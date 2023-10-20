@@ -1,0 +1,235 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Jul 15 14:18:25 CDT 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelSendNotifications"
+               targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/ums/GER_SOA_OCI/ValidationPaymentsAPBiz/SendEmailNotification"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/ums/GER_SOA_OCI/ValidationPaymentsAPBiz/SendEmailNotification"
+         xmlns:ns6="http://platform.integration.oracle/blocks/adapter/fw/metadata/SendEmailNotification"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+         xmlns:ns7="http://xmlns.oracle.com/ias/pcbpel/NotificationService"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications" location="../WSDLs/External/BpelSendNotifications.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelsendnotifications_client" partnerLinkType="client:BpelSendNotifications" myRole="BpelSendNotificationsProvider"/>
+    <partnerLink name="WsERPIntegrationServiceTec" partnerLinkType="ns8:WsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="WsMessageTec1" partnerLinkType="ns1:WsMessageTec1" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelSendNotificationsRequestMessage"/>
+    <variable name="WsMessageTecSendEmailRq" messageType="ns1:MessageRq"/>
+    <variable name="SendEmailNotificationRq" messageType="ns1:MessageRq"/>
+    <variable name="varInstance" type="xsd:string">
+      <from>ora:getFlowId()</from>
+    </variable>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="SqError">
+        <assign name="Assign1">
+          <copy>
+            <from>dvm:lookupValue('DVMs/dvmValidationPaymentsBizConfigs.dvm','Code','EmailPruebas','Value','pedro.sanchez@forteinnovation.mx','Component','NotificacionAP')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo</to>
+          </copy>
+          <copy>
+            <from>ora:getFaultAsString()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Message</to>
+          </copy>
+          <copy>
+            <from>concat("Error-",ora:getComponentName())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Subject</to>
+          </copy>
+        </assign>
+        <invoke name="WsMessageTec" partnerLink="WsMessageTec1"
+                portType="ns1:MessageTecPortType" operation="SendEmail" inputVariable="WsMessageTecSendEmailRq"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelSendNotifications.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelsendnotifications_client" portType="client:BpelSendNotifications" operation="SendNotifications" variable="inputVariable" createInstance="yes"/>
+    <assign name="Trs_SendNotification">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Trs_SendNotification.xsl", $inputVariable.payload,"varInstance",$varInstance)</from>
+        <to variable="SendEmailNotificationRq" part="MessageRq"/>
+      </copy>
+    </assign>
+    <invoke name="SendEmailNotification" partnerLink="WsMessageTec1"
+            portType="ns1:MessageTecPortType" inputVariable="SendEmailNotificationRq"
+            operation="SendEmail"  bpelx:invokeAsDetail="no">
+      <bpelx:skipCondition>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","CleanData","Value","false","Component","NotificacionAP")='true'</bpelx:skipCondition>
+    </invoke>
+    <scope name="ScopeUpdateFlex">
+      <variables>
+        <variable name="WsERPIntegrationServiceTecUpdateObjectRq" messageType="ns8:UpdateObjectRq"/>
+        <variable name="WsERPIntegrationServiceTecUpdateObjectRs" messageType="ns8:UpdateObjectRs"/>
+      </variables>
+      <sequence name="Sequence1"><assign name="AssignUpdateFlexs">
+          <copy>
+            <from>'SINGLE'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:operationMode</to>
+          </copy>
+          <copy>
+            <from>'Payables Invoice Checks'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:EntityName</to>
+          </copy>
+          <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:ContextValue</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.payload/ns2:NUMERO_PAGO</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyA</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.payload/ns2:ID_CHECK</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyD</to>
+          </copy>
+          <copy>
+            <from>concat('{"ATTRIBUTE1":"',$inputVariable.payload/ns2:ESTATUS,'","ATTRIBUTE3":"',$inputVariable.payload/ns2:NUMERO_NOTIFICACION,'","ATTRIBUTE_DATE1":"',xp20:format-dateTime(xp20:current-date(),"[Y0001]-[M01]-[D01]"),'"}')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:DFFAttributes</to>
+          </copy>
+          <copy>
+            <from>'10'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:notificationCode</to>
+          </copy>
+        </assign>
+        <assign name="AssignUpdateFlexsClean" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+   <bpelx:skipCondition>not(dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","CleanData","Value","false","Component","NotificacionAP")='true')</bpelx:skipCondition>
+          <copy>
+            <from>'SINGLE'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:operationMode</to>
+          </copy>
+          <copy>
+            <from>'Payables Invoice Checks'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:EntityName</to>
+          </copy>
+          <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:ContextValue</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.payload/ns2:NUMERO_PAGO</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyA</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.payload/ns2:ID_CHECK</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyD</to>
+          </copy>
+          <copy>
+            <from>concat('{"ATTRIBUTE1":"','','","ATTRIBUTE3":"','','","ATTRIBUTE_DATE1":"','','"}')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:DFFAttributes</to>
+          </copy>
+          <copy>
+            <from>'10'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:notificationCode</to>
+          </copy>
+        </assign>
+        <assign name="AssignUpdateFlexsClean" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:skipCondition xmlns:bpelx="http://schemas.oracle.com/bpel/extension">not(dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","ValidateData","Value","false","Component","NotificacionAP")='true')</bpelx:skipCondition>
+      
+      
+      
+      
+      
+      
+      
+   <copy>
+         <from>'SINGLE'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:operationMode</to>
+      </copy><copy>
+         <from>'Payables Invoice Checks'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:EntityName</to>
+      </copy><copy>
+         <from>'#NULL'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:ContextValue</to>
+      </copy><copy>
+         <from>$inputVariable.payload/ns2:NUMERO_PAGO</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyA</to>
+      </copy><copy>
+         <from>$inputVariable.payload/ns2:ID_CHECK</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:UserKeyD</to>
+      </copy><copy>
+         <from>concat('{"ATTRIBUTE1":"VALIDADO","ATTRIBUTE3":"4" ,"ATTRIBUTE_DATE1":"',xp20:format-dateTime(xp20:current-date(),"[Y0001]-[M01]-[D01]"),'"}')</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:object/ns8:DFFAttributes</to>
+      </copy><copy>
+         <from>'10'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecUpdateObjectRq.UpdateObjectRqPart/ns8:notificationCode</to>
+      </copy></assign>
+        <invoke name="WsERPIntegrationServiceTec" bpelx:invokeAsDetail="no" partnerLink="WsERPIntegrationServiceTec"
+                portType="ns8:ERPIntegrationTecPortType" operation="UpdateObject"
+                inputVariable="WsERPIntegrationServiceTecUpdateObjectRq"
+                outputVariable="WsERPIntegrationServiceTecUpdateObjectRs"/>
+      </sequence>
+    </scope>
+  </sequence>
+</process>

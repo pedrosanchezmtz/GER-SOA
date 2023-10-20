@@ -1,0 +1,210 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Apr 10 18:22:24 CDT 2023
+  Author:  pedro
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelXMLValidadorSftpZAM"
+               targetNamespace="http://xmlns.oracle.com/GER_SOA_OCI/XMLValidatorEnt/BpelXMLValidadorSftpZAM"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/GER_SOA_OCI/XMLValidatorEnt/BpelXMLValidadorSftpZAM"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/XMLValidatorEnt/ftpValidadorZAM"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/CartaPorte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/XMLValidatorEnt"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/SftpTec">
+         
+    <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  <import namespace="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL" location="oramds:/apps/Common/Tables/XXER_CONF_VALIDADOR_XML_TBL.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/XMLValidatorEnt/ftpValidadorZAM"
+          location="../WSDLs/ftpValidadorZAM.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="ftpValidadorZAM" partnerLinkType="ns1:GetFileXML_plt" myRole="GetFileXML_role"/>
+    <partnerLink name="WsMessageTec" partnerLinkType="ns2:WsMessageTec" partnerRole="MessageTecPortType"/>
+    <partnerLink name="WsSOAUtilitiesTec" partnerLinkType="ns3:WsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="XMLValidadorBiz" partnerLinkType="ns6:XMLValidadorBiz" partnerRole="XMLValidatorBizPortType"/>
+    <partnerLink name="wsSftpTec" partnerLinkType="ns10:wsSftpTec" partnerRole="SftpTec_ptt"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:GetFileXML_msg"/>
+    <variable name="WsSOAUtilitiesTecDecodeRq" messageType="ns3:DecodeRq"/>
+    <variable name="WsSOAUtilitiesTecDecodeRs" messageType="ns3:DecodeRs"/>
+    <variable name="v_stringXML" type="xsd:string"/>
+    <variable name="ValidaCartaPorteRq" messageType="ns6:ValidaCartaPorteRq"/>
+    <variable name="ValidaCartaPorteRs" messageType="ns6:ValidaCartaPorteRs"/>
+    <variable name="v_confTbl" element="ns9:XXER_CONF_VALIDADOR_XML_TBL"/>
+    <variable name="PutFileERRq" messageType="ns10:PutFileERRqM"/>
+    <variable name="PutFileERRs" messageType="ns10:PutFileERRsM"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <empty name="Empty1"/>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelXMLValidadorSftpZAM.wsdl) --><receive name="receiveInput" partnerLink="ftpValidadorZAM" portType="ns1:GetFileXML_ptt" operation="GetFileXML" variable="inputVariable" createInstance="yes"/>
+    <scope name="ScopeGetConfigsTbl" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <variables>
+        <variable name="v_consultaString" type="xsd:string"/>
+        <variable name="v_queryConsulta" type="xsd:string"/>
+      </variables>
+      <faultHandlers>
+         <catchAll>
+            
+         <empty name="Empty1" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></catchAll>
+      </faultHandlers>
+      <sequence name="Sequence4">
+         <assign name="AssignQueryConsulta">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmXMLValidatorEnt.dvm","Code","QueryConsulta","Value","","Component","BpelXMLValidadorSftpZAM")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+        </assign>
+         <assign name="AssignGetURLsCFDIs">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+            <from>strClass:replaceAll(oraext:get-content-as-string(oraext:query-database(bpws:getVariableData('v_queryConsulta'),true(),true(),'jdbc/ERSEPDB1DS')),'&lt;ROWSET&gt;','&lt;ROWSET xmlns="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL"&gt;')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaString</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+            <from>oraext:parseXML($v_consultaString)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_confTbl</to>
+          </copy>
+        </assign>
+      </sequence>
+   </scope>
+    <assign name="Trs_MapConf">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Trs_ConfValidate.xsl", $v_confTbl)</from>
+        <to variable="ValidaCartaPorteRq" part="ValidaCartaPorteRqPart"/>
+      </copy>
+    </assign>
+    <assign name="assignBase64" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$inputVariable.opaque</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTecDecodeRq.DecodeRq/ns3:charChain</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>true()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTecDecodeRq.DecodeRq/ns3:contentStripping</to>
+      </copy></assign>
+    <invoke name="WsSOAUtilitiesTec" partnerLink="WsSOAUtilitiesTec" portType="ns3:SOAUtilitiesTecPortType"
+            operation="Decode" inputVariable="WsSOAUtilitiesTecDecodeRq" outputVariable="WsSOAUtilitiesTecDecodeRs"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+    <assign name="AssignParseStringXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+        <from>strClass:replaceAll($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns3:Return/ns3:xmlOut,'&lt;CartaPorte xmlns="http://namespace.pegasotecnologia.com/EComercio/TrasladoWM"&gt;','&lt;CartaPorte xmlns="http://soa.estrellaroja.com.mx/CartaPorte"&gt;')</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_stringXML</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>oraext:parseXML($v_stringXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns7:CartaPorte</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>ora:getPreference("environment")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns6:Ambiente</to>
+      </copy>
+    </assign>
+    <invoke name="WsValidaCartaPorte" bpelx:invokeAsDetail="no" partnerLink="XMLValidadorBiz"
+            portType="ns6:XMLValidatorBizPortType" operation="ValidaCartaPorte" inputVariable="ValidaCartaPorteRq"
+            outputVariable="ValidaCartaPorteRs"/>
+    <if name="If_Exist_Errors" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+        <![CDATA[Success]]>
+      </documentation><condition>$ValidaCartaPorteRs.ValidaCartaPorteRsPart/ns5:Success</condition><assign name="Assign2">
+        <copy>
+          <from>concat($ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns7:CartaPorte/ns7:RFCDestinatario,'-',$ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns7:CartaPorte/ns7:ID_Carga_WTMS,'.xml')</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:FileName</to>
+        </copy>
+        <copy>
+          <from>$inputVariable.opaque</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:FileB64</to>
+        </copy>
+        <copy>
+          <from>'/SOA/er.soa/incoming/ValidadorZAM/SUCCESS'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:DirName</to>
+        </copy>
+      </assign>
+   <else>
+        <documentation>
+          <![CDATA[Error]]>
+        </documentation><assign name="AssignError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+   <copy>
+         <from>concat($ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns7:CartaPorte/ns7:RFCDestinatario,'-',$ValidaCartaPorteRq.ValidaCartaPorteRqPart/ns7:CartaPorte/ns7:ID_Carga_WTMS,'.xml')</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:FileName</to>
+      </copy><copy>
+         <from>$inputVariable.opaque</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:FileB64</to>
+      </copy><copy>
+         <from>'/SOA/er.soa/incoming/ValidadorZAM/ERRORS'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns10:DirName</to>
+      </copy></assign></else></if>
+    <invoke name="wsSftpTec" partnerLink="wsSftpTec" portType="ns10:SftpTec_ptt"
+            operation="PutFileER" inputVariable="PutFileERRq" outputVariable="PutFileERRs"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

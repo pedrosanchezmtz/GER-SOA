@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelNumberToLetter" targetNamespace="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelNumberToLetter" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelNumberToLetter" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelNumberToLetterRequestMessage">
+      <wsdl:part name="NumberToLetterRq" element="ns1:NumberToLetterRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelNumberToLetterResponseMessage">
+      <wsdl:part name="NumberToLetterRs" element="ns1:NumberToLetterRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelNumberToLetter">
+      <wsdl:operation name="transformNumberToLetter">
+         <wsdl:input message="client:bpelNumberToLetterRequestMessage"/>
+         <wsdl:output message="client:bpelNumberToLetterResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelNumberToLetter">
+      <plnk:role name="bpelNumberToLetterProvider" portType="client:bpelNumberToLetter"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

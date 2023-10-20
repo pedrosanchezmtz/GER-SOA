@@ -1,0 +1,854 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 13 16:26:25 CDT 2017
+  Author:  Francisco
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelSendEmail" targetNamespace="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageTec/MessageTec/umsSendEmail"
+         xmlns:ns7="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsSendEmail"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/file/GER_SOA_OCI/MessageTec/fileWrite"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/opaque/">
+    <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail"
+            location="../WSDLs/bpelSendEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="bpelSendemail" partnerLinkType="client:bpelSendEmail" myRole="bpelSendEmailProvider"
+                     partnerRole="bpelSendEmailRequester"/>
+        <partnerLink name="umsSendEmail" partnerLinkType="ns6:SendNotification_plt"
+                     partnerRole="SendNotification_role"/>
+        <partnerLink name="fileWrite" partnerLinkType="ns3:WriteFile_plt" partnerRole="WriteFile_role"/>
+    </partnerLinks>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:MessageRq"/>
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:MessageRs"/>
+    </variables>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in bpelSendEmail.wsdl) -->
+        <scope name="scopeMainSendMail">
+            <documentation>
+                <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Técnica. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+            </documentation>
+            <bpelx:annotation>
+                <bpelx:general>
+                    <bpelx:property name="userDescription">
+                        <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Técnica. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+                    </bpelx:property>
+                </bpelx:general>
+            </bpelx:annotation>
+            <faultHandlers>
+                <catchAll>
+                    <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <documentation>
+                            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+                        </documentation>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>
+            <literal>SOA-00001</literal>
+         </from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>ora:getFaultName()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal>[SendEmail]</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal>[MessageTec]</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>xp20:current-dateTime()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                        </copy>
+                        <extensionAssignOperation>
+                            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</bpelx:target>
+                            </bpelx:remove>
+                        </extensionAssignOperation>
+                        <copy bpelx:insertMissingToData="yes">
+                            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</to>
+                        </copy>
+                        <extensionAssignOperation>
+                            <bpelx:remove>
+                                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</bpelx:target>
+                            </bpelx:remove>
+                        </extensionAssignOperation>
+                    </assign>
+                </catchAll>
+            </faultHandlers>
+            <sequence>
+                <receive name="receiveInput" partnerLink="bpelSendemail" portType="client:bpelSendEmailPortType"
+                         operation="SendEmail" variable="inputVariable" createInstance="yes"/>
+                <scope name="scopeForEachAddress">
+                    <variables>
+                        <variable name="varAddress" type="xsd:string"/>
+                        <variable name="varInvokeWSUmsNotificationEmailRq" messageType="ns6:SendNotification_msg"/>
+                        <variable name="varInvokeWSUmsNotificationEmailRs"
+                                  messageType="ns6:SendNotification_msg_reply"/>
+                        <variable name="varAddressCC" type="xsd:string">
+                            <from>'NULL'</from>
+                        </variable>
+                        <variable name="varHtmlMail" type="xsd:string">
+                            <from><literal>&lt;html&gt; 
+&lt;head&gt; 
+	&lt;meta charset="UTF-8"&gt; 
+	&lt;style&gt; 
+		@import 'https://fonts.googleapis.com/css?family=Raleway'; 
+ 
+		.mainEmail { 
+			display: block; 
+			width: 80%; 
+			margin: 0 auto; 
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f3f3f3+0,ffffff+50,f3f3f3+100 */ 
+			background: rgb(243,243,243); /* Old browsers */ 
+			background: -moz-linear-gradient(left,  rgba(243,243,243,1) 0%, rgba(255,255,255,1) 50%, rgba(243,243,243,1) 100%); /* FF3.6-15 */ 
+			background: -webkit-linear-gradient(left,  rgba(243,243,243,1) 0%,rgba(255,255,255,1) 50%,rgba(243,243,243,1) 100%); /* Chrome10-25,Safari5.1-6 */ 
+			background: linear-gradient(to right,  rgba(243,243,243,1) 0%,rgba(255,255,255,1) 50%,rgba(243,243,243,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ 
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#f3f3f3',GradientType=1 ); /* IE6-9 */ 
+		} 
+		.header {
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a7cfdf+0,23538a+100;Blue+3d+%238 */
+                        background: rgb(167,207,223); /* Old browsers */
+                        background: -moz-linear-gradient(top, rgba(167,207,223,1) 0%, rgba(35,83,138,1) 100%); /* FF3.6-15 */
+                        background: -webkit-linear-gradient(top, rgba(167,207,223,1) 0%,rgba(35,83,138,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                        background: linear-gradient(to bottom, rgba(167,207,223,1) 0%,rgba(35,83,138,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', endColorstr='#23538a',GradientType=0 ); /* IE6-9 */
+                        border-bottom: 14px solid rgb(224, 10, 54); 
+		}
+		.header-title { 
+			text-align: center; 
+			position: relative; 
+			margin: 0 auto; 
+			font-size: 1.3em; 
+			font-family: 'Raleway', sans-serif; 
+			padding: 2em 0; 
+			color: rgb(245,245,245); 
+		} 
+		.mainContent { 
+			min-height: 100px; 
+		} 
+		
+		.errorsTables table tr th {
+			height: 30px;
+		}
+		.errorsTables table tr td {
+			height: 30px;
+		}
+		.errorsTables table tr:nth-of-type(odd) {
+			background: rgba(243,243,243,1);
+			border: 0;
+		}
+		.errorsTables table tr:nth-of-type(even) {
+			background: #7AD7FF;;
+			border: 0;
+		}
+		.errorsTables table {
+			width: 100%;
+			text-align: center;
+			border: 0;
+			font-family: 'Raleway', sans-serif;
+			border-spacing: 0;
+			font-size: 1em;
+			color: black;
+		}
+		.errorsTables {
+			width: 90%;
+			margin: 1em auto;
+			text-align: center;
+		}
+		.errorsTables table tr:first-child th:first-child {
+			border-radius: 10px 0 0 0;
+		}
+		.errorsTables table tr:first-child th:last-child {
+			border-radius: 0 10px 0 0;
+		}
+		.errorsTables table tr:last-child th:first-child {
+			border-radius: 0 0 0 10px;
+		}
+		.errorsTables table tr:last-child td:last-child {
+			border-radius: 0 0 10px 0;
+		}
+		 
+		.textTop, .textBottom { 
+			background: -moz-linear-gradient(left, rgba(235, 235, 235, 1) 0%, rgba(173, 173, 173, 1) 25%, rgba(125, 125, 125, 1) 75%, rgba(235, 235, 235, 1) 100%); 
+			background: -webkit-linear-gradient(left, rgba(235, 235, 235, 1) 0%, rgba(173, 173, 173, 1) 25%, rgba(125, 125, 125, 1) 75%, rgba(235, 235, 235, 1) 100%); 
+			background: linear-gradient(to right, rgba(235, 235, 235, 1) 0%, rgba(173, 173, 173, 1) 25%, rgba(125, 125, 125, 1) 75%, rgba(235, 235, 235, 1) 100%); 
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00acd063', endColorstr='#00acd063',GradientType=1 ); 
+			text-align: center; 
+			padding: 5px 0; 
+			margin: 1em auto; 
+		} 
+		.textTop p, .textBottom p { 
+			font-size: 1em; 
+			font-family: 'Raleway', sans-serif; 
+			color: #3C454E; 
+			font-weight: bold; 
+		} 
+		.clientInfo { 
+			text-align: center; 
+			font-size: 1em; 
+			font-weight: bold; 
+			font-family: 'Raleway', sans-serif; 
+			color: #3C454E; 
+		} 
+ 
+		.footer{
+			background: rgb(0,128,90); /* Old browsers */
+			background: -moz-linear-gradient(top,  rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%); /* FF3.6-15 */
+			background: -webkit-linear-gradient(top,  rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient(to bottom,  rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00805a', endColorstr='#006546',GradientType=0 ); /* IE6-9 */
+		}
+		.EstrellaRojaSvgLogo &gt; img { 
+			width: 200px; 
+			height: 100px; 
+			margin: 0 auto; 
+		} 
+		.EstrellaRojaSvgLogo { 
+			text-align: center; 
+		} 
+		.contactInfo table { 
+			width: 100%; 
+		} 
+		.svgFb &gt; svg { 
+			width: 40px; 
+			height: 40px; 
+		} 
+		.fbText p { 
+			line-height: 10px; 
+		} 
+		.fbText { 
+			width: 75%; 
+			display: inline-block; 
+		} 
+		a.frdFB { 
+			text-decoration: none; 
+			font-size: 0.8em; 
+			font-family: "Raleway",sans-serif; 
+			color: #469b76; 
+			font-weight: bold; 
+		} 
+		a.frdFB &gt; div { 
+			position: relative; 
+			vertical-align: middle; 
+		} 
+		.svgFb { 
+			width: 45px; 
+			display: inline-block; 
+		} 
+		.frdPhoneWeb { 
+			text-align: right; 
+			width: 100%; 
+		} 
+		.frdPhoneWeb p { 
+			text-decoration: none; 
+			color: rgb(224, 10, 54);
+			line-height: 10px; 
+			font-size: 0.9em; 
+			font-family: "Raleway",sans-serif; 
+			font-weight: bold; 
+		} 
+		.frdPhoneWeb a { 
+			text-decoration: none; 
+			color: rgb(224, 10, 54);
+		} 
+	&lt;/style&gt; 
+&lt;/head&gt; 
+&lt;body&gt; 
+	&lt;div class="mainEmail"&gt; 
+		&lt;div class="header"&gt; 
+			&lt;h3 class="header-title"&gt;@SubjectMail@&lt;/h3&gt; 
+		&lt;/div&gt; 
+		&lt;div class="mainContent"&gt; 
+			&lt;div class="textTop"&gt; 
+				&lt;p&gt;Estimado Usuario(a)&lt;/p&gt; 
+				&lt;p&gt;Te informamos que hemos procesado tu solicitud con el siguiente resultado:&lt;/p&gt; 
+			&lt;/div&gt; 
+			&lt;div class="clientInfo"&gt; 
+				&lt;p&gt;@MessagePayload@&lt;/p&gt; 
+			&lt;/div&gt; 
+			 
+				&lt;div class="textBottom"&gt; 
+					&lt;p&gt;Cualquier duda, puedes comunicarte con el &amp;aacute;rea de soporte.&lt;/p&gt; 
+					&lt;p&gt;Instance: @InstanceID@&lt;/p&gt; 
+				&lt;/div&gt; 
+				&lt;div class="contactInfo"&gt; 
+					&lt;table&gt; 
+						&lt;tbody&gt; 
+							&lt;tr&gt; 
+								&lt;td&gt;							 
+								&lt;/a&gt; 
+							&lt;/td&gt; 
+							&lt;td&gt; 
+								&lt;div class="frdPhoneWeb"&gt; 
+									&lt;p&gt;&lt;a href="https://www.estrellaroja.com.mx/" target="_blank"&gt;www.estrellaroja.com.mx&lt;/a&gt;&lt;/p&gt; 
+								&lt;/div&gt; 
+							&lt;/td&gt; 
+						&lt;/tr&gt; 
+					&lt;/tbody&gt; 
+				&lt;/table&gt; 
+			&lt;/div&gt; 
+		&lt;/div&gt; 
+		&lt;div class="footer"&gt; 
+			&lt;div class="EstrellaRojaSvgLogo"&gt; 
+				&lt;img alt="Estrella Roja" 
+					src="https://www.estrellaroja.com.mx/documents/10184/10923/logo_er.png/4620ea57-1fe6-406b-aca8-0aee699a4709" /&gt;
+			&lt;/div&gt; 
+		&lt;/div&gt; 
+	&lt;/div&gt; 
+&lt;/body&gt; 
+&lt;/html&gt;</literal></from>
+                        </variable>
+                        <variable name="varSubject" type="xsd:string"/>
+                        <variable name="varAddressFrom" type="xsd:string"/>
+                        <variable name="varAddressBCC" type="xsd:string">
+                            <from>'NULL'</from>
+                        </variable>
+                        <variable name="varFlowId" type="xsd:string">
+                            <from>ora:getFlowId()</from>
+                        </variable>
+                    </variables>
+                    <faultHandlers>
+                        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+                            <documentation>
+                                <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+                            </documentation>
+                            <assign name="assignTimeout">
+                                <documentation>
+                                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                                </documentation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>SOA-00002</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>ora:getFaultName()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[ServiceOperation]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[EstrellaRojaSOABaseTemplate]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>xp20:current-dateTime()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                            </assign>
+                        </catch>
+                        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+                            <documentation>
+                                <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+                            </documentation>
+                            <assign name="assignRemoteFault">
+                                <documentation>
+                                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                                </documentation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>SOA-00005</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>ora:getFaultName()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[ServiceOperation]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[EstrellaRojaSOABaseTemplate]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>xp20:current-dateTime()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                            </assign>
+                        </catch>
+                        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+                            <documentation>
+                                <![CDATA[Control para excepción por Falla en Selección.]]>
+                            </documentation>
+                            <assign name="assignSelectionFailure">
+                                <documentation>
+                                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                                </documentation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>ora:getFaultName()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[ServiceOperation]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[EstrellaRojaSOABaseTemplate]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>xp20:current-dateTime()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                            </assign>
+                        </catch>
+                        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+                            <documentation>
+                                <![CDATA[Control para excepción por Variables No Válidas.]]>
+                            </documentation>
+                            <assign name="assignInvalidVariables">
+                                <documentation>
+                                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                                </documentation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>SOA-00003</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>ora:getFaultName()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[ServiceOperation]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[EstrellaRojaSOABaseTemplate]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>xp20:current-dateTime()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</to>
+                                </copy>
+                                <extensionAssignOperation>
+                                    <bpelx:remove>
+                                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return</bpelx:target>
+                                    </bpelx:remove>
+                                </extensionAssignOperation>
+                            </assign>
+                        </catch>
+                    </faultHandlers>
+                    <sequence>
+                        <if name="If_bodyEmpty">
+                            <documentation>
+                                <![CDATA[Body]]>
+                            </documentation>
+                            <condition>string-length($inputVariable.MessageRq/ns1:Message/ns1:Body)&gt;0</condition><assign name="assingBody"
+                                                                                                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+   <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$inputVariable.MessageRq/ns1:Message/ns1:Body</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSUmsNotificationEmailRq.body/ns7:payload</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>oraext:create-delimited-string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo,',')</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddress</to>
+      </copy></assign><else>
+                                <documentation>
+                                    <![CDATA[Mensagge]]>
+                                </documentation>
+                                <assign name="assingBodyMessage">
+                                    <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                                        <from>ora:toCDATA($varHtmlMail)</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSUmsNotificationEmailRq.body/ns7:payload</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>oraext:create-delimited-string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo,',')</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddress</to>
+                                    </copy>
+                                </assign>
+                            </else>
+                        </if>
+                        <if name="ifSubjectIsEmpty">
+                            <documentation>
+                                <![CDATA[Subject is Empty]]>
+                            </documentation>
+                            <condition>string-length(normalize-space($inputVariable.MessageRq/ns1:Message/ns1:Subject))=0</condition>
+                            <assign name="assignSubjectFromDvm">
+                                <copy>
+                                    <from>dvm:lookupValue("Dvms/dvmMessageTec.dvm","IntegrationName",$inputVariable.CustomHeader/ns1:IntegrationName,"Subject","")</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSubject</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>dvm:lookupValue("Dvms/dvmMessageTec.dvm","IntegrationName",$inputVariable.CustomHeader/ns1:IntegrationName,"Subject","")</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.MessageRq/ns1:Message/ns1:Subject</to>
+                                </copy>
+                            </assign>
+                            <else>
+                                <documentation>
+                                    <![CDATA[Subject is not empty]]>
+                                </documentation>
+                                <assign name="assignSubject">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$inputVariable.MessageRq/ns1:Message/ns1:Subject</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSubject</to>
+                                    </copy>
+                                </assign>
+                            </else>
+                        </if>
+                        <if name="ifAddressToIsZero">
+                            <documentation>
+                                <![CDATA[AddressTo eq Zero]]>
+                            </documentation>
+                            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo)=0</condition><assign name="assingAddressToFromDvm"
+                                                                                                                                                                                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue("Dvms/dvmMessageTec.dvm","IntegrationName",$inputVariable.CustomHeader/ns1:IntegrationName,"To","")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddress</to>
+      </copy></assign><else>
+                                <documentation>
+                                    <![CDATA[AddressTo is differents Zero]]>
+                                </documentation>
+                                <assign name="assingAddressTo"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>oraext:create-delimited-string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo,',')</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddress</to>
+      </copy></assign>
+                            </else>
+                        </if>
+                        <assign name="trMessageRqToMessageBodyHtml">
+                            <bpelx:annotation>
+                                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                            </bpelx:annotation>
+                            <copy>
+                                <from>ora:doXSLTransformForDoc("../Transformations/trMessageRq_To_MessageBodyHtmlRq.xsl", $inputVariable.MessageRq, "varInvokeWSUmsNotificationEmailRq.body", $varInvokeWSUmsNotificationEmailRq.body,'varFlowId',$varFlowId)</from>
+                                <to variable="varInvokeWSUmsNotificationEmailRq" part="body"/>
+                            </copy>
+                        </assign>
+                        <if name="ifAddressCCIsZero" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                                <![CDATA[AddressCC eq Zero]]>
+                            </documentation>
+      <condition>count($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressCC)=0</condition>
+      <sequence name="Sequence1">
+                                <if name="If_IntegrationName">
+                                    <documentation>
+                                        <![CDATA[IntegrationName]]>
+                                    </documentation>
+                                    <condition>string-length($inputVariable.CustomHeader/ns1:IntegrationName)&gt;0</condition>
+                                    <assign name="assingAddressCC"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                            <from>dvm:lookupValue("Dvms/dvmMessageTec.dvm","IntegrationName",$inputVariable.CustomHeader/ns1:IntegrationName,"CC","")</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddressCC</to>
+                                        </copy>
+                                    </assign>
+                                    <else>
+                                        <documentation>
+                                            <![CDATA[noData]]>
+                                        </documentation>
+                                        <empty name="Empty"/>
+                                    </else>
+                                </if>
+      </sequence>
+      <else>
+         <documentation>
+            <![CDATA[AddressCC is differents Zero]]>
+         </documentation>
+         <assign name="assingAddressCC" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>oraext:create-delimited-string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressCC,',')</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddressCC</to>
+            </copy></assign>
+      </else>
+   </if>
+                        <if name="ifAddressBCCIsZero">
+                            <documentation>
+                                <![CDATA[AddressCC eq Zero]]>
+                            </documentation>
+                            <condition>count($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressBCC)=0</condition>
+                            <sequence name="Sequence1">
+                                <empty name="Continue"/>
+                            </sequence>
+                            <else>
+                                <documentation>
+                                    <![CDATA[AddressCC is differents Zero]]>
+                                </documentation><assign name="assingAddressBCC"
+                                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>oraext:create-delimited-string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressBCC,',')</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varAddressBCC</to>
+                                    </copy>
+                                </assign></else>
+                        </if>
+                        <if name="ifAttachments" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                                <![CDATA[Attachments]]>
+                            </documentation>
+      <condition>count($inputVariable.MessageRq/ns1:Message/ns1:Attachment)&gt;0</condition>
+      
+      
+   <forEach parallel="no" counterName="counterAttachment" name="ForEachAttachments">
+                                <startCounterValue>1</startCounterValue>
+                                <finalCounterValue>count($inputVariable.MessageRq/ns1:Message/ns1:Attachment)</finalCounterValue>
+                                <scope name="ScopeAttachment">
+                                    <variables>
+                                        <variable name="WriteFileRq" messageType="ns3:WriteFile_msg"/>
+                                    </variables>
+                                    <sequence name="Sequence2">
+                                        <assign name="assingWriteFile"
+                                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                            <copy>
+                                                <from>$inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:AttachmentBase64</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WriteFileRq.opaque</to>
+                                            </copy>
+                                        </assign>
+                                        <invoke name="FileWrite" partnerLink="fileWrite"
+                                                portType="ns3:WriteFile_ptt" operation="WriteFile"
+                                                inputVariable="WriteFileRq" bpelx:invokeAsDetail="no">
+                                            <bpelx:toProperties>
+                                                <bpelx:toProperty name="jca.file.FileName">concat(string(dvm:lookupValue("Dvms/dvmMessageTecConfig.dvm","Configuracion","WriteFileName","Value","EmailFile.")),$inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:TypeName)</bpelx:toProperty>
+                                                <bpelx:toProperty name="jca.file.Directory">string(dvm:lookupValue("Dvms/dvmMessageTecConfig.dvm","Configuracion","PathWriteFile","Value","/u01/data/domains/ERSOAPROD02LAB_domain/PROD/TMP_DIR/"))</bpelx:toProperty>
+                                            </bpelx:toProperties>
+                                        </invoke>
+                                        <assign name="AssignAttchment">
+                                            <copy ignoreMissingFromData="yes" keepSrcElementName="no"
+                                                  bpelx:insertMissingToData="yes">
+                                                <from>ora:readBinaryFromFileWithMimeHeaders(concat(string(dvm:lookupValue("Dvms/dvmMessageTecConfig.dvm","Configuracion","PathWriteFile","Value","/u01/data/domains/ERSOAPROD02LAB_domain/PROD/TMP_DIR/")),string(dvm:lookupValue("Dvms/dvmMessageTecConfig.dvm","Configuracion","WriteFileName","Value","EmailFile.")),$inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:TypeName),string($counterAttachment),concat("application/",$inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:TypeName),concat('attachment; filename="',string($inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:FileName),'"'), "7bit",string($inputVariable.MessageRq/ns1:Message/ns1:Attachment[$counterAttachment]/ns1:FileName), "en")</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSUmsNotificationEmailRq.body/ns7:attachment[$counterAttachment]</to>
+                                            </copy>
+                                        </assign>
+                                    </sequence>
+                                </scope>
+                            </forEach></if>
+                        <if name="ifAddressFromIsEmpty"
+                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[is Empty]]></documentation>
+      <condition>string-length(normalize-space($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom))=0</condition>
+      
+      <invoke name="invokeWSUmsNotificationEmail" inputVariable="varInvokeWSUmsNotificationEmailRq"
+              partnerLink="umsSendEmail" portType="ns6:SendNotification_ptt" operation="SendNotification"
+              outputVariable="varInvokeWSUmsNotificationEmailRs" bpelx:invokeAsDetail="no">
+                                <bpelx:toProperties>
+                                    <bpelx:toProperty name="jca.ums.to">$varAddress</bpelx:toProperty>
+                                    <bpelx:toProperty name="jca.ums.msg.content-type">string('text/html; charset=UTF-8')</bpelx:toProperty>
+                                    <bpelx:toProperty name="jca.ums.subject" variable="varSubject"/>
+                                    <bpelx:toProperty name="jca.ums.from">string(dvm:lookupValue("Dvms/dvmMessageTecConfig.dvm","Configuracion","EmailFromDefault","Value","er.soa@estrellaroja.com.mx"))</bpelx:toProperty>
+                                    <bpelx:toProperty name="jca.ums.cc">$varAddressCC</bpelx:toProperty>
+                                    <bpelx:toProperty name="jca.ums.bcc">$varAddressBCC</bpelx:toProperty>
+                                </bpelx:toProperties>
+                            </invoke><else>
+         <documentation>
+            
+         <![CDATA[is not empty]]></documentation>
+         
+      <forEach parallel="no" counterName="counterFrom" name="ForEach_From">
+                                    <startCounterValue>1</startCounterValue>
+                                    <finalCounterValue>count($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom)</finalCounterValue>
+                                    <scope name="ScopeFrom"><invoke name="invokeWSUmsNotificationEmail"
+                                                                 inputVariable="varInvokeWSUmsNotificationEmailRq"
+                                                                 partnerLink="umsSendEmail"
+                                                                 portType="ns6:SendNotification_ptt"
+                                                                 operation="SendNotification"
+                                                                 outputVariable="varInvokeWSUmsNotificationEmailRs"
+                                                                 xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                                                 xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                                                                    bpelx:invokeAsDetail="no">
+      <bpelx:toProperties>
+         <bpelx:toProperty name="jca.ums.to">$varAddress</bpelx:toProperty>
+         <bpelx:toProperty name="jca.ums.msg.content-type">string('text/html; charset=UTF-8')</bpelx:toProperty>
+         <bpelx:toProperty name="jca.ums.subject" variable="varSubject"/>
+         <bpelx:toProperty name="jca.ums.from">string($inputVariable.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom[$counterFrom])</bpelx:toProperty>
+         <bpelx:toProperty name="jca.ums.cc">$varAddressCC</bpelx:toProperty>
+      <bpelx:toProperty name="jca.ums.bcc">$varAddressBCC</bpelx:toProperty>
+                                            </bpelx:toProperties>
+   </invoke></scope>
+                                </forEach></else>
+   </if>
+                        <assign name="assingSuccessSent">
+                            <copy bpelx:insertMissingToData="yes">
+                                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors</to>
+                            </copy>
+                            <extensionAssignOperation>
+                                <bpelx:remove>
+                                    <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Errors</bpelx:target>
+                                </bpelx:remove>
+                            </extensionAssignOperation>
+                            <copy bpelx:insertMissingToData="yes">
+                                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns2:Success</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                                <from>$varInvokeWSUmsNotificationEmailRs.body/ns7:MessageId</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.MessageRs/ns1:Return/ns1:MessageId</to>
+                            </copy>
+                        </assign>
+                    </sequence>
+                </scope>
+            </sequence>
+        </scope>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="bpelSendemail" portType="client:bpelSendEmailCallbackPortType"
+                operation="SendEmailCallback" inputVariable="outputVariable" bpelx:invokeAsDetail="no"/>
+    </sequence>
+</process>

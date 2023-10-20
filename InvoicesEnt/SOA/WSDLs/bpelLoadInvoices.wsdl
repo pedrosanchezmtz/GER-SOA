@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelLoadInvoices" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz">
+   <plnk:partnerLinkType name="bpelLoadInvoices">
+      <plnk:role name="bpelLoadInvoicesProvider" portType="client:bpelLoadInvoices"/>
+      <plnk:role name="bpelLoadInvoicesRequester" portType="client:bpelLoadInvoicesCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" location="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" location="oramds:/apps/SOA/InvoicesBiz/InvoicesBiz.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesEnt" schemaLocation="oramds:/apps/SOA/InvoicesEnt/InvoicesEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureTrxInterface" schemaLocation="../Schemas/StructureTrxInterface.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelLoadInvoicesRequestMessage">
+      <wsdl:part name="LoadInvoices" element="ns1:LoadInvoicesRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelLoadInvoicesResponseMessage">
+      <wsdl:part name="LoadInvoices" element="ns1:LoadInvoicesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelLoadInvoices">
+      <wsdl:operation name="LoadInvoices">
+         <wsdl:input message="client:bpelLoadInvoicesRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelLoadInvoicesCallback">
+      <wsdl:operation name="LoadInvoicesResponse">
+         <wsdl:input message="client:bpelLoadInvoicesResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

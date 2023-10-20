@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="1" name="funcXqtrs_input">
+      <source_tree_view last.visible.row="9" last.visible.path="/sourceRoot[[0]]/DATA_DS[[0]]/G_1[[2]]/ORG_ID[[5]]" first.visible.path="/sourceRoot[[0]]/DATA_DS[[0]]" expanded.paths="/sourceRoot[[0]]/DATA_DS[[0]]&#xA;/sourceRoot[[0]]/DATA_DS[[0]]/G_1[[2]]" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="5" last.visible.path="/TargetRoot[[0]]/GenerateURLRelationCFDIsRq[[0]]/Transactions[[0]]/TransactionSource[[3]]" first.visible.path="/TargetRoot[[0]]/GenerateURLRelationCFDIsRq[[0]]" expanded.paths="/TargetRoot[[0]]/GenerateURLRelationCFDIsRq[[0]]&#xA;/TargetRoot[[0]]/GenerateURLRelationCFDIsRq[[0]]/Transactions[[0]]" first.visible.row="0" selected.paths=""/>
+   </function>
+</view_states>

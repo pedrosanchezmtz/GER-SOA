@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" targetNamespace="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" elementFormDefault="qualified" xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:erp="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+   <xsd:import schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd" namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+   <xsd:import schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd" namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"/>
+   <xsd:element name="ValidatePaymentRq" type="InvoicesDataType"/>
+   <xsd:element name="ValidatePaymenyRs" type="ValidatePaymentRsType"/>
+   <xsd:element name="Payment" type="ValidatePaymentType"/>
+   <xsd:element name="CancelInvoicesAPRq" type="CancelInvoicesAPRqType"/>
+   <xsd:element name="UploadAttachmentsRq" type="erp:UploadAttachmentRqType"/>
+   <xsd:element name="UploadAttachmentsRs" type="UploadAttachmentsRsType"/>
+   <xsd:element name="HelperString" type="xsd:string"/>
+   <xsd:element name="HelperInteger" type="xsd:integer"/>
+   <xsd:complexType name="UploadAttachmentsRsType">
+      <xsd:sequence>
+         <xsd:element name="Return" type="UploadAttachmentsReturnType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadAttachmentReturnType">
+      <xsd:sequence>
+         <xsd:element name="InvoiceNumber" type="xsd:string"/>
+         <xsd:element name="InvalidInvoice" type="InvoiceType"/>
+         <xsd:element name="ValidInvoice" type="InvoiceType"/>
+         <xsd:element name="Result" type="cmn:BaseRsType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadAttachmentsReturnType">
+      <xsd:sequence>
+         <xsd:element name="Attachment" minOccurs="0" maxOccurs="unbounded" type="UploadAttachmentReturnType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InvoiceType"/>
+   <xsd:complexType name="CancelInvoicesAPRqType">
+      <xsd:sequence>
+         <xsd:element name="Invoices" type="CancelInvoiceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CancelInvoiceType">
+      <xsd:sequence>
+         <xsd:element name="Invoice" type="erp:InvoiceType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InvoicesDataType">
+      <xsd:sequence>
+         <xsd:element name="Payment" type="ValidatePaymentType" maxOccurs="unbounded" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ValidatePaymentType">
+      <xsd:sequence>
+         <xsd:element name="InvoiceNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="RfcIssuer" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="RfcReceiver" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="TotalAmount" type="xsd:decimal" maxOccurs="1"/>
+         <xsd:element name="Uuid" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="CuentaPredial" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="UsoCFDI" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="Moneda" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="InformacionAduanera" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="FormaPago" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="MetodoPago" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="ClaveProdServ" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="FechaTimbrado" type="xsd:dateTime"/>
+         <xsd:element name="TipoDeComprobante" type="xsd:string"/>
+         <xsd:element name="SubTotal" type="xsd:string"/>
+         <xsd:element name="TipoRelacion" type="xsd:string"/>
+         <xsd:element name="UUIDRelacion" type="xsd:string"/>
+         <xsd:element name="RFCEmisor" type="xsd:string"/>
+         <xsd:element name="NomEmisor" type="xsd:string"/>
+         <xsd:element name="Descuento" type="xsd:string"/>
+         <xsd:element name="TipoCambio" type="xsd:string"/>
+         <xsd:element name="DescripcionL" type="xsd:string"/>
+         <xsd:element name="RetenidoIVA" type="xsd:string"/>
+         <xsd:element name="RetenidoISR" type="xsd:string"/>
+         <xsd:element name="Impuesto" type="xsd:string"/>
+         <xsd:element name="Importe" type="xsd:string"/>
+         <xsd:element name="Impuestoieps" type="xsd:string"/>
+         <xsd:element name="Importeieps" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ValidatePaymentRsType">
+      <xsd:sequence>
+         <xsd:element name="Return" type="ValidatePaymentsReturnType" maxOccurs="1" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ValidatePaymentsReturnType">
+      <xsd:sequence>
+         <xsd:element name="Payment" maxOccurs="unbounded" minOccurs="0" type="ValidatePaymentReturnType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ValidatePaymentReturnType">
+      <xsd:sequence>
+         <xsd:element name="InvoiceNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="Valid" maxOccurs="1" type="xsd:boolean"/>
+         <xsd:element name="StatusDesc" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="Result" type="cmn:BaseRsType" minOccurs="0"/>
+         <xsd:element name="XmlContent" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

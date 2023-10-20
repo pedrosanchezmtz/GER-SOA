@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersExecutions" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersExecutions" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="XxerEamExecutionsTblCollection" type="XxerEamExecutionsTblCollection"/>
+   <xs:complexType name="XxerEamExecutionsTblCollection">
+      <xs:sequence>
+         <xs:element name="XxerEamExecutionsTbl" type="XxerEamExecutionsTbl" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerEamExecutionsTbl">
+      <xs:sequence>
+         <xs:element name="runId" type="xs:decimal" nillable="true"/>
+         <xs:element name="dataSource" type="string80" minOccurs="0"/>
+         <xs:element name="dataName" type="string80" minOccurs="0"/>
+         <xs:element name="runDateOff" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="readStatus" type="xs:decimal" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string80">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="80"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="MediatorCFDITec" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/CFDITec" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetCFDIFromFile" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelGetCFDIFromFile.bpelgetcfdifromfile_client.GetCFDIFromFile">
+            <action>
+               <assign>
+                  <copy expression="$in.GetCFDIFromFileRqPart/tns:GetCFDIFromFileRq" target="$out.payload/tns:GetCFDIFromFileRq" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec"/>
+               </assign>
+               <invoke reference="BpelGetCFDIFromFile.bpelgetcfdifromfile_client" operation="GetCFDIFromFile">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetCFDIFromFileRs" target="$out.GetCFDIFromFileRsPart/ns1:GetCFDIFromFileRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetInvoiceCFDIFromERP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client.GetInvoiceCFDIFromERP">
+            <action>
+               <assign>
+                  <copy expression="$in.GetInvoiceCFDIFromERPRqPart/tns:GetInvoiceCFDIFromERPRq" target="$out.payload/tns:GetInvoiceCFDIFromERPRq" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec"/>
+               </assign>
+               <invoke reference="BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client" operation="GetInvoiceCFDIFromERP">
+                  <onCallback operation="GetInvoiceCFDIFromERPResponse">
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetInvoiceCFDIFromERPRs" target="$out.GetInvoiceCFDIFromERPRsPart/ns1:GetInvoiceCFDIFromERPRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec"/>
+                     </assign>
+                     <callback operation="GetInvoiceCFDIFromERPResponse"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="SendCFDIToSFTP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelSendCFDIToSFTP.bpelsendcfditosftp_client.SendCFDIToSFTP">
+            <action>
+               <assign>
+                  <copy expression="$in.SendCFDIToSFTPRqPart/tns:SendCFDIToSFTPRq" target="$out.payload/tns:SendCFDIToSFTPRq" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec"/>
+               </assign>
+               <invoke reference="BpelSendCFDIToSFTP.bpelsendcfditosftp_client" operation="SendCFDIToSFTP"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetComplementCFDI" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelGetComplementCFDI.bpelgetcomplementcfdi_client.GetComplementCFDI_2">
+            <action>
+               <assign>
+                  <copy expression="$in.GetComplementCFDIRqPart/tns:GetComplementCFDIRq" target="$out.payload/tns:GetComplementCFDIRq" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec"/>
+               </assign>
+               <invoke reference="BpelGetComplementCFDI.bpelgetcomplementcfdi_client" operation="GetComplementCFDI">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/tns:GetComplementCFDIRs" target="$out.GetComplementCFDIRsPart/tns:GetComplementCFDIRs" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

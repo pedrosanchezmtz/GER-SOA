@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+   <dgm:gReference name="wsERPIntegrationBiz">
+      <dgm:body borderWidth="2" arcRad="20" X="430" Y="142" width="136" height="120">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="420" Y="135" width="156" height="134">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="wsERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>ImportToERPCloud</dgm:item>
+         <dgm:item>GenerateReport</dgm:item>
+         <dgm:item>GetJobsStatus</dgm:item>
+         <dgm:item>ImportToERPCloudCallback</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gReference name="wsERPManagementOfLoadImportBiz">
+      <dgm:body borderWidth="2" arcRad="20" X="430" Y="26" width="136" height="84">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="420" Y="19" width="156" height="98">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="wsERPManagementOfLoadImportBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.interface(ERPManagementOfLoadImportBizPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>SendReportInterface</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+</dgm:gDiagram>

@@ -1,0 +1,801 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DigitalStampReceiptsRs xmlns="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/FinancialsTec/types" xmlns:ns4="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/types" xmlns:ns5="http://schemas.oracle.com/bpel/extension" xmlns:ns6="http://soa.estrellaroja.com.mx/StructureReceipt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <tns:Return>
+      <tns:Data>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3532.48</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12943</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>76</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1890.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12944</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>77</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1890.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12945</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>78</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3084.48</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12946</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>79</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12947</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>80</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1211.84</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12948</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>81</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1211.84</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12949</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>82</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12950</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>83</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12951</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>84</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12952</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>85</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12953</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>86</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12954</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>87</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12955</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>88</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12956</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>89</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12957</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>90</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1302.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12958</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>91</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12960</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>92</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12963</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>93</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12965</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>94</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1499.73</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12966</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>95</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1817.85</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12968</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>96</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12970</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>97</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12971</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>98</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12972</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>99</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1603.13</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12973</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>100</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1603.13</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12974</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>101</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1428</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12975</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>102</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1603.13</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12977</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>103</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>7110.88</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12978</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>104</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1890.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12980</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>105</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1890.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12981</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>106</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1211.84</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12982</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>107</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1890.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12983</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>108</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1211.84</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12986</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>109</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1730.4</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12987</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>110</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1560.16</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12988</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>111</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12989</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>112</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12991</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>113</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3397.95</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12992</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>114</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12994</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>115</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1609.94</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-12995</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>116</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1806.56</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-8041</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>117</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1286.88</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9674</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>118</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3080</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9677</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>119</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3080</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9680</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>120</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1299.2</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9687</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>121</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>1284.17</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9689</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>122</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3080</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9693</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>123</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+         <tns:ProcessedApplyReceipt>
+            <tns:AMOUNT>3079.8</tns:AMOUNT>
+            <tns:RECEIPT_ID>1047021</tns:RECEIPT_ID>
+            <tns:RECEIPT_NUMBER>PAGO ELECT</tns:RECEIPT_NUMBER>
+            <tns:TRANSACTION_NUMBER>VERP-9715</tns:TRANSACTION_NUMBER>
+            <tns:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</tns:CUSTOMER_NAME>
+            <tns:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</tns:APPLICATION_DATE>
+            <tns:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</tns:ACCOUNTING_DATE>
+            <tns:CUST_ACCOUNT_ID>100000001796642</tns:CUST_ACCOUNT_ID>
+            <tns:ORGANIZATION_ID>300000002753767</tns:ORGANIZATION_ID>
+            <tns:CUSTOMER_TRX_ID>100000001796642</tns:CUSTOMER_TRX_ID>
+            <tns:UUID/>
+            <tns:BUSINESS_UNIT/>
+            <tns:METODO_RECIBO>SANTANDER_1186</tns:METODO_RECIBO>
+            <tns:RECEIPT_APPLY_ID>124</tns:RECEIPT_APPLY_ID>
+         </tns:ProcessedApplyReceipt>
+      </tns:Data>
+      <tns:GetHtmlControlRq>
+         <tns:TotalSucceeded>1</tns:TotalSucceeded>
+         <tns:TotalErrors>0</tns:TotalErrors>
+         <tns:ErrorsDetails>
+            <tns:ErrorDetail>
+               <tns:DataValue/>
+               <tns:ErrorMessage/>
+            </tns:ErrorDetail>
+         </tns:ErrorsDetails>
+      </tns:GetHtmlControlRq>
+   </tns:Return>
+</DigitalStampReceiptsRs>

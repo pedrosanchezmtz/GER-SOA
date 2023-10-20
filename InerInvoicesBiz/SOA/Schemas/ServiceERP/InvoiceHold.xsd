@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" sdoJava:package="oracle.apps.financials.payables.invoices.transactions.invoiceService" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:sdoJava="commonj.sdo/java" xmlns:sdoXML="commonj.sdo/xml" xmlns="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+         <name>Invoice Hold SDO</name>
+         <description>The information related to invoice holds, such as hold date and
+                hold reason.</description>
+         <oer:category name="lba">
+            <value>FinTop-Financial Products</value>
+            <value>FinTop-Financial Products : FinApTop-Payables</value>
+            <value>FinTop-Financial Products : FinApTop-Payables :
+                    FinApInvCore-Invoices</value>
+         </oer:category>
+         <oer:attributes>
+            <oer:attribute description="Invoice ID" name="InvoiceId"/>
+            <oer:attribute description="Name of the hold that is applied on the invoice or invoice line." name="HoldLookupCode"/>
+            <oer:attribute description="Reason for hold being placed on invoice" name="HoldReason"/>
+            <oer:attribute description="Date user placed hold on invoice" name="HoldDate"/>
+            <oer:attribute description="User that placed hold on invoice" name="HeldBy"/>
+            <oer:attribute description="Release name that released the hold on the invoice." name="ReleaseLookupCode"/>
+            <oer:attribute description="Reason for release being placed on invoice" name="ReleaseReason"/>
+            <oer:attribute description="Invoice line number of the applied hold" name="LineNumber"/>
+            <oer:attribute description="Hold Status" name="HoldStatusCode"/>
+            <oer:attribute description="Indicates the user who created the row." name="CreatedBy"/>
+            <oer:attribute description="Indicates the date and time of the creation of the row." name="CreationDate"/>
+            <oer:attribute description="Indicates the user who last updated the row." name="LastUpdatedBy"/>
+            <oer:attribute description="Indicates the date and time of the last update of the row." name="LastUpdateDate"/>
+            <oer:attribute description="Hold ID" name="HoldId"/>
+         </oer:attributes>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+   <xsd:import namespace="commonj.sdo/xml" schemaLocation="sdoXML.xsd"/>
+   <xsd:complexType name="InvoiceHold">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>HoldId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InvoiceId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="HoldLookupCode" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HoldReason" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HoldDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="HeldBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReleaseLookupCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReleaseReason" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LineNumber" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="HoldStatusCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CreatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CreationDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="LastUpdatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LastUpdateDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="HoldId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="invoiceHold" type="InvoiceHold"/>
+</xsd:schema>

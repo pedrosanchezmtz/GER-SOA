@@ -1,0 +1,154 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Wed Oct 12 19:14:24 CDT 2022
+  Author:  PedroS�nchezMart�nez
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="SbpelHoldInvoicesAP"
+               targetNamespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelHoldInvoicesAP"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelHoldInvoicesAP"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+                  xmlns:ns7="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/ValidationInvoicesAPEnt"
+                  xmlns:ns6="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz">
+<import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz" location="../WSDLs/BPELValidationInvoicesBiz.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+   <partnerLinks>
+      <partnerLink name="WsERPIntegrationServiceTec" partnerLinkType="ns1:WsERPIntegrationServiceTec"
+                   partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="v_invoice" element="ns7:DATA_DS"/>
+      <variable name="v_input"
+                messageType="ns6:BPELValidationInvoicesBizRequestMessage"/>
+      <variable name="InsertSingleHoldRq" messageType="ns1:InsertSingleHoldRq"/>
+      <variable name="InsertSingleHoldRs" messageType="ns1:InsertSingleHoldRs"/>
+   </variables>
+   <sequence name="main">
+      <assign name="assignClearNodes">
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>
+                  <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+               </literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors</to>
+         </copy>
+         <extensionAssignOperation>
+            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors</bpelx:target>
+            </bpelx:remove>
+         </extensionAssignOperation>
+      </assign>
+      <assign name="assignCurrentInvoice">
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$v_invoice/ns7:G_INVOICES[1]/ns7:BUSINESS_UNIT</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRq.InsertSingleHoldRq/ns1:Invoice/ns1:BusinessUnitName</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$v_invoice/ns7:G_INVOICES[1]/ns7:SUPPLIER_NUMBER</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRq.InsertSingleHoldRq/ns1:Invoice/ns1:SupplierNumber</to>
+         </copy>
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$v_invoice/ns7:G_INVOICES[1]/ns7:INVOICE_NUMBER</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRq.InsertSingleHoldRq/ns1:Invoice/ns1:InvoiceNumber</to>
+         </copy>
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$v_input.payload/ns4:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_HOLD_LOOKUP_CODE']/ns5:Parametro1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRq.InsertSingleHoldRq/ns1:Invoice/ns1:HoldLookupCode</to>
+         </copy>
+      </assign>
+      <invoke name="invokeWsERPIntegrationServiceTecInsertSingleHold" partnerLink="WsERPIntegrationServiceTec"
+              portType="ns1:ERPIntegrationTecPortType" operation="InsertSingleHold"
+              inputVariable="InsertSingleHoldRq"
+              outputVariable="InsertSingleHoldRs"
+              xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+      <if name="ifSuccess">
+         <documentation>
+            <![CDATA[Success]]>
+         </documentation>
+         <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($InsertSingleHoldRs.InsertSingleHoldRs/ns2:Success) &gt; 0</condition>
+         <if name="ifPlacedHold">
+            <documentation>
+               <![CDATA[Ok]]>
+            </documentation>
+            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">contains($InsertSingleHoldRs.InsertSingleHoldRs/ns1:Return/ns1:Result, $v_input.payload/ns4:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_RESP_IHSE']/ns5:Parametro1) or contains($InsertSingleHoldRs.InsertSingleHoldRs/ns1:Return/ns1:Result, $v_input.payload/ns4:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_RESP_IHSI']/ns5:Parametro1) </condition>
+            <empty name="empty"/>
+            <else>
+               <documentation>
+                  <![CDATA[Error]]>
+               </documentation>
+               <assign name="assignError">
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                                 <literal>SOA-00014</literal>
+                              </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$InsertSingleHoldRs.InsertSingleHoldRs/ns1:Return/ns1:Result</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$InsertSingleHoldRs.InsertSingleHoldRs/ns1:Return/ns1:Result</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                                 <literal>bpelValidateInvoicesAP</literal>
+                              </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                                 <literal>InvoicesBiz</literal>
+                              </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InsertSingleHoldRs.InsertSingleHoldRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+               </assign>
+            </else>
+         </if>
+      </if></sequence>
+</bpelx:subProcess>

@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FinancialBiz"
+     targetNamespace="http://soa.estrellaroja.com.mx/FinancialBiz"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/FinancialBiz"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsFinancialsBiz">
+        <plnk:role name="FinancialBizPortType" portType="tns:FinancialBizPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/FinancialBiz" location="oramds:/apps/SOA/FinancialBiz/FinancialBiz.wsdl"/>
+</wsdl:definitions>

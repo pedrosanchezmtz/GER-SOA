@@ -1,0 +1,1548 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Dec 31 13:14:23 CST 2019
+  Author:  ivanr
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RecordUnitMterics" targetNamespace="http://xmlns.oracle.com/ER_AssetsApplication_BPEL/RecordUnitMetrics/RecordUnitMterics" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/RecordUnitMterics" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_UtilityTec/GetSysDate" xmlns:ns2="http://xmlns.oracle.com/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageControlnet" xmlns:ns3="http://xmlns.oracle.com/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageOmnitracs" xmlns:ns4="http://xmlns.oracle.com/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageSine" xmlns:ns5="http://xmlns.oracle.com/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageTomTom" xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageExcel" xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/sp/GetSysDate" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns8="http://soa.estrellaroja.com.mx/MileageControlnet" xmlns:ns9="http://soa.estrellaroja.com.mx/MileageSine" xmlns:ns10="http://soa.estrellaroja.com.mx/MileageOmnitracs" xmlns:ns12="http://soa.estrellaroja.com.mx/RecordUnitMterics" xmlns:ns11="http://soa.estrellaroja.com.mx/MileageTomTom" xmlns:ns13="http://xmlns.oracle.com/oxp/service/PublicReportService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns14="http://soa.estrellaroja.com.mx/ReportAsset" xmlns:ns15="http://soa.estrellaroja.com.mx/ReportReadings" xmlns:ns16="http://xmlns.oracle.com/OSB_EstrellaRoja/DEV_ERPUnitMetricsTec/ERPMeterReadings" xmlns:ns17="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel" xmlns:ns18="http://xmlns.oracle.com/pcbpel/adapter/db/GetMileageExcel" xmlns:ns19="http://soa.estrellaroja.com.mx/ERPMeterReadings" xmlns:ns20="http://xmlns.oracle.com/ER_AssetsApplication_BPEL/DecodeBase64/DecodeBase64" xmlns:ns21="http://soa.estrellaroja.com.mx/DecodeBase64" xmlns:ns22="http://soa.estrellaroja.com.mx/ReadingsCommon" xmlns:ns23="http://soa.estrellaroja.com.mx/AssetMetricReadings" xmlns:ns24="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginPriority" xmlns:ns25="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMErrorRecord" xmlns:ns26="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMOriginPriority" xmlns:ns27="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMErrorRecord" xmlns:ns28="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" xmlns:ns29="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginDataByAsset" xmlns:ns30="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginDataByAsset" xmlns:ns31="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMInsertErrorRecord" xmlns:ns32="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMInsertErrorRecord" xmlns:ns33="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMSelectErrorRecord" xmlns:ns34="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectErrorRecord" xmlns:ns35="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns36="http://soa.estrellaroja.com.mx/MessageTec" xmlns:ns37="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns38="http://soa.estrellaroja.com.mx/AssetMetricReadingExcel">
+    <import namespace="http://soa.estrellaroja.com.mx/AssetMetricReadingExcel" location="../Schemas/AssetMetricsReadingExcel.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" location="../Schemas/OriginPriority/EAMOriginPriority.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://soa.estrellaroja.com.mx/AssetMetricReadings" location="../Schemas/AssetMetricReadings.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://soa.estrellaroja.com.mx/ReadingsCommon" location="../Schemas/MetricsReadingCommon.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import location="../Schemas/Readings_Data.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import location="../Schemas/Asset_Data.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://soa.estrellaroja.com.mx/ReportReadings" location="../Schemas/DATA_DS_Readings.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://soa.estrellaroja.com.mx/ReportAsset" location="../Schemas/DATA_DS_Asset.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/RecordUnitMterics" location="../WSDLs/RecordUnitMterics.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  
+  
+          <import location="oracle.soa.common.util.Base64Decoder" importType="http://schemas.oracle.com/bpel/extension/java"/>
+          <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="wsDateService" partnerLinkType="ns1:GetSysDate_plt" partnerRole="GetSysDate_role"/>
+        <partnerLink name="wsMileageControlnetService" partnerLinkType="ns2:GetMileageControlnet" partnerRole="GetMileageControlnetProvider"/>
+        <partnerLink name="wsMileageOmnitracsService" partnerLinkType="ns3:GetMileageOmnitracs" partnerRole="GetMileageOmnitracsProvider"/>
+        <partnerLink name="wsMileageSine" partnerLinkType="ns4:GetMileageSine" partnerRole="GetMileageSineProvider"/>
+        <partnerLink name="wsMileageTomTomService" partnerLinkType="ns5:GetMileageTomTom" partnerRole="GetMileageTomTomProvider"/>
+        <partnerLink name="recordunitmterics_client_ep" partnerLinkType="ns12:RecordUnitMterics" myRole="RecordUnitMtericsProvider"/>
+        <partnerLink name="wsERPFusionReportService" partnerLinkType="ns13:wsERPFusionReportService" partnerRole="ExternalReportWSSService"/>
+        <partnerLink name="wsERPReadingMetricsService" partnerLinkType="ns16:ERPMeterReadings" partnerRole="ERPMeterReadingsProvider"/>
+        <partnerLink name="wsGetMileageExcelService" partnerLinkType="ns6:GetMileageExcel_plt" partnerRole="GetMileageExcel_role"/>
+        <partnerLink name="wsTruncMileageExcelService" partnerLinkType="ns17:TruncMileageExcel_plt" partnerRole="TruncMileageExcel_role"/>
+        <partnerLink name="wsEAMOriginPriorityService" partnerLinkType="ns24:EAMOriginPriority_plt" partnerRole="EAMOriginPriority_role"/>
+        <partnerLink name="wsEAMOriginDataByAssetService" partnerLinkType="ns29:EAMOriginDataByAsset_plt" partnerRole="EAMOriginDataByAsset_role"/>
+        <partnerLink name="wsEAMInsertErrorRecordService" partnerLinkType="ns31:EAMInsertErrorRecord_plt" partnerRole="EAMInsertErrorRecord_role"/>
+        <partnerLink name="wsEAMSelectErrorRecordService" partnerLinkType="ns33:EAMSelectErrorRecord_plt" partnerRole="EAMSelectErrorRecord_role"/>
+        <partnerLink name="wsSOAUtilitiesService" partnerLinkType="ns35:wsSOAUtilitiesService" partnerRole="SOAUtilitiesTecPortType"/>
+        <partnerLink name="wsSendEmailService" partnerLinkType="ns36:wsSendEmailService" partnerRole="MessageTecPortType" myRole="MessageTecCallbackPortType"/>
+    </partnerLinks>
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns12:RecordUnitMtericsRequestMessage"/>
+        <variable name="In_GetMileageControlnet" messageType="ns2:getMileage_inputMessage"/>
+        <variable name="Out_GetMileageControlnet" messageType="ns2:getMileage_outputMessage"/>
+        <variable name="In_GetMileageSine" messageType="ns4:getMileage_inputMessage"/>
+        <variable name="Out_GetMileageSine" messageType="ns4:getMileage_outputMessage"/>
+        <variable name="In_GetSysDate" messageType="ns1:args_in_msg"/>
+        <variable name="Out_GetSysDate" messageType="ns1:args_out_msg"/>
+        <variable name="In_GetMileageOmnitracs" messageType="ns3:getMileage_inputMessage"/>
+        <variable name="Out_GetMileageOmnitracs" messageType="ns3:getMileage_outputMessage"/>
+        <variable name="In_GetTomTom" messageType="ns5:getMileage_inputMessage"/>
+        <variable name="Out_GetTomTom" messageType="ns5:getMileage_outputMessage"/>
+        <variable name="In_ERPFusionReport" messageType="ns13:runReportInput"/>
+        <variable name="Out_ERPFusionReport" messageType="ns13:runReportOutput"/>
+        <variable name="Base64Report" type="xsd:base64Binary"/>
+        <variable name="decodedValue" type="xsd:string"/>
+        <variable name="In_ERPReadingMetrics" messageType="ns16:postMeterReadings_inputMessage"/>
+        <variable name="Out_ERPReadingMetrics" messageType="ns16:postMeterReadings_outputMessage"/>
+        <variable name="In_GetMileageExcel" messageType="ns6:GetMileageExcelInput_msg"/>
+        <variable name="Out_GetMileageExcel" messageType="ns6:GetMileageExcelOutputCollection_msg"/>
+        <variable name="In_TruncMileageExcel" messageType="ns17:TruncMileageExcelInput_msg"/>
+        <variable name="AssetReportVar" type="xsd:string"/>
+        <variable name="FechaReadingVar" type="xsd:string"/>
+        <variable name="ValorCargaVar" type="xsd:string"/>
+        <variable name="Asset_DATAVar" element="G_1"/>
+        <variable name="Readings_DATAVar" element="G_2"/>
+        <variable name="MetricsReadingVar" element="ns22:MetricsReading"/>
+        <variable name="AssetMetricReadingsVar" element="ns23:AssetMetricReading"/>
+        <variable name="In_OriginPriority" messageType="ns24:EAMOriginPriorityInput_msg"/>
+        <variable name="Out_OriginPriority" messageType="ns24:EAMOriginPriorityOutputCollection_msg"/>
+        <variable name="AssetNumberExcelVar" element="ns28:EAMOriginPriorityInput"/>
+        <variable name="ExcelAssetCountVar" element="ns28:EAMOriginPriorityInput"/>
+        <variable name="In_EAMOriginDataByAsset" messageType="ns29:EAMOriginDataByAssetInput_msg"/>
+        <variable name="Out_EAMOriginDataByAsset" messageType="ns29:EAMOriginDataByAssetOutputCollection_msg"/>
+        <variable name="OriginTmp" type="xsd:string"/>
+        <variable name="In_EAMInsertError" messageType="ns31:XxerEamErrorLogCollection_msg"/>
+        <variable name="Out_EAMInsertError" messageType="ns31:XxerEamErrorLogCollection_msg"/>
+        <variable name="DateTmpVar" type="xsd:dateTime"/>
+        <variable name="In_EAMSelectErrorRecord" messageType="ns33:EAMSelectErrorRecordInput_msg"/>
+        <variable name="Out_EAMSelectErrorRecord" messageType="ns33:EAMSelectErrorRecordOutputCollection_msg"/>
+        <variable name="DateSelectErrorVar" type="xsd:date"/>
+        <variable name="In_GetHTML" messageType="ns35:GetHtmlControlRq"/>
+        <variable name="Out_GetHTML" messageType="ns35:GetHtmlControlRs"/>
+        <variable name="In_SendMail" messageType="ns36:MessageRq"/>
+        <variable name="AssetMetricsReadingExcelVar" element="ns38:AssetMetricReading"/>
+        <variable name="StartDateVar" type="xsd:date"/>
+        <variable name="EndDateVar" type="xsd:date"/>
+        <variable name="OriginVar" type="xsd:string"/>
+    </variables>
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in RecordUnitMterics.wsdl) -->
+        <receive name="receiveInput" partnerLink="recordunitmterics_client_ep" portType="ns12:RecordUnitMterics" operation="process" createInstance="yes" variable="inputVariable"/>
+        <assign name="AssignOrigin">
+            <copy bpelx:insertMissingToData="yes">
+                <from>$inputVariable.payload/ns12:Origin</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$OriginVar</to>
+            </copy>
+        </assign>
+        <if name="IfDateParameter">
+            <condition>(string-length($inputVariable.payload/ns12:StartDate) &gt; 0) or (string-length($inputVariable.payload/ns12:EndDate) &gt; 0)</condition>
+            <assign name="AssignDateParam">
+                <copy bpelx:insertMissingToData="yes">
+                    <from>$inputVariable.payload/ns12:StartDate</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$StartDateVar</to>
+                </copy>
+                <copy bpelx:insertMissingToData="yes">
+                    <from>$inputVariable.payload/ns12:EndDate</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$EndDateVar</to>
+                </copy>
+            </assign>
+            <else>
+                <sequence>
+                    <invoke name="Invoke_GetSysDate" bpelx:invokeAsDetail="no" partnerLink="wsDateService" portType="ns1:GetSysDate_ptt" operation="GetSysDate" inputVariable="In_GetSysDate" outputVariable="Out_GetSysDate"/>
+                    <assign name="AssignSysdate">
+                        <copy>
+                            <from>$Out_GetSysDate.OutputParameters/ns7:GET_SYSDATE</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$StartDateVar</to>
+                        </copy>
+                        <copy>
+                            <from>'All'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$OriginVar</to>
+                        </copy>
+                        <copy>
+                            <from>$Out_GetSysDate.OutputParameters/ns7:GET_SYSDATE</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$EndDateVar</to>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
+        <assign name="AssignDate">
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageOmnitracs.request/ns10:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageExcel.GetMileageExcelInput_msg/ns18:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageOmnitracs.request/ns10:fechaFin</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageExcel.GetMileageExcelInput_msg/ns18:fechaFin</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageSine.request/ns9:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageControlnet.request/ns8:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageControlnet.request/ns8:fechaFin</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetMileageSine.request/ns9:fechaFin</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,"[D01]/[M01]/[Y001]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetTomTom.request/ns11:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,"[D01]/[M01]/[Y001]")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetTomTom.request/ns11:fechaFin</to>
+            </copy>
+        </assign>
+        <scope name="Scope6">
+            <faultHandlers>
+                <catchAll>
+                    <sequence name="Sequence23" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <assign name="AssignError">
+                            <copy>
+                                <from>'0'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetHTML.GetHtmlControlRq/ns35:TotalSucceeded</to>
+                            </copy>
+                            <copy>
+                                <from>'0'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetHTML.GetHtmlControlRq/ns35:TotalProcessed</to>
+                            </copy>
+                            <copy>
+                                <from>'ER-0001'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetHTML.GetHtmlControlRq/ns35:ErrorsDetails/ns35:ErrorDetail/ns35:DataValue</to>
+                            </copy>
+                            <copy>
+                                <from>"Error al obtener las lecturas de los origenes, consulte con el Administrador y reprocese las lecturas manualmente."</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_GetHTML.GetHtmlControlRq/ns35:ErrorsDetails/ns35:ErrorDetail/ns35:ErrorMessage</to>
+                            </copy>
+                        </assign>
+                        <invoke name="Invoke_GetHTML" partnerLink="wsSOAUtilitiesService" portType="ns35:SOAUtilitiesTecPortType" operation="GetHtmlControl" inputVariable="In_GetHTML" outputVariable="Out_GetHTML" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        <assign name="AssignEmail" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <copy>
+                                <from>$Out_GetHTML.GetHtmlControlRs/ns35:Return/ns35:HtmlControl</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SendMail.MessageRq/ns36:Message/ns36:Message</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>'RecordUnitMetrics'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SendMail.CustomHeader/ns36:IntegrationName</to>
+                            </copy>
+                        </assign>
+                        <invoke name="Invoke_SendMail" partnerLink="wsSendEmailService" portType="ns36:MessageTecPortType" operation="SendEmail" inputVariable="In_SendMail" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        <exit name="Exit1"/>
+                    </sequence>
+                </catchAll>
+            </faultHandlers>
+            <sequence>
+                <invoke name="Invoke_GetMileageControlnet" partnerLink="wsMileageControlnetService" portType="ns2:GetMileageControlnet_ptt" operation="getMileage" inputVariable="In_GetMileageControlnet" outputVariable="Out_GetMileageControlnet" bpelx:invokeAsDetail="no">
+                    <bpelx:skipCondition>($OriginVar != 'ControlNet') and ($OriginVar != 'All')</bpelx:skipCondition>
+                </invoke>
+                <invoke name="Invoke_GetTomTom" partnerLink="wsMileageTomTomService" portType="ns5:GetMileageTomTom_ptt" operation="getMileage" inputVariable="In_GetTomTom" outputVariable="Out_GetTomTom" bpelx:invokeAsDetail="no">
+                    <bpelx:skipCondition>($OriginVar != 'TomTom') and ($OriginVar != 'All')</bpelx:skipCondition>
+                </invoke>
+                <invoke name="Invoke_GetMileageOmnitracs" partnerLink="wsMileageOmnitracsService" portType="ns3:GetMileageOmnitracs_ptt" operation="getMileage" inputVariable="In_GetMileageOmnitracs" outputVariable="Out_GetMileageOmnitracs" bpelx:invokeAsDetail="no">
+                    <bpelx:skipCondition>($OriginVar != 'Omnitracs') and ($OriginVar != 'All')</bpelx:skipCondition>
+                </invoke>
+                <invoke name="Invoke_GetMileageSine" partnerLink="wsMileageSine" portType="ns4:GetMileageSine_ptt" operation="getMileage" inputVariable="In_GetMileageSine" outputVariable="Out_GetMileageSine"
+                        bpelx:invokeAsDetail="no">
+                    <bpelx:skipCondition>(($OriginVar != 'Sine') and ($OriginVar != 'All')) or true()</bpelx:skipCondition>
+                </invoke>
+                <invoke name="Invoke_GetMileageExcel" partnerLink="wsGetMileageExcelService" portType="ns6:GetMileageExcel_ptt" operation="GetMileageExcel" inputVariable="In_GetMileageExcel" outputVariable="Out_GetMileageExcel" bpelx:invokeAsDetail="no">
+                    <bpelx:skipCondition>($OriginVar != 'Excel') and ($OriginVar != 'All')</bpelx:skipCondition>
+                </invoke>
+            </sequence>
+        </scope>
+        <assign name="Tr_MetricsReadingResponse">
+            <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+            </bpelx:annotation>
+            <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/Tr_MetricsReadingResponse.xsl", $Out_GetMileageControlnet.reply, "Out_GetMileageSine.reply", $Out_GetMileageSine.reply, "Out_GetMileageOmnitracs.reply", $Out_GetMileageOmnitracs.reply, "Out_GetTomTom.reply", $Out_GetTomTom.reply, "Out_GetMileageExcel.GetMileageExcelOutputCollection", $Out_GetMileageExcel.GetMileageExcelOutputCollection)</from>
+                <to variable="MetricsReadingVar"/>
+            </copy>
+        </assign>
+        <assign name="Tr_AssetMetricReadingsResponse">
+            <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+            </bpelx:annotation>
+            <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/Tr_AssetMetricReadingsResponse.xsl", $MetricsReadingVar)</from>
+                <to variable="AssetMetricReadingsVar"/>
+            </copy>
+        </assign>
+        <forEach parallel="no" counterName="ForEachAssetCounter" name="ForEach">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($AssetMetricReadingsVar/ns23:Reading)</finalCounterValue>
+            <scope name="Scope3">
+                <variables>
+                    <variable name="actualReadingDate" type="xsd:dateTime"/>
+                    <variable name="actualReadingValue" type="xsd:long"/>
+                    <variable name="priorityOrigin" type="xsd:string"/>
+                    <variable name="processing" type="xsd:boolean"/>
+                    <variable name="actualOrigin" type="xsd:string"/>
+                    <variable name="decodedValue" type="xsd:string"/>
+                    <variable name="decodedValue2" type="xsd:string"/>
+                </variables>
+                <faultHandlers>
+                    <catchAll>
+                        <sequence name="Sequence18">
+                            <assign name="AssignError">
+                                <copy ignoreMissingFromData="yes">
+                                    <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes">
+                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes">
+                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes">
+                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                </copy>
+                                <copy>
+                                    <from>"Error general"</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes">
+                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                </copy>
+                            </assign>
+                            <invoke name="Invoke_Error" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                            <compensate name="Compensate2"/>
+                        </sequence>
+                    </catchAll>
+                </faultHandlers>
+                <sequence>
+                    <assign name="AssignGetReportAsset">
+                        <copy>
+                            <from>'P_ACTIVO'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:name</to>
+                        </copy>
+                        <copy>
+                            <from>'ASSETS'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:defaultValue</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                            <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:values/ns13:item</to>
+                        </copy>
+                    </assign>
+                    <invoke name="Invoke_ERPFusionReport" partnerLink="wsERPFusionReportService" portType="ns13:ExternalReportWSSService" operation="runReport" inputVariable="In_ERPFusionReport" outputVariable="Out_ERPFusionReport" bpelx:invokeAsDetail="no"/>
+                    <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <bpelx:exec name="Decoded" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <![CDATA[addAuditTrailEntry("decoding started");    
+try         
+{    
+XMLElement input = (XMLElement) getVariableData("Out_ERPFusionReport","parameters","ns13:runReportReturn/ns13:reportBytes");       
+String encodedString = input.getTextContent();         
+oracle.soa.common.util.Base64Decoder Decoder = new oracle.soa.common.util.Base64Decoder();         
+addAuditTrailEntry("encoded String = "+encodedString);         
+       
+String decoded = Decoder.decode(encodedString);         
+addAuditTrailEntry("decoded string = "+decoded);          
+setVariableData("decodedValue",decoded);         
+}         
+catch(Exception e)         
+{         
+  addAuditTrailEntry("Exception: "+e.getMessage());         
+}]]>
+                        </bpelx:exec>
+                    </extensionActivity>
+                    <assign name="AssignDecoded" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy>
+                            <from>ora:parseEscapedXML($decodedValue)</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Asset_DATAVar</to>
+                        </copy>
+                    </assign>
+                    <if name="ExistAsset">
+                        <documentation/>
+                        <condition>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber = $Asset_DATAVar//ASSET_NUMBER</condition>
+                        <sequence>
+                            <assign name="AssignGetReportMeters">
+                                <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$processing = 'false'</bpelx:skipCondition>
+                                <copy>
+                                    <from>'P_ACTIVO'</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:name</to>
+                                </copy>
+                                <copy>
+                                    <from>'METERS'</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:defaultValue</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes">
+                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPFusionReport.parameters/ns13:reportRequest/ns13:parameterNameValues/ns13:item/ns13:values/ns13:item</to>
+                                </copy>
+                            </assign>
+                            <invoke name="Invoke_ERPFusionReportReadings" partnerLink="wsERPFusionReportService" portType="ns13:ExternalReportWSSService" operation="runReport" inputVariable="In_ERPFusionReport" outputVariable="Out_ERPFusionReport" bpelx:invokeAsDetail="no">
+                                <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$processing = 'false'</bpelx:skipCondition>
+                            </invoke>
+                            <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <bpelx:exec name="Decoded" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <![CDATA[addAuditTrailEntry("decoding started");   
+try       
+{    
+XMLElement input = (XMLElement) getVariableData("Out_ERPFusionReport","parameters","ns13:runReportReturn/ns13:reportBytes");     
+String encodedString = input.getTextContent();       
+oracle.soa.common.util.Base64Decoder Decoder = new oracle.soa.common.util.Base64Decoder();       
+addAuditTrailEntry("encoded String = "+encodedString);       
+    
+String decoded = Decoder.decode(encodedString);       
+addAuditTrailEntry("decoded string = "+decoded);        
+setVariableData("Asset_DATAVar",decoded);       
+}       
+catch(Exception e)       
+{       
+  addAuditTrailEntry("Exception: "+e.getMessage());       
+}]]>
+                                    <![CDATA[addAuditTrailEntry("decoding started");   
+try       
+{    
+XMLElement input = (XMLElement) getVariableData("Out_ERPFusionReport","parameters","ns13:runReportReturn/ns13:reportBytes");     
+String encodedString = input.getTextContent();       
+oracle.soa.common.util.Base64Decoder Decoder = new oracle.soa.common.util.Base64Decoder();       
+addAuditTrailEntry("encoded String = "+encodedString);       
+    
+String decoded = Decoder.decode(encodedString);       
+addAuditTrailEntry("decoded string = "+decoded);        
+setVariableData("decodedValue2",decoded);       
+}       
+catch(Exception e)       
+{       
+  addAuditTrailEntry("Exception: "+e.getMessage());       
+}]]>
+                                </bpelx:exec>
+                            </extensionActivity>
+                            <assign name="AssignDecoded">
+                                <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$processing = 'false'</bpelx:skipCondition>
+                                <copy>
+                                    <from>ora:parseEscapedXML($decodedValue2)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Readings_DATAVar</to>
+                                </copy>
+                            </assign>
+                            <assign name="Tr_AssetMetricsResponse">
+                                <bpelx:annotation>
+                                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                </bpelx:annotation>
+                                <copy>
+                                    <from>ora:doXSLTransformForDoc("../Transformations/Tr_AssetMetricsResponse.xsl", $Readings_DATAVar)</from>
+                                    <to variable="Readings_DATAVar"/>
+                                </copy>
+                            </assign>
+                            <if name="AssetAssociatedWithMeter">
+                                <condition>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber = $Readings_DATAVar[1]/ASSET_NUMBER</condition>
+                                <sequence>
+                                    <if name="MeterActive">
+                                        <condition>((string-length($Readings_DATAVar[1]/ACTIVE_END_DATE) &lt; 1)) or ($Readings_DATAVar[1]/ACTIVE_END_DATE &gt; $AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate)</condition>
+                                        <sequence>
+                                            <assign name="AssignAssetOrigin">
+                                                <copy ignoreMissingFromData="yes">
+                                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_OriginPriority.EAMOriginPriorityInput_msg/ns28:assetNumber</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes">
+                                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$OriginTmp</to>
+                                                </copy>
+                                            </assign>
+                                            <invoke name="Invoke_OriginPriority" partnerLink="wsEAMOriginPriorityService" portType="ns24:EAMOriginPriority_ptt" operation="EAMOriginPriority" inputVariable="In_OriginPriority" outputVariable="Out_OriginPriority" bpelx:invokeAsDetail="no"/>
+                                            <if name="IfExistAssetInOriginPriority">
+                                                <condition>count($Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput) &gt; 0</condition>
+                                                <sequence>
+                                                    <if name="IfRecordHasPriority">
+                                                        <condition>count($Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput[./ns28:PRIORITY = 1]/ns28:ORIGIN) = 1</condition>
+                                                        <sequence>
+                                                            <if name="IfOrigin">
+                                                                <documentation>
+                                                                    <![CDATA[EXCEL]]>
+                                                                </documentation>
+                                                                <condition>$Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput[./ns28:PRIORITY = 1][1]/ns28:ORIGIN = 'EXCEL'</condition>
+                                                                <sequence name="Sequence11">
+                                                                    <assign name="AssignAssetExcel">
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput[./ns28:PRIORITY = 1][1]/ns28:ASSET_NUMBER</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:assetNumber</to>
+                                                                        </copy>
+                                                                        <copy>
+                                                                            <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:fechaFin</to>
+                                                                        </copy>
+                                                                        <copy>
+                                                                            <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:fechaInicio</to>
+                                                                        </copy>
+                                                                    </assign>
+                                                                    <invoke name="Invoke_EAMOriginDataByAsset" partnerLink="wsEAMOriginDataByAssetService" portType="ns29:EAMOriginDataByAsset_ptt" operation="EAMOriginDataByAsset" inputVariable="In_EAMOriginDataByAsset" outputVariable="Out_EAMOriginDataByAsset" bpelx:invokeAsDetail="no"/>
+                                                                    <assign name="Tr_MetricsReadinExcelResponse">
+                                                                        <bpelx:annotation>
+                                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                        </bpelx:annotation>
+                                                                        <copy>
+                                                                            <from>ora:doXSLTransformForDoc("../Transformations/Tr_MetricsReadinExcelResponse.xsl", $Out_EAMOriginDataByAsset.EAMOriginDataByAssetOutputCollection)</from>
+                                                                            <to variable="AssetMetricsReadingExcelVar"/>
+                                                                        </copy>
+                                                                    </assign>
+                                                                    <assign name="Tr_AssetsExcelResponse">
+                                                                        <bpelx:skipCondition>1=1</bpelx:skipCondition>
+                                                                        <bpelx:annotation>
+                                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                        </bpelx:annotation>
+                                                                        <copy>
+                                                                            <from>ora:doXSLTransformForDoc("../Transformations/Tr_AssetsExcelResponse.xsl", $Out_EAMOriginDataByAsset.EAMOriginDataByAssetOutputCollection)</from>
+                                                                            <to variable="AssetMetricReadingsVar"/>
+                                                                        </copy>
+                                                                    </assign>
+                                                                    <forEach parallel="no" counterName="ForEachRecords" name="ForEach">
+                                                                        <startCounterValue>1</startCounterValue>
+                                                                        <finalCounterValue>count($AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records)</finalCounterValue>
+                                                                        <scope name="Scope5">
+                                                                            <sequence name="Sequence12">
+                                                                                <assign name="AssignValues">
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput[./ns28:PRIORITY = 1][1]/ns28:ORIGIN</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$priorityOrigin</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:readingValue</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingValue</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:readingDate</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingDate</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:origin</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualOrigin</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <if name="DateValue" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                                                    <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">$processing = 'false'</bpelx:skipCondition>
+                                                                                    <condition>$actualReadingDate&gt; $Readings_DATAVar[1]/FECHA</condition>
+                                                                                    <sequence>
+                                                                                        <if name="ReadingValue">
+                                                                                            <documentation>
+                                                                                                <![CDATA[Valid]]>
+                                                                                            </documentation>
+                                                                                            <condition>$actualReadingValue &gt; $Readings_DATAVar[1]/VALOR_CARGA</condition>
+                                                                                            <sequence>
+                                                                                                <assign name="AssignReadingMeterExcel">
+                                                                                                    <copy>
+                                                                                                        <from>$Readings_DATAVar/METER_ID</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterId</to>
+                                                                                                    </copy>
+                                                                                                    <copy>
+                                                                                                        <from>substring-before($actualReadingDate,'.')</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DateTmpVar</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>concat($DateTmpVar,'-06:00')</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingDate</to>
+                                                                                                    </copy>
+                                                                                                    <copy>
+                                                                                                        <from>'KMS_ASC'</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterCode</to>
+                                                                                                    </copy>
+                                                                                                    <copy>
+                                                                                                        <from>'ORA_ABSOLUTE'</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingTypeCode</to>
+                                                                                                    </copy>
+                                                                                                    <copy>
+                                                                                                        <from>'ORA_ASSET'</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterUsageCode</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$actualOrigin</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:Comments</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$actualReadingValue</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingValue</to>
+                                                                                                    </copy>
+                                                                                                </assign>
+                                                                                                <scope name="Scope5">
+                                                                                                    <faultHandlers>
+                                                                                                        <catch faultName="ns16:fault" faultVariable="FaultSvc" faultMessageType="ns16:faultMessage">
+                                                                                                            <sequence>
+                                                                                                                <assign name="AssignError">
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                                    </copy>
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                                    </copy>
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>$actualReadingDate</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                                    </copy>
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>$actualReadingValue</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                                    </copy>
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>$actualOrigin</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                                    </copy>
+                                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                                        <from>$FaultSvc.fault/ns19:Description</from>
+                                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                                    </copy>
+                                                                                                                </assign>
+                                                                                                                <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                                                                                                                <compensate name="Compensate1"/>
+                                                                                                            </sequence>
+                                                                                                        </catch>
+                                                                                                    </faultHandlers>
+                                                                                                    <sequence name="Sequence10">
+                                                                                                        <invoke name="Invoke_ERPReadingMetrics" partnerLink="wsERPReadingMetricsService" portType="ns16:ERPMeterReadings_ptt" operation="postMeterReadings" inputVariable="In_ERPReadingMetrics" outputVariable="Out_ERPReadingMetrics" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                                                                                        <assign name="AssignSucces">
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualReadingDate</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualReadingValue</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualOrigin</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                            </copy>
+                                                                                                            <copy>
+                                                                                                                <from>"Sucess"</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                            </copy>
+                                                                                                        </assign>
+                                                                                                        <invoke name="Invoke_EAMInsertError" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                                                                                    </sequence>
+                                                                                                </scope>
+                                                                                            </sequence>
+                                                                                            <else>
+                                                                                                <sequence name="Sequence9">
+                                                                                                    <assign name="AssignErrorValue">
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualReadingDate</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualReadingValue</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualOrigin</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                        </copy>
+                                                                                                        <copy>
+                                                                                                            <from>"Error de validación, el valor de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                        </copy>
+                                                                                                    </assign>
+                                                                                                    <invoke name="Invoke_EAMErrorRecord" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                                                </sequence>
+                                                                                            </else>
+                                                                                        </if>
+                                                                                    </sequence>
+                                                                                    <else>
+                                                                                        <documentation>
+                                                                                            <![CDATA[Invalid]]>
+                                                                                        </documentation>
+                                                                                        <sequence name="Sequence4">
+                                                                                            <assign name="AssignErrorDate">
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                </copy>
+                                                                                                <copy>
+                                                                                                    <from>"Error de validación, la fecha de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingDate</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingValue</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualOrigin</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                </copy>
+                                                                                            </assign>
+                                                                                            <invoke name="Invoke_EAMErrorRecord" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                                        </sequence>
+                                                                                    </else>
+                                                                                </if>
+                                                                            </sequence>
+                                                                        </scope>
+                                                                    </forEach>
+                                                                </sequence>
+                                                                <else>
+                                                                    <documentation>
+                                                                        <![CDATA[DIF EXCEL]]>
+                                                                    </documentation>
+                                                                    <sequence>
+                                                                        <assign name="AssignDateValue">
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput[./ns28:PRIORITY = 1][1]/ns28:ORIGIN</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$priorityOrigin</to>
+                                                                            </copy>
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[./ns23:origin = $priorityOrigin][1]/ns23:origin</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualOrigin</to>
+                                                                            </copy>
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[./ns23:origin = $priorityOrigin][1]/ns23:readingDate</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingDate</to>
+                                                                            </copy>
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[./ns23:origin = $priorityOrigin][1]/ns23:readingValue</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingValue</to>
+                                                                            </copy>
+                                                                        </assign>
+                                                                        <if name="DateValue">
+                                                                            <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$processing = 'false'</bpelx:skipCondition>
+                                                                            <condition>$actualReadingDate&gt; $Readings_DATAVar[1]/FECHA</condition>
+                                                                            <sequence>
+                                                                                <if name="ReadingValue">
+                                                                                    <documentation>
+                                                                                        <![CDATA[Valid]]>
+                                                                                    </documentation>
+                                                                                    <condition>$actualReadingValue &gt; $Readings_DATAVar[1]/VALOR_CARGA</condition>
+                                                                                    <sequence>
+                                                                                        <assign name="AssignReadingMeterExcel">
+                                                                                            <copy>
+                                                                                                <from>$Readings_DATAVar/METER_ID</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterId</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>'KMS_ASC'</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterCode</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>substring-before($actualReadingDate,'.')</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DateTmpVar</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>concat($DateTmpVar,'-06:00')</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingDate</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>'ORA_ABSOLUTE'</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingTypeCode</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>'ORA_ASSET'</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterUsageCode</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualOrigin</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:Comments</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualReadingValue</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingValue</to>
+                                                                                            </copy>
+                                                                                        </assign>
+                                                                                        <scope name="Scope4">
+                                                                                            <faultHandlers>
+                                                                                                <catch faultName="ns16:fault" faultVariable="FaultSvc" faultMessageType="ns16:faultMessage">
+                                                                                                    <sequence>
+                                                                                                        <assign name="AssignError">
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualReadingDate</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualReadingValue</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$actualOrigin</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                            </copy>
+                                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                                <from>$FaultSvc.fault/ns19:Description</from>
+                                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                            </copy>
+                                                                                                        </assign>
+                                                                                                        <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                                                                                        <compensate name="Compensate1"/>
+                                                                                                    </sequence>
+                                                                                                </catch>
+                                                                                            </faultHandlers>
+                                                                                            <sequence name="Sequence10">
+                                                                                                <invoke name="Invoke_ERPReadingMetrics" partnerLink="wsERPReadingMetricsService" portType="ns16:ERPMeterReadings_ptt" operation="postMeterReadings" inputVariable="In_ERPReadingMetrics" outputVariable="Out_ERPReadingMetrics" bpelx:invokeAsDetail="no"/>
+                                                                                                <assign name="AssignSucess">
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$actualReadingDate</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$actualReadingValue</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                    </copy>
+                                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                                        <from>$actualOrigin</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                    </copy>
+                                                                                                    <copy>
+                                                                                                        <from>"Sucess"</from>
+                                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                    </copy>
+                                                                                                </assign>
+                                                                                                <invoke name="Invoke_EAMErrorRecord" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                                            </sequence>
+                                                                                        </scope>
+                                                                                    </sequence>
+                                                                                    <else>
+                                                                                        <sequence name="Sequence9">
+                                                                                            <assign name="AssignErrorValue">
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingDate</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingValue</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualOrigin</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                </copy>
+                                                                                                <copy>
+                                                                                                    <from>"Error de validación, el valor de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                </copy>
+                                                                                            </assign>
+                                                                                            <invoke name="Invoke_ErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                                                                        </sequence>
+                                                                                    </else>
+                                                                                </if>
+                                                                            </sequence>
+                                                                            <else>
+                                                                                <documentation>
+                                                                                    <![CDATA[Invalid]]>
+                                                                                </documentation>
+                                                                                <sequence name="Sequence4">
+                                                                                    <assign name="AssignErrorDate">
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                        </copy>
+                                                                                        <copy>
+                                                                                            <from>"Error de validación, la fecha de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$actualReadingDate</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$actualReadingValue</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$actualOrigin</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                        </copy>
+                                                                                    </assign>
+                                                                                    <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                                                                </sequence>
+                                                                            </else>
+                                                                        </if>
+                                                                    </sequence>
+                                                                </else>
+                                                            </if>
+                                                        </sequence>
+                                                        <else>
+                                                            <sequence>
+                                                                <assign name="AssignErrorPriority">
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>'false'</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$processing</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>"Error al obtener prioridad del activo"</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                    </copy>
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                    </copy>
+                                                                </assign>
+                                                                <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                                            </sequence>
+                                                        </else>
+                                                    </if>
+                                                </sequence>
+                                                <elseif>
+                                                    <documentation>
+                                                        <![CDATA[EXCEL]]>
+                                                    </documentation>
+                                                    <condition>(count($Out_OriginPriority.EAMOriginPriorityOutputCollection/ns28:EAMOriginPriorityOutput) = 0) and ($OriginTmp = 'EXCEL')</condition>
+                                                    <sequence name="Sequence17">
+                                                        <sequence name="Sequence16">
+                                                            <sequence name="Sequence15">
+                                                                <assign name="AssignAssetExcel" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                                    <copy ignoreMissingFromData="yes">
+                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:assetNumber</to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from>xp20:format-dateTime($StartDateVar,"[Y001]-[M01]-[D01]")</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:fechaInicio</to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from>xp20:format-dateTime($EndDateVar,"[Y001]-[M01]-[D01]")</from>
+                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMOriginDataByAsset.EAMOriginDataByAssetInput_msg/ns30:fechaFin</to>
+                                                                    </copy>
+                                                                </assign>
+                                                                <invoke name="Invoke_EAMOriginDataByAsset" partnerLink="wsEAMOriginDataByAssetService" portType="ns29:EAMOriginDataByAsset_ptt" operation="EAMOriginDataByAsset" inputVariable="In_EAMOriginDataByAsset" outputVariable="Out_EAMOriginDataByAsset" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                                                                <assign name="Tr_MetricsReadinExcelResponse" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                    </bpelx:annotation>
+                                                                    <copy>
+                                                                        <from>ora:doXSLTransformForDoc("../Transformations/Tr_MetricsReadinExcelResponse.xsl", $Out_EAMOriginDataByAsset.EAMOriginDataByAssetOutputCollection)</from>
+                                                                        <to variable="AssetMetricsReadingExcelVar"/>
+                                                                    </copy>
+                                                                </assign>
+                                                                <assign name="Tr_AssetsExcelResponse" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                                    <bpelx:skipCondition>1=1</bpelx:skipCondition>
+                                                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                    </bpelx:annotation>
+                                                                    <copy>
+                                                                        <from>ora:doXSLTransformForDoc("../Transformations/Tr_AssetsExcelResponse.xsl", $Out_EAMOriginDataByAsset.EAMOriginDataByAssetOutputCollection)</from>
+                                                                        <to variable="AssetMetricReadingsVar"/>
+                                                                    </copy>
+                                                                </assign>
+                                                            </sequence>
+                                                        </sequence>
+                                                        <forEach parallel="no" counterName="ForEachRecords" name="ForEach" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                            <startCounterValue>1</startCounterValue>
+                                                            <finalCounterValue>count($AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records)</finalCounterValue>
+                                                            <scope name="ExcelNotDuplicated">
+                                                                <sequence name="Sequence12">
+                                                                    <assign name="AssignValues">
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$OriginTmp</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$priorityOrigin</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:readingValue</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingValue</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:readingDate</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingDate</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:Records[./ns38:origin = $priorityOrigin][$ForEachRecords]/ns38:origin</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualOrigin</to>
+                                                                        </copy>
+                                                                    </assign>
+                                                                    <if name="DateValue" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                                        <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">$processing = 'false'</bpelx:skipCondition>
+                                                                        <condition>$actualReadingDate&gt; $Readings_DATAVar[1]/FECHA</condition>
+                                                                        <sequence>
+                                                                            <if name="ReadingValue">
+                                                                                <documentation>
+                                                                                    <![CDATA[Valid]]>
+                                                                                </documentation>
+                                                                                <condition>$actualReadingValue &gt; $Readings_DATAVar[1]/VALOR_CARGA</condition>
+                                                                                <sequence>
+                                                                                    <assign name="AssignReadingMeterExcel">
+                                                                                        <copy>
+                                                                                            <from>$Readings_DATAVar/METER_ID</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterId</to>
+                                                                                        </copy>
+                                                                                        <copy>
+                                                                                            <from>substring-before($actualReadingDate,'.')</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DateTmpVar</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>concat($DateTmpVar,'-06:00')</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingDate</to>
+                                                                                        </copy>
+                                                                                        <copy>
+                                                                                            <from>'KMS_ASC'</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterCode</to>
+                                                                                        </copy>
+                                                                                        <copy>
+                                                                                            <from>'ORA_ABSOLUTE'</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingTypeCode</to>
+                                                                                        </copy>
+                                                                                        <copy>
+                                                                                            <from>'ORA_ASSET'</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterUsageCode</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$actualOrigin</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:Comments</to>
+                                                                                        </copy>
+                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                            <from>$actualReadingValue</from>
+                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingValue</to>
+                                                                                        </copy>
+                                                                                    </assign>
+                                                                                    <scope name="Scope5">
+                                                                                        <faultHandlers>
+                                                                                            <catch faultName="ns16:fault" faultVariable="FaultSvc" faultMessageType="ns16:faultMessage">
+                                                                                                <sequence>
+                                                                                                    <assign name="AssignError">
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                        </copy>
+                                                                                                        <copy>
+                                                                                                            <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualReadingDate</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualReadingValue</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$actualOrigin</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                        </copy>
+                                                                                                        <copy ignoreMissingFromData="yes">
+                                                                                                            <from>$FaultSvc.fault/ns19:Description</from>
+                                                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                        </copy>
+                                                                                                    </assign>
+                                                                                                    <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                                                                                                    <compensate name="Compensate1"/>
+                                                                                                </sequence>
+                                                                                            </catch>
+                                                                                        </faultHandlers>
+                                                                                        <sequence name="Sequence10">
+                                                                                            <invoke name="Invoke_ERPReadingMetrics" partnerLink="wsERPReadingMetricsService" portType="ns16:ERPMeterReadings_ptt" operation="postMeterReadings" inputVariable="In_ERPReadingMetrics" outputVariable="Out_ERPReadingMetrics" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                                                                            <assign name="AssignSucces">
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingDate</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualReadingValue</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                                </copy>
+                                                                                                <copy ignoreMissingFromData="yes">
+                                                                                                    <from>$actualOrigin</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                                </copy>
+                                                                                                <copy>
+                                                                                                    <from>"Sucess"</from>
+                                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                                </copy>
+                                                                                            </assign>
+                                                                                            <invoke name="Invoke_EAMError" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                                        </sequence>
+                                                                                    </scope>
+                                                                                </sequence>
+                                                                                <else>
+                                                                                    <sequence name="Sequence9">
+                                                                                        <assign name="AssignErrorValue">
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualReadingDate</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualReadingValue</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualOrigin</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>"Error de validación, el valor de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                            </copy>
+                                                                                        </assign>
+                                                                                        <invoke name="Invoke_Error" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                                    </sequence>
+                                                                                </else>
+                                                                            </if>
+                                                                        </sequence>
+                                                                        <else>
+                                                                            <documentation>
+                                                                                <![CDATA[Invalid]]>
+                                                                            </documentation>
+                                                                            <sequence name="Sequence4">
+                                                                                <assign name="AssignErrorDate">
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$AssetMetricsReadingExcelVar/ns38:Reading[1]/ns38:assetNumber</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                    </copy>
+                                                                                    <copy>
+                                                                                        <from>"Error de validación, la fecha de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualReadingDate</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualReadingValue</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualOrigin</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <invoke name="Invoke_Error" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                            </sequence>
+                                                                        </else>
+                                                                    </if>
+                                                                </sequence>
+                                                            </scope>
+                                                        </forEach>
+                                                    </sequence>
+                                                </elseif>
+                                                <else>
+                                                    <sequence name="Sequence13">
+                                                        <assign name="AssignDateValue">
+                                                            <copy>
+                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingDate</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualOrigin</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$actualReadingValue</to>
+                                                            </copy>
+                                                        </assign>
+                                                        <if name="DateValue" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                            <bpelx:skipCondition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">$processing = 'false'</bpelx:skipCondition>
+                                                            <condition>$actualReadingDate&gt; $Readings_DATAVar[1]/FECHA</condition>
+                                                            <sequence>
+                                                                <if name="ReadingValue">
+                                                                    <documentation>
+                                                                        <![CDATA[Valid]]>
+                                                                    </documentation>
+                                                                    <condition>$actualReadingValue &gt; $Readings_DATAVar[1]/VALOR_CARGA</condition>
+                                                                    <sequence>
+                                                                        <assign name="AssignReadingMeterExcel">
+                                                                            <copy>
+                                                                                <from>$Readings_DATAVar/METER_ID</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterId</to>
+                                                                            </copy>
+                                                                            <copy>
+                                                                                <from>substring-before($actualReadingDate,'.')</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DateTmpVar</to>
+                                                                            </copy>
+                                                                            <copy>
+                                                                                <from>'KMS_ASC'</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterCode</to>
+                                                                            </copy>
+                                                                            <copy>
+                                                                                <from>'ORA_ABSOLUTE'</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingTypeCode</to>
+                                                                            </copy>
+                                                                            <copy>
+                                                                                <from>'ORA_ASSET'</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:MeterUsageCode</to>
+                                                                            </copy>
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$actualOrigin</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:Comments</to>
+                                                                            </copy>
+                                                                            <copy ignoreMissingFromData="yes">
+                                                                                <from>$actualReadingValue</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingValue</to>
+                                                                            </copy>
+                                                                            <copy>
+                                                                                <from>concat($DateTmpVar,'-06:00')</from>
+                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ERPReadingMetrics.request/ns19:ReadingDate</to>
+                                                                            </copy>
+                                                                        </assign>
+                                                                        <scope name="SendFusionNotDuplicated">
+                                                                            <faultHandlers>
+                                                                                <catch faultName="ns16:fault" faultVariable="FaultSvc" faultMessageType="ns16:faultMessage">
+                                                                                    <sequence>
+                                                                                        <assign name="AssignError">
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualReadingDate</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualReadingValue</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                            </copy>
+                                                                                            <copy ignoreMissingFromData="yes">
+                                                                                                <from>$actualOrigin</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                            </copy>
+                                                                                            <copy>
+                                                                                                <from>$FaultSvc.fault/ns19:Description</from>
+                                                                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                            </copy>
+                                                                                        </assign>
+                                                                                        <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                                                                                        <compensate name="Compensate1"/>
+                                                                                    </sequence>
+                                                                                </catch>
+                                                                            </faultHandlers>
+                                                                            <sequence name="Sequence10">
+                                                                                <invoke name="Invoke_ERPReadingMetrics" partnerLink="wsERPReadingMetricsService" portType="ns16:ERPMeterReadings_ptt" operation="postMeterReadings" inputVariable="In_ERPReadingMetrics" outputVariable="Out_ERPReadingMetrics" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                                                                <assign name="AssignSucess">
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualReadingValue</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                    </copy>
+                                                                                    <copy>
+                                                                                        <from>"Sucess"</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualOrigin</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes">
+                                                                                        <from>$actualReadingDate</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <invoke name="Invoke_Error" bpelx:invokeAsDetail="no" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError"/>
+                                                                            </sequence>
+                                                                        </scope>
+                                                                    </sequence>
+                                                                    <else>
+                                                                        <sequence name="Sequence9">
+                                                                            <assign name="AssignErrorValue">
+                                                                                <copy ignoreMissingFromData="yes">
+                                                                                    <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                                </copy>
+                                                                                <copy ignoreMissingFromData="yes">
+                                                                                    <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                                </copy>
+                                                                                <copy ignoreMissingFromData="yes">
+                                                                                    <from>$actualReadingDate</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                                </copy>
+                                                                                <copy ignoreMissingFromData="yes">
+                                                                                    <from>$actualReadingValue</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                                </copy>
+                                                                                <copy ignoreMissingFromData="yes">
+                                                                                    <from>$actualOrigin</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                                </copy>
+                                                                                <copy>
+                                                                                    <from>"Error de validación, el valor de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                                </copy>
+                                                                            </assign>
+                                                                            <invoke name="Invoke_ErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                                                                        </sequence>
+                                                                    </else>
+                                                                </if>
+                                                            </sequence>
+                                                            <else>
+                                                                <documentation>
+                                                                    <![CDATA[Invalid]]>
+                                                                </documentation>
+                                                                <sequence name="Sequence4">
+                                                                    <assign name="AssignErrorDate">
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                                        </copy>
+                                                                        <copy>
+                                                                            <from>"Error de validación, la fecha de carga es menor al último registro existente en Oracle Fusion"</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$actualReadingDate</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$actualReadingValue</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                                        </copy>
+                                                                        <copy ignoreMissingFromData="yes">
+                                                                            <from>$actualOrigin</from>
+                                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                                        </copy>
+                                                                    </assign>
+                                                                    <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                                                                </sequence>
+                                                            </else>
+                                                        </if>
+                                                    </sequence>
+                                                </else>
+                                            </if>
+                                        </sequence>
+                                        <else>
+                                            <sequence name="Sequence22">
+                                                <assign name="AssignErrorMeter" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                    <copy ignoreMissingFromData="yes">
+                                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                                    </copy>
+                                                    <copy ignoreMissingFromData="yes">
+                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                                    </copy>
+                                                    <copy ignoreMissingFromData="yes">
+                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>"El activo no esta asociado a un medidor activo"</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                                    </copy>
+                                                    <copy ignoreMissingFromData="yes">
+                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                                    </copy>
+                                                    <copy ignoreMissingFromData="yes">
+                                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                                    </copy>
+                                                </assign>
+                                                <invoke name="Invoke_ErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                                            </sequence>
+                                        </else>
+                                    </if>
+                                </sequence>
+                                <else>
+                                    <sequence>
+                                        <assign name="AssignErrorMeter">
+                                            <copy ignoreMissingFromData="yes">
+                                                <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes">
+                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes">
+                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                            </copy>
+                                            <copy>
+                                                <from>"El activo no esta asociado a un medidor"</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes">
+                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes">
+                                                <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                            </copy>
+                                        </assign>
+                                        <invoke name="Invoke_ErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                                    </sequence>
+                                </else>
+                            </if>
+                        </sequence>
+                        <else>
+                            <documentation>
+                                <![CDATA[No]]>
+                            </documentation>
+                            <sequence name="Sequence1">
+                                <assign name="AssignErrorAsset">
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD','JNDIConnection')))</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:idError</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:assetNumber</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:assetNumber</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>"El activo no se encuentra registrado en Oracle Fusion"</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:errorMessage</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingDate</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:origin</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:origin</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$AssetMetricReadingsVar/ns23:Reading[$ForEachAssetCounter]/ns23:Records[1]/ns23:readingValue</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMInsertError.XxerEamErrorLogCollection/ns32:XxerEamErrorLog/ns32:readingValue</to>
+                                    </copy>
+                                </assign>
+                                <invoke name="Invoke_EAMErrorRecord" partnerLink="wsEAMInsertErrorRecordService" portType="ns31:EAMInsertErrorRecord_ptt" operation="insert" inputVariable="In_EAMInsertError" outputVariable="Out_EAMInsertError" bpelx:invokeAsDetail="no"/>
+                            </sequence>
+                        </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+        <assign name="AssignSelectErrorRecord">
+            <copy>
+                <from>xp20:format-dateTime($StartDateVar,'[Y001]-[M01]-[D01]')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectErrorRecord.EAMSelectErrorRecordInput_msg/ns34:fechaInicio</to>
+            </copy>
+            <copy>
+                <from>xp20:format-dateTime($EndDateVar,'[Y001]-[M01]-[D01]')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DateSelectErrorVar</to>
+            </copy>
+            <copy>
+                <from>xp20:add-dayTimeDuration-to-dateTime($DateSelectErrorVar,'P1D')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectErrorRecord.EAMSelectErrorRecordInput_msg/ns34:fechaFin</to>
+            </copy>
+            <copy>
+                <from>substring-before($In_EAMSelectErrorRecord.EAMSelectErrorRecordInput_msg/ns34:fechaFin,'T')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectErrorRecord.EAMSelectErrorRecordInput_msg/ns34:fechaFin</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke_EAMSelectErrorRecord" partnerLink="wsEAMSelectErrorRecordService" portType="ns33:EAMSelectErrorRecord_ptt" operation="EAMSelectErrorRecord" inputVariable="In_EAMSelectErrorRecord" outputVariable="Out_EAMSelectErrorRecord" bpelx:invokeAsDetail="no"/>
+        <assign name="Tr_GetHTMLResponse">
+            <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+            </bpelx:annotation>
+            <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/Tr_GetHTMLResponse.xsl", $AssetMetricReadingsVar, "Out_EAMSelectErrorRecord.EAMSelectErrorRecordOutputCollection", $Out_EAMSelectErrorRecord.EAMSelectErrorRecordOutputCollection)</from>
+                <to variable="In_GetHTML" part="GetHtmlControlRq"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke_GetHTML" partnerLink="wsSOAUtilitiesService" portType="ns35:SOAUtilitiesTecPortType" operation="GetHtmlControl" inputVariable="In_GetHTML" outputVariable="Out_GetHTML" bpelx:invokeAsDetail="no"/>
+        <assign name="AssignEmail">
+            <copy>
+                <from>$Out_GetHTML.GetHtmlControlRs/ns35:Return/ns35:HtmlControl</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SendMail.MessageRq/ns36:Message/ns36:Message</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+                <from>'RecordUnitMetrics'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SendMail.CustomHeader/ns36:IntegrationName</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke_SendMail" partnerLink="wsSendEmailService" portType="ns36:MessageTecPortType" operation="SendEmail" inputVariable="In_SendMail" bpelx:invokeAsDetail="no"/>
+        <invoke name="Invoke_TruncMileageExcel" partnerLink="wsTruncMileageExcelService" portType="ns17:TruncMileageExcel_ptt" operation="TruncMileageExcel" inputVariable="In_TruncMileageExcel" bpelx:invokeAsDetail="no"/>
+    </sequence>
+</process>

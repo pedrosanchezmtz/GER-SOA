@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationOracleXmlResponse xmlns="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec">
+   <success>success15</success>
+   <message>message16</message>
+   <log>
+      <any_0 xmlns="##any">
+         <any_01>any content</any_01>
+      </any_0>
+      <any_1 xmlns="##any">
+         <any_11>any content</any_11>
+      </any_1>
+      <any_2 xmlns="##any">
+         <any_21>any content</any_21>
+      </any_2>
+   </log>
+   <mustCancel>mustCancel17</mustCancel>
+   <mustModify>mustModify18</mustModify>
+   <emailSendedToSupplier>emailSendedToSupplier19</emailSendedToSupplier>
+   <invoiceId>20</invoiceId>
+   <supplierEmail>supplierEmail21</supplierEmail>
+   <oracleLookupCode>oracleLookupCode22</oracleLookupCode>
+   <Return>
+      <Success xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+      <Errors xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+         <Error>
+            <ErrorCode>ErrorCode23</ErrorCode>
+            <ShortDescription>ShortDescription24</ShortDescription>
+            <Description>Description25</Description>
+            <BusinessProcess>BusinessProcess26</BusinessProcess>
+            <FailedService>FailedService27</FailedService>
+            <TimeStamp>TimeStamp28</TimeStamp>
+         </Error>
+         <Error>
+            <ErrorCode>ErrorCode29</ErrorCode>
+            <ShortDescription>ShortDescription30</ShortDescription>
+            <Description>Description31</Description>
+            <BusinessProcess>BusinessProcess32</BusinessProcess>
+            <FailedService>FailedService33</FailedService>
+            <TimeStamp>TimeStamp34</TimeStamp>
+         </Error>
+         <Error>
+            <ErrorCode>ErrorCode35</ErrorCode>
+            <ShortDescription>ShortDescription36</ShortDescription>
+            <Description>Description37</Description>
+            <BusinessProcess>BusinessProcess38</BusinessProcess>
+            <FailedService>FailedService39</FailedService>
+            <TimeStamp>TimeStamp40</TimeStamp>
+         </Error>
+      </Errors>
+   </Return>
+</ValidationOracleXmlResponse>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelCreateDailyRates" targetNamespace="http://soa.estrellaroja.com.mx/DailyRatesBiz/bpelCreateDailyRates" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/DailyRatesBiz/bpelCreateDailyRates" xmlns:ns1="http://soa.estrellaroja.com.mx/DailyRatesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates">
+   <plnk:partnerLinkType name="bpelCreateDailyRates">
+      <plnk:role name="bpelCreateDailyRatesProvider" portType="client:bpelCreateDailyRates"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/DailyRatesBiz" schemaLocation="oramds:/apps/SOA/DailyRatesBiz/DailyRatesBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates" schemaLocation="../Schemas/nxsdFileDailyRates.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="MDailyRatesRq">
+      <wsdl:part name="CreateDailyRatesRq" element="ns1:DailyRatesRq"/>
+   </wsdl:message>
+   <wsdl:message name="MDailyRatesRs">
+      <wsdl:part name="CreateDailyRatesRs" element="ns1:DailyRatesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelCreateDailyRates">
+      <wsdl:operation name="CreateDailyRates">
+         <wsdl:input message="client:MDailyRatesRq"/>
+         <wsdl:output message="client:MDailyRatesRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

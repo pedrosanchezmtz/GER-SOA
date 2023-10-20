@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorERPManagementOfLoadImportBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="SendReportInterface" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendReportInterface.bpelSendReportInterface.SendReportInterface">
+            <action>
+               <assign>
+                  <copy expression="$in.SendReportInterfaceRq/tns:SendReportInterfaceRq" target="$out.SendReportInterfaceRq/tns:SendReportInterfaceRq" xmlns:tns="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"/>
+               </assign>
+               <invoke reference="bpelSendReportInterface.bpelSendReportInterface" operation="SendReportInterface"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

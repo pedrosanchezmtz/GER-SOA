@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="TruncMileageExcel" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/TruncMileageExcel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="TruncMileageExcel_plt">
+      <plt:role name="TruncMileageExcel_role">
+         <plt:portType name="tns:TruncMileageExcel_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/TruncMileageExcel" schemaLocation="../../../Schemas/EXCEL/Mileage/TruncMileageExcel.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="TruncMileageExcelInput_msg">
+      <wsdl:part name="TruncMileageExcelInput_msg" element="db:TruncMileageExcelInput"/>
+   </wsdl:message>
+   <wsdl:portType name="TruncMileageExcel_ptt">
+      <wsdl:operation name="TruncMileageExcel">
+         <wsdl:input message="tns:TruncMileageExcelInput_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmCreateReceiptEnt" xmlns="http://xmlns.oracle.com/dvm">
+   <description>Target interface entry values</description>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>IntegrationName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ProcessName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TargetInterface</cell>
+         <cell>CashInterface</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportName</cell>
+         <cell>XXER_AR_CASH_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PRfc</cell>
+         <cell>P_RFC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TipoDocumento</cell>
+         <cell>RECIBO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportNameTrx</cell>
+         <cell>XXER_AR_CUST_TRX_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TrxNumber</cell>
+         <cell>TrxNumber</cell>
+      </row>
+      <row markdefault="false">
+         <cell>OrgId</cell>
+         <cell>OrgId</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CustomerId</cell>
+         <cell>CustomerId</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MsjTrxNotExist</cell>
+         <cell>La transaccion que desea aplicar no existe en el ERP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MsjTrxNotApli</cell>
+         <cell>No es posible aplicar la transaccion ya que hay una diferencia mayor a la tolerancia entre el ponto a aplicar y el monto diponible en la transaccion</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TolDifApli</cell>
+         <cell>1</cell>
+      </row>
+      <row markdefault="false">
+         <cell>VarGroups</cell>
+         <cell>300</cell>
+      </row>
+   </rows>
+</dvm>

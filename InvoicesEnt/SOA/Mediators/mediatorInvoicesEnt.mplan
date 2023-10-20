@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorInvoicesEnt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetInvoices.bpelGetInvoices.GetInvoices">
+            <action>
+               <assign>
+                  <copy expression="$in.GetInvoicesRq/tns:GetInvoicesRq" target="$out.GetInvoicesRq/tns:GetInvoicesRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+               </assign>
+               <invoke reference="bpelGetInvoices.bpelGetInvoices" operation="GetInvoices">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetInvoicesRs/ns1:GetInvoicesRs" target="$out.GetInvoicesRs/ns1:GetInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ElecInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelElecInvoice.ElecInvoice.ElecInvoice">
+            <action>
+               <assign>
+                  <copy expression="$in.ElecInvoicesRq/tns:ElecInvoicesRq" target="$out.payload/tns:ElecInvoicesRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+               </assign>
+               <invoke reference="bpelElecInvoice.ElecInvoice" operation="ElecInvoice">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:ElecInvoicesRs" target="$out.ElecInvoicesRs/ns1:ElecInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ValidateInvoicesAP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelValidateInvoicesAP.bpelValidateInvoicesAP.ValidateInvoicesAP">
+            <action>
+               <assign>
+                  <copy expression="$in.ValidateInvoicesAPRq/tns:ValidateInvoicesAPRq" target="$out.ValidateInvoicesAPRq/tns:ValidateInvoicesAPRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+               </assign>
+               <invoke reference="bpelValidateInvoicesAP.bpelValidateInvoicesAP" operation="ValidateInvoicesAP">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.ValidateInvoicesAPRs/ns1:ValidateInvoicesAPRs" target="$out.ValidateInvoicesAPRs/ns1:ValidateInvoicesAPRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ValidatePaymentComplements" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client.process">
+            <action>
+               <assign>
+                  <copy expression="$in.ValidatePaymentComplementsRqPart/tns:ValidatePaymentComplementsRq" target="$out.payload/tns:ValidatePaymentComplementsRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+               </assign>
+               <invoke reference="bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client" operation="ValidatePaymentComplements">
+                  <onCallback operation="ValidatePaymentComplementsResponse">
+                     <assign>
+                        <copy expression="$in.payload/ns1:ValidatePaymentComplementsRs" target="$out.ValidatePaymentComplementsRsPart/ns1:ValidatePaymentComplementsRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt"/>
+                     </assign>
+                     <callback operation="ValidatePaymentComplements"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

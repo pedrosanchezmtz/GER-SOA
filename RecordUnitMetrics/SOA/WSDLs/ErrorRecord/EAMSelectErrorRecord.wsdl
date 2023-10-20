@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMSelectErrorRecord" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMSelectErrorRecord" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMSelectErrorRecord" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectErrorRecord" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="EAMSelectErrorRecord_plt">
+      <plt:role name="EAMSelectErrorRecord_role">
+         <plt:portType name="tns:EAMSelectErrorRecord_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectErrorRecord" schemaLocation="../../Schemas/ErrorRecord/EAMSelectErrorRecord.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMSelectErrorRecordInput_msg">
+      <wsdl:part name="EAMSelectErrorRecordInput_msg" element="db:EAMSelectErrorRecordInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMSelectErrorRecordOutputCollection_msg">
+      <wsdl:part name="EAMSelectErrorRecordOutputCollection" element="db:EAMSelectErrorRecordOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMSelectErrorRecord_ptt">
+      <wsdl:operation name="EAMSelectErrorRecord">
+         <wsdl:input message="tns:EAMSelectErrorRecordInput_msg"/>
+         <wsdl:output message="tns:EAMSelectErrorRecordOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

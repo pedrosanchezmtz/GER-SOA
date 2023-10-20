@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/flex/financials/payables/invoices/transactions/installmentsGdf/" xmlns="http://xmlns.oracle.com/apps/flex/financials/payables/invoices/transactions/installmentsGdf/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:include schemaLocation="InstallmentsGdf.xsd"/>
+   <xsd:complexType name="InstallmentsGdfJL_5FBR_5FAPXINWKB_5FAP_5FPAY_5FSCHED">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>InvoiceId</attribute>
+               <attribute>PaymentNum</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="InstallmentsGdf">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="_Interest__Type" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Type_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Rate___2F__Amount" nillable="true" type="xsd:decimal"/>
+               <xsd:element minOccurs="0" name="_Interest__Period" nillable="true" type="xsd:decimal"/>
+               <xsd:element minOccurs="0" name="_Interest__Formula" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Formula_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Grace__Days" nillable="true" type="xsd:decimal"/>
+               <xsd:element minOccurs="0" name="_Interest__Penalty__Type" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Penalty__Type_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="_Interest__Penalty__Rate___2F__Amount" nillable="true" type="xsd:decimal"/>
+               <xsd:element minOccurs="0" name="_Anticipated__Withholding__Amount" nillable="true" type="xsd:decimal"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="installmentsGdfJL_5FBR_5FAPXINWKB_5FAP_5FPAY_5FSCHED" type="InstallmentsGdfJL_5FBR_5FAPXINWKB_5FAP_5FPAY_5FSCHED"/>
+</xsd:schema>

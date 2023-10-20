@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetRfc" targetNamespace="http://soa.estrellaroja.com.mx/FinancialBiz/bpelGetRfc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/FinancialBiz/bpelGetRfc" xmlns:ns1="http://soa.estrellaroja.com.mx/FinancialBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/FinancialBiz" schemaLocation="oramds:/apps/SOA/INER_FinancialBiz/FinancialBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetRfcRq">
+      <wsdl:part name="GetRfcRq" element="ns1:GetRfcRq"/>
+   </wsdl:message>
+   <wsdl:message name="GetRfcRs">
+      <wsdl:part name="GetRfcRs" element="ns1:GetRfcRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetRfc">
+      <wsdl:operation name="GetRfc">
+         <wsdl:input message="client:GetRfcRq"/>
+         <wsdl:output message="client:GetRfcRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetRfc">
+      <plnk:role name="bpelGetRfcProvider" portType="client:bpelGetRfc"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

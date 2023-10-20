@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates" targetNamespace="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+   <xsd:element name="DailyRates">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="DailyRate" minOccurs="1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="fromCurrency" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                     <xsd:element name="toCurrency" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                     <xsd:element name="fromDate" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                     <xsd:element name="toDate" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                     <xsd:element name="classExchangeRate" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                     <xsd:element name="fromExchangeRate" type="xsd:string" nxsd:style="terminated" minOccurs="0" nxsd:terminatedBy=","/>
+                     <xsd:element name="toExchangeRate" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" minOccurs="0"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=P:\Desarrollo\JDeveloper\GER\Documentación SOA\Tipo_de_Cambio\DailyRate20210218.csv</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

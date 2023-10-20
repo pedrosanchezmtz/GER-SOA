@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='obtenerCMCount_If']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='aplicarCM_Assign']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy'][1]</loc>
+      <line>190</line>
+      <col/>
+      <file>BPEL/CreditMemoApplyBPEL.bpel</file>
+      <name>BPEL/CreditMemoApplyBPEL.bpel</name>
+      <fix>Types must be compatible.</fix>
+      <msg>The from-spec of "ns3:XXER_AR_APPLY_CM_COLLTYPE" is not compatible with to-spec of "ns4:XXER_AR_APPLY_CM_COLLTYPE"</msg>
+   </Fault>
+</Faults>

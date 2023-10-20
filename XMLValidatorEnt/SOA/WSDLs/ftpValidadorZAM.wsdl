@@ -1,0 +1,34 @@
+<wsdl:definitions
+     name="ftpValidadorZAM"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/XMLValidatorEnt/ftpValidadorZAM"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/XMLValidatorEnt/ftpValidadorZAM"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tbl="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL"
+     xmlns:opaque="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+    >
+  <plt:partnerLinkType name="GetFileXML_plt" >
+    <plt:role name="GetFileXML_role" >
+      <plt:portType name="tns:GetFileXML_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL" schemaLocation="oramds:/apps/Common/Tables/XXER_CONF_VALIDADOR_XML_TBL.xsd" />
+      </schema>
+    <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+            xmlns="http://www.w3.org/2001/XMLSchema" >
+      <element name="opaqueElement" type="base64Binary" />
+    </schema>
+    </wsdl:types>
+    <wsdl:message name="GetFileXML_msg">
+        <wsdl:part name="opaque" element="opaque:opaqueElement"/>
+    </wsdl:message>
+    <wsdl:portType name="GetFileXML_ptt">
+        <wsdl:operation name="GetFileXML">
+            <wsdl:input message="tns:GetFileXML_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

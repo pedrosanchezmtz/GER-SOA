@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorStatementsBankBBVA" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/mediatorStatementsBankBBVA" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetFilesStatementsBankBBVA" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelManagementsStatmentsBankBBVA.bpelmanagementsstatmentsbankbbva_client.ManagementsStatmentsBankBBVA">
+            <action>
+               <assign>
+                  <copy expression="$in.body/imp1:AccountStatements" target="$out.payload/imp1:AccountStatements" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBBVA"/>
+                  <copy value="$in.property.jca.ftp.FileName" target="$out.property.jca.ftp.FileName"/>
+               </assign>
+               <invoke reference="bpelManagementsStatmentsBankBBVA.bpelmanagementsstatmentsbankbbva_client" operation="ManagementsStatmentsBankBBVA"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

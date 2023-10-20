@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="Configuration" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="PropertyName"/>
+      <column name="PropertyValue"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>ALREADY_STAMPED_RECEIPT</cell>
+         <cell>Ya tiene asignado un UUID; por lo cual, ya está timbrado.</cell>
+      </row>
+      <row>
+         <cell>ERROR_QUERY_ALREADY_STAMPED_RECEIPT</cell>
+         <cell>No puede Realizar la consulta en tabla de control de Facturas ya timbradas.</cell>
+      </row>
+      <row>
+         <cell>NO_APPLICATIONS</cell>
+         <cell>No contiene ninguna aplicación.</cell>
+      </row>
+      <row>
+         <cell>NO_CONNETED</cell>
+         <cell>No es posible conectarse al servicio de timbrado, reintentando hasta tener conexion.</cell>
+      </row>
+      <row>
+         <cell>MAX_RETRY_COUNT</cell>
+         <cell>5</cell>
+      </row>
+      <row>
+         <cell>INTEGRATION_NAME</cell>
+         <cell>PaymentComplementEnt</cell>
+      </row>
+      <row>
+         <cell>PROCESS_NAME</cell>
+         <cell>PaymentComplement</cell>
+      </row>
+      <row>
+         <cell>ENTITY_NAME</cell>
+         <cell>AR_CASH_RECEIPTS_ALL</cell>
+      </row>
+      <row>
+         <cell>CATEGORY_NAME</cell>
+         <cell>CUSTOMER_RECEIPT</cell>
+      </row>
+      <row>
+         <cell>ALLOW_DUPLICATE</cell>
+         <cell>yes</cell>
+      </row>
+      <row>
+         <cell>ORIGIN_SYSTEM</cell>
+         <cell>APOLO</cell>
+      </row>
+      <row>
+         <cell>KEY_FROM</cell>
+         <cell>APOLO</cell>
+      </row>
+      <row>
+         <cell>KEY_TYPE</cell>
+         <cell>P</cell>
+      </row>
+      <row>
+         <cell>DOCUMENT_TYPE_DESCRIPTION</cell>
+         <cell>COMPLEMENTO-PAGO-DIRECTA</cell>
+      </row>
+      <row>
+         <cell>TYPE_INVOICE</cell>
+         <cell>PAYMENTCOMPLEMENT</cell>
+      </row>
+   </rows>
+</dvm>

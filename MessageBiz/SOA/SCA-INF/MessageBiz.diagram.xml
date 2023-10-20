@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="umsReceiveEmail">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="214" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="207" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="umsReceiveEmail" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail#wsdl.interface(ReceiveNotification_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ums_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ReceiveNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="MessageBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="41" width="137" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="34" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="MessageBiz" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+            <dgm:item>SendEmailCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="wsAuditControlTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1086" Y="159" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1076" Y="152" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsAuditControlTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>MergeInvoicesAP</dgm:item>
+            <dgm:item>InsertArElecInvoice</dgm:item>
+            <dgm:item>InsertArElecInvoiceErrors</dgm:item>
+            <dgm:item>MergeIncPaymentComplement</dgm:item>
+            <dgm:item>GetComplementsAP</dgm:item>
+            <dgm:item>MergeComplementsAP</dgm:item>
+            <dgm:item>CreateLog</dgm:item>
+            <dgm:item>MergeCtrlTrans</dgm:item>
+            <dgm:item>GetCtrlTrans</dgm:item>
+            <dgm:item>CreateJobsStatus</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>GetAllValidIncPaymentComplements</dgm:item>
+            <dgm:item>MergeCustomerSiteLog</dgm:item>
+            <dgm:item>GetCustomerSiteLog</dgm:item>
+            <dgm:item>GetInvoicesAPByExample</dgm:item>
+            <dgm:item>GetValPaymentComplementsResume</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSOAUtilitiesTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1086" Y="361" width="136" height="156">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1076" Y="354" width="156" height="170">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSOAUtilitiesTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetDateByTimeZone</dgm:item>
+            <dgm:item>GenerateZipFile</dgm:item>
+            <dgm:item>transformNumberToLetter</dgm:item>
+            <dgm:item>Decode</dgm:item>
+            <dgm:item>Encode</dgm:item>
+            <dgm:item>EncodeFileBase64</dgm:item>
+            <dgm:item>GetHtmlControl</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsMessageTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1086" Y="41" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1076" Y="34" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="bpelLogAttatchment">
+        <dgm:body borderWidth="2" arcRad="20" X="784" Y="199" width="130" height="111">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="774" Y="192" width="150" height="127">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="umsReceiveEmail" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail#wsdl.interface(ReceiveNotification_ptt)"/>
+        <dgm:outputPort name="wsAuditControlTec" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+        <dgm:outputPort name="wsSOAUtilitiesTec" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:outputPort name="wsMessageTec" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorMessageBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="482" Y="26" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="472" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorMessageBiz" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizCallbackPortType)"/>
+        <dgm:outputPort name="bpelSendEmail.bpelSendEmail" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail#wsdl.interface(bpelSendEmail)" callbackInterface="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail#wsdl.interface(bpelSendEmailCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelSendEmail">
+        <dgm:body borderWidth="2" arcRad="20" X="784" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="774" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelSendEmail" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail#wsdl.interface(bpelSendEmail)" callbackInterface="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail#wsdl.interface(bpelSendEmailCallback)"/>
+        <dgm:outputPort name="wsMessageTec" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="umsReceiveEmail" target="bpelLogAttatchment/umsReceiveEmail" width="2">
+        <dgm:gSegment X1="168" Y1="224" X2="774" Y2="224"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLogAttatchment/wsAuditControlTec" target="wsAuditControlTec" width="2">
+        <dgm:gSegment X1="924" Y1="224" X2="948" Y2="224"/>
+        <dgm:gSegment X1="948" Y1="224" X2="948" Y2="169"/>
+        <dgm:gSegment X1="948" Y1="169" X2="1076" Y2="169"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLogAttatchment/wsSOAUtilitiesTec" target="wsSOAUtilitiesTec" width="2">
+        <dgm:gSegment X1="924" Y1="249" X2="978" Y2="249"/>
+        <dgm:gSegment X1="978" Y1="249" X2="978" Y2="371"/>
+        <dgm:gSegment X1="978" Y1="371" X2="1076" Y2="371"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLogAttatchment/wsMessageTec" target="wsMessageTec" width="2">
+        <dgm:gSegment X1="924" Y1="274" X2="963" Y2="274"/>
+        <dgm:gSegment X1="963" Y1="274" X2="963" Y2="51"/>
+        <dgm:gSegment X1="963" Y1="51" X2="1076" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MessageBiz" target="mediatorMessageBiz/mediatorMessageBiz" width="2">
+        <dgm:gSegment X1="168" Y1="51" X2="472" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorMessageBiz/bpelSendEmail.bpelSendEmail" target="bpelSendEmail/bpelSendEmail" width="2">
+        <dgm:gSegment X1="622" Y1="51" X2="774" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelSendEmail/wsMessageTec" target="wsMessageTec" width="2">
+        <dgm:gSegment X1="924" Y1="51" X2="1076" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

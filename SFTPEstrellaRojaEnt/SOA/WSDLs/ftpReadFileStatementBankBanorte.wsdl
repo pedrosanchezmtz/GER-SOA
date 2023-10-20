@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpReadFileStatementBankBanorte" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanorte" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanorte" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="GetFilesStatementsBankFromBanorte_plt">
+      <plt:role name="GetFilesStatementsBankFromBanorte_role">
+         <plt:portType name="tns:GetFilesStatementsBankFromBanorte_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" schemaLocation="../Schemas/Banks/StatementsBankBanorte.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetFilesStatementsBankFromBanorte_msg">
+      <wsdl:part name="body" element="imp1:StatementsBankBanorte"/>
+   </wsdl:message>
+   <wsdl:portType name="GetFilesStatementsBankFromBanorte_ptt">
+      <wsdl:operation name="GetFilesStatementsBankFromBanorte">
+         <wsdl:input message="tns:GetFilesStatementsBankFromBanorte_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

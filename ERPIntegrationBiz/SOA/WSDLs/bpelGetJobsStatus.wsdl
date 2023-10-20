@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetJobsStatus" targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGetJobsStatus" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGetJobsStatus" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" schemaLocation="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetJobsStatusRq">
+      <wsdl:part name="GetJobsStatusRq" element="ns1:GetJobsStatusRq"/>
+   </wsdl:message>
+   <wsdl:message name="GetJobsStatusRs">
+      <wsdl:part name="GetJobsStatusRs" element="ns1:GetJobsStatusRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetJobsStatus">
+      <wsdl:operation name="GetJobsStatus">
+         <wsdl:input message="client:GetJobsStatusRq"/>
+         <wsdl:output message="client:GetJobsStatusRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetJobsStatus">
+      <plnk:role name="bpelGetJobsStatusProvider" portType="client:bpelGetJobsStatus"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

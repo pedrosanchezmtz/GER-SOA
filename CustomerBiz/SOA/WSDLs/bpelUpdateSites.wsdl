@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelUpdateSites" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/bpelUpdateSites" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelUpdateSites" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/FinancialsTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <plnk:partnerLinkType name="bpelUpdateSites">
+      <plnk:role name="bpelUpdateSitesProvider" portType="client:bpelUpdateSites"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelUpdateSites" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/FinancialsTec">
+         <import namespace="http://soa.estrellaroja.com.mx/CustomerBiz" schemaLocation="oramds:/apps/SOA/CustomerBiz/CustomerBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelUpdateSites" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/FinancialsTec">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/FinancialsTec" schemaLocation="oramds:/apps/OSB/FinancialsTec/FinancialsTec.xsd"/>
+      </xsd:schema>
+            <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSite" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="UpdateSitesRq">
+      <wsdl:part name="UpdateSitesRq" element="ns1:UpdateSitesRq"/>
+   </wsdl:message>
+   <wsdl:message name="UpdateSitesRs">
+      <wsdl:part name="UpdateSitesRs" element="ns1:UpdateSitesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelUpdateSites">
+      <wsdl:operation name="UpdateSites">
+         <wsdl:input message="client:UpdateSitesRq"/>
+         <wsdl:output message="client:UpdateSitesRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

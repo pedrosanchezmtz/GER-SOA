@@ -1,0 +1,300 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbelCreateLog" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/sbelCreateLog" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/sbelCreateLog" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no" xmlns:ns1="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="http://soa.estrellaroja.com.mx/CustomerBiz">
+   <partnerLinks>
+      <partnerLink name="wsAuditControlTec" partnerLinkType="ns1:wsAuditControlTec" partnerRole="AuditControlTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varCreateLogRq" messageType="ns1:CreateLogRq"/>
+      <variable name="varCreateLogRs" messageType="ns1:CreateLogRs"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <documentation><![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>
+                  <literal>SOA-00001</literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>ora:getFaultName()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>xp20:current-dateTime()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>
+                  <literal>
+                     <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                  </literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</to>
+            </copy>
+            <extensionAssignOperation>
+               <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</bpelx:target>
+               </bpelx:remove>
+            </extensionAssignOperation>
+            <copy ignoreMissingFromData="yes">
+               <from>concat('[',concat(ora:getCompositeName(),']'))</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>concat('[',concat(ora:getComponentName(),']'))</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+            </copy>
+         </assign>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="sequenceMain">
+      <scope name="scopeCreatelog">
+         <variables>
+            <variable name="varInvokeWsAuditControlTecCreateLogRq" messageType="ns1:CreateLogRq"/>
+            <variable name="varInvokeWsAuditControlTecCreateLogRs" messageType="ns1:CreateLogRs"/>
+            <variable name="varInvokeWsMessageTecSendEmailRq" messageType="ns2:MessageRq"/>
+         </variables>
+         <faultHandlers>
+            <catch faultName="bpel:selectionFailure">
+               <assign name="assignSelectionFailure" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00004</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getComponentName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('[',concat(ora:getCompositeName(),']'))</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+            <catch faultName="bpelx:remoteFault">
+               <assign name="assignRemoteFault" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00005</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getComponentName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getCompositeName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+            <catch faultName="bpel:invalidVariables">
+               <assign name="assignInvalidVariables" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00003</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getComponentName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getCompositeName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+            <catch faultName="bpelx:timeout">
+               <assign name="assignTimeout" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00002</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getComponentName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            concat('[',concat(ora:getCompositeName(),']'))
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+         </faultHandlers>
+         <sequence name="sequenceCreateLog">
+            <assign name="assignWsAuditControlTecCreateLogRq">
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varCreateLogRq.CreateLogRq</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsAuditControlTecCreateLogRq.CreateLogRq</to>
+               </copy>
+            </assign>
+            <if name="IfErrorCodeIsTooLong">
+               <documentation><![CDATA[> 100]]></documentation>
+               <condition>string-length($varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError[1]/ns1:codeError) > 100</condition>
+               <assign name="fixErrorCodeLength">
+                  <copy>
+                     <from>substring($varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError[1]/ns1:codeError,1,99)</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError/ns1:codeError</to>
+                  </copy>
+               </assign>
+               <else>
+                  <documentation><![CDATA[Length correct]]></documentation>
+                  <empty name="nothingToDo"/>
+               </else>
+            </if>
+            <if name="IfErrorIsTooLong" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[> 1000]]></documentation>
+               <condition>string-length($varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError[1]/ns1:error) > 1000</condition>
+               <assign name="fixErrorLength">
+                  <copy>
+                     <from>substring($varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError[1]/ns1:error,1,999)</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsAuditControlTecCreateLogRq.CreateLogRq/ns1:CompositeError/ns1:error</to>
+                  </copy>
+               </assign>
+               <else>
+                  <documentation><![CDATA[Length correct]]></documentation>
+                  <empty name="nothingToDo"/>
+               </else>
+            </if>
+            <invoke name="invokeWsAuditControlTecCreateLog" bpelx:invokeAsDetail="no" partnerLink="wsAuditControlTec" portType="ns1:AuditControlTecPortType" operation="CreateLog" inputVariable="varInvokeWsAuditControlTecCreateLogRq" outputVariable="varInvokeWsAuditControlTecCreateLogRs"/>
+            <assign name="assignCreateLogRs">
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varInvokeWsAuditControlTecCreateLogRs.CreateLogRs</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRs.CreateLogRs</to>
+               </copy>
+            </assign>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

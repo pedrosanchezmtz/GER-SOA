@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsSFTPEstrellaRojaTec">
+        <plnk:role name="SFTPEstrellaRojaTecPort" portType="tns:SFTPEstrellaRojaTecPort"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec" location="oramds:/apps/SOA/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec.wsdl"/>
+</wsdl:definitions>

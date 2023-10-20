@@ -1,0 +1,146 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Fri Jun 10 16:25:30 CDT 2022
+  Author:  PedroS�nchezMart�nez
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="sbpelSenNotificationValidation"
+               targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelSenNotificationValidation"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelSenNotificationValidation"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/AuditControlTec"
+                  xmlns:ns3="http://xmlns.oracle.com/ias/pcbpel/NotificationService"
+                  xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/ums/GER_SOA_OCI/InerInvoicesBiz/SendNotificacion"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/MessageTec"
+                  xmlns:ns6="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+                  xmlns:ns7="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+
+    <partnerLink name="wsMessageTec" partnerLinkType="ns5:wsMessageTec" partnerRole="MessageTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="v_ValidationRs" messageType="ns1:ValidaOracleXml_outputMessage"/>
+    <variable name="varInvoiceAP" element="ns6:InvoiceAP"/>
+    <variable name="WsSendEmailRq" messageType="ns5:MessageRq"/>
+    <variable name="varUUID" type="xsd:string"/>
+    <variable name="varInstance" type="xsd:string">
+      <from>ora:getFlowId()</from>
+    </variable>
+  </variables>
+  <sequence name="main">
+    <assign name="Trs_bodyEmail">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Trs_sendEmailValidation.xsl", $v_ValidationRs.request, "varInvoiceAP", $varInvoiceAP,"varUUID",$varUUID,'varInstance',$varInstance)</from>
+        <to variable="WsSendEmailRq" part="MessageRq"/>
+      </copy>
+    </assign>
+    <if name="If_Tets">
+      <documentation>
+        <![CDATA[Test]]>
+      </documentation>
+      <condition>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","Pruebas","Value","false","Component","ValidateInvoicesAP")='true'</condition>
+      <assign name="AssignEmailTest">
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailFrom","Value","er.soa@estrellaroja.com.mx","Component","ValidateInvoicesAP")</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressFrom</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>$varInvoiceAP/ns6:OrdereMail</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressTo</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>concat('(CORREO DE PRUEBA) - ',dvm:lookupValue ('DVMs/dvmInvoicesBiz.dvm','Code','Subject','Value','No Subject','Component','ValidateInvoicesAP'))</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Subject</to>
+        </copy>
+      </assign>
+      <else>
+        <documentation>
+          <![CDATA[Prod]]>
+        </documentation>
+        <if name="If_Rechazos">
+          <documentation>
+            <![CDATA[Rechazos]]>
+          </documentation>
+          <condition>$v_ValidationRs.request/ns1:mustCancel ='true' or $v_ValidationRs.request/ns1:mustModify='true'</condition>
+          <assign name="AssignEmailRechazos" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailFrom","Value","er.soa@estrellaroja.com.mx","Component","ValidateInvoicesAP")</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressFrom</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>concat(dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailBCC","Value","pedro.sanchez@forteinnovation.mx","Component","ValidateInvoicesAP"),',',dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailBCCError","Value","pedro.sanchez@forteinnovation.mx","Component","ValidateInvoicesAP"))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressBCC</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$varInvoiceAP/ns6:OrdereMail</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressTo</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","Subject","Value","No Subject","Component","ValidateInvoicesAP")</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Subject</to>
+            </copy>
+          </assign>
+          <else>
+            <documentation>
+              <![CDATA[Validos]]>
+            </documentation><assign name="AssignEmail" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailFrom","Value","er.soa@estrellaroja.com.mx","Component","ValidateInvoicesAP")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressFrom</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","EmailBCC","Value","pedro.sanchez@forteinnovation.mx","Component","ValidateInvoicesAP")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressBCC</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$varInvoiceAP/ns6:OrdereMail</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Addresses/ns5:AddressTo</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue ("DVMs/dvmInvoicesBiz.dvm","Code","Subject","Value","No Subject","Component","ValidateInvoicesAP")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSendEmailRq.MessageRq/ns5:Message/ns5:Subject</to>
+      </copy>
+   </assign></else>
+        </if>
+      </else>
+    </if>
+    <invoke name="WsSendEmail" partnerLink="wsMessageTec" portType="ns5:MessageTecPortType"
+            operation="SendEmail" bpelx:invokeAsDetail="no" inputVariable="WsSendEmailRq"/>
+  </sequence>
+</bpelx:subProcess>

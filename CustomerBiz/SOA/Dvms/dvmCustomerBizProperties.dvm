@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmCustomerBizProperties" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="CODE"/>
+      <column name="VALUE"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>ORGS_REPORT_PATH</cell>
+         <cell>/Custom/ER_INTEGRATION/Commons/Data Models/</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NOTIFICATION_SUBJECT</cell>
+         <cell>[ERROR]-[NOTIFICATION]</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ORGS_REPORT_NAME</cell>
+         <cell>XXER_FND_SETID_SETS.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>COUNTRIES_REPORT_PATH</cell>
+         <cell>/Custom/ER_INTEGRATION/Commons/Data Models/</cell>
+      </row>
+      <row markdefault="false">
+         <cell>COUNTRIES_REPORT_NAME</cell>
+         <cell>XXER_FND_TERRITORIES_VL.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>COUNTRY_PARAMETER_NAME</cell>
+         <cell>p_CountryName</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CUSTOMER_TYPE</cell>
+         <cell/>
+      </row>
+      <row markdefault="false">
+         <cell>CUSTOMER_CLASS_CODE</cell>
+         <cell/>
+      </row>
+      <row markdefault="false">
+         <cell>RETRY_MAX_VALUE</cell>
+         <cell>2</cell>
+      </row>
+   </rows>
+</dvm>

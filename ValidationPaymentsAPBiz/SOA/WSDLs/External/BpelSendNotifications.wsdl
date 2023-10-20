@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelSendNotifications" targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications" xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" schemaLocation="oramds:/apps/SOA/ValidationPaymentsAPBiz/ValidationPaymentsAPBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="BpelSendNotificationsRequestMessage">
+      <wsdl:part name="payload" element="ns1:SendNotificationsRq"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelSendNotifications">
+      <wsdl:operation name="SendNotifications">
+         <wsdl:input message="client:BpelSendNotificationsRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="BpelSendNotifications">
+      <plnk:role name="BpelSendNotificationsProvider" portType="client:BpelSendNotifications"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="RegisterAssetStatus">
+
+      <import>
+<searchReplace>
+		<search>oramds:/apps/SOA/RegisterAssetStatus/RegisterAssetStatus</search>
+		<replace>oramds:/apps/SOA/DEV_RegisterAssetStatus/RegisterAssetStatus</replace>
+	</searchReplace>
+	<searchReplace>
+		<search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+		<replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+	</searchReplace>
+        <searchReplace>
+		<search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+		<replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+	</searchReplace>
+	<searchReplace>
+		<search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+		<replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+	</searchReplace>
+      </import>
+      <service name="RegisterAssetStatusService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus#wsdl.endpoint(RegisterAssetStatusService/RegisterAssetStatusPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>9301c181-17f3-46f3-ae7f-d3d82a3fc7cf</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="RegisterAssetStatus">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="wsDateService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_GetSysDatePS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectDeliverAssetService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_SelectDeliverAssetsPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectTratecsaAssetsService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_SelectTratecsaAssetsPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectTratecsaTravel">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_SelectTratecsaTravelTrafficPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectDeliverOrder">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+                  <attribute name="address">
+               <replace>sb://DEV_SelectDeliverOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectTratecsaOrder">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+
+            <attribute name="address">
+               <replace>sb://DEV_SelectTratecsaOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMSelectDeliverTravelTraffic">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+             <attribute name="address">
+               <replace>sb://DEV_SelectDeliverTravelTrafficPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsEAMWorkOrdersExecutionsService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMWorkOrdersExecutionsPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSOAUtilitiesService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSendMailService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsInsertWorkOrdersService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+          <attribute name="address">
+               <replace>sb://DEV_EAMInsertWorkOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsUpdateWorkOrdersService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMUpdateWorkOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSelectWorkOrdersService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMSelectWorkOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsZAMBlockAssetService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_ZAMBlockAssetPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="ZAMUnblockAssetService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_ZAMUnblockAssetPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsEAMSelectWorkOrdersByUnit">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMSelectWorkOrdersByUnitPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsEAMSelectUnprocessedWorkOrders">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMSelectUnprocessedWorkOrdersPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsEAMSelectWorkOrdersByStatusService">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_EAMSelectWorkOrdersByStatusPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPIntegrationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPIntegrationAPITec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+               <replace>sb://DEV_ERPIntegrationApiTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Schemas/Assets/SelectDeliverAssets.xsd|Schemas/Assets/SelectTratecsaAssets.xsd|Schemas/DATA_DS.xsd|Schemas/EAMWorkOrdersTec_table.xsd|Schemas/GetSysDate_sp.xsd|Schemas/InsertDeliverOrders.xsd|Schemas/InsertTratecsaOrders.xsd|Schemas/Orders/SelectDeliverOrders.xsd|Schemas/Orders/SelectTratecsaOrders.xsd|Schemas/Orders/ZAMBlockAsset_sp.xsd|Schemas/Orders/ZAMUnblockAsset_sp.xsd|Schemas/RegisterAssetStatus.xsd|Schemas/SelectTratecsaTravleTraffic.xsd|Schemas/TransactionalWorkOrders/EAMInsertWorkOrders_table.xsd|Schemas/TransactionalWorkOrders/EAMSelectUnprocessedWorkOrders.xsd|Schemas/TransactionalWorkOrders/EAMSelectWorkOrdersByStatus.xsd|Schemas/TransactionalWorkOrders/EAMSelectWorkOrdersByUnit.xsd|Schemas/TransactionalWorkOrders/EAMSelectWorkOrders_table.xsd|Schemas/TransactionalWorkOrders/EAMUpdateWorkOrders_table.xsd|Schemas/Travels/SelectDeliverTravelTraffic.xsd|Schemas/Travels/SelectTratecsaTravleTraffic.xsd|Schemas/WorkOrdersExecutions/EAMWorkOrdersExecutions_table.xsd|WSDLs/Assets/SelectDeliverAssets-concrete.wsdl|WSDLs/Assets/SelectDeliverAssets.wsdl|WSDLs/Assets/SelectTratecsaAssets-concrete.wsdl|WSDLs/Assets/SelectTratecsaAssets.wsdl|WSDLs/ERPIntegrationApiTecWrapper.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/GetSysDate-concrete.wsdl|WSDLs/GetSysDate.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/Orders/SelectDeliverOrders-concrete.wsdl|WSDLs/Orders/SelectDeliverOrders.wsdl|WSDLs/Orders/SelectTratecsaOrders-concrete.wsdl|WSDLs/Orders/SelectTratecsaOrders.wsdl|WSDLs/Orders/ZAMBlockAsset-concrete.wsdl|WSDLs/Orders/ZAMBlockAsset.wsdl|WSDLs/Orders/ZAMUnblockAsset-concrete.wsdl|WSDLs/Orders/ZAMUnblockAsset.wsdl|WSDLs/RegisterAssetStatusWrapper.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl|WSDLs/TransactionalWorkOrders/EAMInsertWorkOrders-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMInsertWorkOrders.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectUnprocessedWorkOrders-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectUnprocessedWorkOrders.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrders-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrders.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrdersByStatus-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrdersByStatus.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrdersByUnit-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMSelectWorkOrdersByUnit.wsdl|WSDLs/TransactionalWorkOrders/EAMUpdateWorkOrders-concrete.wsdl|WSDLs/TransactionalWorkOrders/EAMUpdateWorkOrders.wsdl|WSDLs/Travels/SelectDeliverTravelTraffic-concrete.wsdl|WSDLs/Travels/SelectDeliverTravelTraffic.wsdl|WSDLs/Travels/SelectTratecsaTravleTraffic-concrete.wsdl|WSDLs/Travels/SelectTratecsaTravleTraffic.wsdl|WSDLs/WorkOrdersExecutions/EAMWorkOrdersExecutions.wsdl">
+<searchReplace>
+		<search>oramds:/apps/SOA/RegisterAssetStatus/RegisterAssetStatus</search>
+		<replace>oramds:/apps/SOA/DEV_RegisterAssetStatus/RegisterAssetStatus</replace>
+	</searchReplace>
+	<searchReplace>
+		<search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+		<replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+	</searchReplace>
+        <searchReplace>
+		<search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+		<replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+	</searchReplace>
+	<searchReplace>
+		<search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+		<replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+	</searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

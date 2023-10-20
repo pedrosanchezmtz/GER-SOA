@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="umsReceiveEmail" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsReceiveEmail" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://www.sat.gob.mx/cfd/3" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <plt:partnerLinkType name="ReceiveNotification_plt">
+      <plt:role name="ReceiveNotification_role">
+         <plt:portType name="tns:ReceiveNotification_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsReceiveEmail" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+         <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsReceiveEmail" schemaLocation="../Schemas/umsReceiveEmail.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://www.sat.gob.mx/cfd/3" schemaLocation="../Schemas/SAT/cfdv33.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://www.sat.gob.mx/TimbreFiscalDigital" schemaLocation="../Schemas/SAT/TimbreFiscalDigitalv11.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://www.sat.gob.mx/Pagos" schemaLocation="../Schemas/SAT/pagos10.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="ReceiveNotification_msg">
+      <wsdl:part name="body" element="imp1:message"/>
+   </wsdl:message>
+   <wsdl:portType name="ReceiveNotification_ptt">
+      <wsdl:operation name="ReceiveNotification">
+         <wsdl:input message="tns:ReceiveNotification_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

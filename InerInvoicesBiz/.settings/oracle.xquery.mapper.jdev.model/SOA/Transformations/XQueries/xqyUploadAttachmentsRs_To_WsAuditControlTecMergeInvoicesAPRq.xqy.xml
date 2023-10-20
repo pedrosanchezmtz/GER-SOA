@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="3" name="funcXqyuploadattachmentsrs_to_wsauditcontroltecmergeinvoicesaprq">
+      <source_tree_view last.visible.row="43" last.visible.path="/sourceRoot[[0]]/ValidateInvoicesAPRq[[2]]/InvoicesAP[[0]]/InvoiceAP[[0]]/Address[[36]]" first.visible.path="/sourceRoot[[0]]/UploadAttachmentsRs[[0]]" expanded.paths="/sourceRoot[[0]]/UploadAttachmentsRs[[0]]&#xA;/sourceRoot[[0]]/UploadAttachmentsRs[[0]]/Return[[0]]&#xA;/sourceRoot[[0]]/ValidateInvoicesAPRq[[2]]&#xA;/sourceRoot[[0]]/ValidateInvoicesAPRq[[2]]/InvoicesAP[[0]]&#xA;/sourceRoot[[0]]/ValidateInvoicesAPRq[[2]]/InvoicesAP[[0]]/InvoiceAP[[0]]" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="43" last.visible.path="/TargetRoot[[0]]/MergeInvoicesAPRq[[0]]/Invoices[[0]]/Invoice[[0]]/sitioProveedor[[40]]" first.visible.path="/TargetRoot[[0]]/MergeInvoicesAPRq[[0]]" expanded.paths="/TargetRoot[[0]]/MergeInvoicesAPRq[[0]]&#xA;/TargetRoot[[0]]/MergeInvoicesAPRq[[0]]/Invoices[[0]]&#xA;/TargetRoot[[0]]/MergeInvoicesAPRq[[0]]/Invoices[[0]]/Invoice[[0]]" first.visible.row="0" selected.paths=""/>
+   </function>
+</view_states>

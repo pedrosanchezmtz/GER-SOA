@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="InvoicesEnt">
+      <import>
+            <searchReplace>
+         <search>oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</replace>
+      </searchReplace>
+            <searchReplace>
+         <search>oramds:/apps/SOA/LetterPorteBiz/LetterPorteBiz</search>
+         <replace>oramds:/apps/SOA/DEV_LetterPorteBiz/LetterPorteBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/InvoicesBiz/InvoicesBiz</search>
+         <replace>oramds:/apps/SOA/DEV_InvoicesBiz/InvoicesBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/InvoicesEnt/InvoicesEnt</search>
+         <replace>oramds:/apps/SOA/DEV_InvoicesEnt/InvoicesEnt</replace>
+      </searchReplace>
+                        <searchReplace>
+         <search>oramds:/apps/SOA/FinancialBiz/FinancialBiz</search>
+         <replace>oramds:/apps/SOA/DEV_FinancialBiz/FinancialBiz</replace>
+      </searchReplace>
+      </import>
+      <service name="InvoicesEnt">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.endpoint(InvoicesEnt/InvoicesEntPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.endpoint(InvoicesEnt/InvoicesEntCallbackPort)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelGetInvoices">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelElecInvoice">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelValidateInvoicesAP">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelValidatePaymentComplements">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelLoadInvoices">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="wsERPIntegrationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsFinancialsBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/FinancialBiz#wsdl.endpoint(FinancialBiz/FinancialBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_FinancialBiz/FinancialBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsInvoicesBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.endpoint(InvoicesBiz/InvoicesBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_InvoicesBiz/InvoicesBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPManagementOfLoadImportBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.endpoint(ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBizPortType)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsLetterPorteBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/LetterPorteBiz#wsdl.endpoint(LetterPorteBiz/LetterPorteBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_LetterPorteBiz/LetterPorteBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+
+   <wsdlAndSchema name="Schemas/InvoicesAP.xsd|Schemas/LocatePayment.xsd|Schemas/StructureTrxInterface.xsd|WSDLs/bpelElecInvoice.wsdl|WSDLs/bpelGetInvoices.wsdl|WSDLs/bpelLoadInvoices.wsdl|WSDLs/bpelValidateInvoicesAP.wsdl|WSDLs/bpelValidatePaymentComplements.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/ERPIntegrationBizWrapper1.wsdl|WSDLs/ERPManagementOfLoadImportBizWrapper.wsdl|WSDLs/FinancialBizWrapper.wsdl|WSDLs/InvoicesBizWrapper.wsdl|WSDLs/InvoicesBizWrapper1.wsdl|WSDLs/InvoicesBizWrapper2.wsdl|WSDLs/LetterPorteBizWrapper.wsdl">
+            <searchReplace>
+         <search>oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</replace>
+      </searchReplace>
+            <searchReplace>
+         <search>oramds:/apps/SOA/LetterPorteBiz/LetterPorteBiz</search>
+         <replace>oramds:/apps/SOA/DEV_LetterPorteBiz/LetterPorteBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/InvoicesBiz/InvoicesBiz</search>
+         <replace>oramds:/apps/SOA/DEV_InvoicesBiz/InvoicesBiz</replace>
+      </searchReplace>
+                  <searchReplace>
+         <search>oramds:/apps/SOA/InvoicesEnt/InvoicesEnt</search>
+         <replace>oramds:/apps/SOA/DEV_InvoicesEnt/InvoicesEnt</replace>
+      </searchReplace>
+                        <searchReplace>
+         <search>oramds:/apps/SOA/FinancialBiz/FinancialBiz</search>
+         <replace>oramds:/apps/SOA/DEV_FinancialBiz/FinancialBiz</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

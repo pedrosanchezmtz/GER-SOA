@@ -1,0 +1,379 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Dec 26 17:06:15 CST 2017
+  Author:  Juan
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelGetHtmlControl"
+               targetNamespace="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns3="http://impl.utilities.cloud.estrellaroja.com.mx/">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl" location="../WSDLs/bpelGetHtmlControl.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelGetHtmlControl" partnerLinkType="client:bpelGetHtmlControl" myRole="bpelGetHtmlControlProvider"/>
+    <partnerLink name="springConvertDateFromTimezone.SOAUtilitiesImplService"
+                 partnerLinkType="ns3:springConvertDateFromTimezone.SOAUtilitiesImplService"
+                 partnerRole="SOAUtilitiesImpl"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelGetHtmlControlRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:bpelGetHtmlControlResponseMessage"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from><literal>SOA-00001</literal></from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getFaultName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>concat('Unknown error un service integration. ',ora:getFaultAsString())</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[GetHtmlControl]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[SOAUtiliesTec]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+      </copy><extensionAssignOperation>
+          <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+         </bpelx:remove>
+        </extensionAssignOperation><copy bpelx:insertMissingToData="yes"
+                                         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</to>
+      </copy><extensionAssignOperation>
+          <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</bpelx:target>
+         </bpelx:remove>
+        </extensionAssignOperation></assign></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelGetHtmlControl.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelGetHtmlControl" portType="client:bpelGetHtmlControl" operation="GetHtmlControl" variable="inputVariable" createInstance="yes"/>
+    <scope name="scopeMain">
+      <variables>
+        <variable name="varInvokeGetHtmlControlRq" messageType="ns3:getHtmlControlInput"/>
+        <variable name="varInvokeGetHtmlControlRs" messageType="ns3:getHtmlControlOutput"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="InvalidVariables" faultName="bpel:invalidVariables"><assign name="assignInvalidVariables"
+                                                                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from><literal>SOA-00003</literal></from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getFaultName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>concat('There have been exceptions when trying to select and set values in variables. ',ora:getFaultAsString())</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[GetHtmlControl]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[SOAUtiliesTec]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+      </copy><extensionAssignOperation>
+              <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+         </bpelx:remove>
+            </extensionAssignOperation><copy bpelx:insertMissingToData="yes"
+                                             xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</to>
+      </copy><extensionAssignOperation>
+              <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</bpelx:target>
+         </bpelx:remove>
+            </extensionAssignOperation></assign></catch>
+        <catch bpelx:name="SelectionFailure" faultName="bpel:selectionFailure"><assign name="assignSelectionFailure"
+                                                                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from><literal>SOA-00004</literal></from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getFaultName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[GetHtmlControl]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>[SOAUtiliesTec]</literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+      </copy><extensionAssignOperation>
+              <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+         </bpelx:remove>
+            </extensionAssignOperation><copy bpelx:insertMissingToData="yes"
+                                             xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</to>
+      </copy><extensionAssignOperation>
+              <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</bpelx:target>
+         </bpelx:remove>
+            </extensionAssignOperation></assign></catch>
+        <catch bpelx:name="RemoteFault" faultName="bpelx:remoteFault">
+          <assign name="assignRemoteFault">
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GetHtmlControl]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[SOAUtiliesTec]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="TimeOut" faultName="bpelx:timeout">
+          <assign name="assignTimeOut">
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GetHtmlControl]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[SOAUtiliesTec]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceGetHtml">
+        <assign name="trBpelRqToSpringGetHtmlControlRq">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/trBpelRq_To_SpringGetHtmlControlRq.xsl", $inputVariable.payload)</from>
+            <to variable="varInvokeGetHtmlControlRq" part="parameters"/>
+          </copy>
+        </assign>
+        <invoke name="invokeGetHtmlControl" bpelx:invokeAsDetail="no"
+                partnerLink="springConvertDateFromTimezone.SOAUtilitiesImplService" portType="ns3:SOAUtilitiesImpl"
+                operation="getHtmlControl" inputVariable="varInvokeGetHtmlControlRq"
+                outputVariable="varInvokeGetHtmlControlRs"/>
+        <assign name="trSpringGetHtmlControlRsToBpelRs">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/trSpringGetHtmlControlRs_To_BpelRs.xsl", $varInvokeGetHtmlControlRs.parameters)</from>
+            <to variable="outputVariable" part="payload"/>
+          </copy>
+        </assign>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelGetHtmlControl" portType="client:bpelGetHtmlControl" operation="GetHtmlControl" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="JournalEnt">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="164" width="137" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="157" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="JournalEnt" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalEnt#wsdl.interface(JournalEntPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendFileJournal</dgm:item>
+            <dgm:item>SendFileJournals</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="wsJournalBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1194" Y="180" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1184" Y="173" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsJournalBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalBiz#wsdl.interface(JournalBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetJournal</dgm:item>
+            <dgm:item>GetJournals</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsERPIntegrationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1194" Y="26" width="136" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1184" Y="19" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ImportToERPCloud</dgm:item>
+            <dgm:item>GenerateReport</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>ImportToERPCloudCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="mediatorJournalEnt">
+        <dgm:body borderWidth="2" arcRad="20" X="536" Y="149" width="130" height="86">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="526" Y="142" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorJournalEnt" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalEnt#wsdl.interface(JournalEntPortType)"/>
+        <dgm:outputPort name="bpelSendFileJournal.bpelSendFileJournal" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalEnt/bpelSendFileJournal#wsdl.interface(bpelSendFileJournal)"/>
+        <dgm:outputPort name="bpelSendFileJournals.bpelsendfilejournals_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/GER_SOA_OCI/JournalEnt/bpelSendFileJournals#wsdl.interface(bpelSendFileJournals)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelSendFileJournal">
+        <dgm:body borderWidth="2" arcRad="20" X="865" Y="95" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="855" Y="88" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelSendFileJournal" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalEnt/bpelSendFileJournal#wsdl.interface(bpelSendFileJournal)"/>
+        <dgm:outputPort name="wsJournalBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalBiz#wsdl.interface(JournalBizPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelSendFileJournals">
+        <dgm:body borderWidth="2" arcRad="20" X="865" Y="215" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="855" Y="208" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelsendfilejournals_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/GER_SOA_OCI/JournalEnt/bpelSendFileJournals#wsdl.interface(bpelSendFileJournals)"/>
+        <dgm:outputPort name="wsJournalBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/JournalBiz#wsdl.interface(JournalBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="JournalEnt" target="mediatorJournalEnt/mediatorJournalEnt" width="2">
+        <dgm:gSegment X1="168" Y1="174" X2="526" Y2="174"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelSendFileJournal/wsJournalBiz" target="wsJournalBiz" width="2">
+        <dgm:gSegment X1="1005" Y1="120" X2="1044" Y2="120"/>
+        <dgm:gSegment X1="1044" Y1="120" X2="1044" Y2="190"/>
+        <dgm:gSegment X1="1044" Y1="190" X2="1184" Y2="190"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelSendFileJournal/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1005" Y1="145" X2="1029" Y2="145"/>
+        <dgm:gSegment X1="1029" Y1="145" X2="1029" Y2="36"/>
+        <dgm:gSegment X1="1029" Y1="36" X2="1184" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelSendFileJournals/wsJournalBiz" target="wsJournalBiz" width="2">
+        <dgm:gSegment X1="1005" Y1="240" X2="1029" Y2="240"/>
+        <dgm:gSegment X1="1029" Y1="240" X2="1029" Y2="190"/>
+        <dgm:gSegment X1="1029" Y1="190" X2="1184" Y2="190"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorJournalEnt/bpelSendFileJournal.bpelSendFileJournal" target="bpelSendFileJournal/bpelSendFileJournal" width="2">
+        <dgm:gSegment X1="676" Y1="174" X2="700" Y2="174"/>
+        <dgm:gSegment X1="700" Y1="174" X2="700" Y2="120"/>
+        <dgm:gSegment X1="700" Y1="120" X2="855" Y2="120"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorJournalEnt/bpelSendFileJournals.bpelsendfilejournals_client" target="bpelSendFileJournals/bpelsendfilejournals_client" width="2">
+        <dgm:gSegment X1="676" Y1="199" X2="700" Y2="199"/>
+        <dgm:gSegment X1="700" Y1="199" X2="700" Y2="240"/>
+        <dgm:gSegment X1="700" Y1="240" X2="855" Y2="240"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

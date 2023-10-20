@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelGenerateReport" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/sbpelGenerateReport" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/sbpelGenerateReport" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsERPIntegrationBiz" partnerLinkType="ns1:wsERPIntegrationBiz" partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varInvokeWSGenerateReportRq" messageType="ns1:GenerateReportRq"/>
+      <variable name="varInvokeWSGenerateReportRs" messageType="ns1:GenerateReportRs"/>
+   </variables>
+   <sequence name="main">
+      <documentation><![CDATA[Scope principal que tiene la invocacion de los reportes.]]></documentation>
+      <scope name="scopeInvokeGenerateReport">
+         <faultHandlers>
+            <catchAll>
+               <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00001</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[GenerateReport]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[SalesOrdersEnt]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRs.GenerateReportRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catchAll>
+         </faultHandlers>
+         <sequence name="Sequence1">
+            <invoke name="invokeWSErpIntegrationBizGenerateReport" bpelx:invokeAsDetail="no" partnerLink="wsERPIntegrationBiz" portType="ns1:ERPIntegrationBizPortType" operation="GenerateReport" inputVariable="varInvokeWSGenerateReportRq" outputVariable="varInvokeWSGenerateReportRs"/>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

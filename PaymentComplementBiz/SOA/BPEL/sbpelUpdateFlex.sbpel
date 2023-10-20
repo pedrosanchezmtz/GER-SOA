@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelUpdateFlex" targetNamespace="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsIntegrationServiceTec1" partnerLinkType="ns1:wsIntegrationServiceTec1" partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="WsERPIntegrationTec_UpdateObjectRq" messageType="ns1:UpdateObjectRq"/>
+      <variable name="v_ContextValue" type="xsd:string"/>
+      <variable name="v_UserKeyA" type="xsd:string"/>
+      <variable name="v_UserKeyB" type="xsd:string"/>
+      <variable name="v_DFFAttributes" type="xsd:string"/>
+      <variable name="WsERPIntegrationTec_UpdateObjectRs" messageType="ns1:UpdateObjectRs"/>
+   </variables>
+   <sequence name="main">
+      <assign name="AssignVarWs">
+         <copy>
+            <from>'single'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:operationMode</to>
+         </copy>
+         <copy>
+            <from>'Receivables Invoice Cash Receipt'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:EntityName</to>
+         </copy>
+         <copy>
+            <from>$v_ContextValue</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:ContextValue</to>
+         </copy>
+         <copy>
+            <from>$v_UserKeyA</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:UserKeyA</to>
+         </copy>
+         <copy>
+            <from>$v_UserKeyB</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:UserKeyB</to>
+         </copy>
+         <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:UserKeyC</to>
+         </copy>
+         <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:UserKeyD</to>
+         </copy>
+         <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:UserKeyE</to>
+         </copy>
+         <copy>
+            <from>$v_DFFAttributes</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:object/ns1:DFFAttributes</to>
+         </copy>
+         <copy>
+            <from>'10'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:notificationCode</to>
+         </copy>
+         <copy>
+            <from>'#NULL'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationTec_UpdateObjectRq.UpdateObjectRqPart/ns1:callbackURL</to>
+         </copy>
+      </assign>
+      <invoke name="WsERPIntegrationTec" partnerLink="wsIntegrationServiceTec1" portType="ns1:ERPIntegrationTecPortType" operation="UpdateObject" inputVariable="WsERPIntegrationTec_UpdateObjectRq" outputVariable="WsERPIntegrationTec_UpdateObjectRs" bpelx:invokeAsDetail="no"/>
+   </sequence>
+</bpelx:subProcess>

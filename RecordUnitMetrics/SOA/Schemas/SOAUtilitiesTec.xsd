@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" targetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" elementFormDefault="qualified" xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <xsd:import schemaLocation="Commons/EstrellaRojaCommons.xsd" namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+   <xsd:element name="EncodeFileBase64Rq" type="tns:EncodeFileBase64RqType"/>
+   <xsd:element name="EncodeFileBase64Rs" type="tns:EncodeFileBase64RsType"/>
+   <xsd:element name="GetDateByTimeZoneRq" type="tns:GetDateByTimeZoneRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GenerateZipFileRq" type="tns:GenerateZipFileRqType"/>
+   <xsd:element name="GenerateZipFileRs" type="tns:GenerateZipFileRsType"/>
+   <xsd:element name="GetDateByTimeZoneRs" type="tns:GetDateByTimeZoneRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="NumberToLetterRq" type="tns:NumberToLetterRqType"/>
+   <xsd:element name="NumberToLetterRs" type="tns:NumberToLetterRsType"/>
+   <xsd:element name="DecodeRq" type="tns:DecodeRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="DecodeRs" type="tns:DecodeRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="EncodeRq" type="tns:EncodeRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="EncodeRs" type="tns:EncodeRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetHtmlControlRq" type="tns:HtmlControlRqType"/>
+   <xsd:element name="GetHtmlControlRs" type="tns:HtmlControlRsType"/>
+   <xsd:complexType name="EncodeFileBase64RqType">
+      <xsd:sequence>
+         <xsd:element name="File" type="tns:Base64FileRqType" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EncodeFileBase64RsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="FileResult" type="tns:EncodeFileBase64ReturnType" minOccurs="1" maxOccurs="unbounded"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="EncodeFileBase64ReturnType">
+      <xsd:sequence>
+         <xsd:element name="ContentBase64" type="xsd:base64Binary"/>
+         <xsd:element name="FileName" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Base64FileRqType">
+      <xsd:sequence>
+         <xsd:element name="FileContent" type="xsd:base64Binary" maxOccurs="1"/>
+         <xsd:element name="FileName" maxOccurs="1" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GenerateZipFileRqType">
+      <xsd:complexContent>
+         <xsd:extension base="tns:ZipFileRqType"/>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GenerateZipFileRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GenerateZipFileReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GenerateZipFileReturnType">
+      <xsd:sequence>
+         <xsd:element name="ContentBase64" type="xsd:base64Binary"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ZipFileRqType">
+      <xsd:sequence>
+         <xsd:element name="ContentFile" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="PathFile" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="FileName" maxOccurs="1" type="xsd:string"/>
+         <xsd:element name="FileNameToZip" type="xsd:string" maxOccurs="1"/>
+         <xsd:element name="PathFileToZip" type="xsd:string" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetDateByTimeZoneRqType">
+      <xsd:sequence>
+         <xsd:element name="DateToChange" type="xsd:dateTime" minOccurs="0"/>
+         <xsd:element name="ZoneDateTime" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetDateByTimeZoneRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetDateByTimeZoneReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetDateByTimeZoneReturnType">
+      <xsd:sequence>
+         <xsd:element name="DateFromTimeZone" type="xsd:dateTime"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="NumberToLetterRqType">
+      <xsd:sequence>
+         <xsd:element name="Amount" type="xsd:double" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="NumberToLetterRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:NumToLetterReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="NumToLetterReturnType">
+      <xsd:sequence>
+         <xsd:element name="Amount" type="xsd:double"/>
+         <xsd:element name="letterAmount" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EncodeRqType">
+      <xsd:sequence>
+         <xsd:element name="Coded" type="tns:CodedType" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CodedType">
+      <xsd:sequence>
+         <xsd:element name="ContentDataName" type="xsd:string"/>
+         <xsd:element name="ContentData" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EncodeRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:CodedReturnType" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CodedReturnType">
+      <xsd:sequence>
+         <xsd:element name="CodedReturn" type="tns:EncodeReturnType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EncodeReturnType">
+      <xsd:sequence>
+         <xsd:element name="ContentDataName" type="xsd:string"/>
+         <xsd:element name="DataBase64" type="xsd:base64Binary"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DecodeRqType">
+      <xsd:sequence>
+         <xsd:element name="charChain" type="xsd:string"/>
+         <xsd:element name="contentStripping" type="xsd:boolean" maxOccurs="1" default="true" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DecodeRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:DecodeReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="DecodeReturnType">
+      <xsd:sequence>
+         <xsd:element name="xmlOut" type="tns:OutDataType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OutDataType">
+      <xsd:sequence>
+         <xsd:element name="xml" type="xsd:anyType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="HtmlControlRqType">
+      <xsd:sequence>
+         <xsd:element name="TotalSucceeded" type="xsd:int" minOccurs="0"/>
+         <xsd:element name="TotalErrors" type="xsd:int" minOccurs="0"/>
+         <xsd:element name="TotalProcessed" type="xsd:int"/>
+         <xsd:element name="ErrorsDetails" type="tns:ErrorsDetailsType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="HtmlControlRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:HtmlControlReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="HtmlControlReturnType">
+      <xsd:sequence>
+         <xsd:element name="HtmlControl" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ErrorDetailType">
+      <xsd:sequence>
+         <xsd:element name="DataValue" type="xsd:string"/>
+         <xsd:element name="ErrorMessage" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ErrorsDetailsType">
+      <xsd:sequence>
+         <xsd:element name="ErrorDetail" type="tns:ErrorDetailType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

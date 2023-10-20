@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="EAMOriginPriorityInput" type="EAMOriginPriorityInput"/>
+   <xs:complexType name="EAMOriginPriorityInput">
+      <xs:sequence>
+         <xs:element name="assetNumber" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="EAMOriginPriorityOutputCollection" type="EAMOriginPriorityOutputCollection"/>
+   <xs:complexType name="EAMOriginPriorityOutputCollection">
+      <xs:sequence>
+         <xs:element name="EAMOriginPriorityOutput" type="EAMOriginPriorityOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="EAMOriginPriorityOutput">
+      <xs:sequence>
+         <xs:element name="ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="ORIGIN" type="xs:string" nillable="true"/>
+         <xs:element name="PRIORITY" type="xs:decimal" nillable="true"/>
+         <xs:element name="ASSET_NUMBER" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

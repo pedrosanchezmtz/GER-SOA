@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="CFDITec" targetNamespace="http://soa.estrellaroja.com.mx/CFDITec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plnk:partnerLinkType name="wsCFDITec">
+      <plnk:role name="CFDITecPortType" portType="tns:CFDITecPortType"/>
+      <plnk:role name="CFDITecPortTypeCallback" portType="tns:CFDITecPortTypeCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/CFDITec" location="oramds:/apps/SOA/CFDITec/CFDITec.wsdl"/>
+</wsdl:definitions>

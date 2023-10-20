@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelValidatePaymentComplements" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/InvoicesEnt/XxerApLocatePayment">
+   <plnk:partnerLinkType name="bpelValidatePaymentComplements">
+      <plnk:role name="bpelValidatePaymentComplementsProvider" portType="client:bpelValidatePaymentComplements"/>
+      <plnk:role name="bpelValidatePaymentComplementsRequester" portType="client:bpelValidatePaymentComplementsCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/InvoicesEnt/XxerApLocatePayment">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesEnt" schemaLocation="oramds:/apps/SOA/InvoicesEnt/InvoicesEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/InvoicesEnt/XxerApLocatePayment">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="oramds:/apps/SOA/InvoicesBiz/InvoicesBiz.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/InvoicesEnt/XxerApLocatePayment">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesEnt/XxerApLocatePayment" schemaLocation="../Schemas/LocatePayment.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelValidatePaymentComplementsRequestMessage">
+      <wsdl:part name="payload" element="ns1:ValidatePaymentComplementsRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelValidatePaymentComplementsResponseMessage">
+      <wsdl:part name="payload" element="ns1:ValidatePaymentComplementsRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelValidatePaymentComplements">
+      <wsdl:operation name="ValidatePaymentComplements">
+         <wsdl:input message="client:bpelValidatePaymentComplementsRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelValidatePaymentComplementsCallback">
+      <wsdl:operation name="ValidatePaymentComplementsResponse">
+         <wsdl:input message="client:bpelValidatePaymentComplementsResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

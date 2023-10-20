@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMSelectUnprocessedWorkOrders" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectUnprocessedWorkOrders" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectUnprocessedWorkOrders" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectUnprocessedWorkOrders" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="EAMSelectUnprocessedWorkOrders_plt">
+      <plt:role name="EAMSelectUnprocessedWorkOrders_role">
+         <plt:portType name="tns:EAMSelectUnprocessedWorkOrders_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectUnprocessedWorkOrders" schemaLocation="../../Schemas/TransactionalWorkOrders/EAMSelectUnprocessedWorkOrders.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMSelectUnprocessedWorkOrdersInput_msg">
+      <wsdl:part name="EAMSelectUnprocessedWorkOrdersInput_msg" element="db:EAMSelectUnprocessedWorkOrdersInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMSelectUnprocessedWorkOrdersOutputCollection_msg">
+      <wsdl:part name="EAMSelectUnprocessedWorkOrdersOutputCollection" element="db:EAMSelectUnprocessedWorkOrdersOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMSelectUnprocessedWorkOrders_ptt">
+      <wsdl:operation name="EAMSelectUnprocessedWorkOrders">
+         <wsdl:input message="tns:EAMSelectUnprocessedWorkOrdersInput_msg"/>
+         <wsdl:output message="tns:EAMSelectUnprocessedWorkOrdersOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="dbRetriableComplements" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbRetriableComplements" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbRetriableComplements" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/dbRetriableComplements" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="dbRetriableComplements_plt">
+      <plt:role name="dbRetriableComplements_role">
+         <plt:portType name="tns:dbRetriableComplements_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbRetriableComplements" schemaLocation="../Schemas/dbRetriableComplements.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbRetriableComplements" schemaLocation="../Schemas/dbRetriableComplements.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="dbRetriableComplementsInput_msg">
+      <wsdl:part name="dbRetriableComplementsInput_msg" element="db:dbRetriableComplementsInput"/>
+   </wsdl:message>
+   <wsdl:message name="dbRetriableComplementsOutputCollection_msg">
+      <wsdl:part name="dbRetriableComplementsOutputCollection" element="db:dbRetriableComplementsOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="dbRetriableComplements_ptt">
+      <wsdl:operation name="dbRetriableComplements">
+         <wsdl:input message="tns:dbRetriableComplementsInput_msg"/>
+         <wsdl:output message="tns:dbRetriableComplementsOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

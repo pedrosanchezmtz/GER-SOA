@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpReadFileStatementBankHSBC" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementBankHSBC" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementBankHSBC" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC">
+   <plt:partnerLinkType name="GetFilesStatementsBankFromHSBC_plt">
+      <plt:role name="GetFilesStatementsBankFromHSBC_role">
+         <plt:portType name="tns:GetFilesStatementsBankFromHSBC_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC" schemaLocation="../Schemas/Banks/StatementsBankHSBC.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetFilesStatementsBankFromHSBC_msg">
+      <wsdl:part name="body" element="imp1:StatementsBankHSBC"/>
+   </wsdl:message>
+   <wsdl:portType name="GetFilesStatementsBankFromHSBC_ptt">
+      <wsdl:operation name="GetFilesStatementsBankFromHSBC">
+         <wsdl:input message="tns:GetFilesStatementsBankFromHSBC_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

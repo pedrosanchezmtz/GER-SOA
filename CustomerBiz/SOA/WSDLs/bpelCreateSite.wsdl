@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelCreateSite" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSite" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSite" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns4="http://soa.estrellaroja.com.mx/CoherenceTec">
+   <plnk:partnerLinkType name="bpelCreateSite">
+      <plnk:role name="bpelCreateSiteProvider" portType="client:bpelCreateSite"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSite" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+         <import namespace="http://soa.estrellaroja.com.mx/CustomerBiz" schemaLocation="oramds:/apps/SOA/CustomerBiz/CustomerBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSite" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/CoherenceTec" schemaLocation="oramds:/apps/OSB/CoherenceTec/CoherenceTec.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="CreateSiteRq">
+      <wsdl:part name="CreateSiteRq" element="ns1:CreateSiteRq"/>
+   </wsdl:message>
+   <wsdl:message name="CreateSiteRs">
+      <wsdl:part name="CreateSiteRs" element="ns1:CreateSiteRs"/>
+   </wsdl:message>
+   <wsdl:message name="ServiceFaultMessage">
+      <wsdl:part name="ServiceError" type="ns1:FaultMessageType"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelCreateSite">
+      <wsdl:operation name="CreateSite">
+         <wsdl:input message="client:CreateSiteRq"/>
+         <wsdl:output message="client:CreateSiteRs"/>
+         <wsdl:fault name="ServiceFault" message="client:ServiceFaultMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

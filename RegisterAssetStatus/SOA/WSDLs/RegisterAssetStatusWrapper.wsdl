@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="RegisterAssetStatus"
+     targetNamespace="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="RegisterAssetStatusService">
+        <plnk:role name="RegisterAssetStatus_ptt" portType="tns:RegisterAssetStatus_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus"
+         location="oramds:/apps/SOA/RegisterAssetStatus/RegisterAssetStatus.wsdl"/>
+</wsdl:definitions>

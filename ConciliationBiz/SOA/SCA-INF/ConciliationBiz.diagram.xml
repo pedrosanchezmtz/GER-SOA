@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="ConciliationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="235" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="228" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ConciliationBiz" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz#wsdl.interface(ConciliationBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ConciliationCashTP</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="ERPIntegrationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1424" Y="26" width="136" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1414" Y="19" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ImportToERPCloud</dgm:item>
+            <dgm:item>GenerateReport</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>ImportToERPCloudCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="ConciliationTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1424" Y="198" width="136" height="132">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1414" Y="191" width="156" height="146">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ConciliationTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationTec#wsdl.interface(ConciliationTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetConciliations</dgm:item>
+            <dgm:item>ConciliationCash</dgm:item>
+            <dgm:item>ConciliationTransactions</dgm:item>
+            <dgm:item>SendConciliationBank</dgm:item>
+            <dgm:item>SendConciliationBankAMEX</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="WsMessageTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1424" Y="554" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1414" Y="547" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="WsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="WsSOAUtilitiesTec">
+        <dgm:body borderWidth="2" arcRad="20" X="1424" Y="364" width="136" height="156">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1414" Y="357" width="156" height="170">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="WsSOAUtilitiesTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetDateByTimeZone</dgm:item>
+            <dgm:item>GenerateZipFile</dgm:item>
+            <dgm:item>transformNumberToLetter</dgm:item>
+            <dgm:item>Decode</dgm:item>
+            <dgm:item>Encode</dgm:item>
+            <dgm:item>EncodeFileBase64</dgm:item>
+            <dgm:item>GetHtmlControl</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="MediatorConciliationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="377" Y="220" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="367" Y="213" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="MediatorConciliationBiz" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz#wsdl.interface(ConciliationBizPortType)"/>
+        <dgm:outputPort name="BpelConciliationCashTp.bpelconciliationcashtp_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelConciliationCashTp#wsdl.interface(BpelConciliationCashTp)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="BpelConciliationCashTp">
+        <dgm:body borderWidth="2" arcRad="20" X="726" Y="220" width="130" height="186">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="716" Y="213" width="150" height="202">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelconciliationcashtp_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelConciliationCashTp#wsdl.interface(BpelConciliationCashTp)"/>
+        <dgm:outputPort name="BpelGetCreditMemo.bpelgetcreditmemo_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo#wsdl.interface(BpelGetCreditMemo)"/>
+        <dgm:outputPort name="BpelGetPaymentsCash.bpelgetpaymentscash_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetPaymentsCash#wsdl.interface(BpelGetPaymentsCash)"/>
+        <dgm:outputPort name="ConciliationTec" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationTec#wsdl.interface(ConciliationTecPortType)"/>
+        <dgm:outputPort name="ConciliationSpring.ConciliationSpringService" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://conciliationspringbiz.soa.estrellaroja.com.mx/#wsdl.interface(IConciliationSpringBiz)"/>
+        <dgm:outputPort name="WsSOAUtilitiesTec" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:outputPort name="WsMessageTec" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="BpelGetPaymentsCash">
+        <dgm:body borderWidth="2" arcRad="20" X="1075" Y="121" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1065" Y="114" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelgetpaymentscash_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetPaymentsCash#wsdl.interface(BpelGetPaymentsCash)"/>
+        <dgm:outputPort name="ERPIntegrationBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="BpelGetCreditMemo">
+        <dgm:body borderWidth="2" arcRad="20" X="1075" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1065" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelgetcreditmemo_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo#wsdl.interface(BpelGetCreditMemo)"/>
+        <dgm:outputPort name="ERPIntegrationBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="ConciliationSpring">
+        <dgm:body borderWidth="2" arcRad="20" X="1075" Y="295" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1065" Y="288" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ConciliationSpringService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="mx.com.estrellaroja.soa.conciliationspringbiz.IConciliationSpringBiz"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="ConciliationBiz" target="MediatorConciliationBiz/MediatorConciliationBiz" width="2">
+        <dgm:gSegment X1="168" Y1="245" X2="367" Y2="245"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelGetPaymentsCash/ERPIntegrationBiz" target="ERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1215" Y1="146" X2="1254" Y2="146"/>
+        <dgm:gSegment X1="1254" Y1="146" X2="1254" Y2="36"/>
+        <dgm:gSegment X1="1254" Y1="36" X2="1414" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/BpelGetCreditMemo.bpelgetcreditmemo_client" target="BpelGetCreditMemo/bpelgetcreditmemo_client" width="2">
+        <dgm:gSegment X1="866" Y1="245" X2="890" Y2="245"/>
+        <dgm:gSegment X1="890" Y1="245" X2="890" Y2="51"/>
+        <dgm:gSegment X1="890" Y1="51" X2="1065" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelGetCreditMemo/ERPIntegrationBiz" target="ERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1215" Y1="51" X2="1239" Y2="51"/>
+        <dgm:gSegment X1="1239" Y1="51" X2="1239" Y2="36"/>
+        <dgm:gSegment X1="1239" Y1="36" X2="1414" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/BpelGetPaymentsCash.bpelgetpaymentscash_client" target="BpelGetPaymentsCash/bpelgetpaymentscash_client" width="2">
+        <dgm:gSegment X1="866" Y1="270" X2="905" Y2="270"/>
+        <dgm:gSegment X1="905" Y1="270" X2="905" Y2="146"/>
+        <dgm:gSegment X1="905" Y1="146" X2="1065" Y2="146"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/ConciliationTec" target="ConciliationTec" width="2">
+        <dgm:gSegment X1="866" Y1="295" X2="920" Y2="295"/>
+        <dgm:gSegment X1="920" Y1="295" X2="920" Y2="208"/>
+        <dgm:gSegment X1="920" Y1="208" X2="1414" Y2="208"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MediatorConciliationBiz/BpelConciliationCashTp.bpelconciliationcashtp_client" target="BpelConciliationCashTp/bpelconciliationcashtp_client" width="2">
+        <dgm:gSegment X1="517" Y1="245" X2="716" Y2="245"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/ConciliationSpring.ConciliationSpringService" target="ConciliationSpring/ConciliationSpringService" width="2">
+        <dgm:gSegment X1="866" Y1="320" X2="1065" Y2="320"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/WsSOAUtilitiesTec" target="WsSOAUtilitiesTec" width="2">
+        <dgm:gSegment X1="866" Y1="345" X2="905" Y2="345"/>
+        <dgm:gSegment X1="905" Y1="345" X2="905" Y2="442"/>
+        <dgm:gSegment X1="905" Y1="442" X2="1239" Y2="442"/>
+        <dgm:gSegment X1="1239" Y1="442" X2="1239" Y2="374"/>
+        <dgm:gSegment X1="1239" Y1="374" X2="1414" Y2="374"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="BpelConciliationCashTp/WsMessageTec" target="WsMessageTec" width="2">
+        <dgm:gSegment X1="866" Y1="370" X2="890" Y2="370"/>
+        <dgm:gSegment X1="890" Y1="370" X2="890" Y2="564"/>
+        <dgm:gSegment X1="890" Y1="564" X2="1414" Y2="564"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

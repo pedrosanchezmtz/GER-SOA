@@ -1,0 +1,1033 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelHandleMergedStamping" targetNamespace="http://soa.estrellaroja.com.mx/PaymentComplementBiz/bpelHandleMergedStamping"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/PaymentComplementBiz/bpelHandleMergedStamping"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/PaymentComplementBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:sp1="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelCheckAlreadyStamped"
+         xmlns:ns2="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelLogPayment"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/AuditControlTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelHandleError"
+         xmlns:ns5="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelActivateCheckpoint"
+         xmlns:ns6="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelAddAttachment"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns8="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelHandleMessage"
+         xmlns:ns9="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/DigitalStampGERTec">
+  <documentation>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación HandleMergedStamping del servicio PaymentComplementBiz.]]>
+  </documentation>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/PaymentComplementBiz/bpelHandleMergedStamping"
+          location="../WSDLs/bpelHandleMergedStamping.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelHandleMergedStamping" partnerLinkType="client:bpelHandleMergedStamping"
+                 myRole="bpelHandleMergedStampingProvider"/>
+    <partnerLink name="wsSOAUtillities" partnerLinkType="ns7:wsSOAUtillities" partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns3:wsAuditControlTec" initializePartnerRole="no"
+                 partnerRole="AuditControlTecPortType"/>
+    <partnerLink name="wsDigitalStampGERTec" partnerLinkType="ns10:wsDigitalStampGERTec"
+                 partnerRole="DigitalStampGERTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:HandleMergedStampingRq"/>
+    <variable name="outputVariable" messageType="client:HandleMergedStampingRs"/>
+    <variable name="contextInfo" element="ns0:ContextInfo"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <faultHandlers>
+    <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation>
+        <assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[HandleMergedStamping]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[PaymentComplementBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <reply name="replyOutput" partnerLink="bpelHandleMergedStamping" variable="outputVariable"
+               portType="client:bpelHandleMergedStamping" operation="HandleMergedStamping">
+          <documentation>
+            <![CDATA[Se indica la salida del proceso BPEL.]]>
+          </documentation>
+        </reply>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelHandleMergedStamping.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelHandleMergedStamping" portType="client:bpelHandleMergedStamping"
+             operation="HandleMergedStamping" variable="inputVariable" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeHandleMergedStamping">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varCurrentControl" element="ns0:ControlData"/>
+        <variable name="varHtmlControlInput" element="ns7:GetHtmlControlRq"/>
+        <variable name="varHtmlControlOutput" element="ns7:GetHtmlControlRs"/>
+        <variable name="varCounter" type="xsd:unsignedInt"/>
+        <variable name="varCurrentSuccess" type="xsd:unsignedInt"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[HandleMergedStamping]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[PaymentComplementBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[HandleMergedStamping]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[PaymentComplementBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[HandleMergedStamping]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[PaymentComplementBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[HandleMergedStamping]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[PaymentComplementBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.HandleMergedStampingRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceHandleMergedStamping">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <if name="IfAnyHeader">
+          <documentation>
+            <![CDATA[Found Headers]]>
+          </documentation>
+          <condition>count($inputVariable.HandleMergedStampingRq/ns0:MergedHeader) &gt; 0</condition>
+          <sequence name="sequenceMainFoundHeaders">
+            <assign name="assignInitialContext">
+              <copy>
+                <from><literal>0</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:RetryCount</to>
+              </copy>
+              <copy>
+                <from><literal>1</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastProcessedIndex</to>
+              </copy>
+            </assign>
+            <scope name="scopeFoundHeaders">
+              <sequence name="sequenceFoundHeaders">
+                <assign name="assignControl">
+                  <copy>
+                    <from><literal>0</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:SuccessfulRecords</to>
+                  </copy>
+                  <copy>
+                    <from><literal>0</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:WrongRecords</to>
+                  </copy>
+                </assign>
+                <scope name="sequenceForEachHeader">
+                  <forEach parallel="no" counterName="counter" name="ForEachHeader">
+                    <startCounterValue>1</startCounterValue>
+                    <finalCounterValue>count($inputVariable.HandleMergedStampingRq/ns0:MergedHeader)</finalCounterValue>
+                    <scope name="scopeForEachHeader">
+                      <variables>
+                        <variable name="currentHeader" element="ns0:CurrentHeader"/>
+                        <variable name="alreadyStamped" type="xsd:boolean"/>
+                        <variable name="trxStampInput" messageType="ns10:createTrxCFDIRq"/>
+                        <variable name="trxStampOutput" messageType="ns10:createTrxCFDIRs"/>
+                        <variable name="createLogRq" messageType="ns3:CreateLogRq"/>
+                        <variable name="varStampData" element="ns0:StampData"/>
+                        <variable name="createLogRs" messageType="ns3:CreateLogRs"/>
+                        <variable name="varContextAtt" element="ns0:ContextInfo"/>
+                        <variable name="v_ErrorQuery" type="xsd:boolean"/>
+                        <variable name="varErrorCode" type="xsd:string"/>
+                        <variable name="varErrorDesc" type="xsd:string"/>
+                        <variable name="varStatus" type="xsd:string"/>
+                      </variables>
+                      <sequence name="sequenceForEachHeader">
+                        <assign name="assignCurrentContext">
+                          <copy>
+                            <from>$counter</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastProcessedIndex</to>
+                          </copy>
+                          <copy>
+                            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError</to>
+                          </copy>
+                          <extensionAssignOperation>
+                            <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError</bpelx:target>
+                            </bpelx:remove>
+                          </extensionAssignOperation>
+                          <copy>
+                            <from>$inputVariable.HandleMergedStampingRq/ns0:MergedHeader[$counter]/ns0:Header</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentHeader</to>
+                          </copy>
+                        </assign>
+                        <if name="IfRestored">
+                          <documentation>
+                            <![CDATA[Restored Headers]]>
+                          </documentation>
+                          <condition>$inputVariable.HandleMergedStampingRq/ns0:MergedHeader[$counter]/ns0:Restored/text() = 'true'</condition>
+                          <assign name="assignNotStamped">
+                            <copy>
+                              <from>false()</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$alreadyStamped</to>
+                            </copy>
+                          </assign>
+                          <else>
+                            <documentation>
+                              <![CDATA[Fresh Headers]]>
+                            </documentation>
+                            <sequence name="sequenceFreshHeaders">
+                              <extensionActivity>
+                                <bpelx:call name="callCheckAlreadyStamped" target="sp1:sbpelCheckAlreadyStamped">
+                                  <bpelx:param name="cashReceiptId" copyByValue="yes">$currentHeader/ns0:CashReceiptId</bpelx:param>
+                                  <bpelx:param name="alreadyStamped" copyByValue="no" variable="alreadyStamped"/>
+                                  <bpelx:param name="paymentType" copyByValue="yes">'COMPLEMENT'</bpelx:param>
+                                  <bpelx:param name="v_ErrorQuery" copyByValue="no" variable="v_ErrorQuery"/>
+                                </bpelx:call>
+                              </extensionActivity>
+                            </sequence>
+                          </else>
+                        </if>
+                        <if name="If_errorQueryAlreadyStamped">
+                          <documentation>
+                            <![CDATA[ErrorConsultaAlreadyStamp]]>
+                          </documentation>
+                          <condition>$v_ErrorQuery</condition>
+                          <assign name="assignQueryAlreadyStampedError"
+                                                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>
+            <literal>SOA-00022</literal>
+         </from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ErrorCode</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>concat($currentHeader/ns0:ReceiptNumber, ' - ', dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","ERROR_QUERY_ALREADY_STAMPED_RECEIPT", "PropertyValue", ""))</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:Description</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>
+            <literal>[PaymentComplementBiz]</literal>
+         </from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:FailedService</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>
+            <literal>[bpelHandleMergedStamping]</literal>
+         </from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:BusinessProcess</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>xp20:current-dateTime()</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:TimeStamp</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>
+            <literal>Error query already stamped receitp</literal>
+         </from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                            </copy>
+                            <copy>
+                              <from>'04'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                            </copy>
+                            <copy>
+                              <from>dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","ERROR_QUERY_ALREADY_STAMPED_RECEIPT", "PropertyValue", "")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                            </copy>
+                            <copy>
+                              <from>'ERRORED'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                            </copy>
+                          </assign><else>
+                            <documentation>
+                              <![CDATA[QueryValid]]>
+                            </documentation>
+                            <sequence>
+                              <if name="IfAlreadyStamped">
+                                <documentation>
+                                  <![CDATA[Already Stamped]]>
+                                </documentation>
+                                <condition>contains($alreadyStamped,'true')</condition>
+                                <assign name="assignAlreadyStampedError">
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>SOA-00022</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ErrorCode</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>concat($currentHeader/ns0:ReceiptNumber, ' - ', dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","ALREADY_STAMPED_RECEIPT", "PropertyValue", ""))</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:Description</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[PaymentComplementBiz]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:FailedService</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>[bpelHandleMergedStamping]</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:BusinessProcess</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>xp20:current-dateTime()</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:TimeStamp</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from><literal>Already stamped receipt</literal></from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                                  </copy>
+                                  <copy>
+                                    <from>'04'</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                  </copy>
+                                  <copy>
+                                    <from>dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","ALREADY_STAMPED_RECEIPT", "PropertyValue", "")</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                  </copy>
+                                  <copy>
+                                    <from>'ERRORED'</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                  </copy>
+                                </assign>
+                                <else>
+                                  <documentation>
+                                    <![CDATA[Another Status]]>
+                                  </documentation>
+                                  <sequence name="sequenceAnotherStatus">
+                                    <if name="IfAnyDetail">
+                                      <documentation>
+                                        <![CDATA[Found Details]]>
+                                      </documentation>
+                                      <condition>count($currentHeader/ns0:Lines)&gt;0</condition>
+                                      <sequence name="sequenceFoundDetails">
+                                        <assign name="transformInput">
+                                          <bpelx:annotation>
+                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                          </bpelx:annotation>
+                                          <copy>
+                                            <from>ora:doXSLTransformForDoc("../Transformations/CurrentHeader_To_createTrxCFDIRq.xsl", $currentHeader)</from>
+                                            <to variable="trxStampInput" part="createTrxCFDIRq"/>
+                                          </copy>
+                                        </assign>
+                                        <invoke name="invokeStamp" partnerLink="wsDigitalStampGERTec"
+                                                portType="ns10:DigitalStampGERTecPortType" operation="createTrxCFDI"
+                                                inputVariable="trxStampInput" outputVariable="trxStampOutput"
+                                                bpelx:invokeAsDetail="no"/>
+                                        <if name="IfUnavailablePAC">
+                                          <documentation>
+                                            <![CDATA[Unavailable PAC]]>
+                                          </documentation>
+                                          <condition>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode = 'OSB-380002'</condition>
+                                          <if name="IfMoreIntents">
+                                            <documentation>
+                                              <![CDATA[More Intents]]>
+                                            </documentation>
+                                            <condition>$contextInfo/ns0:RetryCount &lt; dvm:lookupValue("Dvms/Configuration.dvm", "PropertyName", "MAX_RETRY_COUNT", "PropertyValue", "1")</condition>
+                                            <sequence name="sequenceMoreIntents">
+                                              <assign name="assignRetryCount">
+                                                <copy>
+                                                  <from>$contextInfo/ns0:RetryCount + 1</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:RetryCount</to>
+                                                </copy>
+                                              </assign>
+                                              <extensionActivity>
+                                                <bpelx:replay name="replayHeader" scope="scopeFoundHeaders"/>
+                                              </extensionActivity>
+                                            </sequence>
+                                            <else>
+                                              <documentation>
+                                                <![CDATA[Reached Max Limit]]>
+                                              </documentation>
+                                              <assign name="assignFixError">
+                                                <copy>
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</to>
+                                                </copy>
+                                              </assign>
+                                            </else>
+                                          </if>
+                                          <else>
+                                            <documentation>
+                                              <![CDATA[Available PAC]]>
+                                            </documentation>
+                                            <empty name="Empty"/>
+                                          </else>
+                                        </if>
+                                        <if name="IfSuccessfulStamping">
+                                          <documentation>
+                                            <![CDATA[Successful Stamping]]>
+                                          </documentation>
+                                          <condition>count($trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error) = 0</condition>
+                                          <sequence name="sequenceAttachmentLog">
+                                            <assign name="AssignSTAMPED"
+                                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                              <copy>
+                                                <from>'02'</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                              </copy>
+                                              <copy>
+                                                <from>'STAMPED'</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                              </copy>
+                                            </assign>
+                                            <assign name="assignUUID">
+                                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:stampingUuid</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStampData/ns0:UUID</to>
+                                              </copy>
+                                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:urlXml</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStampData/ns0:UrlXML</to>
+                                              </copy>
+                                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:stampingDate</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStampData/ns0:UUIDDate</to>
+                                              </copy>
+                                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:urlPdf</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStampData/ns0:UrlPDF</to>
+                                              </copy>
+                                            </assign>
+                                            <extensionActivity>
+                                              <bpelx:call name="CallUpdateFlex"
+                                                          xmlns:sp1="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex"
+                                                          target="sp1:sbpelUpdateFlex">
+                                                <bpelx:param name="v_ContextValue" copyByValue="yes">'JLxMXReceipts'</bpelx:param>
+                                                <bpelx:param name="v_UserKeyA" copyByValue="yes">$currentHeader/ns0:ReceiptNumber</bpelx:param>
+                                                <bpelx:param name="v_UserKeyB" copyByValue="yes">$currentHeader/ns0:CashReceiptId</bpelx:param>
+                                                <bpelx:param name="v_DFFAttributes" copyByValue="yes">concat('{"GLOBAL_ATTRIBUTE1":"',$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:stampingUuid,'"}')</bpelx:param>
+                                              </bpelx:call>
+                                            </extensionActivity>
+                                            <extensionActivity>
+                                              <bpelx:call xmlns:sp1="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelAddAttachment"
+                                                          target="sp1:sbpelAddAttachment" name="callAddAttachment">
+                                                <bpelx:param name="currentHeader" copyByValue="yes">$currentHeader</bpelx:param>
+                                                <bpelx:param name="varDataUUID" copyByValue="yes">$varStampData</bpelx:param>
+                                                <bpelx:param name="varContextAttachment" copyByValue="no"
+                                                             variable="varContextAtt"/>
+                                                <bpelx:param name="varSuccessful" copyByValue="no"
+                                                             variable="varCurrentSuccess"/>
+                                              </bpelx:call>
+                                            </extensionActivity>
+                                            <assign name="assignResult">
+                                              <copy>
+                                                <from>number($varCurrentControl/ns0:SuccessfulRecords) + number($varCurrentSuccess)</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:SuccessfulRecords</to>
+                                              </copy>
+                                              <copy>
+                                                <from>$varContextAtt</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo</to>
+                                              </copy>
+                                            </assign>
+                                          </sequence>
+                                          <else>
+                                            <documentation>
+                                              <![CDATA[Other Errors]]>
+                                            </documentation>
+                                            <sequence name="sequenceOtherErrors">
+                                              <assign name="assignError">
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ErrorCode</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:Description</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:BusinessProcess</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:BusinessProcess</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:FailedService</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:FailedService</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:TimeStamp</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:TimeStamp</to>
+                                                </copy>
+                                              </assign>
+                                              <if name="IfNotConnected">
+                                                <documentation>
+                                                  <![CDATA[Not Connected]]>
+                                                </documentation>
+                                                <condition>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode = 'OSB-380002'</condition>
+                                                <assign name="AssignNotConnected">
+                                                  <copy>
+                                                    <from>'03'</from>
+                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                                  </copy>
+                                                  <copy>
+                                                    <from>dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","NO_CONNETED", "PropertyValue", "")</from>
+                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                                  </copy>
+                                                  <copy>
+                                                    <from>'ERRORED'</from>
+                                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                                  </copy>
+                                                </assign>
+                                                <else>
+                                                  <documentation>
+                                                    <![CDATA[Other Errors]]>
+                                                  </documentation>
+                                                  <assign name="AssignERRORED"
+                                                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                    <copy>
+                                                      <from>'04'</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                                    </copy>
+                                                    <copy>
+                                                      <from>$trxStampOutput.createTrxCFDIRs/cmn:Errors/cmn:Error/cmn:Description</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                                    </copy>
+                                                    <copy>
+                                                      <from>'ERRORED'</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                                    </copy>
+                                                  </assign>
+                                                </else>
+                                              </if>
+                                            </sequence>
+                                          </else>
+                                        </if>
+                                      </sequence>
+                                      <else>
+                                        <documentation>
+                                          <![CDATA[No Details]]>
+                                        </documentation>
+                                        <assign name="assignNoDetailsError">
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from><literal>SOA-00023</literal></from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ErrorCode</to>
+                                          </copy>
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from><literal>No available receipt applications</literal></from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                                          </copy>
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from>concat($currentHeader/ns0:ReceiptNumber, ' - ', dvm:lookupValue("Dvms/Configuration.dvm", "PropertyName", "NO_APPLICATIONS", "PropertyValue", ""))</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:Description</to>
+                                          </copy>
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from><literal>[bpelHandleMergedStamping]</literal></from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:BusinessProcess</to>
+                                          </copy>
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from><literal>[PaymentComplementBiz]</literal></from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:FailedService</to>
+                                          </copy>
+                                          <copy bpelx:insertMissingToData="yes">
+                                            <from>xp20:current-dateTime()</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:TimeStamp</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'04'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                          </copy>
+                                          <copy>
+                                            <from>dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","NO_APPLICATIONS", "PropertyValue", "")</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'ERRORED'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                          </copy>
+                                        </assign>
+                                      </else>
+                                    </if>
+                                  </sequence>
+                                </else>
+                              </if>
+                            </sequence>
+                          </else>
+                        </if>
+                        <if name="IfFoundError">
+                          <documentation>
+                            <![CDATA[Found Error]]>
+                          </documentation>
+                          <condition>string-length($contextInfo/ns0:LastError/cmn:ErrorCode) &gt; 0</condition>
+                          <sequence name="sequenceHandleError">
+                            <if name="IfErrorLarger">
+                              <documentation>
+                                <![CDATA[Larger]]>
+                              </documentation>
+                              <condition>string-length($contextInfo/ns0:LastError/cmn:Description)&gt;1000</condition>
+                              <assign name="assignCutErrorDesc">
+                                <copy>
+                                  <from>concat(substring($contextInfo/ns0:LastError/cmn:Description,1,1000),'...')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:Description</to>
+                                </copy>
+                              </assign>
+                            </if>
+                            <assign name="assignLogParams">
+                              <copy>
+                                <from><literal>SOA-00006</literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:codeError</to>
+                              </copy>
+                              <copy>
+                                <from>$contextInfo/ns0:LastError/cmn:Description</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:error</to>
+                              </copy>
+                              <copy>
+                                <from>ora:toCDATA($currentHeader)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:payload</to>
+                              </copy>
+                              <copy>
+                                <from><literal>[PaymentComplementBiz]</literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:serviceName</to>
+                              </copy>
+                              <copy>
+                                <from><literal>[bpelHandleMergedStamping]</literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:operationName</to>
+                              </copy>
+                              <copy>
+                                <from>ora:getComponentInstanceId()</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$createLogRq.CreateLogRq/ns3:CompositeError/ns3:instanceNumber</to>
+                              </copy>
+                            </assign>
+                            <invoke name="invokeLogError" partnerLink="wsAuditControlTec"
+                                    portType="ns3:AuditControlTecPortType" operation="CreateLog"
+                                    inputVariable="createLogRq" outputVariable="createLogRs" bpelx:invokeAsDetail="no"/>
+                            <assign name="assignAddCounterError">
+                              <copy>
+                                <from>number($varCurrentControl/ns0:WrongRecords)+1</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:WrongRecords</to>
+                              </copy>
+                            </assign>
+                            <if name="IfShortDescription">
+                              <documentation>
+                                <![CDATA[Not Found Desc]]>
+                              </documentation>
+                              <condition>string-length($contextInfo/ns0:LastError/cmn:ShortDescription)=0</condition>
+                              <assign name="assignShortDesc">
+                                <copy>
+                                  <from>$contextInfo/ns0:LastError/cmn:Description</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                                </copy>
+                              </assign>
+                            </if>
+                            <if name="IfLengthError">
+                              <documentation>
+                                <![CDATA[Greater than]]>
+                              </documentation>
+                              <condition>string-length($contextInfo/ns0:LastError/cmn:ShortDescription)&gt;140</condition>
+                              <assign name="assignCutError">
+                                <copy>
+                                  <from>concat(substring($contextInfo/ns0:LastError/cmn:ShortDescription,1,140),'...')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns0:LastError/cmn:ShortDescription</to>
+                                </copy>
+                              </assign>
+                            </if>
+                            <if name="IfFirstError">
+                              <documentation>
+                                <![CDATA[FirstError]]>
+                              </documentation>
+                              <condition>number($varCurrentControl/ns0:WrongRecords)  = 1</condition>
+                              <assign name="assignDirectError">
+                                <copy>
+                                  <from>concat("Recibo: ",$currentHeader/ns0:ReceiptNumber)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:DetailType/ns0:ReceiptNumber</to>
+                                </copy>
+                                <copy>
+                                  <from>concat($contextInfo/ns0:LastError/cmn:ErrorCode,' - ' ,$contextInfo/ns0:LastError/cmn:ShortDescription)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:DetailType/ns0:ErrorDescription</to>
+                                </copy>
+                                <copy>
+                                  <from>concat($contextInfo/ns0:LastError/cmn:ErrorCode,' - ' ,$contextInfo/ns0:LastError/cmn:ShortDescription)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                </copy>
+                                <copy>
+                                  <from>'04'</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                </copy>
+                                <copy>
+                                  <from>'ERRORED'</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                </copy>
+                              </assign>
+                              <else>
+                                <documentation>
+                                  <![CDATA[NotFirts]]>
+                                </documentation>
+                                <sequence name="sequenceAppendError">
+                                  <assign name="assignPosition">
+                                    <copy>
+                                      <from>$varCurrentControl/ns0:WrongRecords</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCounter</to>
+                                    </copy>
+                                  </assign>
+                                  <assign name="assigAppedError">
+                                    <extensionAssignOperation>
+                                      <bpelx:insertAfter>
+                                        <bpelx:from><bpelx:literal><DetailType xmlns="http://soa.estrellaroja.com.mx/PaymentComplementBiz"/></bpelx:literal></bpelx:from>
+                                        <bpelx:to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:DetailType</bpelx:to>
+                                      </bpelx:insertAfter>
+                                    </extensionAssignOperation>
+                                    <copy>
+                                      <from>concat($contextInfo/ns0:LastError/cmn:ErrorCode,' - ' ,$contextInfo/ns0:LastError/cmn:ShortDescription)</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorDesc</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'04'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCode</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'ERRORED'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStatus</to>
+                                    </copy>
+                                    <copy bpelx:insertMissingToData="yes">
+                                      <from>concat($contextInfo/ns0:LastError/cmn:ErrorCode, " - ",$contextInfo/ns0:LastError/cmn:ShortDescription)</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:DetailType[$varCounter]/ns0:ErrorDescription</to>
+                                    </copy>
+                                    <copy bpelx:insertMissingToData="yes">
+                                      <from>concat("Recibo: ",$currentHeader/ns0:ReceiptNumber)</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCurrentControl/ns0:DetailType[$varCounter]/ns0:ReceiptNumber</to>
+                                    </copy>
+                                  </assign>
+                                </sequence>
+                              </else>
+                            </if>
+                          </sequence>
+                        </if>
+                        <extensionActivity>
+                          <bpelx:call name="callLogPayment"
+                                      xmlns:sp1="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelLogPayment"
+                                      target="sp1:sbpelLogPayment">
+                            <bpelx:param name="currentHeader" copyByValue="yes">$currentHeader</bpelx:param>
+                            <bpelx:param name="status" copyByValue="yes" variable="varStatus"/>
+                            <bpelx:param name="UUID" copyByValue="yes">$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:stampingUuid</bpelx:param>
+                            <bpelx:param name="UUIDDate" copyByValue="yes">$trxStampOutput.createTrxCFDIRs/ns10:Return/ns10:data/ns10:stampingDate</bpelx:param>
+                          </bpelx:call>
+                        </extensionActivity>
+                        <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                          <bpelx:call name="CallUpdateFlex"
+                                      xmlns:sp1="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex"
+                                      target="sp1:sbpelUpdateFlex"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <bpelx:param name="v_ContextValue" copyByValue="yes">'#NULL'</bpelx:param>
+                            <bpelx:param name="v_UserKeyA" copyByValue="yes">$currentHeader/ns0:ReceiptNumber</bpelx:param>
+                            <bpelx:param name="v_UserKeyB" copyByValue="yes">$currentHeader/ns0:CashReceiptId</bpelx:param>
+                            <bpelx:param name="v_DFFAttributes" copyByValue="yes">concat('{"ATTRIBUTE1":"',$varErrorCode,'","ATTRIBUTE2":"',substring(translate($varErrorDesc,',',''),1,149),'"}')</bpelx:param>
+                          </bpelx:call>
+                        </extensionActivity>
+                      </sequence>
+                    </scope>
+                  </forEach>
+                </scope>
+              </sequence>
+            </scope>
+            <assign name="trHtmlControl">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/trCurrentControl_To_HtmlControl.xsl", $varCurrentControl)</from>
+                <to variable="varHtmlControlInput"/>
+              </copy>
+            </assign>
+            <invoke name="invokeHtmlControl" partnerLink="wsSOAUtillities"
+                    portType="ns7:SOAUtilitiesTecPortType" operation="GetHtmlControl"
+                    inputVariable="varHtmlControlInput" outputVariable="varHtmlControlOutput"
+                    bpelx:invokeAsDetail="no"/>
+            <extensionActivity>
+              <bpelx:call name="callHandleMessage" target="ns8:sbpelHandleMessage">
+                <bpelx:param name="varHtmlString" copyByValue="yes">$varHtmlControlOutput/ns7:Return/ns7:HtmlControl</bpelx:param>
+              </bpelx:call>
+            </extensionActivity>
+            <extensionActivity>
+              <bpelx:call xmlns:sp1="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelActivateCheckpoint"
+                          target="sp1:sbpelActivateCheckpoint" name="callActivateCheckpoint">
+                <bpelx:param name="integrationName" copyByValue="yes">dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","INTEGRATION_NAME","PropertyValue","")</bpelx:param>
+                <bpelx:param name="processName" copyByValue="yes">dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","PROCESS_NAME", "PropertyValue","")</bpelx:param>
+                <bpelx:param name="lastDate" copyByValue="yes">$inputVariable.HandleMergedStampingRq/ns0:MergedHeader[1]/ns0:Header/ns0:LastUpdateDate</bpelx:param>
+              </bpelx:call>
+            </extensionActivity>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[Any Header Found]]>
+            </documentation>
+            <empty name="empty"/>
+          </else>
+        </if>
+        <assign name="transformOutput">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/ContextInfo_To_HandleMergedStampingRs.xsl", $contextInfo)</from>
+            <to variable="outputVariable" part="HandleMergedStampingRs"/>
+          </copy>
+        </assign>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelHandleMergedStamping" portType="client:bpelHandleMergedStamping"
+           operation="HandleMergedStamping" variable="outputVariable">
+      <documentation>
+        <![CDATA[Salida del proceso BPEL.]]>
+      </documentation>
+    </reply>
+  </sequence>
+</process>

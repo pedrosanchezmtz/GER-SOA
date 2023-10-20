@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders" name="SelectTratecsaOrders-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:import location="SelectTratecsaOrders.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders"/>
+   <wsdl:binding name="SelectTratecsaOrders_ptt-binding" type="sel:SelectTratecsaOrders_ptt" xmlns:sel="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders">
+      <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+      <wsdl:operation name="SelectTratecsaOrders">
+         <soap:operation soapAction="SelectTratecsaOrders"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

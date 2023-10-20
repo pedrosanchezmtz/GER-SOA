@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelManagementsStatementsBankBanorte" targetNamespace="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" xmlns:ns4="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails" xmlns:ns6="http://soa.estrellaroja.com.mx/MessageBiz" xmlns:ns7="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns8="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz">
+   <plnk:partnerLinkType name="bpelManagementsStatementsBankBanorte">
+      <plnk:role name="bpelManagementsStatementsBankBanorteProvider" portType="client:bpelManagementsStatementsBankBanorte"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" location="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/MessageBiz" location="oramds:/apps/SOA/MessageBiz/MessageBiz.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" xmlns:ns4="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" schemaLocation="../Schemas/Banks/StatementsBankBanorte.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" xmlns:ns4="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" schemaLocation="../Schemas/SFTPEstrellaRojaEnt.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" xmlns:ns4="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureCodeBank" schemaLocation="../Schemas/StructureBankCode.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" xmlns:ns4="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails" schemaLocation="../Schemas/StructureBankDetails.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz" schemaLocation="oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelManagementsStatementsBankBanorteRequestMessage">
+      <wsdl:part name="payload" element="ns1:StatementsBankBanorte"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelManagementsStatementsBankBanorte">
+      <wsdl:operation name="ManagementsStatementsBankBanorte">
+         <wsdl:input message="client:bpelManagementsStatementsBankBanorteRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

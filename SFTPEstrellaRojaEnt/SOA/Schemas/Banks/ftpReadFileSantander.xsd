@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" targetNamespace="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+   <xsd:element name="estadoCta">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="choice" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="C1" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=8007751681200000000990220171228.TXT</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

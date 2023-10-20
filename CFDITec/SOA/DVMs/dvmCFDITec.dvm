@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmCFDITec" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>CFDITec</cell>
+         <cell>Path</cell>
+         <cell>/Custom/ER_INTEGRATION/ER13_AP_Validacion_automatica/Data Models/XXER_AP_INVOICE_REPORT.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CFDITec</cell>
+         <cell>PathID</cell>
+         <cell>/Custom/ER_INTEGRATION/ER13_AP_Validacion_automatica/Data Models/XXER_AP_INVOICE_REPORT_ID.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CFDITec</cell>
+         <cell>TargetInterface</cell>
+         <cell>CFDITec</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CFDITec</cell>
+         <cell>C_ENTITY_NAME</cell>
+         <cell>AP_INVOICES_ALL</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CFDITec</cell>
+         <cell>V_CATEGORIA_ADJ</cell>
+         <cell>AP_SUPPORTING_DOC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidationPaymentsAP</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_ValidationComplement.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>SendCFDIToSFTP</cell>
+         <cell>DirSFTP</cell>
+         <cell>/SOA/er.soa/incoming/CFDI</cell>
+      </row>
+      <row markdefault="false">
+         <cell>SendCFDIToSFTP</cell>
+         <cell>QueryConsulta</cell>
+         <cell>SELECT ID,SISTEMA_ORIGEN,TIPO_FACTURA,SERIE,FOLIO,FECHA_CREACION,URL_PDF FROM ER_FACTURACION_GENERAL_TBL@REPCONTROL.ESTRELLAROJA.COM.MX where 1=1 and  ESTATUS_DESCARGA_SFTP='@ESTATUS@' AND TRUNC(FECHA_CREACION) BETWEEN TRUNC(NVL(to_date('@FECHA_INICIAL@','DD/MM/RRRR'),FECHA_CREACION)) AND TRUNC(NVL(to_date('@FECHA_FINAL@','DD/MM/RRRR'),FECHA_CREACION)) AND ID=NVL('@ID_TRANSACCION@',ID)</cell>
+      </row>
+   </rows>
+</dvm>

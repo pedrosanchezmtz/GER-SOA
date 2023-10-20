@@ -1,0 +1,309 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Nov 25 12:41:09 CST 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELRelationCFDIs"
+               targetNamespace="http://soa.estrellaroja.com.mx/LetterPorteBiz/BPELRelationCFDIs"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/LetterPorteBiz/BPELRelationCFDIs"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/LetterPorteBiz"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/LetterPorteTec"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/LetterPorteTec/Types"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/LetterPorteBiz/NXSD/RelationCFDIs">
+  <import namespace="http://soa.estrellaroja.com.mx/LetterPorteBiz/NXSD/RelationCFDIs"
+          location="../Schemas/NXSD/RelationsCFDIs.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/LetterPorteBiz/BPELRelationCFDIs" location="../WSDLs/BPELRelationCFDIs.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelrelationcfdis_client" partnerLinkType="client:BPELRelationCFDIs" myRole="BPELRelationCFDIsProvider"/>
+    <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns1:wsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsMessageTec" partnerLinkType="ns2:wsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+    <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns3:wsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="wsLetterPorteTec" partnerLinkType="ns6:wsLetterPorteTec" partnerRole="LetterPorteTec_ptt"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPELRelationCFDIsRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BPELRelationCFDIsResponseMessage"/>
+    <variable name="WsSOAUtilitiesGetHtmlControlRs" messageType="ns1:GetHtmlControlRs"/>
+    <variable name="WsSOAUtilitiesGetHtmlControlRq" messageType="ns1:GetHtmlControlRq"/>
+    <variable name="WsMessage_SendEmailRq" messageType="ns2:MessageRq"/>
+    <variable name="v_title" type="xsd:string"/>
+    <variable name="wsLetterPorteTecGetRelationsCFDIsRq" messageType="ns6:requestMessage"/>
+    <variable name="wsLetterPorteTecGetRelationsCFDIsRs" messageType="ns6:replyMessage"/>
+    <variable name="v_relationsCFDIsCSV" element="ns8:RelationsCFDIs"/>
+    <variable name="v_csvString" type="xsd:string"/>
+    <variable name="WsSOAUtilitiesEncodeRq" messageType="ns1:EncodeRq"/>
+    <variable name="WsSOAUtilitiesEncodeRs" messageType="ns1:EncodeRs"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><if name="IfEnable" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[NotificacionErrorEnable]]></documentation>
+      <condition>dvm:lookupValue("DVMs/LetterPorteBiz.dvm","Code","NotifiactionsError","Value","no","Component","RelationCFDIs")='si'</condition>
+      <sequence name="SeqNotification" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <assign name="AssignErrorMsg">
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+         <extensionAssignOperation>
+              <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq</bpelx:target>
+               </bpelx:remove>
+            </extensionAssignOperation><copy>
+               <from>0</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:TotalSucceeded</to>
+            </copy><copy>
+               <from>1</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:TotalErrors</to>
+            </copy><copy>
+               <from>0</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:TotalProcessed</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>ora:getCompositeName()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[1]/ns1:ErrorMessage</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>'Integraticion:'</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[1]/ns1:DataValue</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>'Intancia: '</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[2]/ns1:DataValue</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>ora:getFlowId()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[2]/ns1:ErrorMessage</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>'Detalle Error: '</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[4]/ns1:DataValue</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>string('Error not Controled')</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[4]/ns1:ErrorMessage</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>ora:getFaultName()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[3]/ns1:ErrorMessage</to>
+            </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>'Nombre Error: '</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail[3]/ns1:DataValue</to>
+            </copy></assign>
+         <invoke name="WsSOAUtilities" partnerLink="wsSOAUtilitiesTec" portType="ns1:SOAUtilitiesTecPortType"
+                 operation="GetHtmlControl" inputVariable="WsSOAUtilitiesGetHtmlControlRq"
+                 outputVariable="WsSOAUtilitiesGetHtmlControlRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                 bpelx:invokeAsDetail="no"/>
+         <assign name="assignHtmlResult" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>"LetterPorteBiz"</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessage_SendEmailRq.CustomHeader/ns2:IntegrationName</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>$WsSOAUtilitiesGetHtmlControlRs.GetHtmlControlRs/ns1:Return/ns1:HtmlControl</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessage_SendEmailRq.MessageRq/ns2:Message/ns2:Message</to>
+            </copy>
+          </assign>
+         <invoke name="WsMessage" partnerLink="wsMessageTec" portType="ns2:MessageTecPortType" operation="SendEmail"
+                 inputVariable="WsMessage_SendEmailRq" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                 bpelx:invokeAsDetail="no"/>
+      </sequence>
+   </if></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELRelationCFDIs.wsdl) --><receive name="receiveInput" partnerLink="bpelrelationcfdis_client" portType="client:BPELRelationCFDIs" operation="RelationCFDIs" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignRs">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>oraext:setFlowInstanceTitle("RelationCFDIs")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_title</to>
+      </copy>
+      <copy>
+        <from>concat(dvm:lookupValue("DVMs/LetterPorteBiz.dvm","Code","PreFijoName","Value","Relations_CFDIs_","Component","UploadURLTransactions"),$inputVariable.payload/ns4:Transaction,'.csv')</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:FileName</to>
+      </copy>
+      <copy>
+        <from>1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:TotalSucceeded</to>
+      </copy>
+      <copy>
+        <from>1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:TotalProcessed</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns4:Transaction</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsLetterPorteTecGetRelationsCFDIsRq.part1/ns7:TransactionNumber</to>
+      </copy>
+    </assign>
+    <invoke name="wsLetterPorteTec" bpelx:invokeAsDetail="no" partnerLink="wsLetterPorteTec"
+            portType="ns6:LetterPorteTec_ptt" operation="GetRelationsCFDIs"
+            inputVariable="wsLetterPorteTecGetRelationsCFDIsRq" outputVariable="wsLetterPorteTecGetRelationsCFDIsRs"/>
+    <if name="if_Realtions">
+      <documentation>
+        <![CDATA[File_relations]]>
+      </documentation>
+      <condition>count($wsLetterPorteTecGetRelationsCFDIsRs.part1/ns7:RelationCFDIs)&gt;0</condition>
+      <sequence name="FileRelations">
+        <assign name="Trs_realitonsCSV">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/Trs_realitonsCSV.xsl", $wsLetterPorteTecGetRelationsCFDIsRs.part1)</from>
+            <to variable="v_relationsCFDIsCSV"/>
+          </copy>
+        </assign>
+        <assign name="TrsCSV">
+          <bpelx:annotation>
+            <bpelx:pattern>translate</bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doTranslateToNative($v_relationsCFDIsCSV, 'Schemas/NXSD/RelationsCFDIs.xsd', 'RelationsCFDIs', 'STRING')</from>
+            <to>$v_csvString</to>
+          </copy>
+        </assign>
+        <assign name="AssignEncode">
+          <copy>
+            <from>concat(dvm:lookupValue("DVMs/LetterPorteBiz.dvm","Code","HeaderCSV","Value","","Component","RelationCFDIs"),'
+',$v_csvString)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesEncodeRq.EncodeRq/ns1:Coded/ns1:ContentData</to>
+          </copy>
+          <copy>
+            <from>$outputVariable.payload/ns4:FileName</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesEncodeRq.EncodeRq/ns1:Coded/ns1:ContentDataName</to>
+          </copy>
+        </assign>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[Empty]]>
+        </documentation>
+        <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" name="fileempty">
+      
+      
+      <assign name="AssignEncode">
+         
+         
+      <copy>
+            <from>concat(dvm:lookupValue("DVMs/LetterPorteBiz.dvm","Code","HeaderCSV","Value","","Component","RelationCFDIs"),'
+','')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesEncodeRq.EncodeRq/ns1:Coded/ns1:ContentData</to>
+         </copy><copy>
+            <from>$outputVariable.payload/ns4:FileName</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesEncodeRq.EncodeRq/ns1:Coded/ns1:ContentDataName</to>
+         </copy></assign>
+      
+      
+   </sequence>
+      </else>
+    </if>
+    <invoke name="WsSOAUtilities" partnerLink="wsSOAUtilitiesTec" portType="ns1:SOAUtilitiesTecPortType"
+            operation="Encode" inputVariable="WsSOAUtilitiesEncodeRq" outputVariable="WsSOAUtilitiesEncodeRs"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+    <assign name="AssignRsB64">
+      <copy>
+        <from>$WsSOAUtilitiesEncodeRs.EncodeRs/ns1:Return/ns1:CodedReturn/ns1:DataBase64</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:FileContent</to>
+      </copy>
+      <copy>
+        <from>'Archivo Generado exitoso'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail/ns1:DataValue</to>
+      </copy>
+      <copy>
+        <from>$outputVariable.payload/ns4:FileName</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesGetHtmlControlRq.GetHtmlControlRq/ns1:ErrorsDetails/ns1:ErrorDetail/ns1:ErrorMessage</to>
+      </copy>
+    </assign>
+    <if name="If_Enable" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[NotificacionSuccessEnable]]></documentation>
+      <condition>dvm:lookupValue("DVMs/LetterPorteBiz.dvm","Code","NotifiactionsSuccess","Value","no","Component","RelationCFDIs")='si'</condition>
+      <sequence name="SeqNotification" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <invoke name="WsSOAUtilities" partnerLink="wsSOAUtilitiesTec" portType="ns1:SOAUtilitiesTecPortType"
+                 operation="GetHtmlControl" inputVariable="WsSOAUtilitiesGetHtmlControlRq"
+                 outputVariable="WsSOAUtilitiesGetHtmlControlRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                 bpelx:invokeAsDetail="no"/>
+         <assign name="assignHtmlResult" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>"LetterPorteBiz"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessage_SendEmailRq.CustomHeader/ns2:IntegrationName</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$WsSOAUtilitiesGetHtmlControlRs.GetHtmlControlRs/ns1:Return/ns1:HtmlControl</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessage_SendEmailRq.MessageRq/ns2:Message/ns2:Message</to>
+          </copy>
+        </assign>
+         <invoke name="WsMessage" partnerLink="wsMessageTec" portType="ns2:MessageTecPortType" operation="SendEmail"
+                 inputVariable="WsMessage_SendEmailRq" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                 bpelx:invokeAsDetail="no"/>
+      </sequence>
+   </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelrelationcfdis_client" portType="client:BPELRelationCFDIs" operation="RelationCFDIs" variable="outputVariable"/>
+  </sequence>
+</process>

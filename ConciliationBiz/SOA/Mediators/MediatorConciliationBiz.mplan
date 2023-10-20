@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="MediatorConciliationBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/ConciliationBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="ConciliationCashTP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelConciliationCashTp.bpelconciliationcashtp_client.Conciliate">
+            <action>
+               <assign>
+                  <copy expression="$in.ConciliationCashTPRqP/tns:ConciliationCashTPRq"
+                        target="$out.payload/tns:ConciliationCashTPRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/ConciliationBiz"/>
+               </assign>
+               <invoke reference="BpelConciliationCashTp.bpelconciliationcashtp_client" operation="Conciliate"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

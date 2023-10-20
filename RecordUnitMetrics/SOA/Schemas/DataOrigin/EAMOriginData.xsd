@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginData" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginData" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="EAMOriginDataInput" type="EAMOriginDataInput"/>
+   <xs:complexType name="EAMOriginDataInput">
+      <xs:sequence>
+         <xs:element name="pOrigin" type="xs:string" nillable="true"/>
+         <xs:element name="pFechaInicio" type="xs:string" nillable="true"/>
+         <xs:element name="pFechaFin" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="EAMOriginDataOutputCollection" type="EAMOriginDataOutputCollection"/>
+   <xs:complexType name="EAMOriginDataOutputCollection">
+      <xs:sequence>
+         <xs:element name="EAMOriginDataOutput" type="EAMOriginDataOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="EAMOriginDataOutput">
+      <xs:sequence>
+         <xs:element name="ASSET_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ORIGIN" type="xs:string" nillable="true"/>
+         <xs:element name="READING_DATE" type="xs:string" nillable="true"/>
+         <xs:element name="READING_VALUE" type="xs:decimal" nillable="true"/>
+         <xs:element name="STATUS" type="xs:string" nillable="true"/>
+         <xs:element name="ERROR_MESSAGE" type="xs:string" nillable="true"/>
+         <xs:element name="CREATION_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="CUT_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="CREATED_BY" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

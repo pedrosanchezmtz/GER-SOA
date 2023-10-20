@@ -1,0 +1,191 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Jan 22 17:12:16 CST 2018
+  Author:  francisco
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelSendEmail"
+         targetNamespace="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/MessageBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail" location="../WSDLs/bpelSendEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="bpelSendEmail" partnerLinkType="client:bpelSendEmail" myRole="bpelSendEmailProvider" partnerRole="bpelSendEmailRequester"/>
+        <partnerLink name="wsMessageTec" partnerLinkType="ns1:wsMessageTec" partnerRole="MessageTecPortType"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:SendEmailRq"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:SendEmailRs"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in bpelSendEmail.wsdl) -->
+        <receive name="receiveInput" partnerLink="bpelSendEmail" portType="client:bpelSendEmail" operation="SendEmail" variable="inputVariable" createInstance="yes"/>
+        <scope name="scopeMainSendMail">
+            <documentation>
+                <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Técnica. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+            </documentation>
+            <bpelx:annotation>
+                <bpelx:general>
+                    <bpelx:property name="userDescription">
+                        <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Técnica. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+                    </bpelx:property>
+                </bpelx:general>
+            </bpelx:annotation>
+            <variables>
+                <variable name="varInvokeWSMessageTecSendEmailRq" messageType="ns1:MessageRq"/>
+            </variables>
+            <faultHandlers>
+                <catchAll><assign name="assignCatchAll"
+                                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+                        </documentation>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>
+            <literal>SOA-00001</literal>
+         </from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>ora:getFaultName()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:Description</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>
+            <literal>[SendEmail]</literal>
+         </from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal>[MessageBiz]</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>xp20:current-dateTime()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Success</to>
+                        </copy>
+                        <extensionAssignOperation>
+                            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Success</bpelx:target>
+                            </bpelx:remove>
+                        </extensionAssignOperation>
+                        <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns2:Return</to>
+                        </copy>
+                        <extensionAssignOperation>
+                            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns2:Return</bpelx:target>
+                            </bpelx:remove>
+                        </extensionAssignOperation>
+                    </assign></catchAll>
+            </faultHandlers>
+            <sequence name="Sequence1">
+                <assign name="trBpelRqToMessageRq">
+                    <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/trBpelRq_To_MessageRq.xsl", $inputVariable.SendEmail)</from>
+                        <to variable="varInvokeWSMessageTecSendEmailRq" part="MessageRq"/>
+                    </copy>
+                </assign>
+                <assign name="assignCustomHeader">
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$inputVariable.CustomHeader/ns2:IntegrationName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageTecSendEmailRq.CustomHeader/ns1:IntegrationName</to>
+                    </copy>
+                </assign>
+                <invoke name="invokeWSMessageTecSendEmail" bpelx:invokeAsDetail="no" partnerLink="wsMessageTec"
+                        portType="ns1:MessageTecPortType" operation="SendEmail"
+                        inputVariable="varInvokeWSMessageTecSendEmailRq"/>
+                <assign name="assignRsSendEmail">
+                    <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                        <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors</to>
+                    </copy>
+                    <extensionAssignOperation>
+                        <bpelx:remove>
+                            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns3:Errors</bpelx:target>
+                        </bpelx:remove>
+                    </extensionAssignOperation>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns2:Return</to>
+                    </copy>
+                    <extensionAssignOperation>
+                        <bpelx:remove>
+                            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.SendEmailRs/ns2:Return</bpelx:target>
+                        </bpelx:remove>
+                    </extensionAssignOperation>
+                </assign>
+            </sequence>
+        </scope>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="bpelSendEmail" portType="client:bpelSendEmailCallback"
+                operation="SendEmailCallback" inputVariable="outputVariable"/>
+    </sequence>
+</process>

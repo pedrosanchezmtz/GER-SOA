@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorFinancialBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/FinancialBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetRfc" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetRfc.bpelGetRfc.GetRfc">
+            <action>
+               <assign>
+                  <copy expression="$in.GetRfcRq/tns:GetRfcRq" target="$out.GetRfcRq/tns:GetRfcRq" xmlns:tns="http://soa.estrellaroja.com.mx/FinancialBiz"/>
+               </assign>
+               <invoke reference="bpelGetRfc.bpelGetRfc" operation="GetRfc">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetRfcRs/ns1:GetRfcRs" target="$out.GetRfcRs/ns1:GetRfcRs" xmlns:ns1="http://soa.estrellaroja.com.mx/FinancialBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="dbGetRetriableIncome" adapter="db" wsdlLocation="../WSDLs/dbGetRetriableIncome.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIConnectionName="XXER" location="eis/DB/ERSEPDB1"/>
+   <endpoint-interaction portType="dbGetRetriableIncome_ptt" operation="dbGetRetriableIncome">
+      <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+         <property name="SqlString" value="SELECT PAYMENT_ID,        CASH_RECEIPT_ID,        CONTENT FROM XXER_PAYMENTS WHERE 1 = 1   AND CONTENT IS NOT NULL   AND PAYMENT_TYPE = 'INCOME'   AND STATUS = 'NOT_CONNECTED' ORDER BY LAST_UPDATE_DATE DESC"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

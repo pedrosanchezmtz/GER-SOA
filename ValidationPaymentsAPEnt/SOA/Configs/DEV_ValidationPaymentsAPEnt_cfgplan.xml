@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="ValidationPaymentsAPEnt">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+            <replace>oramds:/apps/SOA/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ValidationPaymentsAPBiz/ValidationPaymentsAPBiz</search>
+            <replace>oramds:/apps/SOA/DEV_ValidationPaymentsAPBiz/ValidationPaymentsAPBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+            <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ValidationPaymentsAPEnt/ValidationPaymentsAPEnt</search>
+            <replace>oramds:/apps/SOA/DEV_ValidationPaymentsAPEnt/ValidationPaymentsAPEnt</replace>
+         </searchReplace>
+      </import>
+      <service name="SendPaymentsAP">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ValidationPaymentsAPEnt#wsdl.endpoint(SendPaymentsAP/ValidationPaymentsAPEntPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>3b40ce04-b8b9-4e98-9ea3-e8296eae84fd</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="BpelSendPaymentsAP">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <reference name="WsMessageTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsErpIntegrationTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_ERPIntegrationServiceTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsValidationPaymentsAPBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz#wsdl.endpoint(ValidationPaymentsAPBiz/ValidationPaymentsAPBizPortType)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ValidationPaymentsAPBiz/ValidationPaymentsAPBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="WSDLs/External/BpelSendPaymentsAP.wsdl|WSDLs/External/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/External/MessageTecWrapper1.wsdl|WSDLs/External/ValidationPaymentsAPBizWrapper.wsdl|WSDLs/External/ValidationPaymentsAPBizWrapper1.wsdl">
+      <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+         <replace>oramds:/apps/SOA/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/ValidationPaymentsAPBiz/ValidationPaymentsAPBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ValidationPaymentsAPBiz/ValidationPaymentsAPBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+         <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/ValidationPaymentsAPEnt/ValidationPaymentsAPEnt</search>
+         <replace>oramds:/apps/SOA/DEV_ValidationPaymentsAPEnt/ValidationPaymentsAPEnt</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

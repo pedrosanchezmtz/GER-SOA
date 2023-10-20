@@ -1,0 +1,769 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Feb 16 12:42:00 CST 2021
+  Author:  PedroSánchezMartínez
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelCreateDailyRates"
+               targetNamespace="http://xmlns.oracle.com/GER_SOA_DEV/DailyRatesBiz/bpelCreateDailyRates"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/GER_SOA_DEV/DailyRatesBiz/bpelCreateDailyRates"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="http://soa.estrellaroja.com.mx/DailyRatesBiz/bpelCreateDailyRates"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:ns2="http://soa.estrellaroja.com.mx/BanxicoTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://soa.estrellaroja.com.mx/DailyRatesBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/MessageTec">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://soa.estrellaroja.com.mx/DailyRatesBiz/nxsdDailyRates"
+          location="../Schemas/nxsdFileDailyRates.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://soa.estrellaroja.com.mx/DailyRatesBiz/bpelCreateDailyRates"
+          location="../WSDLs/bpelCreateDailyRates.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+          ui:processWSDL="true"/>
+  <import location="java.util.Calendar" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  <import location="java.text.SimpleDateFormat" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelCreateDailyRates" partnerLinkType="ns1:bpelCreateDailyRates" myRole="bpelCreateDailyRatesProvider"/>
+    <partnerLink name="BanxicoTec" partnerLinkType="ns2:BanxicoTec" partnerRole="BanxicoTecPortType"/>
+    <partnerLink name="SOAUtilitiesTec1" partnerLinkType="ns4:SOAUtilitiesTec1" partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="ERPIntegrationBiz" partnerLinkType="ns6:ERPIntegrationBiz"
+                 partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+    <partnerLink name="MessageTec" partnerLinkType="ns9:MessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:MDailyRatesRq"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:MDailyRatesRs"/>
+    <variable name="v_fileDailyRate" type="xsd:string"/>
+    <variable name="varHtmlControlInput" messageType="ns4:GetHtmlControlRq"/>
+    <variable name="varHtmlControlOutput" messageType="ns4:GetHtmlControlRs"/>
+    <variable name="mailInput" messageType="ns9:MessageRq"/>
+    <variable name="v_dailyRate" element="ns7:DailyRates"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><sequence name="SequenceError"><assign name="assignCatchAll"
+                                                 xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>[bpelDailyRatesBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>[DailyRatesBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <reply name="replyOutput" partnerLink="bpelCreateDailyRates" portType="ns1:bpelCreateDailyRates"
+               operation="CreateDailyRates" variable="outputVariable"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelCreateDailyRates.wsdl) --><receive name="receiveInput" partnerLink="bpelCreateDailyRates" portType="ns1:bpelCreateDailyRates" operation="CreateDailyRates" variable="inputVariable" createInstance="yes"/>
+    <scope name="ScopeGetExRate">
+      <variables>
+        <variable name="v_counterDailyRates" type="xsd:int">
+          <from>0</from>
+        </variable>
+        <variable name="v_day" type="xsd:string"/>
+        <variable name="v_dayName" type="xsd:string"/>
+      </variables>
+      <sequence name="SequenceGetExRate">
+        <assign name="AssignVar">
+          <copy>
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalSucceeded</to>
+          </copy>
+          <copy>
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalErrors</to>
+          </copy>
+          <copy>
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalProcessed</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <forEach parallel="no" counterName="counterDailyRate" name="For_DailyRate">
+          <startCounterValue>1</startCounterValue>
+          <finalCounterValue>count($inputVariable.CreateDailyRatesRq/ns3:DailyRate)</finalCounterValue>
+          <scope name="Scope1">
+            <variables>
+              <variable name="v_countSWBanxico" type="xsd:int">
+                <from>0</from>
+              </variable>
+              <variable name="v_dayQuery" type="xsd:string"/>
+              <variable name="v_dayViernes" type="xsd:string"/>
+              <variable name="v_daySabado" type="xsd:string"/>
+              <variable name="v_dayDomingo" type="xsd:string"/>
+            </variables>
+            <sequence name="GetTCBanxico">
+              <if name="If_ExistDate">
+                <documentation>
+                  <![CDATA[assingDate]]>
+                </documentation>
+                <condition>string-length($inputVariable.CreateDailyRatesRq/ns3:Date)&gt;0</condition>
+                <assign name="AssignVarInitial" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy>
+                    <from>concat(substring($inputVariable.CreateDailyRatesRq/ns3:Date,1,4),'/',substring($inputVariable.CreateDailyRatesRq/ns3:Date,6,2),'/',substring($inputVariable.CreateDailyRatesRq/ns3:Date,9,2))</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_day</to>
+                  </copy>
+                </assign>
+                <else>
+                  <documentation>
+                    <![CDATA[assingDateDefault]]>
+                  </documentation>
+                  <assign name="AssignVarInitial">
+                    <copy>
+                      <from>concat(substring(xp20:current-dateTime(),1,4),'/',substring(xp20:current-dateTime(),6,2),'/',substring(xp20:current-dateTime(),9,2))</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_day</to>
+                    </copy>
+                  </assign>
+                </else>
+              </if>
+              <extensionActivity>
+                <bpelx:exec name="JavaGetDayName">
+                  <![CDATA[addAuditTrailEntry("Get DayName");                                                      
+try {      
+java.util.Calendar calendar = Calendar.getInstance();  
+String day = (String) getVariableData("v_day");   
+addAuditTrailEntry("El fecha entrada: "+day);    
+java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+calendar.setTime(formatter.parse(day));  
+String[] strDays = new String[]{    
+                                        "Domingo",    
+                                        "Lunes",    
+                                        "Martes",    
+                                        "Miercoles",    
+                                        "Jueves",    
+                                        "Viernes",    
+                                        "Sabado"};    
+String v_dayName=strDays[calendar.get(Calendar.DAY_OF_WEEK) - 1];    
+setVariableData("v_dayName",v_dayName);    
+addAuditTrailEntry("El nombre del dia: "+v_dayName );      
+} catch (Exception e) {                                                      
+  addAuditTrailEntry("Error Get dayName: "+e.getMessage());                                                      
+}]]>
+                </bpelx:exec>
+              </extensionActivity>
+              <extensionActivity>
+                <bpelx:exec name="JavaGetDayOperation">
+                  <![CDATA[try      
+{      
+//inicializamos los objetos a ocupar      
+java.util.Calendar calendar = Calendar.getInstance();       
+java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");      
+//traemos la fecha y el dato a manipular y el valor a sumar or restar   v_dayViernes   
+String day = (String) getVariableData("v_day");   
+String dayViernes="";   
+String daySabado="";   
+String dayDomingo="";   
+addAuditTrailEntry("El fecha entrada: "+day);      
+String dayName = (String) getVariableData("v_dayName");        
+addAuditTrailEntry("El nombre del dia es: "+dayName);    
+int numAdd=-1;   
+   
+ switch (dayName)      
+            {      
+                case "Viernes":    
+                     
+                 dayViernes=""+day;   
+   
+                calendar.setTime(formatter.parse(day));    
+                 calendar.add(Calendar.DAY_OF_WEEK, 1);   
+                 daySabado=""+formatter.format(calendar.getTime());   
+   
+                  calendar.setTime(formatter.parse(day));    
+                 calendar.add(Calendar.DAY_OF_WEEK, 2);   
+                 dayDomingo=""+formatter.format(calendar.getTime());   
+   
+                  numAdd=-1;             
+                    break;      
+      
+                case "Sabado":   
+                 calendar.setTime(formatter.parse(day));   
+                 calendar.add(Calendar.DAY_OF_WEEK, -1);   
+                 dayViernes=""+formatter.format(calendar.getTime());   
+                    
+                 daySabado=""+day;   
+   
+                 calendar.setTime(formatter.parse(day));   
+                 calendar.add(Calendar.DAY_OF_WEEK, 1);   
+                 dayDomingo=""+formatter.format(calendar.getTime());   
+                           
+                        numAdd=-2;    
+                     break;      
+      
+                case "Domingo":   
+                 calendar.setTime(formatter.parse(day));   
+                 calendar.add(Calendar.DAY_OF_WEEK, -2);   
+                 dayViernes=""+formatter.format(calendar.getTime());   
+                    
+                 calendar.setTime(formatter.parse(day));   
+                 calendar.add(Calendar.DAY_OF_WEEK, -1);   
+                 daySabado=""+formatter.format(calendar.getTime());   
+   
+                 dayDomingo=""+day;   
+   
+                    numAdd=-3;      
+                    break;      
+      
+                default:                    
+                     numAdd=-1;            
+                    break;      
+            }      
+//enviamos la fecha para manipularla    
+calendar.setTime(formatter.parse(day));     
+calendar.add(Calendar.DAY_OF_WEEK, numAdd);     
+               
+//Respuesta Salida                  
+String dayQuery=""+formatter.format(calendar.getTime());         
+setVariableData("v_dayViernes",dayViernes);       
+setVariableData("v_daySabado",daySabado);     
+setVariableData("v_dayDomingo",dayDomingo);     
+setVariableData("v_dayQuery",dayQuery);   
+ 
+addAuditTrailEntry("El respuesta V, S, D: "+dayViernes+" "+ daySabado+" "+dayDomingo);    
+addAuditTrailEntry("El respuesta: "+dayQuery );         
+        }      
+        catch(Exception e)      
+        {      
+addAuditTrailEntry("Error DayOperation: "+e.getMessage());             
+        }]]>
+                </bpelx:exec>
+              </extensionActivity>
+              <scope name="ScopeBanxico">
+                <variables>
+                  <variable name="WsBanxicoTec-GetExchangeRateRs" messageType="ns2:GetExchangeRateRs"/>
+                  <variable name="WsBanxicoTec-GetExchangeRateRq" messageType="ns2:GetExchangeRateRq"/>
+                </variables>
+                <sequence name="SequenceBanxico">
+                  <assign name="AssignBanxicoTecVars">
+                    <copy>
+                      <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:Serie</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsBanxicoTec-GetExchangeRateRq.GetExchangeRateRq/ns2:idSerie</to>
+                    </copy>
+                    <copy>
+                      <from>concat(substring($v_dayQuery,1,4),'-',substring($v_dayQuery,6,2),'-',substring($v_dayQuery,9,2))</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsBanxicoTec-GetExchangeRateRq.GetExchangeRateRq/ns2:fechaInicio</to>
+                    </copy>
+                    <copy>
+                      <from>concat(substring($v_dayQuery,1,4),'-',substring($v_dayQuery,6,2),'-',substring($v_dayQuery,9,2))</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsBanxicoTec-GetExchangeRateRq.GetExchangeRateRq/ns2:fechaFin</to>
+                    </copy>
+                    <copy>
+                      <from>$v_countSWBanxico + 1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_countSWBanxico</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:Serie</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:ErrorsDetails/ns4:ErrorDetail[$counterDailyRate]/ns4:DataValue</to>
+                    </copy>
+                  </assign>
+                  <invoke name="InvokeBanxicoTec" bpelx:invokeAsDetail="no" partnerLink="BanxicoTec"
+                          portType="ns2:BanxicoTecPortType" operation="GetExchangeRate"
+                          inputVariable="WsBanxicoTec-GetExchangeRateRq"
+                          outputVariable="WsBanxicoTec-GetExchangeRateRs"/>
+                  <if name="If_SW_Error">
+                    <documentation>
+                      <![CDATA[EjecucionCorrecta]]>
+                    </documentation>
+                    <condition>count($WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns5:Errors/ns5:Error/ns5:ErrorCode)=0 and count($WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos)&gt;0</condition>
+                    <if name="If_vierne-sabado-domingo">
+                      <documentation>
+                        <![CDATA[Viernes,Sabado,Domingo]]>
+                      </documentation>
+                      <condition>$v_dayName='Viernes' or $v_dayName='Sabado' or $v_dayName='Domingo'</condition>
+                      <assign name="AssignGeneraTemplate"
+                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy>
+                          <from>$v_counterDailyRates+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_counterDailyRates</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:FromCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromCurrency</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ToCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toCurrency</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_dayViernes</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_dayViernes</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ClassExchangeRate</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:classExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>concat("",$WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos/ns2:dato/text())</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>""</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toExchangeRate</to>
+                        </copy>
+                        <copy>
+                          <from>$v_counterDailyRates+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_counterDailyRates</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:FromCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromCurrency</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ToCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toCurrency</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_daySabado</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_daySabado</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ClassExchangeRate</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:classExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>concat("",$WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos/ns2:dato/text())</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>""</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toExchangeRate</to>
+                        </copy>
+                        <copy>
+                          <from>$v_counterDailyRates+1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_counterDailyRates</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:FromCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromCurrency</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ToCurrency</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toCurrency</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_dayDomingo</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$v_dayDomingo</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ClassExchangeRate</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:classExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>concat("",$WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos/ns2:dato/text())</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                          <from>""</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toExchangeRate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                          <from>$varHtmlControlInput.GetHtmlControlRq/ns4:TotalSucceeded +1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalSucceeded</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                          <from>"Success V, S, D"</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:ErrorsDetails/ns4:ErrorDetail[$counterDailyRate]/ns4:ErrorMessage</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                          <from>$v_counterDailyRates</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalProcessed</to>
+                        </copy>
+                      </assign>
+                      <else>
+                        <documentation>
+                          <![CDATA[OtrosDias]]>
+                        </documentation>
+                        <assign name="AssignGeneraTemplate">
+                          <copy>
+                            <from>$v_counterDailyRates+1</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_counterDailyRates</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:FromCurrency</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromCurrency</to>
+                          </copy>
+                          <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                            <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ToCurrency</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toCurrency</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$v_day</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromDate</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$v_day</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toDate</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$inputVariable.CreateDailyRatesRq/ns3:DailyRate[$counterDailyRate]/ns3:ClassExchangeRate</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:classExchangeRate</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>concat("",$WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos/ns2:dato/text())</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:fromExchangeRate</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>""</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dailyRate/ns7:DailyRate[$v_counterDailyRates]/ns7:toExchangeRate</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$varHtmlControlInput.GetHtmlControlRq/ns4:TotalSucceeded +1</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalSucceeded</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>"Success"</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:ErrorsDetails/ns4:ErrorDetail[$counterDailyRate]/ns4:ErrorMessage</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$v_counterDailyRates</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalProcessed</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <elseif>
+                      <documentation>
+                        <![CDATA[NoDataDay]]>
+                      </documentation>
+                      <condition>count($WsBanxicoTec-GetExchangeRateRs.GetExchangeRateRs/ns2:series/ns2:datos)=0</condition><sequence name="SeqNoDataSWBanxico"
+                                                                                                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <if name="If_reintentos">
+         <documentation>
+                            <![CDATA[Reintentos]]>
+                          </documentation>
+         <condition>$v_countSWBanxico&lt;dvm:lookupValue("DVMs/dvmDailyRatesBiz.dvm","Code","DaysBefore","Value","3","Component","DailyRatesBiz")</condition>
+         <sequence name="SequenceReplaySWBanxico">
+            <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:exec name="JavaRestaDay" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+      <![CDATA[addAuditTrailEntry("Resta Day start");                                                      
+try {    
+String day = (String) getVariableData("v_dayQuery");    
+addAuditTrailEntry("El fecha query: "+day);     
+java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");  
+  
+java.util.Calendar calendar = Calendar.getInstance();   
+calendar.setTime(formatter.parse(day));   
+  
+calendar.add(Calendar.DAY_OF_WEEK, -1);    
+  
+String dayNew=formatter.format( calendar.getTime());   
+setVariableData("v_dayQuery",dayNew);    
+addAuditTrailEntry("Resta Day : "+dayNew);    
+} catch (Exception e) {                                                      
+  addAuditTrailEntry("Resta Day Exception: "+e.getMessage());                                                      
+}                                                      
+addAuditTrailEntry("Resta Day End");]]></bpelx:exec>
+   </extensionActivity>
+            <extensionActivity>
+               <bpelx:replay name="ReplayBanxico" scope="ScopeBanxico"
+                             xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+            </extensionActivity>
+         </sequence>
+         <else>
+            <documentation>
+               <![CDATA[MaximoIntentos]]>
+            </documentation><assign name="AssignErrorMaximoRWsBanxico"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <extensionAssignOperation>
+                                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Success</bpelx:target>
+                                </bpelx:remove>
+                              </extensionAssignOperation>
+                              <copy>
+                                <from>'SOA-02002'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ErrorCode</to>
+                              </copy>
+                              <copy>
+                                <from>concat("Servicio Banxico no disponible maximo numero de dias en busca de dato ",$v_countSWBanxico)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ShortDescription</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$counterDailyRate</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalProcessed</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"Servicio Banxico no disponible maximo numero de reintentos"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:ErrorsDetails/ns4:ErrorDetail[$counterDailyRate]/ns4:ErrorMessage</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varHtmlControlInput.GetHtmlControlRq/ns4:TotalErrors +1</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalErrors</to>
+                              </copy>
+                            </assign></else>
+      </if>
+   </sequence></elseif>
+                    <else>
+                      <documentation>
+                        <![CDATA[ErrorSWBanxico]]>
+                      </documentation>
+                      <sequence name="SequenceErrorSWBanxico">
+                        <if name="If_reintentos">
+                          <documentation>
+                            <![CDATA[Reintentos]]>
+                          </documentation>
+                          <condition>$v_countSWBanxico&lt;dvm:lookupValue("DVMs/dvmDailyRatesBiz.dvm","Code","FailureRetries","Value","3","Component","DailyRatesBiz")</condition>
+                          <sequence name="SequenceReplaySWBanxico">
+                            <wait name="Wait5">
+                              <for>'PT5S'</for>
+                            </wait>
+                            <extensionActivity>
+                              <bpelx:replay name="ReplayBanxico" scope="ScopeBanxico"/>
+                            </extensionActivity>
+                          </sequence>
+                          <else>
+                            <documentation>
+                              <![CDATA[MaximoIntentos]]>
+                            </documentation>
+                            <assign name="AssignErrorMaximoRWsBanxico"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <extensionAssignOperation>
+                                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Success</bpelx:target>
+                                </bpelx:remove>
+                              </extensionAssignOperation>
+                              <copy>
+                                <from>'SOA-02002'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ErrorCode</to>
+                              </copy>
+                              <copy>
+                                <from>"Servicio Banxico no disponible maximo numero de reintentos"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns5:Errors/ns5:Error/ns5:ShortDescription</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>$counterDailyRate</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalProcessed</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>"Servicio Banxico no disponible maximo numero de reintentos"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:ErrorsDetails/ns4:ErrorDetail[$counterDailyRate]/ns4:ErrorMessage</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>$varHtmlControlInput.GetHtmlControlRq/ns4:TotalErrors +1</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlControlInput.GetHtmlControlRq/ns4:TotalErrors</to>
+                              </copy>
+                            </assign>
+                          </else>
+                        </if>
+                      </sequence>
+                    </else>
+                  </if>
+                </sequence>
+              </scope>
+            </sequence>
+          </scope>
+        </forEach>
+        <if name="If_ExistImport">
+          <documentation>
+            <![CDATA[ExistImport]]>
+          </documentation>
+          <condition>count($v_dailyRate/ns7:DailyRate)&gt;0</condition>
+          <scope name="ScopeImportERP">
+            <variables>
+              <variable name="wsERPIntegarionBiz_ImportToERPCloudRq" messageType="ns6:ImportToERPCloudRq"/>
+              <variable name="wsERPIntegarionBiz_ImportToERPCloudRs" messageType="ns6:ImportToERPCloudRs"/>
+              <variable name="WsSOAUtilitiesTec_EncodeRs" messageType="ns4:EncodeRs"/>
+              <variable name="WsSOAUtilitiesTec_EncodeRq" messageType="ns4:EncodeRq"/>
+            </variables>
+            <sequence name="SequenceImportERP">
+              <assign name="TrslFileTemplate">
+                <bpelx:annotation>
+                  <bpelx:pattern>translate</bpelx:pattern>
+                </bpelx:annotation>
+                <copy>
+                  <from>ora:doTranslateToNative($v_dailyRate, 'Schemas/nxsdFileDailyRates.xsd', 'DailyRates', 'STRING')</from>
+                  <to>$v_fileDailyRate</to>
+                </copy>
+              </assign>
+              <assign name="AssignDecodeVars">
+                <copy>
+                  <from>$v_fileDailyRate</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTec_EncodeRq.EncodeRq/ns4:Coded/ns4:ContentData</to>
+                </copy>
+                <copy>
+                  <from>concat('DailyRate',substring($v_day,1,4),substring($v_day,6,2),substring($v_day,9,2))</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTec_EncodeRq.EncodeRq/ns4:Coded/ns4:ContentDataName</to>
+                </copy>
+              </assign>
+              <invoke name="WsSOAUtilitiesTec" partnerLink="SOAUtilitiesTec1" portType="ns4:SOAUtilitiesTecPortType"
+                      operation="Encode" inputVariable="WsSOAUtilitiesTec_EncodeRq"
+                      outputVariable="WsSOAUtilitiesTec_EncodeRs" bpelx:invokeAsDetail="no"/>
+              <assign name="AssignRqImport">
+                <copy>
+                  <from>'DailyRatesImport'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsERPIntegarionBiz_ImportToERPCloudRq.ImportToERPCloudRq/ns6:TargetInterface</to>
+                </copy>
+                <copy>
+                  <from>$WsSOAUtilitiesTec_EncodeRs.EncodeRs/ns4:Return/ns4:CodedReturn/ns4:DataBase64</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsERPIntegarionBiz_ImportToERPCloudRq.ImportToERPCloudRq/ns6:File/ns6:Content</to>
+                </copy>
+                <copy>
+                  <from>'csv'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsERPIntegarionBiz_ImportToERPCloudRq.ImportToERPCloudRq/ns6:File/ns6:ContentType</to>
+                </copy>
+                <copy>
+                  <from>concat($WsSOAUtilitiesTec_EncodeRs.EncodeRs/ns4:Return/ns4:CodedReturn/ns4:ContentDataName,'.csv')</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsERPIntegarionBiz_ImportToERPCloudRq.ImportToERPCloudRq/ns6:File/ns6:FileName</to>
+                </copy>
+              </assign>
+              <invoke name="wsERPIntegarionBiz" partnerLink="ERPIntegrationBiz" portType="ns6:ERPIntegrationBizPortType"
+                      operation="ImportToERPCloud" inputVariable="wsERPIntegarionBiz_ImportToERPCloudRq"
+                      outputVariable="wsERPIntegarionBiz_ImportToERPCloudRs" bpelx:invokeAsDetail="no"/>
+              <assign name="AssignRsImport">
+                <copy>
+                  <from>$wsERPIntegarionBiz_ImportToERPCloudRs.ImportToERPCloudRs/ns6:Return/ns6:Processes/ns6:Process/ns6:Id</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateDailyRatesRs/ns3:Return/ns3:IdCargaTemplate</to>
+                </copy>
+              </assign>
+            </sequence>
+          </scope>
+        </if>
+        <invoke name="invokeHtmlControl" partnerLink="SOAUtilitiesTec1" portType="ns4:SOAUtilitiesTecPortType"
+                operation="GetHtmlControl" inputVariable="varHtmlControlInput" outputVariable="varHtmlControlOutput" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+        <assign name="assignMailContent" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy>
+            <from>string($varHtmlControlOutput.GetHtmlControlRs/ns4:Return/ns4:HtmlControl)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.MessageRq/ns9:Message/ns9:Message</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>'DailyRatesBiz'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.CustomHeader/ns9:IntegrationName</to>
+          </copy>
+        </assign>
+        <invoke name="invokeSendMail" partnerLink="MessageTec" portType="ns9:MessageTecPortType" operation="SendEmail"
+                inputVariable="mailInput"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelCreateDailyRates" portType="ns1:bpelCreateDailyRates" operation="CreateDailyRates" variable="outputVariable"/>
+  </sequence>
+</process>

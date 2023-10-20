@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMInsertWorkOrders" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMInsertWorkOrders" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="XxerZamWoBlksTblCollection" type="XxerZamWoBlksTblCollection"/>
+   <xs:complexType name="XxerZamWoBlksTblCollection">
+      <xs:sequence>
+         <xs:element name="XxerZamWoBlksTbl" type="XxerZamWoBlksTbl" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerZamWoBlksTbl">
+      <xs:sequence>
+         <xs:element name="blkId" type="xs:decimal" nillable="true"/>
+         <xs:element name="oraWoNumber" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoAssetNumber" type="string60" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoReleasedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoCompletedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoClosedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoOrgName" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="oraWoCostClas" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="zamWoNumber" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="zamBlockDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="zamUnblockDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="processStatus" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="message" type="string500" minOccurs="0" nillable="true"/>
+         <xs:element name="creationDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="createdBy" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="createdByUser" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="runId" type="xs:decimal" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string100">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="100"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string60">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="60"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string40">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="40"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string500">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="500"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,310 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Dec 18 11:02:55 CST 2017
+  Author:  Uomo
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelLogAttatchment" targetNamespace="http://soa.estrellaroja.com.mx/MessageBiz/bpelLogAttatchment"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/MessageBiz/bpelLogAttatchment"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/AuditControlTec"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns5="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsReceiveEmail"
+         xmlns:ns6="http://www.sat.gob.mx/cfd/3" xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://schemas.oracle.com/bpel/extension" location="../WSDLs/RuntimeFault.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import namespace="http://www.sat.gob.mx/cfd/3" location="../Schemas/SAT/cfdv33.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/umsReceiveEmail"
+          location="../Schemas/umsReceiveEmail.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ums/MessageBiz/MessageBiz/umsReceiveEmail"
+          location="../WSDLs/umsReceiveEmail.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="umsReceiveEmail" partnerLinkType="ns1:ReceiveNotification_plt"
+                 myRole="ReceiveNotification_role"/>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns2:wsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+    <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns3:wsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsMessageTec" partnerLinkType="ns4:wsMessageTec" partnerRole="MessageTecPortType"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:ReceiveNotification_msg"/>
+    <variable name="customException" messageType="bpelx:RuntimeFaultMessage"/>
+    <variable name="mailInput" messageType="ns4:MessageRq"/>
+    <variable name="foundAttachment" type="xsd:boolean"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="sequenceCatchAll">
+        <if name="IfNoCustomMessage">
+          <documentation>
+            <![CDATA[Empty Custom Message]]>
+          </documentation>
+          <condition>string-length($customException.detail) = 0</condition>
+          <assign name="assignDefaultMessage">
+            <copy>
+              <from><literal>SOA-00001</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.code</to>
+            </copy>
+            <copy>
+              <from><literal>Unknown error in service integration</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.summary</to>
+            </copy>
+            <copy>
+              <from>dvm:lookupValue("DVM/Configuration.dvm", "PropertyName", "GENERIC_ERROR_MESSAGE", "PropertyValue", "")</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.detail</to>
+            </copy>
+          </assign>
+          <else>
+            <documentation>
+              <![CDATA[Found Content]]>
+            </documentation>
+            <empty name="empty"/>
+          </else>
+        </if>
+        <assign name="assignMailParams">
+          <copy bpelx:insertMissingToData="yes">
+            <from>dvm:lookupValue("DVM/Configuration.dvm", "PropertyName", "INTEGRATION_NAME", "PropertyValue", "")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.CustomHeader/ns4:IntegrationName</to>
+          </copy>
+          <copy>
+            <from>concat($customException.detail, ' ', dvm:lookupValue("DVM/Configuration.dvm", "PropertyName", "FLOW_LOCATOR_ID", "PropertyValue", ""), ' ', ora:getFlowId())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.MessageRq/ns4:Message/ns4:Message</to>
+          </copy>
+        </assign>
+        <invoke name="invokeSendMail" partnerLink="wsMessageTec"
+                portType="ns4:MessageTecPortType" operation="SendEmail"
+                inputVariable="mailInput"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelLogAttatchment.wsdl) -->
+    <receive name="receiveInput" createInstance="yes" partnerLink="umsReceiveEmail"
+             portType="ns1:ReceiveNotification_ptt" operation="ReceiveNotification" variable="inputVariable"/>
+    <assign name="assignInit">
+      <copy>
+        <from>false()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$foundAttachment</to>
+      </copy>
+    </assign>
+    <forEach parallel="no" counterName="counter" name="forEachAttatchment">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>count($inputVariable.body/ns5:attachment)</finalCounterValue>
+      <scope name="scopeForEachAttatchment">
+        <variables>
+          <variable name="currentPath" type="xsd:string"/>
+          <variable name="contentType" type="xsd:string"/>
+          <variable name="parsedReceipt" element="ns6:Comprobante"/>
+        </variables>
+        <sequence name="sequenceForEachAttatchment">
+          <assign name="assignPath">
+            <copy>
+              <from>concat('/ns5:message/ns5:attachment[', $counter, ']')</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPath</to>
+            </copy>
+          </assign>
+          <assign name="assignContentType">
+            <copy>
+              <from>xp20:upper-case(ora:getAttachmentProperty('Content-Type', 'inputVariable', 'body', $currentPath))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contentType</to>
+            </copy>
+          </assign>
+          <if name="IfXMLFile">
+            <documentation>
+              <![CDATA[XML File]]>
+            </documentation>
+            <condition>contains($contentType, 'TEXT/XML')</condition>
+            <sequence name="sequnceFoundXML">
+              <scope name="scopeLogAttatchment">
+                <variables>
+                  <variable name="decoderInput" messageType="ns3:DecodeRq"/>
+                  <variable name="decoderOutput" messageType="ns3:DecodeRs"/>
+                  <variable name="logInput" messageType="ns2:MergeIncPaymentComplementRq"/>
+                  <variable name="logOutput" messageType="ns2:MergeIncPaymentComplementRs"/>
+                </variables>
+                <sequence name="sequenceLogAttatchment">
+                  <assign name="asssignAttatchmentContent">
+                    <copy>
+                      <from>ora:getAttachmentContent('inputVariable', 'body', $currentPath)</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$decoderInput.DecodeRq/ns3:charChain</to>
+                    </copy>
+                    <copy>
+                      <from>true()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$foundAttachment</to>
+                    </copy>
+                  </assign>
+                  <invoke name="invokeDecoder" bpelx:invokeAsDetail="no" partnerLink="wsSOAUtilitiesTec"
+                          portType="ns3:SOAUtilitiesTecPortType" operation="Decode" inputVariable="decoderInput"
+                          outputVariable="decoderOutput"/>
+                  <if name="IfCorrectDecoding">
+                    <documentation>
+                      <![CDATA[Correct Decoding]]>
+                    </documentation>
+                    <condition>count($decoderOutput.DecodeRs/cmn:Errors/cmn:Error) = 0</condition>
+                    <sequence name="sequenceCorrectDecoding">
+                      <assign name="assignParsedContent">
+                        <copy>
+                          <from>oraext:parseXML($decoderOutput.DecodeRs/ns3:Return/ns3:xmlOut)</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$parsedReceipt</to>
+                        </copy>
+                      </assign>
+                      <assign name="transformParams">
+                        <bpelx:annotation>
+                          <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                          <from>ora:doXSLTransformForDoc("../Transformations/ComplexInputs_To_MergeIncPaymentComplementRq.xsl", $parsedReceipt, "decoderOutput.DecodeRs", $decoderOutput.DecodeRs)</from>
+                          <to variable="logInput" part="MergeIncPaymentComplementRqPart"/>
+                        </copy>
+                      </assign>
+                      <invoke name="invokeLogAttatchment" bpelx:invokeAsDetail="no" partnerLink="wsAuditControlTec"
+                              portType="ns2:AuditControlTecPortType" operation="MergeIncPaymentComplement"
+                              inputVariable="logInput" outputVariable="logOutput"/>
+                      <if name="IfCorrectLogging">
+                        <documentation>
+                          <![CDATA[Correct Logging]]>
+                        </documentation>
+                        <condition>count($logOutput.MergeIncPaymentComplementRsPart/cmn:Errors/cmn:Error) = 0</condition>
+                        <empty name="empty"/>
+                        <else>
+                          <documentation>
+                            <![CDATA[Failed Logging]]>
+                          </documentation>
+                          <sequence name="sequenceFailedLogging">
+                            <assign name="assignDetails">
+                              <copy>
+                                <from>$logOutput.MergeIncPaymentComplementRsPart/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.code</to>
+                              </copy>
+                              <copy>
+                                <from>$logOutput.MergeIncPaymentComplementRsPart/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.summary</to>
+                              </copy>
+                              <copy>
+                                <from>$logOutput.MergeIncPaymentComplementRsPart/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.detail</to>
+                              </copy>
+                            </assign>
+                            <throw name="throwUnableToLog" faultName="bpelx:assertFailure"
+                                   faultVariable="customException"/>
+                          </sequence>
+                        </else>
+                      </if>
+                    </sequence>
+                    <else>
+                      <documentation>
+                        <![CDATA[Failed Decoding]]>
+                      </documentation>
+                      <sequence name="sequenceFailedInvocation">
+                        <assign name="assignDetails">
+                          <copy>
+                            <from>$decoderOutput.DecodeRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.code</to>
+                          </copy>
+                          <copy>
+                            <from>$decoderOutput.DecodeRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.summary</to>
+                          </copy>
+                          <copy>
+                            <from>$decoderOutput.DecodeRs/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.detail</to>
+                          </copy>
+                        </assign>
+                        <throw name="throwUnableToDecode" faultName="bpelx:assertFailure"
+                               faultVariable="customException"/>
+                      </sequence>
+                    </else>
+                  </if>
+                </sequence>
+              </scope>
+            </sequence>
+            <else>
+              <documentation>
+                <![CDATA[Other File Type]]>
+              </documentation>
+              <empty name="empty"/>
+            </else>
+          </if>
+        </sequence>
+      </scope>
+    </forEach>
+    <if name="IfNotFoundAttachment">
+      <documentation>
+        <![CDATA[Not Found Attatchment]]>
+      </documentation>
+      <condition>not ($foundAttachment)</condition>
+      <sequence name="sequenceNotFoundAttatchment">
+        <assign name="assingDetails">
+          <copy>
+            <from><literal>SOA-00010</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.code</to>
+          </copy>
+          <copy>
+            <from>dvm:lookupValue("DVM/Configuration.dvm", "PropertyName", "NO_ATTATCHMENT_FOUND_MESSAGE", "PropertyValue", "")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.detail</to>
+          </copy>
+          <copy>
+            <from><literal>No data found</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$customException.summary</to>
+          </copy>
+        </assign>
+        <throw name="throwNotFoundAttachment" faultName="bpelx:assertFailure" faultVariable="customException"/>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[Found Attachment]]>
+        </documentation>
+        <empty name="empty"/>
+      </else>
+    </if>
+  </sequence>
+</process>

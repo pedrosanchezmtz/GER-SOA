@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata"
+               xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+               xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
+               xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+  <composite name="PaymentComplementEnt">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</search>
+        <replace>oramds:/apps/SOA/DEV_PaymentComplementBiz/PaymentComplementBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+        <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/PaymentComplementEnt/PaymentComplementEnt</search>
+        <replace>oramds:/apps/SOA/DEV_PaymentComplementEnt/PaymentComplementEnt</replace>
+      </searchReplace>
+    </import>
+    <service name="PaymentComplementEnt">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/PaymentComplementEnt#wsdl.endpoint(PaymentComplementEnt/PaymentComplementEntPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_PaymentComplementEnt/PaymentComplementEnt.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>NEVER</replace>
+        </property>
+      </binding>
+    </service>
+    <property name="compositeID">
+      <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+    </property>
+    <property name="productVersion">
+      <replace>12.2.1.4.0.190828</replace>
+    </property>
+    <component name="bpelStampPaymentComplement">
+      <property name="bpel.config.transaction">
+        <replace>required</replace>
+      </property>
+    </component>
+    <reference name="wsPaymentComplementBiz">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/PaymentComplementBiz#wsdl.endpoint(PaymentComplementBiz/PaymentComplementBizPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_PaymentComplementBiz/PaymentComplementBiz.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsERPIntegrationBiz">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+  </composite>
+  <wsdlAndSchema name="WSDLs/bpelStampPaymentComplement.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/PaymentComplementBizWrapper.wsdl">
+    <searchReplace>
+      <search>oramds:/apps/SOA/PaymentComplementEnt/PaymentComplementEnt</search>
+      <replace>oramds:/apps/SOA/DEV_PaymentComplementEnt/PaymentComplementEnt</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</search>
+      <replace>oramds:/apps/SOA/DEV_PaymentComplementBiz/PaymentComplementBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+    </searchReplace>
+  </wsdlAndSchema>
+</SOAConfigPlan>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="dbHierarchy" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbHierarchy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="dbHierarchy_plt">
+      <plt:role name="dbHierarchy_role">
+         <plt:portType name="tns:dbHierarchy_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbHierarchy" schemaLocation="../Schemas/dbHierarchy_table.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="dbHierarchySelect_inputParameters">
+      <wsdl:part name="dbHierarchySelect_inputParameters" element="top:dbHierarchySelect_pCashReceiptId_pPaymentTypeInputParameters"/>
+   </wsdl:message>
+   <wsdl:message name="XxerPaymentsCollection_msg">
+      <wsdl:part name="XxerPaymentsCollection" element="top:XxerPaymentsCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="dbHierarchy_ptt">
+      <wsdl:operation name="merge">
+         <wsdl:input message="tns:XxerPaymentsCollection_msg"/>
+         <wsdl:output message="tns:XxerPaymentsCollection_msg"/>
+      </wsdl:operation>
+      <wsdl:operation name="dbHierarchySelect">
+         <wsdl:input message="tns:dbHierarchySelect_inputParameters"/>
+         <wsdl:output message="tns:XxerPaymentsCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset" name="ZAMUnblockAsset-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:import location="ZAMUnblockAsset.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset"/>
+   <wsdl:binding name="ZAMUnblockAsset_ptt-binding" type="zam:ZAMUnblockAsset_ptt" xmlns:zam="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset">
+      <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+      <wsdl:operation name="ZAMUnblockAsset">
+         <soap:operation soapAction="ZAMUnblockAsset"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

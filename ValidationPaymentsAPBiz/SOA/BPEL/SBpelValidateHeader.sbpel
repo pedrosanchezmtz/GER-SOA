@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="SBpelValidateHeader" targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/SBpelValidateHeader" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/SBpelValidateHeader" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns3="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:ns4="http://www.sat.gob.mx/Pagos" xmlns:ns5="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:ns6="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" xmlns:ns7="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications" xmlns:ns8="http://www.sat.gob.mx/cfd/4" xmlns:ns11="http://www.sat.gob.mx/ConsumoDeCombustibles11" xmlns:ns12="http://www.sat.gob.mx/EstadoDeCuentaCombustible12" xmlns:ns10="http://www.sat.gob.mx/CartaPorte20" xmlns:ns13="http://www.sat.gob.mx/nomina12" xmlns:ns9="http://www.sat.gob.mx/Pagos20">
+   <variables>
+      <variable name="v_payment" element="ns1:DATA_DS"/>
+      <variable name="v_paymentXML" element="ns2:Comprobante"/>
+      <variable name="v_statusDesc" type="xsd:string"/>
+      <variable name="v_paymentXML40" element="ns8:Comprobante"/>
+      <variable name="v_objetoImpD" type="xsd:string">
+         <from>''</from>
+      </variable>
+      <variable name="v_objetoImpXML" type="xsd:string">
+         <from>''</from>
+      </variable>
+      <variable name="v_tolerancia" type="xsd:string">
+         <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","tolerancia","Value","0","Component","Vars")</from>
+      </variable>
+   </variables>
+   <sequence name="main">
+      <if name="If_V4.0">
+         <documentation><![CDATA[Validaciones 4.0]]></documentation>
+         <condition>$v_paymentXML/@Version='4.0'</condition>
+         <sequence name="SeqVal40">
+            <if name="If_V_IMPORTE_PAGO" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaIMPORTE_PAGO]]></documentation>
+               <condition>xp20:abs(xp20:abs(number($v_payment/ns1:G_1[1]/ns1:MONTO_PAGO)) - xp20:abs(number($v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Totales/@MontoTotalPagos) )) > dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","tolerancia","Value","","Component","Vars")</condition>
+               <assign name="AssignError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_IMPORTE_PAGO","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_LUGAR_EXPEDICION" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaLugarExpedicionEmisor]]></documentation>
+               <condition>string-length($v_paymentXML40/@LugarExpedicion)=0</condition>
+               <assign name="AssignErrorLUGAR_EXPEDICION">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_LUGAR_EXPEDICION","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_NOMBRE_EMISOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaNombreEmisor]]></documentation>
+               <condition>string-length($v_paymentXML40/ns8:Emisor/@Nombre)=0</condition>
+               <assign name="AssignErrorNOMBRE_EMISOR">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_NOMBRE_EMISOR","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_REGIMEN_EMISOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaRegimen
+Emisor]]></documentation>
+               <condition>string-length($v_paymentXML40/ns8:Emisor/@RegimenFiscal)=0</condition>
+               <assign name="AssignErrorREGIMEN_EMISOR">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_REGIMEN_EMISOR","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_NOMBRE_RECEPTOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaNombreReceptor]]></documentation>
+               <condition>xp20:upper-case($v_paymentXML40/ns8:Receptor/@Nombre) !=xp20:upper-case($v_payment/ns1:G_1/ns1:NOMBRE_EMPRESA_COMPLETO)</condition>
+               <assign name="AssignErrorNombreReceptor">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_NOMBRE_RECEPTOR","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_DOMICILIO_FISCAL_RECEPTOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaDomicilioFiscalReceptor]]></documentation>
+               <condition>xp20:upper-case($v_payment/ns1:G_1/ns1:CODIGO_POSTAL_EMPRESA) !=xp20:upper-case($v_paymentXML40/ns8:Receptor/@DomicilioFiscalReceptor)</condition>
+               <assign name="AssignErrorDomicilioFiscalReceptor">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_DOMICILIO_FISCAL_RECEPTOR","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_REGIMEN_FISCAL_RECEPTOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaRegienFiscalReceptor]]></documentation>
+               <condition>$v_payment/ns1:G_1[1]/ns1:REGIMEN_EMPRESA != $v_paymentXML40/ns8:Receptor/@RegimenFiscalReceptor</condition>
+               <assign name="AssignErrorRegimenFiscalReceptor">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_REGIMEN_FISCAL_RECEPTOR","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_USO_CFDI" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaUsoCFDI]]></documentation>
+               <condition>$v_paymentXML40/ns8:Receptor/@UsoCFDI!= dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","UsoCFDI","Value","","Component","AttachmentsAP")</condition>
+               <assign name="AssignErrorUsoCFDI">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_USO_CFDI","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_PROD_SERV" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaProdServ]]></documentation>
+               <condition>$v_paymentXML40/ns8:Conceptos/ns8:Concepto/@ClaveProdServ != dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","ClaveProdServ","Value","","Component","AttachmentsAP")</condition>
+               <assign name="AssignErrorProdServ">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_PROD_SERV","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_CLAVE_UNIDAD" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaClaveUnidad]]></documentation>
+               <condition>$v_paymentXML40/ns8:Conceptos/ns8:Concepto/@ClaveUnidad != dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","ClaveUnidad","Value","","Component","AttachmentsAP")</condition>
+               <assign name="AssignErrorClaveUnidad">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_CLAVE_UNIDAD","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+            <if name="If_V_OBJETO_IMPUESTO" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaObjetoImpuesto]]></documentation>
+               <condition>string-length($v_paymentXML40/ns8:Conceptos/ns8:Concepto/@ObjetoImp)=0</condition>
+               <assign name="AssignErrorObjetoImpuesto">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_OBJETO_IMPUESTO","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+               <else>
+                  <documentation><![CDATA[Valida Valor]]></documentation>
+                  <if name="If_V_OBJETO_IMPUESTO_D" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                     <documentation><![CDATA[ValidaObjetoImpuestoValorDVM]]></documentation>
+                     <condition>$v_paymentXML40/ns8:Conceptos/ns8:Concepto[1]/@ObjetoImp != dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","objetoImp","Value","","Component","AttachmentsAP")</condition>
+                     <assign name="AssignErrorObjetoImpuestoD">
+                        <copy>
+                           <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_OBJETO_IMPUESTO_D","Value","","Component","Validation"),'&lt;/li>')</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                           <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","objetoImp","Value","","Component","AttachmentsAP")</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_objetoImpD</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                           <from>$v_paymentXML40/ns8:Conceptos/ns8:Concepto[1]/@ObjetoImp</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_objetoImpXML</to>
+                        </copy>
+                     </assign>
+                  </if>
+               </else>
+            </if>
+            <if name="If_V_MONEDA" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaMoneda]]></documentation>
+               <condition>xp20:upper-case($v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago[1]/@MonedaP) != xp20:upper-case($v_payment/ns1:G_1/ns1:MONEDA_PAGO)</condition>
+               <assign name="AssignErrorMoneda">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_MONEDA","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+         </sequence>
+         <else>
+            <documentation><![CDATA[Validaciones 3.3]]></documentation>
+            <if name="If_V_IMPORTE_PAGO" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation><![CDATA[ValidaIMPORTE_PAGO]]></documentation>
+               <condition>xp20:abs(xp20:abs(number($v_payment/ns1:G_1[1]/ns1:MONTO_PAGO)) - xp20:abs(number(sum($v_paymentXML/ns2:Complemento/ns4:Pagos/ns4:Pago/@Monto)) )) > dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","tolerancia","Value","","Component","Vars")</condition>
+               <assign name="AssignError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy>
+                     <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_IMPORTE_PAGO","Value","","Component","Validation"),'&lt;/li>')</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                  </copy>
+               </assign>
+            </if>
+         </else>
+      </if>
+      <if name="If_V_RFC_EMISOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <documentation><![CDATA[ValidaRFCEmisor]]></documentation>
+         <condition>xp20:upper-case($v_payment/ns1:G_1/ns1:RFC_PROVEEDOR) !=xp20:upper-case($v_paymentXML/ns2:Emisor/@Rfc)</condition>
+         <assign name="AssignErrorRFCEmisor">
+            <copy>
+               <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RFC_EMISOR","Value","","Component","Validation"),'&lt;/li>')</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+         </assign>
+      </if>
+      <if name="If_V_RFC_RECEPTOR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <documentation><![CDATA[ValidaRFCReceptor]]></documentation>
+         <condition>xp20:upper-case($v_payment/ns1:G_1/ns1:RFC_EMPRESA) !=xp20:upper-case($v_paymentXML/ns2:Receptor/@Rfc)</condition>
+         <assign name="AssignErrorRFCRecptor" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+               <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RFC_RECEPTOR","Value","","Component","Validation"),'&lt;/li>' )</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+         </assign>
+      </if>
+      <if name="If_V_RFC_FECHA_PAGO" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <documentation><![CDATA[ValidaV_RFC_FECHA_PAGO]]></documentation>
+         <condition>xp20:format-dateTime($v_payment/ns1:G_1[1]/ns1:FECHA_PAGO,"[Y0001]/[M01]/[D01]")!=xp20:format-dateTime($v_paymentXML/ns2:Complemento[1]/ns4:Pagos/ns4:Pago[1]/@FechaPago,"[Y0001]/[M01]/[D01]")</condition>
+         <assign name="AssignErrorFechaPago" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+               <from>concat($v_statusDesc,'&lt;li>'  ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_FECHA_PAGO","Value","","Component","Validation"),'&lt;/li>' )</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+         </assign>
+      </if>
+      <if name="If_NumLinesXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <documentation><![CDATA[V_MAS_LINES_XML]]></documentation>
+         <condition>ora:countNodes($v_paymentXML/ns2:Complemento/ns4:Pagos/ns4:Pago/ns4:DoctoRelacionado)>count($v_payment/ns1:G_1[1]/ns1:G_2[ns1:TIPO_PAGO!='CREDIT'])</condition>
+         <assign name="AssignErrorMasLinesXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+               <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_MAS_LINES_XML","Value","","Component","Validation"),'&lt;/li>' )</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+         </assign>
+         <elseif>
+            <documentation><![CDATA[V_MENOS_LINES_XML]]></documentation>
+            <condition>ora:countNodes($v_paymentXML/ns2:Complemento/ns4:Pagos/ns4:Pago/ns4:DoctoRelacionado)&lt;count($v_payment/ns1:G_1[1]/ns1:G_2[ns1:TIPO_PAGO!='CREDIT'])</condition>
+            <assign name="AssignErrorMenosLinesXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy>
+                  <from>concat($v_statusDesc,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_MENOS_LINES_XML","Value","","Component","Validation"),'&lt;/li>' )</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+               </copy>
+            </assign>
+         </elseif>
+      </if>
+      <if name="If_Error" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <documentation><![CDATA[ReplaceVarsErrors]]></documentation>
+         <condition>string-length($v_statusDesc) >0</condition>
+         <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <bpelx:exec name="Java_ReplaceVars" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"><![CDATA[addAuditTrailEntry("Replace Variables");                                                         
+try {                                                      
+String v_objetoImpD = (String)getVariableData("v_objetoImpD");                                                          
+String v_objetoImpXML = (String)getVariableData("v_objetoImpXML");  
+String v_tolerancia = (String)getVariableData("v_tolerancia");     
+    
+String msj = (String)getVariableData("v_statusDesc");                                                            
+String cadena = null;             
+cadena=msj.replace("$OBJ_IMP_XML", v_objetoImpXML);           
+msj=cadena.replace("$OBJ_IMP_D", v_objetoImpD); 
+cadena=msj.replace("$TOLERANCIA", v_tolerancia);           
+msj=cadena; 
+addAuditTrailEntry("Cadena 1="+msj);                     
+setVariableData("v_statusDesc",msj);                                                         
+} catch (Exception e) {                                                         
+  addAuditTrailEntry("Exception: "+e.getMessage());                                                         
+}                                                         
+addAuditTrailEntry("ended");]]></bpelx:exec>
+         </extensionActivity>
+      </if>
+   </sequence>
+</bpelx:subProcess>

@@ -1,0 +1,33 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="BpelConciliationCashTp"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelConciliationCashTp"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelConciliationCashTp"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+  <plnk:partnerLinkType name="BpelConciliationCashTp">
+    <plnk:role name="BpelConciliationCashTpProvider" portType="client:BpelConciliationCashTp"/>
+  </plnk:partnerLinkType>
+  <wsdl:import namespace="http://soa.estrellaroja.com.mx/ConciliationBiz" location="oramds:/apps/SOA/ConciliationBiz/ConciliationBiz.wsdl"/>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:client="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelConciliationCashTp"
+            xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationBiz"
+            xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationBiz"
+              schemaLocation="oramds:/apps/SOA/ConciliationBiz/ConciliationBiz.xsd"/>
+    </schema>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationTec"
+              schemaLocation="oramds:/apps/OSB/ConciliationTec/ConciliationTec.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="BpelConciliationCashTpRequestMessage">
+    <wsdl:part name="payload" element="ns1:ConciliationCashTPRq"/>
+  </wsdl:message>
+  <wsdl:portType name="BpelConciliationCashTp">
+    <wsdl:operation name="Conciliate">
+      <wsdl:input message="client:BpelConciliationCashTpRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

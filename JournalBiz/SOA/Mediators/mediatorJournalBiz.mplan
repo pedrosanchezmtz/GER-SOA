@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorJournalBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/JournalBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetJournal" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetJournal.bpelGetJournal.GetJournal">
+            <action>
+               <assign>
+                  <copy expression="$in.GetJournalRq/tns:GetJournalRq" target="$out.GetJournalRq/tns:GetJournalRq" xmlns:tns="http://soa.estrellaroja.com.mx/JournalBiz"/>
+               </assign>
+               <invoke reference="bpelGetJournal.bpelGetJournal" operation="GetJournal">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetJournalRs/ns1:GetJournalRs" target="$out.GetJournalRs/ns1:GetJournalRs" xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetJournals" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetJournals.bpelgetjournals_client.GetJournals">
+            <action>
+               <assign>
+                  <copy expression="$in.GetJournalsRq/tns:GetJournalRq" target="$out.payload/tns:GetJournalRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/JournalBiz"/>
+                  <copy expression="$in.GetJournalsRq/tns:GetJournalRq/tns:Status"
+                        target="$out.payload/tns:GetJournalRq/tns:Status"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/JournalBiz"/>
+                  <copy expression="$in.GetJournalsRq/tns:GetJournalRq/tns:Source"
+                        target="$out.payload/tns:GetJournalRq/tns:Source"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/JournalBiz"/>
+               </assign>
+               <invoke reference="bpelGetJournals.bpelgetjournals_client" operation="GetJournals"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

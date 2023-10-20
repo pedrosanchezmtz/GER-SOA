@@ -1,0 +1,200 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Thu Oct 27 18:09:21 CDT 2022
+  Author:  PedroS�nchezMart�nez
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="SbpelSenNotificationValidation"
+               targetNamespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelSenNotificationValidation"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelSenNotificationValidation"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/ValidationInvoicesAPEnt"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String">
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <partnerLink name="WsMessageTec" partnerLinkType="ns1:WsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="SendEmailRq" messageType="ns1:MessageRq"/>
+    <variable name="v_invoice" element="ns2:DATA_DS"/>
+    <variable name="v_invoiceXML" element="ns3:InvoiceXML"/>
+    <variable name="input" element="ns3:ValidateInvoicesAPRq"/>
+    <variable name="v_mensajeDesc" type="xsd:string"/>
+    <variable name="v_body" type="xsd:string"/>
+    <variable name="v_colorEstatus" type="xsd:string"/>
+    <variable name="v_status" type="xsd:string"/>
+  </variables>
+  <sequence name="main"><assign name="AssignReplace" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>dvm:lookupValue("DVM/dvmValidationInvoicesAPBiz.dvm","Code","TemplateEmail","Value","No Body Email","Component","ValidationAP")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">strClass:replaceAll($v_body,'@fechaActual@',xp20:current-date())</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@proveedor@',$v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_NAME)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@estatus@',$v_status)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@folio@',$v_invoice/ns2:G_INVOICES[1]/ns2:INVOICE_NUMBER)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@uuid@',$v_invoiceXML/ns3:Complemento/ns3:TimbreFiscalDigital/ns3:UUID)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@monto@',$v_invoice/ns2:G_INVOICES[1]/ns2:TOTAL)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>strClass:replaceAll($v_body,'@ordenCompra@',$v_invoice/ns2:G_INVOICES[1]/ns2:ORDER_NUMBER)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy>
+        <from>strClass:replaceAll($v_body,'@mensaje@',$v_mensajeDesc)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy>
+        <from>strClass:replaceAll($v_body,'@instance@',ora:getFlowId())</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy>
+        <from>strClass:replaceAll($v_body,'@colorEstatus@',$v_colorEstatus)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_body</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>$v_body</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Body</to>
+      </copy>
+    </assign><if name="If_Tets" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+        <![CDATA[Pruebas]]>
+      </documentation>
+      <condition>xp20:upper-case($input/ns3:Config/ns5:Ambiente)='DEV' or xp20:upper-case($input/ns3:Config/ns5:Ambiente)='TEST'</condition>
+      <assign name="AssignEmailTest">
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+          <from>substring(concat('er.soa@estrellaroja.com.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1),( number(string-length('er.soa@estrellaroja.com.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1))))</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+          <from>substring(concat('pedro.sanchez@forteinnovation.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_TEST']/ns5:Parametro1),( number(string-length('pedro.sanchez@forteinnovation.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_TEST']/ns5:Parametro1)))) </from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+          <from>concat('(CORREO DE PRUEBA) - ',substring(concat('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1),( number(string-length('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1)))) )</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Subject</to>
+        </copy>
+      </assign>
+      <else>
+         <documentation>
+            
+         <![CDATA[produccion]]></documentation>
+         <if name="If_Rechazos">
+            <documentation>
+            <![CDATA[Rechazos]]>
+          </documentation>
+            <condition>$v_status='RECHAZADA' or $v_status='EN PROCESO DE ACLARACION/PAGO'</condition>
+            
+            <assign name="AssignEmail" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>substring(concat('er.soa@estrellaroja.com.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1),( number(string-length('er.soa@estrellaroja.com.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1)))) </from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>$v_invoice/ns2:G_INVOICES[1]/ns2:ORDER_EMAIL</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+              <from>substring(concat('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1),( number(string-length('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1)))) </from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Subject</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>substring(concat('pedro.sanchez@forteinnovation.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_BCC_ERROR']/ns5:Parametro1),( number(string-length('pedro.sanchez@forteinnovation.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_BCC_ERROR']/ns5:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressBCC</to>
+            </copy>
+          </assign><elseif>
+            <documentation>
+              <![CDATA[Validos]]>
+            </documentation>
+            <condition>$v_status='VALIDADA'</condition>
+            <assign name="AssignEmail" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>substring(concat('er.soa@estrellaroja.com.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1),( number(string-length('er.soa@estrellaroja.com.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_FROM']/ns5:Parametro1)))) </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressFrom</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>$v_invoice/ns2:G_INVOICES[1]/ns2:ORDER_EMAIL</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>substring(concat('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1),( number(string-length('RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_SUBJECT']/ns5:Parametro1)))) </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Subject</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>substring(concat('pedro.sanchez@forteinnovation.mx',$input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_BCC']/ns5:Parametro1),( number(string-length('pedro.sanchez@forteinnovation.mx') + 1) * number(boolean($input/ns3:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_EMAIL_BCC']/ns5:Parametro1))))</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressBCC</to>
+              </copy>
+            </assign>
+          </elseif>
+         </if>
+      </else>
+   </if>
+    <invoke name="WsMessageTec" partnerLink="WsMessageTec" portType="ns1:MessageTecPortType"
+            operation="SendEmail" bpelx:invokeAsDetail="no" inputVariable="SendEmailRq"/>
+  </sequence>
+</bpelx:subProcess>

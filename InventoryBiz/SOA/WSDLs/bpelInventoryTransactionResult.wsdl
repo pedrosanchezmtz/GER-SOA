@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelInventoryTransactionResult" targetNamespace="http://xmlns.oracle.com/InventoryBiz/InventoryBiz/bpelInventoryTransactionResult" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/InventoryBiz/InventoryBiz/bpelInventoryTransactionResult" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/InventoryBiz" schemaLocation="oramds:/apps/SOA/InventoryBiz/InventoryBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelInventoryTransactionResultRequestMessage">
+      <wsdl:part name="payload" element="ns1:InventoryTransactionResultRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelInventoryTransactionResultResponseMessage">
+      <wsdl:part name="payload" element="ns1:InventoryTransactionResultRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelInventoryTransactionResult">
+      <wsdl:operation name="process">
+         <wsdl:input message="client:bpelInventoryTransactionResultRequestMessage"/>
+         <wsdl:output message="client:bpelInventoryTransactionResultResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelInventoryTransactionResult">
+      <plnk:role name="bpelInventoryTransactionResultProvider" portType="client:bpelInventoryTransactionResult"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

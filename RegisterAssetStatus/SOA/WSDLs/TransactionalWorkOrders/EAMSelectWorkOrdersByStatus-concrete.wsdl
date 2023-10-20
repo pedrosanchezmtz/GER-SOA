@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus" name="EAMSelectWorkOrdersByStatus-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:import location="EAMSelectWorkOrdersByStatus.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus"/>
+   <wsdl:binding name="EAMSelectWorkOrdersByStatus_ptt-binding" type="eam:EAMSelectWorkOrdersByStatus_ptt" xmlns:eam="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus">
+      <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+      <wsdl:operation name="EAMSelectWorkOrdersByStatus">
+         <soap:operation soapAction="EAMSelectWorkOrdersByStatus"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelCreateOrgsCache" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateOrgsCache" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateOrgsCache" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/CoherenceTec">
+   <plnk:partnerLinkType name="bpelCreateOrgsCache">
+      <plnk:role name="bpelCreateOrgsCacheProvider" portType="client:bpelCreateOrgsCache"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/CustomerBiz" schemaLocation="oramds:/apps/SOA/CustomerBiz/CustomerBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/CoherenceTec" schemaLocation="oramds:/apps/OSB/CoherenceTec/CoherenceTec.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="CreateOrgsCacheRq">
+      <wsdl:part name="CreateOrgsCacheRq" element="ns1:CreateOrgsCacheRq"/>
+   </wsdl:message>
+   <wsdl:message name="CreateOrgsCacheRs">
+      <wsdl:part name="CreateOrgsCacheRs" element="ns1:CreateOrgsCacheRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelCreateOrgsCache">
+      <wsdl:operation name="CreateOrgsCache">
+         <wsdl:input message="client:CreateOrgsCacheRq"/>
+         <wsdl:output message="client:CreateOrgsCacheRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

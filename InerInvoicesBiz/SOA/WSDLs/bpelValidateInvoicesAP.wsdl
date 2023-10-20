@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelValidateInvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidateInvoicesAP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidateInvoicesAP" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns4="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns5="http://soa.estrellaroja.com.mx/cfd/3" xmlns:ns6="http://www.sat.gob.mx/cfd/4">
+   <plnk:partnerLinkType name="bpelValidateInvoicesAP">
+      <plnk:role name="bpelValidateInvoicesAPProvider" portType="client:bpelValidateInvoicesAP"/>
+      <plnk:role name="bpelValidateInvoicesAPRequester" portType="client:bpelValidateInvoicesAPCallback"/>
+   </plnk:partnerLinkType>
+      <wsdl:import namespace="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec" location="oramds:/apps/OSB/INER_ValidacionAutomaticTec/ERPValidacionConsultBS.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" location="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidateInvoicesAP" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidateInvoicesAP" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" schemaLocation="../Schemas/ElectronicInvoiceAP.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidateInvoicesAP" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/cfd/3" schemaLocation="../Schemas/CFDIGER/cfdv33.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://www.sat.gob.mx/cfd/4" schemaLocation="oramds:/apps/Common/XSD/CFDI40/cfdv40.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelValidateInvoicesAPRequestMessage">
+      <wsdl:part name="payload" element="ns1:ValidateInvoicesAPRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelValidateInvoicesAPResponseMessage">
+      <wsdl:part name="payload" element="ns1:ValidateInvoicesAPRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelValidateInvoicesAP">
+      <wsdl:operation name="ValidateInvoicesAP">
+         <wsdl:input message="client:bpelValidateInvoicesAPRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelValidateInvoicesAPCallback">
+      <wsdl:operation name="ValidateInvoicesAPCallback">
+         <wsdl:input message="client:bpelValidateInvoicesAPResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

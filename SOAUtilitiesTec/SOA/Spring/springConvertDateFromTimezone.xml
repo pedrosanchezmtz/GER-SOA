@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:sca="http://xmlns.oracle.com/weblogic/weblogic-sca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://xmlns.oracle.com/weblogic/weblogic-sca META-INF/weblogic-sca.xsd">
+   <bean id="SOAUtilitiesImpl" class="mx.com.estrellaroja.cloud.utilities.impl.SOAUtilitiesImpl"/>
+   <sca:service name="SOAUtilitiesImplService" target="SOAUtilitiesImpl" type="mx.com.estrellaroja.cloud.utilities.impl.SOAUtilitiesImpl"/>
+</beans>

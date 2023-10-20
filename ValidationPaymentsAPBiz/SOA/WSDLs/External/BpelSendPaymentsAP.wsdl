@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelSendPaymentsAP" targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendPaymentsAP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendPaymentsAP" xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" xmlns:ns3="http://soa.estrellaroja.com.mx/SftpTec">
+   <plnk:partnerLinkType name="BpelSendPaymentsAP">
+      <plnk:role name="BpelSendPaymentsAPProvider" portType="client:BpelSendPaymentsAP"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="oramds:/apps/OSB/SftpTec/SftpTec.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" schemaLocation="oramds:/apps/SOA/ValidationPaymentsAPBiz/ValidationPaymentsAPBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" schemaLocation="oramds:/apps/Common/Report/XXER_ValidationComplement.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="BpelSendPaymentsAPRequestMessage">
+      <wsdl:part name="payload" element="ns1:SendPaymentsAPRq"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelSendPaymentsAP">
+      <wsdl:operation name="SendPaymentsAP">
+         <wsdl:input message="client:BpelSendPaymentsAPRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://soa.estrellaroja.com.mx/RecordUnitMterics" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="RecordUnitMetricsRq">
+      <complexType>
+         <sequence>
+            <element name="StartDate" type="date" minOccurs="0"/>
+            <element name="EndDate" type="date" minOccurs="0"/>
+            <element name="Origin">
+               <simpleType>
+                  <restriction base="string">
+                     <enumeration value="Excel"/>
+                     <enumeration value="Omnitracs"/>
+                     <enumeration value="Sine"/>
+                     <enumeration value="ControlNet"/>
+                     <enumeration value="TomTom"/>
+                     <enumeration value="All"/>
+                  </restriction>
+               </simpleType>
+            </element>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

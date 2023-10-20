@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faultPolicyBindings version="2.0.1" xmlns="http://schemas.oracle.com/bpel/faultpolicy">
+   <composite faultPolicy="RecordUnitMetricspolicy"/>
+   <component faultPolicy="RecordUnitMetricspolicy">
+      <name>RecordUnitMterics</name>
+   </component>
+   <reference faultPolicy="RecordUnitMetricspolicy">
+      <name>wsMileageControlnetService</name>
+   </reference>
+   <reference faultPolicy="RecordUnitMetricspolicy">
+      <name>wsMileageOmnitracsService</name>
+   </reference>
+   <reference faultPolicy="RecordUnitMetricspolicy">
+      <name>wsMileageSine</name>
+   </reference>
+   <reference faultPolicy="RecordUnitMetricspolicy">
+      <name>wsMileageTomTomService</name>
+   </reference>
+   <service faultPolicy="RecordUnitMetricspolicy">
+      <name>recordunitmterics_client_ep</name>
+   </service>
+</faultPolicyBindings>

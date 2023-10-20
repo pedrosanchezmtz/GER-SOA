@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" sdoJava:package="oracle.apps.financials.payables.invoices.transactions.invoiceService" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:ns1="http://xmlns.oracle.com/apps/publicFlex/financials/payables/payments/singlePayments/invoicePaymentsGdf/" xmlns:sdo="commonj.sdo" xmlns:sdoJava="commonj.sdo/java" xmlns:sdoXML="commonj.sdo/xml" xmlns="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+         <name>Payment Status SDO</name>
+         <description>The information related to invoice payment status, such as
+                payment method and check number.</description>
+         <oer:category name="lba">
+            <value>FinTop-Financial Products</value>
+            <value>FinTop-Financial Products : FinApTop-Payables</value>
+            <value>FinTop-Financial Products : FinApTop-Payables :
+                    FinApInvCore-Invoices</value>
+         </oer:category>
+         <oer:attributes>
+            <oer:attribute description="Invoice ID" name="InvoiceId"/>
+            <oer:attribute description="Invoice Payment Number" name="PaymentNumber"/>
+            <oer:attribute description="Date when the invoice or installment is due for payment." name="DueDate"/>
+            <oer:attribute description="Gross amount due for a scheduled payment" name="GrossAmount"/>
+            <oer:attribute description="Invoice amount remaining for payment" name="RemainingAmount"/>
+            <oer:attribute description="Flag that indicates if payment has been made (Y, N, or P)" name="PaymentStatusCode"/>
+            <oer:attribute description="Payment amount that is paid" name="PaidAmount"/>
+            <oer:attribute description="The currency in which a supplier invoice is received." name="InvoiceCurrencyCode"/>
+            <oer:attribute description="The currency that the payment is made in." name="PaymentCurrencyCode"/>
+            <oer:attribute description="Unique Identifier maintained for every payment made." name="CheckId"/>
+            <oer:attribute description="Check number printed on physical check." name="CheckNumber"/>
+            <oer:attribute description="Date on which payment is made and mentioned on payment document." name="CheckDate"/>
+            <oer:attribute description="Payment method used to make payment." name="PaymentMethodCode"/>
+            <oer:attribute description="Payment amount in payment currency." name="CheckAmount"/>
+            <oer:attribute description="Status of payment (for example, NEGOTIABLE, SET UP, SPOILED)" name="StatusLookupCode"/>
+            <oer:attribute description="Indicates the user who created the row." name="CreationDate"/>
+            <oer:attribute description="Indicates the date and time of the creation of the row." name="CreatedBy"/>
+            <oer:attribute description="Indicates the user who last updated the row." name="LastUpdatedBy"/>
+            <oer:attribute description="Indicates the date and time of the last update of the row." name="LastUpdateDate"/>
+            <oer:attribute description="Invoice Payment ID" name="InvoicePaymentId"/>
+            <oer:attribute description="Invoice Payment GDF" name="InvoicePaymentsGdf"/>
+         </oer:attributes>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <xsd:import namespace="http://xmlns.oracle.com/apps/publicFlex/financials/payables/payments/singlePayments/invoicePaymentsGdf/" schemaLocation="InvoicePaymentsGdf.xsd"/>
+   <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+   <xsd:import namespace="commonj.sdo/xml" schemaLocation="sdoXML.xsd"/>
+   <xsd:import namespace="commonj.sdo" schemaLocation="sdoModel.xsd"/>
+   <xsd:complexType name="PaymentStatus">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>InvoiceId</attribute>
+               <attribute>PaymentNumber</attribute>
+               <attribute>CheckId</attribute>
+               <attribute>InvoicePaymentId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InvoiceId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="PaymentNumber" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="DueDate" nillable="true" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="GrossAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="RemainingAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="PaymentStatusCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PaidAmount" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="InvoiceCurrencyCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PaymentCurrencyCode" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CheckId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="CheckNumber" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="CheckDate" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="PaymentMethodCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CheckAmount" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="StatusLookupCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CreationDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="CreatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LastUpdatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LastUpdateDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="InvoicePaymentId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="InvoicePaymentsGdf" type="ns1:InvoicePaymentsGdf" sdoXML:dataType="sdo:DataObject"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="paymentStatus" type="PaymentStatus"/>
+</xsd:schema>

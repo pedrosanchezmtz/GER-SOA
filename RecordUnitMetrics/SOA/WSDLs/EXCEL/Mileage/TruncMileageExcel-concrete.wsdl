@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel" name="TruncMileageExcel-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:import location="TruncMileageExcel.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel"/>
+   <wsdl:binding name="TruncMileageExcel_ptt-binding" type="trun:TruncMileageExcel_ptt" xmlns:trun="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/TruncMileageExcel">
+      <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+      <wsdl:operation name="TruncMileageExcel">
+         <soap:operation soapAction="TruncMileageExcel"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

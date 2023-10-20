@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/publicFlex/financials/payables/payments/singlePayments/invoicePaymentsGdf/" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns="http://xmlns.oracle.com/apps/publicFlex/financials/payables/payments/singlePayments/invoicePaymentsGdf/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <xsd:include schemaLocation="InvoicePaymentsGdf.xsd"/>
+   <xsd:complexType name="JExESOnlineVatReporting">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>InvoicePaymentId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:complexContent>
+         <xsd:extension base="InvoicePaymentsGdf">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="TransactionStatus" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="TransactionStatus_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="TaxAuthorityStatus" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="TaxAuthorityStatus_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="RegisterType" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="RegisterType_Display" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="MessageCode" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="MessageDescription" nillable="true" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="DateLastUpdated" nillable="true" type="ns0:date-Date"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:element name="jExESOnlineVatReporting" type="JExESOnlineVatReporting"/>
+</xsd:schema>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="Journals" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>Nómina de Empleados</cell>
+         <cell>JournalNE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TMS</cell>
+         <cell>JournalTMS</cell>
+      </row>
+   </rows>
+</dvm>

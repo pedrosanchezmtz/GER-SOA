@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SftpTec" targetNamespace="http://soa.estrellaroja.com.mx/SftpTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:WL5G3N1="http://soa.estrellaroja.com.mx/SftpTec" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plnk:partnerLinkType name="wsSftpTec1">
+      <plnk:role name="SftpTec_ptt" portType="WL5G3N1:SftpTec_ptt"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="oramds:/apps/OSB/SftpTec/SftpTec.wsdl"/>
+</wsdl:definitions>

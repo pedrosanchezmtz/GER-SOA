@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="InvoicesBiz">
+   <import>
+         <searchReplace>
+            <search>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</search>
+            <replace>oramds:/apps/OSB/DEV_DigitalStampGERTec/DigitalStampGERTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+            <replace>oramds:/apps/OSB/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+            <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/FinancialsTec/FinancialsTec</search>
+            <replace>oramds:/apps/OSB/DEV_FinancialsTec/FinancialsTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/InvoicesBiz/InvoicesBiz</search>
+            <replace>oramds:/apps/SOA/DEV_InvoicesBiz/InvoicesBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/DigitalStampTec/DigitalStampTec</search>
+            <replace>oramds:/apps/OSB/DEV_DigitalStampTec/DigitalStampTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+      </import>
+      <service name="InvoicesBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.endpoint(InvoicesBiz/InvoicesBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.endpoint(InvoicesBiz/InvoicesBizCallbackPort)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+     
+      <component name="bpelBuildInvoicesZip">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelValidateInvoicesAP">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelDigitalStamp">
+         <property name="bpel.config.transaction">
+            <replace>requiresNew</replace>
+         </property>
+      </component>
+      <component name="bpelValidatePaymentComplements">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelUploadPaymentComplements">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelNotifyLoadInvoices">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelStatusLoadInvoices">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelUpdateUuid">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <component name="bpelGetComplementToUpdInvoices">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelUpdateStatusInvoices">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+       <reference name="wsFinancialsTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_FinancialsTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsDigitalStampTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_DigitalStampTec</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsAuditControlTecPs">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_AuditControlTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPIntegrationServiceTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_ERPIntegrationServiceTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSOAUtilitiesTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsMessageTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="dbStatusLoadInvoices">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="wsDigitalStmapGERTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_DigitalStampGERTecPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Adapters/dbStatusLoadInvoices_db.jca|Schemas/cfdv33.xsd|Schemas/Data_DS_ElecInvoice.xsd|Schemas/dbStatusLoadInvoices_sp.xsd|Schemas/DoctosRelacionados.xsd|Schemas/ElectronicInvoiceAP.xsd|Schemas/InvoicesToCsv.xsd|Schemas/StructursInvoicesBiz.xsd|Schemas/tdCFDI.xsd|Schemas/TimbreFiscalDigitalv11.xsd|WSDLs/AuditControlTecWrapper.wsdl|WSDLs/bpelBuildInvoicesZip.wsdl|WSDLs/bpelDigitalStamp.wsdl|WSDLs/bpelGetComplementToUpdInvoices.wsdl|WSDLs/bpelNotifyLoadInvoices.wsdl|WSDLs/bpelStatusLoadInvoices.wsdl|WSDLs/bpelUpdateStatusInvoices.wsdl|WSDLs/bpelUpdateUuid.wsdl|WSDLs/bpelUploadPaymentComplements.wsdl|WSDLs/bpelValidateInvoicesAP.wsdl|WSDLs/bpelValidatePaymentComplements.wsdl|WSDLs/dbStatusLoadInvoices.wsdl|WSDLs/DigitalStampGERTecWrapper.wsdl|WSDLs/DigitalStampTecWrapper.wsdl|WSDLs/DigitalStampTecWrapper1.wsdl|WSDLs/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/FinancialsTecWrapper.wsdl|WSDLs/FinancialsTecWrapper1.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/MessageTecWrapper1.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl|WSDLs/SOAUtilitiesTecWrapper1.wsdl|WSDLs/SOAUtilitiesTecWrapper2.wsdl">
+       <jca:property name="SchemaName">
+         <replace>XERINTUSER</replace>
+      </jca:property>
+      <searchReplace>
+         <search>eis/DB/ERSEPDB1</search>
+         <replace>eis/DB/DEV/ERSEPDB1</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</search>
+         <replace>oramds:/apps/OSB/DEV_DigitalStampGERTec/DigitalStampGERTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+         <replace>oramds:/apps/OSB/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+         <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/FinancialsTec/FinancialsTec</search>
+         <replace>oramds:/apps/OSB/DEV_FinancialsTec/FinancialsTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/InvoicesBiz/InvoicesBiz</search>
+         <replace>oramds:/apps/SOA/DEV_InvoicesBiz/InvoicesBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/DigitalStampTec/DigitalStampTec</search>
+         <replace>oramds:/apps/OSB/DEV_DigitalStampTec/DigitalStampTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

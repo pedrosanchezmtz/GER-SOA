@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://soa.estrellaroja.com.mx/DecodeBase64" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="DecodeInput">
+      <complexType>
+         <sequence>
+            <element name="input" type="base64Binary"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="DecodeOutput">
+      <complexType>
+         <sequence>
+            <element name="output" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbHierarchy" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbHierarchy" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="XxerPaymentsCollection" type="XxerPaymentsCollection"/>
+   <xs:complexType name="XxerPaymentsCollection">
+      <xs:sequence>
+         <xs:element name="XxerPayments" type="XxerPayments" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerPayments">
+      <xs:sequence>
+         <xs:element name="paymentId" type="xs:long" nillable="true"/>
+         <xs:element name="cashReceiptId" type="xs:long" minOccurs="0"/>
+         <xs:element name="receiptNumber" type="string150" minOccurs="0"/>
+         <xs:element name="customerNumber" type="string150" minOccurs="0"/>
+         <xs:element name="accountNumber" type="string150" minOccurs="0"/>
+         <xs:element name="siteNumber" type="string150" minOccurs="0"/>
+         <xs:element name="uuid" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="uuidDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="status" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="paymentType" type="string150" minOccurs="0"/>
+         <xs:element name="currencyCode" type="string3" minOccurs="0" nillable="true"/>
+         <xs:element name="receipMethod" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="subtotal" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="iva" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="total" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="content" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute1" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute2" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute3" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute4" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute5" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="createdBy" type="string150" minOccurs="0"/>
+         <xs:element name="creationDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="lastUpdatedBy" type="string150" minOccurs="0"/>
+         <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="sourceLastUpdatedBy" type="string150" minOccurs="0"/>
+         <xs:element name="objectVersionNumber" type="xs:int" minOccurs="0"/>
+         <xs:element name="xxerPaymentDetailsCollection" minOccurs="0">
+            <xs:complexType>
+               <xs:sequence>
+                  <xs:element name="XxerPaymentDetails" type="XxerPaymentDetails" minOccurs="0" maxOccurs="unbounded"/>
+               </xs:sequence>
+            </xs:complexType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerPaymentDetails">
+      <xs:sequence>
+         <xs:element name="paymentDetailId" type="xs:long" nillable="true"/>
+         <xs:element name="invoiceNumber" type="string150" minOccurs="0"/>
+         <xs:element name="installmentNumber" type="xs:int" minOccurs="0"/>
+         <xs:element name="receivableApplicationId" type="xs:long" minOccurs="0"/>
+         <xs:element name="trxNumber" type="string20" minOccurs="0"/>
+         <xs:element name="balanceBefore" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="balanceAfter" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="uuid" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="uuidDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="status" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="currencyCode" type="string3" minOccurs="0" nillable="true"/>
+         <xs:element name="total" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="content" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute1" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute2" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute3" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute4" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="attribute5" type="string150" minOccurs="0" nillable="true"/>
+         <xs:element name="createdBy" type="string150" minOccurs="0"/>
+         <xs:element name="creationDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="lastUpdatedBy" type="string150" minOccurs="0"/>
+         <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="objectVersionNumber" type="xs:int" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="dbHierarchySelect_pCashReceiptId_pPaymentTypeInputParameters" type="dbHierarchySelect_pCashReceiptId_pPaymentType"/>
+   <xs:complexType name="dbHierarchySelect_pCashReceiptId_pPaymentType">
+      <xs:sequence>
+         <xs:element name="pCashReceiptId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="pPaymentType" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string150">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="150"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string3">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="3"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string20">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="20"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

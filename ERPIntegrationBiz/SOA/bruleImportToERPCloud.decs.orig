@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="bruleImportToERPCloud">
+   <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+      <repository type="SCA-Archive">
+         <path>ERPIntegrationBiz/oracle/rules/erpintegrationbiz/bruleImportToERPCloud.rules</path>
+      </repository>
+   </ruleEngineProvider>
+   <decisionService name="bruleImportToERPCloudDS" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/bruleImportToERPCloud/bruleImportToERPCloudDS">
+      <catalog>bruleImportToERPCloud</catalog>
+      <pattern name="CallFunctionStateless">
+         <arguments>
+            <call>erpintegrationbiz.bruleImportToERPCloud.S</call>
+         </arguments>
+      </pattern>
+      <pattern name="CallFunctionStateful">
+         <arguments>
+            <call>erpintegrationbiz.bruleImportToERPCloud.S</call>
+         </arguments>
+      </pattern>
+   </decisionService>
+   <schemaInformation>
+      <dictionary fqnPackage="erpintegrationbiz" fqnName="bruleImportToERPCloud" updateNumber="286">
+         <schemaBrowser>
+            <package>mx.com.estrellaroja.soa.erpintegrationbiz</package>
+            <namespace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz</namespace>
+         </schemaBrowser>
+         <schemaImport namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" localPart="ERPIntegrationBiz.xsd" schemaLocation="Schemas/ERPIntegrationBiz.xsd">
+            <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" localPart="ERPIntegrationBiz.xsd" schemaLocation="Schemas/ERPIntegrationBiz.xsd"/>
+            <import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" localPart="EstrellaRojaCommons.xsd" schemaLocation="Schemas/Commons/EstrellaRojaCommons.xsd"/>
+         </schemaImport>
+      </dictionary>
+   </schemaInformation>
+</decisionServices>

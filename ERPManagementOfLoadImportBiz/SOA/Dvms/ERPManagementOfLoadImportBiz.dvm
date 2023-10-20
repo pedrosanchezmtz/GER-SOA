@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="ERPManagementOfLoadImportBiz" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+      <column name="Attribute1"/>
+      <column name="Attribute2"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements</cell>
+         <cell>Y</cell>
+         <cell>CashManagementBankStatementImportTemplate</cell>
+         <cell>NA</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements$BBVA</cell>
+         <cell>/SOA/er.soa/incoming/BBVA/</cell>
+         <cell>SUCCESS</cell>
+         <cell>ERROR</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements$HSBC</cell>
+         <cell>/SOA/er.soa/incoming/HSBC/</cell>
+         <cell>SUCCESS</cell>
+         <cell>ERROR</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements$BNMX</cell>
+         <cell>/SOA/er.soa/incoming/BNMX/</cell>
+         <cell>SUCCESS</cell>
+         <cell>ERROR</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements$SANTANDER</cell>
+         <cell>/SOA/er.soa/incoming/SANTANDER/</cell>
+         <cell>SUCCESS</cell>
+         <cell>ERROR</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements$BANORTE</cell>
+         <cell>/SOA/er.soa/incoming/BANORTE/</cell>
+         <cell>SUCCESS</cell>
+         <cell>ERROR</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfacceAutoInvoiceImport</cell>
+         <cell>N</cell>
+         <cell>AutoInvoiceImportTemplate</cell>
+         <cell>NA</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmCreateReceiptEnt" xmlns="http://xmlns.oracle.com/dvm">
+   <description>Target interface entry values</description>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>IntegrationName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ProcessName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TargetInterface</cell>
+         <cell>CashInterface</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportName</cell>
+         <cell>XXER_AR_CASH_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PRfc</cell>
+         <cell>P_RFC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TipoDocumento</cell>
+         <cell>RECIBO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportNameTrx</cell>
+         <cell>XXER_AR_CUST_TRX_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TrxNumber</cell>
+         <cell>TrxNumber</cell>
+      </row>
+      <row markdefault="false">
+         <cell>OrgId</cell>
+         <cell>OrgId</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CustomerId</cell>
+         <cell>CustomerId</cell>
+      </row>
+   </rows>
+</dvm>

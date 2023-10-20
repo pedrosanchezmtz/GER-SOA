@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="DailyRatesBiz">
+      <import>
+      <searchReplace>
+         <search>oramds:/apps/SOA/DEV_MessageTec/MessageTec</search>
+         <replace>oramds:/apps/SOAMessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+       <searchReplace>
+         <search>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/DEV_BanxicoTec/BanxicoTec</search>
+         <replace>oramds:/apps/OSB/BanxicoTec/BanxicoTec</replace>
+      </searchReplace>
+            <searchReplace>
+         <search>oramds:/apps/SOA/DailyRatesBiz/DailyRatesBiz</search>
+         <replace>oramds:/apps/SOA/DailyRatesBiz/DailyRatesBiz</replace>
+      </searchReplace>
+      </import>
+      <service name="DailyRatesBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/DailyRatesBiz#wsdl.endpoint(DailyRatesBiz/DailyRatesBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>f87b284d-a092-418a-b87c-266ffad99dbb</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+
+      <reference name="BanxicoTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/BanxicoTec#wsdl.endpoint(BanxicoTecBindingQSService/BanxicoTecBindingQSPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/OSB/BanxicoTec/BanxicoTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="SOAUtilitiesTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="ERPIntegrationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="MessageTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Schemas/nxsdFileDailyRates.xsd|WSDLs/bpelCreateDailyRates.wsdl|WSDLs/External/BanxicoTecWrapper.wsdl|WSDLs/External/ERPIntegrationBizWrapper.wsdl|WSDLs/External/MessageTecWrapper.wsdl|WSDLs/External/SOAUtilitiesTecWrapper.wsdl|WSDLs/External/SOAUtilitiesTecWrapper1.wsdl">
+           <searchReplace>
+         <search>oramds:/apps/SOA/DEV_MessageTec/MessageTec</search>
+         <replace>oramds:/apps/SOAMessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+       <searchReplace>
+         <search>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/DEV_BanxicoTec/BanxicoTec</search>
+         <replace>oramds:/apps/OSB/BanxicoTec/BanxicoTec</replace>
+      </searchReplace>
+            <searchReplace>
+         <search>oramds:/apps/SOA/DailyRatesBiz/DailyRatesBiz</search>
+         <replace>oramds:/apps/SOA/DailyRatesBiz/DailyRatesBiz</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

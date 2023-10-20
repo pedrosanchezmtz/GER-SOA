@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetPayement" targetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetPayement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetPayement" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec" schemaLocation="oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelGetPayementRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetPayementRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelGetPayementResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetPayementRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetPayement">
+      <wsdl:operation name="GetPayment">
+         <wsdl:input message="client:bpelGetPayementRequestMessage"/>
+         <wsdl:output message="client:bpelGetPayementResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetPayement">
+      <plnk:role name="bpelGetPayementProvider" portType="client:bpelGetPayement"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

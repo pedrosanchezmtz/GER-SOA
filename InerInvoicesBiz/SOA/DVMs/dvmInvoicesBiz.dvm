@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmInvoicesBiz" xmlns="http://xmlns.oracle.com/dvm">
+  <description></description>
+  <columns>
+    <column name="Component" qualifier="true" order="1"/>
+    <column name="Code"/>
+    <column name="Value"/>
+  </columns>
+  <rows>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>Pruebas</cell>
+      <cell>false</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>EmailPruebas</cell>
+      <cell>pedro.sanchez@forteinnovation.mx</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>calcularImpuestos</cell>
+      <cell>true</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>generarDistribuciones</cell>
+      <cell>true</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>paramEntity</cell>
+      <cell>paramEntity</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>RespIHSI</cell>
+      <cell>A hold was placed on the invoice.</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>RespIHSE</cell>
+      <cell>Se coloco una retención en la factura.</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>paramCategoryName</cell>
+      <cell>AP_SUPPORTING_DOC</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>paramHoldLookupCode</cell>
+      <cell>paramHoldLookupCode</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>paramReleaseLookupCode</cell>
+      <cell>ER Sustitución de CFDI</cell>
+    </row>
+    <row markdefault="false">
+      <cell>CONFIG</cell>
+      <cell>MAX_RETRY_COUNT</cell>
+      <cell>MAX_RETRY_COUNT</cell>
+    </row>
+    <row markdefault="false">
+      <cell>MESSAGES</cell>
+      <cell>UNABLE_TO_GET_CANDIDATES</cell>
+      <cell>No se pudieron recuperar los complementos de pago candidatos</cell>
+    </row>
+    <row markdefault="false">
+      <cell>MESSAGES</cell>
+      <cell>INVOICE_NOT_FOUND</cell>
+      <cell>No se ha podido resolver la factura</cell>
+    </row>
+    <row markdefault="false">
+      <cell>MESSAGES</cell>
+      <cell>NO_PAYMENT_INFO_FOUND</cell>
+      <cell>No hay información de pago para</cell>
+    </row>
+    <row markdefault="false">
+      <cell>MESSAGES</cell>
+      <cell>INVALID_MERGE</cell>
+      <cell>No se han podido guardar los cambios para</cell>
+    </row>
+    <row markdefault="false">
+      <cell>CONFIG</cell>
+      <cell>VALIDATE_PAYMENT_COMPLEMENTS_INTNAME</cell>
+      <cell>InvoicesEnt$ValidatePaymentComplements</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>paramIntegrationName</cell>
+      <cell>ValidateInvoicesAP</cell>
+    </row>
+    <row markdefault="false">
+      <cell>UpdateUuId</cell>
+      <cell>OperationMode</cell>
+      <cell>single</cell>
+    </row>
+    <row markdefault="false">
+      <cell>UpdateUuId</cell>
+      <cell>NotificationCode</cell>
+      <cell>10</cell>
+    </row>
+    <row markdefault="false">
+      <cell>UpdateUuId</cell>
+      <cell>ContextValue</cell>
+      <cell>Contabilidad Electronica (MX)</cell>
+    </row>
+    <row markdefault="false">
+      <cell>UpdateUuId</cell>
+      <cell>EntityName</cell>
+      <cell>Receivables Invoice</cell>
+    </row>
+    <row markdefault="false">
+      <cell>UpdateUuId</cell>
+      <cell>IntegrationName</cell>
+      <cell>InterfacceUpdateInvoices</cell>
+    </row>
+    <row markdefault="false">
+      <cell>BuildInvoices</cell>
+      <cell>NameCsv</cell>
+      <cell>RaInterfaceLinesAll.csv</cell>
+    </row>
+    <row markdefault="false">
+      <cell>BuildInvoices</cell>
+      <cell>PathFileZip</cell>
+      <cell>/u01/data/domains/ERSOAPRD_domain/INER/TMP_DIR/</cell>
+    </row>
+    <row markdefault="false">
+      <cell>BuildInvoices</cell>
+      <cell>NamePrefixZip</cell>
+      <cell>AR_Invoices_</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>TemplateEmail</cell>
+      <cell>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;es&quot; xml:lang=&quot;es&quot; style=&quot;background:#eee!important&quot;&gt;
+	&lt;head&gt;
+		&lt;title&gt;Boleto&lt;/title&gt;
+		&lt;style&gt; @media only screen { html { min-height: 100%; background: #f3f3f3 } } @media only screen and (max-width: 596px) { table.body img { width: auto; height: auto } table.body center { min-width: 0 !important } table.body .container { width: 95% !important } table.body .columns { height: auto !important; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 16px !important; padding-right: 16px !important } th.small-1 { display: inline-block !important; width: 8.33333% !important } th.small-3 { display: inline-block !important; width: 25% !important } th.small-4 { display: inline-block !important; width: 33.33333% !important } th.small-6 { display: inline-block !important; width: 50% !important } th.small-7 { display: inline-block !important; width: 58.33333% !important } th.small-10 { display: inline-block !important; width: 83.33333% !important } th.small-12 { display: inline-block !important; width: 100% !important } .columns th.small-12 { display: block !important; width: 100% !important } table.menu { width: 100% !important } table.menu td, table.menu th { width: auto !important; display: inline-block !important } table.menu.vertical td, table.menu.vertical th { display: block !important } table.menu[align=center] { width: auto !important } } @media only screen and (max-width: 596px) { .first, .last { padding-left: 0 !important; padding-right: 0 !important } .columns, th.large-2, th.large-3 { padding-left: 0 !important; padding-right: 0 !important } } &lt;/style&gt;
+	&lt;/head&gt;
+	&lt;body style=&quot;-moz-box-sizing:border-box;-ms-text-size-adjust:100%;-webkit-box-sizing:border-box;-webkit-text-size-adjust:100%;Margin:0;background:#eee!important;box-sizing:border-box;color:#0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;min-width:100%;padding:0;text-align:left;width:100%!important;&quot;&gt;
+		&lt;table bgcolor=&quot;#000&quot; class=&quot;wrapper container-fluid&quot; align=&quot;center&quot; style=&quot;background-color:#eee;background-size:cover;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+			&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+				&lt;td class=&quot;wrapper-inner&quot; style=&quot;-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;&quot;&gt;
+					&lt;table class=&quot;spacer&quot; style=&quot;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+						&lt;tbody&gt;
+							&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+								&lt;td height=&quot;50px&quot; style=&quot;-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-size:50px;font-weight:400;hyphens:auto;line-height:50px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;&quot;&gt; &amp;#xA0; &lt;/td&gt;
+							&lt;/tr&gt;
+						&lt;/tbody&gt;
+					&lt;/table&gt;
+					&lt;table align=&quot;center&quot; class=&quot;container email-body&quot; style=&quot;Margin:0 auto;background:#fefefe;border-collapse:collapse;border-radius:25px!important;border-spacing:0;margin:0 auto;padding:0;text-align:inherit;vertical-align:top;width:580px;&quot;&gt;
+						&lt;tbody&gt;
+							&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+								&lt;td style=&quot;-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;&quot;&gt;
+									&lt;table class=&quot;row&quot; style=&quot;border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+										&lt;tbody&gt;
+											&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+												&lt;th class=&quot;small-12 large-12 columns first last&quot; style=&quot;Margin:0 auto;color:#0a0a0a;float:left;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:16px;padding-right:16px;text-align:left;width:564px;&quot;&gt;
+													&lt;table style=&quot;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+														&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+															&lt;th style=&quot;Margin:0;color:#0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left;&quot;&gt;
+																&lt;table class=&quot;spacer&quot; style=&quot;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+																	&lt;tbody&gt;
+																		&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+																			&lt;td height=&quot;32px&quot; style=&quot;-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-size:32px;font-weight:400;hyphens:auto;line-height:32px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;&quot;&gt; &amp;#xA0; &lt;/td&gt;
+																		&lt;/tr&gt;
+																	&lt;/tbody&gt;
+																&lt;/table&gt;
+																&lt;p style=&quot;color: #000; font-size: .8em; font-weight: 400; line-height: 1.3; margin: 20; padding: 0;&quot; align=&quot;right&quot;&gt;Instancia: @instance@ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@fechaActual@&lt;/p&gt;
+																&lt;h3 class=&quot;text-center&quot; style=&quot;text-transform:uppercase;Margin:0;Margin-bottom:10px;color:inherit;font-size:22px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:center;word-wrap:normal;&quot;&gt;
+																	&lt;b&gt;Resultado de validación de comprobante Oracle&lt;/b&gt;
+																&lt;/h3&gt;
+																&lt;table class=&quot;spacer&quot; style=&quot;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;&quot;&gt;
+																	&lt;tbody&gt;
+																		&lt;tr style=&quot;padding:0;text-align:left;vertical-align:top;&quot;&gt;
+																			&lt;td height=&quot;16px&quot; style=&quot;-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:16px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;&quot;&gt; &amp;#xA0; &lt;/td&gt;
+																		&lt;/tr&gt;
+																	&lt;/tbody&gt;
+																&lt;/table&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; ¡Estimado(a)! &lt;strong style=&quot;color: #005cb9; text-transform: uppercase;&quot;&gt;@proveedor@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Se ha realizado el proceso de validación de tu comprobante que enviaste a través de nuestro portal de proveedores con los siguientes resultados: &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt;Estatus de validación: &lt;strong style=&quot;@colorEstatus@&quot; id=&quot;idValid&quot; &gt;@estatus@&lt;/strong&gt;.&lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Folio: &lt;strong style=&quot;color: #005cb9;&quot;&gt;@folio@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; UUID: &lt;strong style=&quot;color: #005cb9;&quot;&gt;@uuid@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Monto: &lt;strong style=&quot;color: #005cb9;&quot;&gt;@monto@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Orden de compra: &lt;strong style=&quot;color: #005cb9;&quot;&gt;@ordenCompra@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Mensaje de estatus: &lt;strong style=&quot;color: #005cb9;&quot;&gt;@mensaje@&lt;/strong&gt;. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Si el resultado de validación es exitoso, tu comprobante será enviado para aprobación y programación de pago, en caso contrario comunicate con nosotros para cualquier aclaración o duda. &lt;/h4&gt;
+																&lt;h4 class=&quot;tittle&quot; style=&quot;text-align:justify;color:inherit;font-size:12px;font-weight:400;line-height:1.3;margin-top:30px;margin-bottom:10px;padding:0;word-wrap:normal;&quot;&gt; Favor de no responder este correo. &lt;/h4&gt;
+															&lt;/th&gt;
+															&lt;th class=&quot;expander&quot; style=&quot;Margin:0;color:#0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0;&quot;&gt; &lt;/th&gt;
+														&lt;/tr&gt;
+													&lt;/table&gt;
+												&lt;/th&gt;
+											&lt;/tr&gt;
+										&lt;/tbody&gt;
+									&lt;/table&gt;
+								&lt;/td&gt;
+							&lt;/tr&gt;
+						&lt;/tbody&gt;
+					&lt;/table&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+	&lt;/body&gt;
+&lt;/html&gt; </cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>EmailFrom</cell>
+      <cell>er.notificaciones@estrellaroja.com.mx</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>EmailBCC</cell>
+      <cell>pedro.sanchez@forteinnovation.mx,integracion.automatica@estrellaroja.com.mx,uriel.colin@forteinnovation.mx,mlavin@estrellaroja.com.mx,elena.castro@estrellaroja.com.mx,fresvinda.tirzo@estrellaroja.com.mx,brenda.chavez@estrellaroja.com.mx</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>EmailBCCError</cell>
+      <cell>integracion.automatica.rechazos@estrellaroja.com.mx,nadia.farro@estrellaroja.com.mx,teresita.blanco@estrellaroja.com.mx,julia.arroyo@estrellaroja.com.mx,marcela.olvera@estrellaroja.com.mx,violeta.gallardo@estrellaroja.com.mx,maximiliano.martinez@estrellaroja.com.mx,juan.fermin@estrellaroja.com.mx,edmundo.rodriguez@estrellaroja.com.mx,alberto.rosas@estrellaroja.com.mx</cell>
+    </row>
+    <row markdefault="false">
+      <cell>ValidateInvoicesAP</cell>
+      <cell>Subject</cell>
+      <cell>RESULTADO DE VALIDACION DE COMPROBANTE ORACLE GRUPO ESTRELLA ROJA</cell>
+    </row>
+  </rows>
+</dvm>

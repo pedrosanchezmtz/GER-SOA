@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CurrentHeader xmlns="http://soa.estrellaroja.com.mx/PaymentComplementBiz">
+   <CashReceiptId>300000081181605</CashReceiptId>
+   <ReceiptNumber>CONPLEMENTO DE MANTENIMIENTO</ReceiptNumber>
+   <IssuerRfc>TTP050504P51</IssuerRfc>
+   <IssuerName>TERMINAL LAS TORRES PUEBLA</IssuerName>
+   <IssuerZipCode>72050</IssuerZipCode>
+   <IssuerStreet>BOULEVARD NORTE 4222</IssuerStreet>
+   <IssuerColony>LAS CUARTILLAS</IssuerColony>
+   <IssuerMunicipality>PUEBLA</IssuerMunicipality>
+   <IssuerState>PUEBLA</IssuerState>
+   <IssuerCountry>MX</IssuerCountry>
+   <InvoiceDate>2023-01-27T11:04:45</InvoiceDate>
+   <DocumentType>P</DocumentType>
+   <AdditionalInformation />
+   <TotalWords />
+   <DescriptionItm>Pago</DescriptionItm>
+   <ProdservkeyItm>84111506</ProdservkeyItm>
+   <QuantityItm>1</QuantityItm>
+   <VatPercentageItm>0</VatPercentageItm>
+   <UnitKeyItm>ACT</UnitKeyItm>
+   <AmountItm>0</AmountItm>
+   <SubtotalItm>0</SubtotalItm>
+   <VatItm>0</VatItm>
+   <TotalItm>0</TotalItm>
+   <TaxObjectItm>01</TaxObjectItm>
+   <TotalVat>0</TotalVat>
+   <Subtotal>0</Subtotal>
+   <Total>0</Total>
+   <Serie>TTP</Serie>
+   <BranchName>MATRIZ</BranchName>
+   <BranchZipCode>72050</BranchZipCode>
+   <ReceiverName>SOFIA RAMIREZ SAINZ</ReceiverName>
+   <ReceiverRfc>RASS880116LB4</ReceiverRfc>
+   <ReceiverPhone />
+   <ReceiverAddress />
+   <ReceiverCounty />
+   <ReceiverExtNumber />
+   <ReceiverIntNumber />
+   <ReceiverStreet>45,48 CALLE NEPTURNO 159 EXHACIENDA MAYORAZGO</ReceiverStreet>
+   <ReceiverMunicipality />
+   <ReceiverState>PUE</ReceiverState>
+   <ReceiverCountry>MX</ReceiverCountry>
+   <ReceiverColony />
+   <ReceiverCfdiUse>CP01</ReceiverCfdiUse>
+   <ReceiverTaxRegime>612</ReceiverTaxRegime>
+   <ReceiverZipCode>72480</ReceiverZipCode>
+   <Currency>XXX</Currency>
+   <IssuerTaxRegime>624</IssuerTaxRegime>
+   <Comments />
+   <Service>PORTAL*</Service>
+   <PaymentDatePc>2023-01-26T00:00:00</PaymentDatePc>
+   <PaymentWayPc>03</PaymentWayPc>
+   <CurrencyPc>MXN</CurrencyPc>
+   <CurrencyExchangePc>1</CurrencyExchangePc>
+   <AmountPc>1665.00</AmountPc>
+   <OperationNumberPc>1</OperationNumberPc>
+   <BankNamePc />
+   <PayerAccountPc />
+   <BenAccIssuerRfcPc />
+   <BeneficiaryAccountPc />
+   <PaymentStringTypePc />
+   <PaymentCertPc />
+   <PaymentStringPc />
+   <PaymentSealPc />
+   <VersionPc>1</VersionPc>
+   <CustomerNumber>973277</CustomerNumber>
+   <AccountNumber>363027</AccountNumber>
+   <SiteNumber>373032</SiteNumber>
+   <LastUpdateDate>2023-01-27T17:04:20.511+00:00</LastUpdateDate>
+   <LastUpatedby>Malintzi.Alcantarilla</LastUpatedby>
+   <BusinessUnit>TTP_BU</BusinessUnit>
+   <EstatusCFDI>01</EstatusCFDI>
+   <Exportacion>01</Exportacion>
+   <ReceiptMethod>HSBC_0764</ReceiptMethod>
+   -
+   <Lines>
+      <CashReceiptId>300000081181605</CashReceiptId>
+      <InvoiceNumber>8403046</InvoiceNumber>
+      <DocumentId>0e4ff8f5-dc92-4f01-8b55-420f18fc07c5</DocumentId>
+      <Serie>TTP</Serie>
+      <Folio>110162</Folio>
+      <Currency>MXN</Currency>
+      <CurrencyExchange>1</CurrencyExchange>
+      <PaymentMethod>PPD</PaymentMethod>
+      <PartialityNumber>1</PartialityNumber>
+      <PreviousBalance>3596.39</PreviousBalance>
+      <PaidAmount>1665.00</PaidAmount>
+      <OutStandingBalance>1931.39</OutStandingBalance>
+      <CustomerTrxLineId>300000080573556</CustomerTrxLineId>
+      <ReceiptNumber>CONPLEMENTO DE MANTENIMIENTO</ReceiptNumber>
+      <InstallmentNumber>2</InstallmentNumber>
+      <ReceivableApplicationId>19876788</ReceivableApplicationId>
+      <TrxNumber>8403046</TrxNumber>
+      <Exportacion />
+      <TaxObject>02</TaxObject>
+      <RetainedTaxBase>1435.34</RetainedTaxBase>
+      <RetainedTax>002</RetainedTax>
+      <RetainedRateFee>0</RetainedRateFee>
+      <RetainedFactorType>Tasa</RetainedFactorType>
+      <RetainedAmount>0.00</RetainedAmount>
+      <TransferredsTaxBase>1435.34</TransferredsTaxBase>
+      <TransferredsTax>002</TransferredsTax>
+      <TransferredsRateFee>0.16</TransferredsRateFee>
+      <TransferredsFactorType>Tasa</TransferredsFactorType>
+      <TransferredsAmount>229.66</TransferredsAmount>
+   </Lines>
+</CurrentHeader>

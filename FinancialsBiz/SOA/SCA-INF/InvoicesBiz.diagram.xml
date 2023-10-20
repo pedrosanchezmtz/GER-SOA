@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gReference name="wsFinancialsTec">
+        <dgm:body borderWidth="2" arcRad="20" X="682" Y="26" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="672" Y="19" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsFinancialsTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialsTec#wsdl.interface(FinancialsTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ValidationLinesInvoiceConfig</dgm:item>
+            <dgm:item>GetTransactionsReconcile</dgm:item>
+            <dgm:item>GetCustomers</dgm:item>
+            <dgm:item>GetCustomerSites</dgm:item>
+            <dgm:item>UpdateCustomerSites</dgm:item>
+            <dgm:item>UpdateCustomers</dgm:item>
+            <dgm:item>UpdateConciliations</dgm:item>
+            <dgm:item>UpdateInventoryTransactions</dgm:item>
+            <dgm:item>GetInventoryTransactions</dgm:item>
+            <dgm:item>GetJournalTMS</dgm:item>
+            <dgm:item>UpdateJournalTMS</dgm:item>
+            <dgm:item>GetJournalNE</dgm:item>
+            <dgm:item>GetCustomerRFC</dgm:item>
+            <dgm:item>GetReceiptOrInvoices</dgm:item>
+            <dgm:item>ProcessedReceipt</dgm:item>
+            <dgm:item>ProcessedApplyReceipt</dgm:item>
+            <dgm:item>GetComplementInvoice</dgm:item>
+            <dgm:item>UpdateStatusInvoice</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+</dgm:gDiagram>

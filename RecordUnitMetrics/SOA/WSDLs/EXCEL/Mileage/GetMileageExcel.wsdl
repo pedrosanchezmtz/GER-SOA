@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="GetMileageExcel" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageExcel" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_APIUnitMetricsTec/GetMileageExcel" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/GetMileageExcel" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="GetMileageExcel_plt">
+      <plt:role name="GetMileageExcel_role">
+         <plt:portType name="tns:GetMileageExcel_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetMileageExcel" schemaLocation="../../../Schemas/EXCEL/Mileage/GetMileageExcel.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetMileageExcelInput_msg">
+      <wsdl:part name="GetMileageExcelInput_msg" element="db:GetMileageExcelInput"/>
+   </wsdl:message>
+   <wsdl:message name="GetMileageExcelOutputCollection_msg">
+      <wsdl:part name="GetMileageExcelOutputCollection" element="db:GetMileageExcelOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="GetMileageExcel_ptt">
+      <wsdl:operation name="GetMileageExcel">
+         <wsdl:input message="tns:GetMileageExcelInput_msg"/>
+         <wsdl:output message="tns:GetMileageExcelOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

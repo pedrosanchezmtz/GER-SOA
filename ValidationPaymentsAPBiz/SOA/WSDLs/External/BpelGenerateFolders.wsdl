@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGenerateFolders" targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelGenerateFolders" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelGenerateFolders" xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_Bank_Accounts">
+   <plnk:partnerLinkType name="BpelGenerateFolders">
+      <plnk:role name="BpelGenerateFoldersProvider" portType="client:BpelGenerateFolders"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" schemaLocation="oramds:/apps/SOA/ValidationPaymentsAPBiz/ValidationPaymentsAPBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_Bank_Accounts" schemaLocation="oramds:/apps/Common/Report/XXER_Bank_Accounts.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="BpelGenerateFoldersRequestMessage">
+      <wsdl:part name="payload" element="ns1:GenerateFoldersRq"/>
+   </wsdl:message>
+   <wsdl:message name="BpelGenerateFoldersResponseMessage">
+      <wsdl:part name="payload" element="ns1:GenerateFoldersRs"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelGenerateFolders">
+      <wsdl:operation name="GenerateFolders">
+         <wsdl:input message="client:BpelGenerateFoldersRequestMessage"/>
+         <wsdl:output message="client:BpelGenerateFoldersResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

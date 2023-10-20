@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesAP" elementFormDefault="qualified">
+   <xsd:element name="DATA_DS">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="G_INVOICES" maxOccurs="unbounded" minOccurs="0">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element type="xsd:long" name="SUPPLIER_ID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIER_RFC"/>
+                     <xsd:element type="xsd:float" name="TOTAL"/>
+                     <xsd:element type="xsd:short" name="SUBTOTAL" minOccurs="0"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERNAME"/>
+                     <xsd:element type="xsd:dateTime" name="INVOICEDATE"/>
+                     <xsd:element type="xsd:dateTime" name="CREATION_DATE"/>
+                     <xsd:element type="xsd:dateTime" name="LAST_UPDATE_DATE"/>
+                     <xsd:element type="xsd:string" name="CURRENCY"/>
+                     <xsd:element type="xsd:string" name="RECEPTOR_RFC"/>
+                     <xsd:element type="xsd:string" name="NAME_RFC"/>
+                     <xsd:element type="xsd:long" name="INVOICE_ID"/>
+                     <xsd:element type="xsd:short" name="SUPPLIER_NUMBER"/>
+                     <xsd:element type="xsd:string" name="INVOICE_NUMBER"/>
+                     <xsd:element type="xsd:short" name="TOTAL_TAX_AMOUNT" minOccurs="0"/>
+                     <xsd:element type="xsd:string" name="STATUS"/>
+                     <xsd:element type="xsd:string" name="BUSINESS_UNIT"/>
+                     <xsd:element type="xsd:string" name="NUMERO_PAGO"/>
+                     <xsd:element type="xsd:string" name="DOCUMENTO_PAGO"/>
+                     <xsd:element type="xsd:string" name="ESTADO_PAGO"/>
+                     <xsd:element type="xsd:string" name="TIPO_PAGO"/>
+                     <xsd:element type="xsd:string" name="CONCILIADAS"/>
+                     <xsd:element type="xsd:string" name="BENEFICIO"/>
+                     <xsd:element type="xsd:string" name="SITIO_BENEFICIO"/>
+                     <xsd:element type="xsd:dateTime" name="FECHA_PAGO"/>
+                     <xsd:element type="xsd:string" name="MONEDA_PAGO"/>
+                     <xsd:element type="xsd:string" name="DIRECCION_PAGO"/>
+                     <xsd:element type="xsd:string" name="NO_CUENTA_PAGO"/>
+                     <xsd:element type="xsd:string" name="PROVEEDOR_PARTE"/>
+                     <xsd:element type="xsd:string" name="SITIO_PROVEEDOR"/>
+                     <xsd:element type="xsd:string" name="UNIDAD_NEGOCIO"/>
+                     <xsd:element type="xsd:string" name="NOM_BANCO_PAGADOR"/>
+                     <xsd:element type="xsd:dateTime" name="FEC_PAGO_BANCO"/>
+                     <xsd:element type="xsd:string" name="IMPORTE_PAGADO_BANCO"/>
+                     <xsd:element type="xsd:string" name="CUENTA_BANCARIA_PAGO"/>
+                     <xsd:element type="xsd:string" name="IMPORT_PAGO_BANCO"/>
+                     <xsd:element type="xsd:string" name="NOMBRE_ACTUAL"/>
+                     <xsd:element type="xsd:string" name="DETALLES"/>
+                     <xsd:element type="xsd:string" name="TERCER_SEGM_COTABLE"/>
+                     <xsd:element type="xsd:string" name="CONCEPTO_CUEN_COTBLE3"/>
+                     <xsd:element type="xsd:string" name="QUINTO_SEGM_CONTABLE"/>
+                     <xsd:element type="xsd:string" name="CONCEPTO_CUEN_CONTABLE5"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

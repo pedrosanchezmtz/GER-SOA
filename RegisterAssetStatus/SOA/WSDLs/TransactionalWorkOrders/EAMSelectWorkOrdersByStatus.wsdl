@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMSelectWorkOrdersByStatus" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByStatus" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="EAMSelectWorkOrdersByStatus_plt">
+      <plt:role name="EAMSelectWorkOrdersByStatus_role">
+         <plt:portType name="tns:EAMSelectWorkOrdersByStatus_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByStatus" schemaLocation="../../Schemas/TransactionalWorkOrders/EAMSelectWorkOrdersByStatus.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMSelectWorkOrdersByStatusInput_msg">
+      <wsdl:part name="EAMSelectWorkOrdersByStatusInput_msg" element="db:EAMSelectWorkOrdersByStatusInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMSelectWorkOrdersByStatusOutputCollection_msg">
+      <wsdl:part name="EAMSelectWorkOrdersByStatusOutputCollection" element="db:EAMSelectWorkOrdersByStatusOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMSelectWorkOrdersByStatus_ptt">
+      <wsdl:operation name="EAMSelectWorkOrdersByStatus">
+         <wsdl:input message="tns:EAMSelectWorkOrdersByStatusInput_msg"/>
+         <wsdl:output message="tns:EAMSelectWorkOrdersByStatusOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

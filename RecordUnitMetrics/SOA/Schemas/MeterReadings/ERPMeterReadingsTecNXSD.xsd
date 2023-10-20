@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/ERPMeterReadings" targetNamespace="http://soa.estrellaroja.com.mx/ERPMeterReadings" elementFormDefault="qualified" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" nxsd:version="JSON" nxsd:encoding="US-ASCII">
+   <xsd:element name="PostMeterReadingsRequest">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="MeterId" type="xsd:string"/>
+            <xsd:element name="AssetNumber" type="xsd:string"/>
+            <xsd:element name="MeterCode" type="xsd:string"/>
+            <xsd:element name="ReadingDate" type="xsd:string"/>
+            <xsd:element name="ReadingTypeCode" type="xsd:string"/>
+            <xsd:element name="MeterUsageCode" type="xsd:string"/>
+            <xsd:element name="ReadingValue" type="xsd:string"/>
+            <xsd:element name="Comments" type="xsd:string"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="PostMeterReadingsResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="MeterReadingId" type="xsd:integer"/>
+            <xsd:element name="ReadingValue" type="xsd:integer"/>
+            <xsd:element name="ReadingDate" type="xsd:string"/>
+            <xsd:element name="ReadingTypeCode" type="xsd:string"/>
+            <xsd:element name="NetValue" type="xsd:integer"/>
+            <xsd:element name="Comments" type="xsd:string"/>
+            <xsd:element name="RolloverFlag" type="xsd:string"/>
+            <xsd:element name="ResetFlag" type="xsd:string"/>
+            <xsd:element name="ModifiedFlag"/>
+            <xsd:element name="InitialFlag"/>
+            <xsd:element name="DisabledFlag"/>
+            <xsd:element name="MeterDefinitionId"/>
+            <xsd:element name="MeterCode"/>
+            <xsd:element name="MeterId" type="xsd:integer"/>
+            <xsd:element name="MeterUsageCode" type="xsd:string"/>
+            <xsd:element name="AssetNumber"/>
+            <xsd:element name="AssetId"/>
+            <xsd:element name="links" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="rel" type="xsd:string"/>
+                     <xsd:element name="href" type="xsd:string"/>
+                     <xsd:element name="name" type="xsd:string"/>
+                     <xsd:element name="kind" type="xsd:string"/>
+                     <xsd:element name="properties" minOccurs="0">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="changeIndicator" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="ErrorMessage">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Description" type="xsd:string"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation xmlns="">
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

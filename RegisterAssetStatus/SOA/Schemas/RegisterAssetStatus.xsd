@@ -1,0 +1,6 @@
+<schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus"
+	xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="RegisterAssetStatusRq" type="dateTime" />
+</schema>

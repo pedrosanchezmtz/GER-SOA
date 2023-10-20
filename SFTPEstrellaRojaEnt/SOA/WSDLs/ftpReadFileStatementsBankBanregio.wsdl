@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpReadFileStatementsBankBanregio" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBanregio" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBanregio" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanregio">
+   <plt:partnerLinkType name="GetFileBanregio_plt">
+      <plt:role name="GetFileBanregio_role">
+         <plt:portType name="tns:GetFileBanregio_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanregio" schemaLocation="../Schemas/Banks/StatementsBankBanregio.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetFileBanregio_msg">
+      <wsdl:part name="body" element="imp1:Banregio"/>
+   </wsdl:message>
+   <wsdl:portType name="GetFileBanregio_ptt">
+      <wsdl:operation name="GetFileBanregio">
+         <wsdl:input message="tns:GetFileBanregio_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/StructureCodeBank" targetNamespace="http://soa.estrellaroja.com.mx/StructureCodeBank" elementFormDefault="qualified">
+   <xsd:element name="DATA_DS">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element type="xsd:string" name="P_TRX_CODE"/>
+            <xsd:element name="XXER_CE_CODIGO_BANCARIO" maxOccurs="unbounded" minOccurs="0">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element type="xsd:string" name="TRX_TYPE"/>
+                     <xsd:element type="xsd:string" name="TRX_CODE"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

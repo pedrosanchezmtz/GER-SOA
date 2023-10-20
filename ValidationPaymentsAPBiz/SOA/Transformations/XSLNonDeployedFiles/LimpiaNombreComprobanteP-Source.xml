@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GetListFilesERRs xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns="http://soa.estrellaroja.com.mx/SftpTec">
+ <filelist>  
+   <file>
+      <directory>/SOA/er.soa/incoming/COMPROBANTE 2023/08 august/10/VERSA_BU_SANTANDER_1186</directory>
+      <filename>Inf.txt</filename>
+      <lastModifiedTime>1691716346000</lastModifiedTime>
+      <creationTime>0</creationTime>
+      <size>44</size>
+   </file>
+   
+   <file>
+      <directory>/SOA/er.soa/incoming/COMPROBANTE 2023/08 august/10/VERSA_BU_SANTANDER_1186</directory>
+      <filename>18626 _440800.99.pdf.</filename>
+      <lastModifiedTime>1692213181000</lastModifiedTime>
+      <creationTime>0</creationTime>
+      <size>12451</size>
+   </file>
+   
+   <file>
+      <directory>/SOA/er.soa/incoming/COMPROBANTE 2023/08 august/10/VERSA_BU_SANTANDER_1186</directory>
+      <filename>18626 _4940800.99.pdf.</filename>
+      <lastModifiedTime>1691760785000</lastModifiedTime>
+      <creationTime>0</creationTime>
+      <size>12456</size>
+   </file>
+</filelist>
+</GetListFilesERRs>

@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorCommonPaymentsTec" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="MergePayment" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelMergePayment.bpelMergePayment.MergePayment">
+            <action>
+               <assign>
+                  <copy expression="$in.MergePaymentRq/tns:MergePaymentRq" target="$out.MergePaymentRq/tns:MergePaymentRq" xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+               </assign>
+               <invoke reference="bpelMergePayment.bpelMergePayment" operation="MergePayment">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.MergePaymentRs/ns1:MergePaymentRs" target="$out.MergePaymentRs/ns1:MergePaymentRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetPayement" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetPayement.bpelgetpayement_client.process">
+            <action>
+               <assign>
+                  <copy expression="$in.GetPayementRqPart/tns:GetPayementRq" target="$out.payload/tns:GetPayementRq" xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+               </assign>
+               <invoke reference="bpelGetPayement.bpelgetpayement_client" operation="GetPayment">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetPayementRs" target="$out.GetPayementRsPart/ns1:GetPayementRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetRetriableComplements" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetRetriableComplements.bpelgetretriablecomplements_client.process">
+            <action>
+               <assign>
+                  <copy expression="$in.GetRetriableComplementsRqPart/tns:GetRetriableComplementsRq" target="$out.payload/tns:GetRetriableComplementsRq" xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+               </assign>
+               <invoke reference="bpelGetRetriableComplements.bpelgetretriablecomplements_client" operation="GetRetriableComplements">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetRetriableComplementsRs" target="$out.GetRetriableComplementsRsPart/ns1:GetRetriableComplementsRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetRetriableIncomes" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetRetriableIncome.GetRetriableIncome.GetRetriableIncome">
+            <action>
+               <assign>
+                  <copy expression="$in.GetRetriableIncomeRqPart/tns:GetRetriableIncomeRq" target="$out.payload/tns:GetRetriableIncomeRq" xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+               </assign>
+               <invoke reference="bpelGetRetriableIncome.GetRetriableIncome" operation="GetRetriableIncome">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetRetriableIncomeRs" target="$out.GetRetriableIncomeRsPart/ns1:GetRetriableIncomeRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetRetriableOutcomes" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetRetriableOutcome.GetRetriableOutcome.GetRetriableOutcome">
+            <action>
+               <assign>
+                  <copy expression="$in.GetRetriableOutcomeRqPart/tns:GetRetriableOutcomeRq" target="$out.payload/tns:GetRetriableOutcomeRq" xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+               </assign>
+               <invoke reference="bpelGetRetriableOutcome.GetRetriableOutcome" operation="GetRetriableOutcome">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetRetriableOutcomeRs" target="$out.GetRetriableOutcomeRsPart/ns1:GetRetriableOutcomeRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

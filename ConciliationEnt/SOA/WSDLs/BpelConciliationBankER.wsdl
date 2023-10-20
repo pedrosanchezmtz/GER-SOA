@@ -1,0 +1,31 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BpelConciliationBankER"
+     targetNamespace="http://soa.estrellaroja.com.mx/ConciliationEnt/BpelConciliationBankER"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://soa.estrellaroja.com.mx/ConciliationEnt/BpelConciliationBankER"
+     xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationEnt"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns2="http://soa.estrellaroja.com.mx/ConciliationEnt/NXSDBankPayments"
+    >
+    <plnk:partnerLinkType name="BpelConciliationBankER">
+        <plnk:role name="BpelConciliationBankERProvider" portType="client:BpelConciliationBankER"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://soa.estrellaroja.com.mx/ConciliationEnt" schemaLocation="oramds:/apps/SOA/ConciliationEnt/ConciliationEnt.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/ConciliationEnt/NXSDBankPayments"
+                 schemaLocation="../Schemas/nxsd_BankPayments.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="BpelConciliationBankERRequestMessage">
+        <wsdl:part name="payload" element="ns1:ConciliationBankERRq"/>
+    </wsdl:message>
+    <wsdl:portType name="BpelConciliationBankER">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:BpelConciliationBankERRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGetPaymentsCash"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetPaymentsCash"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetPaymentsCash"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationBiz"
+              schemaLocation="oramds:/apps/SOA/ConciliationBiz/ConciliationBiz.xsd"/>
+    </schema>
+            <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationTec"
+              schemaLocation="oramds:/apps/OSB/ConciliationTec/ConciliationTec.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="BpelGetPaymentsCashRequestMessage">
+    <wsdl:part name="payload" element="ns1:GetPaymentsCashRq"/>
+  </wsdl:message>
+  <wsdl:message name="BpelGetPaymentsCashResponseMessage">
+    <wsdl:part name="payload" element="ns1:GetPaymentsCashRs"/>
+  </wsdl:message>
+  <wsdl:portType name="BpelGetPaymentsCash">
+    <wsdl:operation name="GetPaymentsCash">
+      <wsdl:input message="client:BpelGetPaymentsCashRequestMessage"/>
+      <wsdl:output message="client:BpelGetPaymentsCashResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <plnk:partnerLinkType name="BpelGetPaymentsCash">
+    <plnk:role name="BpelGetPaymentsCashProvider" portType="client:BpelGetPaymentsCash"/>
+  </plnk:partnerLinkType>
+</wsdl:definitions>

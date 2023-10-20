@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="ValidationPaymentsAPBiz">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+            <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+            <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+            <replace>oramds:/apps/OSB/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+            <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/CFDITec/CFDITec.wsdl</search>
+            <replace>oramds:/apps/SOA/DEV_CFDITec/CFDITec.wsdl</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/SftpTec/SftpTec</search>
+            <replace>oramds:/apps/OSB/SftpTec/SftpTec</replace>
+         </searchReplace>
+      </import>
+      <service name="ValidationPaymentsBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz#wsdl.endpoint(ValidationPaymentsBiz/ValidationPaymentsAPBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="ReceiveEmail">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>82472c9d-2d16-4496-83f1-bcc5aa74069b</replace>
+      </property>
+      <property name="originalProductVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <property name="bpel.preference.ENVIROMENT">
+         <replace>TEST</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="BpelGenerateFolders">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="BpelValidateAttachmentsAP">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="BpelSendNotifications">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="BpelSendPaymentsAP">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="SBpelValidateLines">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <reference name="WsERPIntegrationBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsMessageTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsSOAUtilitiesTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsERPIntegrationServiceTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_ERPIntegrationServiceTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsAuditControlTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://DEV_AuditControlTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsCFDITec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITecService/CFDITecPortType)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_CFDITec/CFDITec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+            <property name="oracle.webservices.httpConnTimeout">
+               <replace>600000</replace>
+            </property>
+            <property name="oracle.webservices.httpReadTimeout">
+               <replace>600000</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITecCallbackService/CFDITecPortTypeCallback_pt)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </reference>
+      <reference name="wsSftpTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://SftpTecPS</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Adapters/ReceiveEmail_ums.jca|Schemas/opaque.xsd|Schemas/ReceiveEmail.xsd|WSDLs/AuditControlTecWrapper.wsdl|WSDLs/AuditControlTecWrapper1.wsdl|WSDLs/CFDITecWrapper.wsdl|WSDLs/CFDITecWrapper1.wsdl|WSDLs/CFDITecWrapper2.wsdl|WSDLs/CFDITecWrapper3.wsdl|WSDLs/External/AuditControlTecWrapper.wsdl|WSDLs/External/BpelGenerateFolders.wsdl|WSDLs/External/BpelSendNotifications.wsdl|WSDLs/External/BpelSendPaymentsAP.wsdl|WSDLs/External/ERPIntegrationBizWrapper.wsdl|WSDLs/External/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/External/MessageTecWrapper.wsdl|WSDLs/External/MessageTecWrapper1.wsdl|WSDLs/External/ReceiveEmail.wsdl|WSDLs/External/SOAUtilitiesTecWrapper.wsdl|WSDLs/SftpTecWrapper.wsdl|WSDLs/SftpTecWrapper1.wsdl|wsm-assembly.xml">
+      <searchReplace>
+         <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+         <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+         <replace>oramds:/apps/OSB/DEV_ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+         <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/CFDITec/CFDITec.wsdl</search>
+         <replace>oramds:/apps/SOA/DEV_CFDITec/CFDITec.wsdl</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/SftpTec/SftpTec</search>
+         <replace>oramds:/apps/OSB/SftpTec/SftpTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ReceiveEmail_ums.jca">
+      <jca:property name="To">
+         <replace>ger.notificaciones@forteinnovation.mx</replace>
+      </jca:property>
+   </wsdlAndSchema>
+</SOAConfigPlan>

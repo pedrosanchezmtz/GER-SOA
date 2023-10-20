@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL" targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+   <xsd:element name="GetCFDIFileURL">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="URL" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="?"/>
+            <xsd:element name="RFC" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="&amp;" nxsd:startsWith="rfc="/>
+            <xsd:element name="UUID" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="&amp;" nxsd:startsWith="uuid="/>
+            <xsd:element name="TIPO_ARCHIVO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="&amp;" nxsd:startsWith="tipoArchivo="/>
+            <xsd:element name="BASE64" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:startsWith="base64="/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=P:\Desarrollo\JDeveloper\GER\Documentación SOA\Tecnico Forte\Mantenimientos\MA119 Generación de Carpeta Repositorio\URLCFDIFile.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

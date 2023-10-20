@@ -1,0 +1,1987 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Tue Oct 18 12:10:39 CDT 2022
+  Author:  PedroS�nchezMart�nez
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="SbpelValidations"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelValidations"
+                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelValidations"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                  xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                  xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+                  xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/ValidationInvoicesAPEnt"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/AuditControlTec"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  xmlns:ns6="http://soa.estrellaroja.com.mx/DigitalStampGERTec"
+                  xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String">
+
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz" location="../WSDLs/BPELValidationInvoicesBiz.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <partnerLinks>
+    <partnerLink name="WsAuditControlTec" partnerLinkType="ns4:WsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+    <partnerLink name="WsDigitalStampGERTec" partnerLinkType="ns6:WsDigitalStampGERTec"
+                 partnerRole="DigitalStampGERTecPortType"/>
+  </partnerLinks>
+  <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <variables>
+    <variable name="v_statusDesc" type="xsd:string"/>
+    <variable name="v_validationsInvoice" element="ns1:ValidateInvoicesAPRq"/>
+    <variable name="v_invoice" element="ns2:DATA_DS"/>
+    <variable name="v_invoiceXML" element="ns1:InvoiceXML"/>
+    <variable name="v_status" type="xsd:string"/>
+    <variable name="v_activo_fijo" type="xsd:boolean">
+      <from>false()</from>
+    </variable>
+    <variable name="v_statusSATConf" type="xsd:string"/>
+    <variable name="v_contReintentosSAT" type="xsd:int">
+      <from>0</from>
+    </variable>
+    <variable name="v_numAdj" type="xsd:int"/>
+    <variable name="v_uuidXML" type="xsd:string"/>
+    <variable name="v_cuentaActivoF" type="xsd:int"/>
+    <variable name="v_toleranciaRetencionIVA" type="xsd:decimal"/>
+    <variable name="v_toleranciaTotal" type="xsd:decimal"/>
+    <variable name="v_toleranciaSubTotal" type="xsd:decimal"/>
+    <variable name="v_reintentosSAT" type="xsd:int"/>
+    <variable name="v_statusSAT" type="xsd:string"/>
+    <variable name="v_toleranciaRetencionISR" type="xsd:decimal"/>
+    <variable name="v_retencionISRConf" type="xsd:string"/>
+    <variable name="v_retencionIVAConf" type="xsd:string"/>
+    <variable name="v_categoriaAdj" type="xsd:string"/>
+    <variable name="v_retencionISRI" type="xsd:decimal"/>
+    <variable name="v_retencionIVAI" type="xsd:decimal"/>
+    <variable name="v_retencionISRXML" type="xsd:decimal"/>
+    <variable name="v_retencionIVAXML" type="xsd:decimal"/>
+    <variable name="v_toleranciaPRetenciones" type="xsd:decimal"/>
+    <variable name="v_retCalISRXML" type="xsd:decimal"/>
+    <variable name="v_retCalIVAXML" type="xsd:decimal"/>
+    <variable name="v_retCalISRI" type="xsd:decimal"/>
+    <variable name="v_retCalIVAI" type="xsd:decimal"/>
+    <variable name="v_subTotalXML" type="xsd:decimal"/>
+    <variable name="v_subTotalI" type="xsd:decimal"/>
+    <variable name="v_totalXML" type="xsd:decimal"/>
+    <variable name="v_descuentoXML" type="xsd:decimal"/>
+    <variable name="v_totalI" type="xsd:decimal"/>
+    <variable name="v_metodoPagXML" type="xsd:string"/>
+    <variable name="v_formaPagXML" type="xsd:string"/>
+    <variable name="v_formaPagConf" type="xsd:string"/>
+    <variable name="v_metodoPagConf" type="xsd:string"/>
+    <variable name="v_condPagInv" type="xsd:string"/>
+    <variable name="v_usoCFDIXML" type="xsd:string"/>
+    <variable name="v_usoCFDIConf" type="xsd:string"/>
+    <variable name="v_cuentaContInv" type="xsd:string"/>
+    <variable name="v_regFisEmXML" type="xsd:string"/>
+    <variable name="v_numBUOrden" type="xsd:string"/>
+    <variable name="v_numBUInv" type="xsd:string"/>
+    <variable name="v_anioTimbradoXML" type="xsd:string"/>
+    <variable name="v_anioSys" type="xsd:string"/>
+    <variable name="v_mesTimbradoXML" type="xsd:string"/>
+    <variable name="v_mesSys" type="xsd:string"/>
+    <variable name="v_diaTimbradoXML" type="xsd:string"/>
+    <variable name="v_diaSys" type="xsd:string"/>
+    <variable name="v_condPagXML" type="xsd:string"/>
+    <variable name="v_tipoDoc" type="xsd:string"/>
+    <variable name="v_uuidRelacionadoXML" type="xsd:string"/>
+    <variable name="v_formaPagFactRelXML" type="xsd:string"/>
+    <variable name="v_version" type="xsd:string"/>
+    <variable name="v_totalLineInvISR" type="xsd:decimal">
+      <from>0</from>
+    </variable>
+    <variable name="v_totalLineInvIVA" type="xsd:decimal">
+      <from>0</from>
+    </variable>
+    <variable name="v_toleranciaRetLinesISR" type="xsd:decimal">
+      <from>0</from>
+    </variable>
+    <variable name="v_toleranciaRetLinesIVA" type="xsd:decimal">
+      <from>0</from>
+    </variable>
+    <variable name="v_metodoPagoFacRel" type="xsd:string"/>
+    <variable name="v_tipoPersonaF" type="xsd:string"/>
+    <variable name="v_estatusCfdiValidos" type="xsd:string">
+      <from>''</from>
+    </variable>
+    <variable name="v_cfdiVersionXML" type="xsd:string">
+      <from>''</from>
+    </variable>
+    <variable name="v_IVAXML" type="xsd:decimal"/>
+    <variable name="v_confIVATP" type="xsd:int"/>
+    <variable name="v_toleranciaIVA" type="xsd:decimal"/>
+    <variable name="v_IVA_MOUNT_XML" type="xsd:decimal"/>
+    <variable name="v_IVA_MOUNT_INV" type="xsd:decimal"/>
+    <variable name="v_diaInicial" type="xsd:int"/>
+    <variable name="v_diaFinal" type="xsd:int"/>
+  </variables>
+  <sequence name="main"><assign name="AssignVars" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>number(substring(concat('1', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:Parametro1),(string-length('1') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:Parametro1))))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_numAdj</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>substring(concat('AP_SUPPORTING_DOC', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:Parametro1),(string-length('AP_SUPPORTING_DOC') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:Parametro1)))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_categoriaAdj</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>number(substring(concat('16', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:Parametro2),(string-length('16') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:Parametro2))))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_confIVATP</to>
+      </copy>
+    </assign><sequence name="Seq_V_CATEGORIA_ADJ">
+      <if name="IF_V_CATEGORIA_ADJ">
+        <documentation>
+          <![CDATA[Se Valida que los adjuntos se encuentren el la categoria configurada en el PARAMETRO1]]>
+        </documentation>
+        <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[1]/ns3:Codigo='V_CATEGORIA_ADJ' or  true()</condition>
+        <if name="If_CategoriaNotValida">
+          <documentation>
+            <![CDATA[categoriaInvalida]]>
+          </documentation>
+          <condition>$v_invoiceXML/ns1:NoXML=0 and $v_invoice/ns2:G_INVOICES[1]/ns2:XML_REGISTRADOS &gt; 1</condition>
+          <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_contReintentosSAT + 1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_contReintentosSAT</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:Accion)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+          </assign>
+        </if>
+      </if>
+    </sequence>
+    <sequence name="Seq_V_NUM_ADJ">
+      <if name="IF_V_NUM_ADJ">
+        <documentation>
+          <![CDATA[Se Valida que Solo se tenga el numero de Adjuntos XML igual al  indicado en el parametro1.]]>
+        </documentation>
+        <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[1]/ns3:Codigo='V_NUM_ADJ' or true()</condition>
+        <if name="If_NumeroAdjuntosDiferente">
+          <documentation>
+            <![CDATA[NumeroDeAdjuntosNoValido]]>
+          </documentation>
+          <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns1:NoXML != $v_numAdj</condition>
+          <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:Accion)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+            </copy>
+          </assign>
+        </if>
+      </if>
+    </sequence>
+    <sequence name="Seq_V_XML_NOT_VALID" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <if name="IF_V_XML_NOT_VALID">
+         <documentation>
+            
+         <![CDATA[Cuando Existe un archivo XML valida que sea CFDI 3.3 o 4.0.]]></documentation>
+         <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[1]/ns3:Codigo='V_XML_NOT_VALID' or true()</condition>
+         <if name="If_version_correcta">
+            <documentation>
+               
+            <![CDATA[Xml no es CFDI]]></documentation>
+            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns1:Version='0'</condition>
+            <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               
+               
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_XML_NOT_VALID']/ns3:Accion)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_XML_NOT_VALID']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+               </copy></assign>
+         </if>
+      </if>
+   </sequence>
+    <sequence name="Seq_V_CFDI_VERSION" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:skipCondition>string-length($v_statusDesc)&gt;0</bpelx:skipCondition><if name="IF_V_CFDI_VERSION">
+         <documentation>
+            
+         <![CDATA[Valida que la version del CFDI @CFDI_VERSION@ exista en el PARAMETRO 1(VERSIONES VALIDAS CFDI).]]></documentation>
+         <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CFDI_VERSION']/ns3:Parametro1</condition>
+         <if name="If_version_correcta">
+            <documentation>
+               
+            <![CDATA[Xml no es CFDI]]></documentation>
+            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">not(contains($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CFDI_VERSION']/ns3:Parametro1,$v_invoiceXML/ns1:Version))</condition>
+            <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               
+               
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CFDI_VERSION']/ns3:Accion)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CFDI_VERSION']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CFDI_VERSION']/ns3:Parametro1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_estatusCfdiValidos</to>
+            </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:Version</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_cfdiVersionXML</to>
+            </copy></assign>
+         </if>
+      </if>
+   </sequence>
+    <if name="If_ExisteAdj">
+      <documentation>
+        <![CDATA[AdjuntoNotExist]]>
+      </documentation>
+      <condition>string-length($v_statusDesc)&gt;0</condition>
+      <empty name="ErrorCFDI"/>
+      <else>
+        <documentation>
+          <![CDATA[AdjuntoExistente]]>
+        </documentation>
+        <sequence name="SeqExistAdjunto">
+          <assign name="AssignVars">
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',$v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RET_ISR),( number(string-length('0') + 1) * number(boolean($v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RET_ISR))))) div 100</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionISRI</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IVA']/ns3:Parametro1 ),( number(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IVA']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaIVA</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:CfdiRelacionados/ns1:UUID[1]</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_uuidRelacionadoXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>xp20:upper-case($v_invoice/ns2:G_INVOICES[1]/ns2:INVOICE_TYPE)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_tipoDoc</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_USO_CFDI']/ns3:Parametro1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_usoCFDIConf</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:Emisor/ns1:RegimenFiscal</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_regFisEmXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:CondicionesDePago</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_condPagXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number($v_invoice/ns2:G_INVOICES[1]/ns2:TOTAL)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_totalI</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:MetodoPago</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:FormaPago</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_formaPagXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoice/ns2:G_INVOICES[1]/ns2:INVOICE_TERMS_NAME</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_condPagInv</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:Receptor/ns1:UsoCFDI</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_usoCFDIXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from> $v_invoice/ns2:G_INVOICES[1]/ns2:LEGAL_ENTITY_SEGMENT</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_numBUInv</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0][1]/ns2:GCC_SEGMENT1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_numBUOrden</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0][1]/ns2:GCC_SEGMENT5</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_cuentaContInv</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',$v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RET_IVA),( number(string-length('0') + 1) * number(boolean($v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RET_IVA))))) div 100</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAI</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>((xp20:abs(sum($v_invoice/ns2:G_INVOICES/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM']/ns2:INVOICE_RET_ISR)) div  count($v_invoice/ns2:G_INVOICES/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM'])) div 100 ) * $v_subTotalI</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_totalLineInvISR</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>((xp20:abs(sum($v_invoice/ns2:G_INVOICES/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM']/ns2:INVOICE_RET_IVA)) div  count($v_invoice/ns2:G_INVOICES/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM'])) div 100 ) * $v_subTotalI</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_totalLineInvIVA</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',$v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Retencion[ns1:Impuesto='001'][1]/ns1:TasaOCuota),( number(string-length('0') + 1) * number(boolean($v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Retencion[ns1:Impuesto='001'][1]/ns1:TasaOCuota)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionISRXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',$v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Retencion[ns1:Impuesto='002'][1]/ns1:TasaOCuota),( number(string-length('0') + 1) * number(boolean($v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Retencion[ns1:Impuesto='002'][1]/ns1:TasaOCuota)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',$v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Traslado[ns1:Impuesto='002'][1]/ns1:TasaOCuota),( number(string-length('0') + 1) * number(boolean($v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Traslado[ns1:Impuesto='002'][1]/ns1:TasaOCuota))))) * 100</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_IVAXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number($v_invoice/ns2:G_INVOICES[1]/ns2:TOTAL_TAX_AMOUNT)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_IVA_MOUNT_INV</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0',sum($v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Traslado[ns1:Impuesto='002']/ns1:Importe)),( number(string-length('0') + 1) * number(boolean(sum($v_invoiceXML/ns1:Concepto/ns1:Impuestos/ns1:Traslado[ns1:Impuesto='002']/ns1:Importe)))))) </from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_IVA_MOUNT_XML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('0.01',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:Parametro1 ),( number(string-length('0.01') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaPRetenciones</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_ISR']/ns3:Parametro1 ),( number(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_ISR']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaRetencionISR</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoiceXML/ns1:SubTotal</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_subTotalXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number($v_invoiceXML/ns1:Total)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_totalXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number($v_invoiceXML/ns1:Descuento)</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_descuentoXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_invoice/ns2:G_INVOICES[1]/ns2:SUBTOTAL</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_subTotalI</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_IVA']/ns3:Parametro1 ),( number(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_IVA']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaRetencionIVA</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_IVA']/ns3:Parametro1 ),( number(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_IVA']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaRetLinesIVA</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_ISR']/ns3:Parametro1 ),( number(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_ISR']/ns3:Parametro1)))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaRetLinesISR</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('1', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:Parametro1),(string-length('1') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_NUM_ADJ']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_numAdj</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('1622', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ACTIVO_FIJO']/ns3:Parametro1),(string-length('1622') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ACTIVO_FIJO']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_cuentaActivoF</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>substring(concat('AP_SUPPORTING_DOC', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:Parametro1),(string-length('AP_SUPPORTING_DOC') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CATEGORIA_ADJ']/ns3:Parametro1)))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_categoriaAdj</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SUBTOTAL']/ns3:Parametro1),(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SUBTOTAL']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaSubTotal</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('5', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_TOTAL']/ns3:Parametro1),(string-length('5') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_TOTAL']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_toleranciaTotal</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_subTotalXML * $v_retencionISRXML</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retCalISRXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_subTotalXML * $v_retencionIVAXML</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retCalIVAXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_subTotalXML * $v_retencionISRI</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retCalISRI</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>$v_subTotalXML * $v_retencionIVAI</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retCalIVAI</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+              <from>xp20:year-from-dateTime(xp20:format-dateTime($v_invoiceXML/ns1:Complemento/ns1:TimbreFiscalDigital/ns1:FechaTimbrado ,'[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_anioTimbradoXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>xp20:year-from-dateTime(xp20:current-dateTime()) +number(substring(concat('0', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1),(string-length('0') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_anioSys</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+              <from>xp20:month-from-dateTime(xp20:format-dateTime($v_invoiceXML/ns1:Complemento/ns1:TimbreFiscalDigital/ns1:FechaTimbrado ,'[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_mesTimbradoXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>xp20:month-from-dateTime(xp20:current-dateTime()) +number(substring(concat('0', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1),(string-length('0') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_mesSys</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+              <from>xp20:day-from-dateTime(xp20:format-dateTime($v_invoiceXML/ns1:Complemento/ns1:TimbreFiscalDigital/ns1:FechaTimbrado ,'[Y0001]-[M01]-[D01]T[H01]:[m01]:[s01]'))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_diaTimbradoXML</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>xp20:day-from-dateTime(xp20:current-dateTime()) +number(substring(concat('0', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1),(string-length('0') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_diaSys</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('1', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:Parametro1),(string-length('1') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:Parametro1))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_diaInicial</to>
+            </copy>
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+              <from>number(substring(concat('20', $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:Parametro2),(string-length('20') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:Parametro2))))</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_diaFinal</to>
+            </copy>
+          </assign>
+          <sequence name="SeqPrint">
+            <bpelx:skipCondition>true()</bpelx:skipCondition>
+            <extensionActivity>
+              <bpelx:exec name="Java_Embedding1">
+                <![CDATA[addAuditTrailEntry("monitor vairab les");                                                            
+try {                                                         
+Integer v_monitorea = (Integer)getVariableData("v_confIVATP");       
+Integer v_monitorea2 = (Integer)getVariableData("v_IVAXML");       
+ Integer v_monitorea3 = (Integer)getVariableData("v_retencionIVAConf");       
+   
+addAuditTrailEntry("v_confIVATP 3="+v_monitorea3);     
+addAuditTrailEntry("v_IVAXML 2="+v_monitorea2);      
+addAuditTrailEntry("$v_retencionIVAConf 1="+v_monitorea);                        
+} catch (Exception e) {                                                            
+  addAuditTrailEntry("Exception: "+e.getMessage());                                                            
+}                                                            
+addAuditTrailEntry("ended");]]>
+              </bpelx:exec>
+            </extensionActivity>
+          </sequence>
+          <if name="If_PersonaFM">
+            <documentation>
+              <![CDATA[FISICA]]>
+            </documentation>
+            <condition>string-length($v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RFC)=13</condition>
+            <assign name="AssignTipoPersonaF">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>"F"</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_tipoPersonaF</to>
+              </copy>
+            </assign>
+            <elseif>
+              <documentation>
+                <![CDATA[MORAL]]>
+              </documentation>
+              <condition>string-length($v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RFC)=12</condition>
+              <assign name="AssignTipoPersona" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>"M"</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_tipoPersonaF</to>
+                </copy>
+              </assign>
+            </elseif>
+            <else>
+              <documentation>
+                <![CDATA[notDefine]]>
+              </documentation>
+              <assign name="AssignTipoPersona" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>"N"</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_tipoPersonaF</to>
+                </copy>
+              </assign>
+            </else>
+          </if>
+          <forEach parallel="no" counterName="counterValidation" name="For_Validation">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>count($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion)</finalCounterValue>
+            <scope name="ScopeValidation">
+              <variables>
+                <variable name="GetInvoicesAPRq" messageType="ns4:GetInvoicesAPByExampleRq"/>
+                <variable name="GetInvoicesAPRs" messageType="ns4:GetInvoicesAPByExampleRs"/>
+                <variable name="consultaCFDIRq" messageType="ns6:consultaCFDIRq"/>
+                <variable name="consultaCFDIRs" messageType="ns6:consultaCFDIRs"/>
+              </variables>
+              <if name="If_ActivoFijo">
+                <documentation>
+                  <![CDATA[ActivoFijo]]>
+                </documentation>
+                <condition>$v_activo_fijo</condition>
+                <empty name="CuentaActivoFijo"/>
+                <else>
+                  <documentation>
+                    <![CDATA[Validar]]>
+                  </documentation>
+                  <sequence name="SeqValidation">
+                    <flow name="Flow1">
+                      <sequence name="Seq_V_PUE_DIA"><if name="IF_V_PUE_DIA"
+                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[V_PUE_DIA]]></documentation>
+      <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_PUE_DIA'</condition>
+      <if name="If_PUE">
+         <documentation>
+            <![CDATA[Es PUE]]>
+         </documentation>
+         <condition>$v_metodoPagXML='PUE'</condition>
+         <if name="If_dia_1_20">
+            <documentation>
+                                <![CDATA[dia de validacion no esta entre 1 a 20]]>
+                              </documentation>
+            <condition>$v_diaSys &gt; $v_diaFinal or $v_diaSys &lt; $v_diaInicial</condition>
+            <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               
+               
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:Accion)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_DIA']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+               </copy></assign>
+         </if>
+      </if>
+   </if></sequence>
+                      <sequence name="Seq_V_PUE_MES"><if name="IF_V_PUE_MES"
+                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[V_PUE_MES]]></documentation>
+      <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_PUE_MES'</condition>
+      <if name="If_PUE">
+         <documentation>
+            
+         <![CDATA[Es PUE]]></documentation>
+         <condition>$v_metodoPagXML='PUE'</condition>
+         <if name="If_mesActual">
+            <documentation>
+                                <![CDATA[Mes de timbrado de la factura diferente al actual]]>
+                              </documentation>
+            <condition>$v_mesTimbradoXML != $v_mesSys or  $v_anioTimbradoXML!=$v_anioSys</condition>
+            <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_MES']/ns3:Accion)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_PUE_MES']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                </copy>
+                              </assign>
+         </if>
+      </if>
+   </if></sequence>
+                      <sequence name="SeqLinesRetenciones">
+                        <flow name="Flow5" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                          <sequence name="Seq_V_IMP_RET_IVA">
+                            <if name="If_V_LINES_INV_IVA">
+                              <documentation>
+                                <![CDATA[Valida que la diferencia entre el monto total de las lineas de IVA de la factura contra el total de la retencio IVA del XML no se mayor a la tolerancia establecida en el PARAMETRO 1]]>
+                              </documentation>
+                              <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_LINES_INV_IVA'</condition>
+                              <if name="If_diferenciaRetenciones">
+                                <documentation>
+                                  <![CDATA[Diferencia mayor a tolerancia]]>
+                                </documentation>
+                                <condition>xp20:abs($v_totalLineInvIVA - $v_retCalIVAXML)&gt; $v_toleranciaRetLinesIVA</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_IVA']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_IVA']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                              </if>
+                            </if>
+                          </sequence>
+                          <sequence name="Seq_V_IMP_RET_ISR">
+                            <if name="If_V_LINES_INV_ISR">
+                              <documentation>
+                                <![CDATA[Valida que la diferencia entre el monto total de las lineas de ISR de la factura contra el total de la retencio ISR del XML no se mayor a la tolerancia establecida en el PARAMETRO 1]]>
+                              </documentation>
+                              <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_LINES_INV_ISR'</condition>
+                              <if name="If_diferenciaRetenciones">
+                                <documentation>
+                                  <![CDATA[Diferencia mayor a tolerancia]]>
+                                </documentation>
+                                <condition>xp20:abs($v_totalLineInvISR - $v_retCalISRXML) &gt; $v_toleranciaRetLinesISR</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_ISR']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LINES_INV_ISR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                              </if>
+                            </if>
+                          </sequence>
+                        </flow>
+                      </sequence>
+                      <sequence name="Seq_V_ORDEN_BU">
+                        <if name="IF_V_ORDEN_BU">
+                          <documentation>
+                            <![CDATA[Se Valida que la Unidad de negocio de la Orden Sea la misma que la unidad de negocio de la Factura datos ERP.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_ORDEN_BU'</condition>
+                          <if name="If_UnidadEsIgual">
+                            <documentation>
+                              <![CDATA[UnidadesDiferentes]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0]/ns2:GCC_SEGMENT1 != $v_invoice/ns2:G_INVOICES[1]/ns2:LEGAL_ENTITY_SEGMENT</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ORDEN_BU']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ORDEN_BU']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_RFC_EMISOR">
+                        <if name="IF_V_RFC_EMISOR">
+                          <documentation>
+                            <![CDATA[Se Valida que el RFC del Emisor en el XML se igual a RFC del proveedor en ERP]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_RFC_EMISOR'</condition>
+                          <if name="If_RFCEmisorEsIgual"
+                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                              <![CDATA[RFCEmisorDiferentes]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:SUPPLIER_RFC != $v_invoiceXML/ns1:Emisor/ns1:Rfc</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RFC_EMISOR']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RFC_EMISOR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_ACTIVO_FIJO">
+                        <if name="IF_V_ACTIVO_FIJO">
+                          <documentation>
+                            <![CDATA[El proceso Valida primero el parametro 1 que define la cuenta de activo fijo, si  la cuenta contable de la factura es igual a la cuenta definida de activo fijo, manda notifiacion de validacion manual.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_ACTIVO_FIJO'</condition>
+                          <if name="If_IsCuentaActivoFijo">
+                            <documentation>
+                              <![CDATA[EsCuentaActivoFijo]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0]/ns2:GCC_SEGMENT5 = $v_cuentaActivoF</condition>
+                            <assign name="AssignStatus">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ACTIVO_FIJO']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat('&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_ACTIVO_FIJO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>true()</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_activo_fijo</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                    </flow>
+                    <flow name="Flow2">
+                      <sequence name="Seq_V_SAT">
+                        <if name="IF_V_SAT">
+                          <documentation>
+                            <![CDATA[Si el web service da error al ejecutarse se reintenta el numero de veces definido en el PARAMETRO 1]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_SAT'</condition>
+                          <scope name="ScopeValidaSAT">
+                            <sequence name="SeqValidaSAT">
+                              <assign name="AssignconsultaCFDIRq">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_invoiceXML/ns1:Emisor/ns1:Rfc</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$consultaCFDIRq.consultaCFDIRq/ns6:rfcIssuer</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_invoiceXML/ns1:Receptor/ns1:Rfc</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$consultaCFDIRq.consultaCFDIRq/ns6:rfcReceiver</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_invoiceXML/ns1:Total</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$consultaCFDIRq.consultaCFDIRq/ns6:totalAmount</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_invoiceXML/ns1:Complemento/ns1:TimbreFiscalDigital/ns1:UUID</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$consultaCFDIRq.consultaCFDIRq/ns6:uuid</to>
+                                </copy>
+                              </assign>
+                              <invoke name="WsDigitalStampGERTecConsultaCFDI" partnerLink="WsDigitalStampGERTec"
+                                      portType="ns6:DigitalStampGERTecPortType" operation="consultaCFDI"
+                                      bpelx:invokeAsDetail="no" inputVariable="consultaCFDIRq"
+                                      outputVariable="consultaCFDIRs"/>
+                              <assign name="AssignVars"
+                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>xp20:upper-case(substring(concat('VIGENTE',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT']/ns3:Parametro1 ),( number(string-length('VIGENTE') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT']/ns3:Parametro1)))))</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusSATConf</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>xp20:upper-case($consultaCFDIRs.consultaCFDIRs/ns6:Return/ns6:Estado)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusSAT</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>number(substring(concat('2',$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT_WS']/ns3:Parametro1 ),(string-length('2') + 1) * number(boolean($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT_WS']/ns3:Parametro1))))</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_reintentosSAT</to>
+                                </copy>
+                              </assign>
+                              <if name="If_ExistErrorWs">
+                                <documentation>
+                                  <![CDATA[Error Ws SAT]]>
+                                </documentation>
+                                <condition>count($consultaCFDIRs.consultaCFDIRs/ns5:Errors/ns5:Error)&gt;0</condition>
+                                <if name="If_Reintenta">
+                                  <documentation>
+                                    <![CDATA[Reintentando]]>
+                                  </documentation>
+                                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_contReintentosSAT &lt; $v_reintentosSAT</condition>
+                                  <sequence name="SeqReintentoWsSAT">
+                                    <assign name="AssignCont">
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$v_contReintentosSAT + 1</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_contReintentosSAT</to>
+                                      </copy>
+                                    </assign>
+                                    <wait name="Wait">
+                                      <for>'PT2S'</for>
+                                    </wait>
+                                    <extensionActivity>
+                                      <bpelx:replay name="ReplayValidationSAT" scope="ScopeValidaSAT"/>
+                                    </extensionActivity>
+                                  </sequence>
+                                  <else>
+                                    <documentation>
+                                      <![CDATA[ErrorWsSAT]]>
+                                    </documentation>
+                                    <assign name="AssignStatusDesc"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT_WS']/ns3:Accion)</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                      </copy>
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT_WS']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                      </copy>
+                                    </assign>
+                                  </else>
+                                </if>
+                                <else>
+                                  <documentation>
+                                    <![CDATA[EjecucionCorrectaServicio]]>
+                                  </documentation>
+                                  <if name="If_EstatusValido">
+                                    <documentation>
+                                      <![CDATA[Se realiza que el estatus que retorna el web service del SAT sea el definido en el PARAMETRO 1 de lo contrario notifiac el estatus en la notifiacion definido en la con la variable $STATUS_SAT]]>
+                                    </documentation>
+                                    <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusSATConf !=$v_statusSAT</condition>
+                                    <if name="If_Reintenta"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                      <documentation>
+                                        <![CDATA[Reintentando]]>
+                                      </documentation>
+                                      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_contReintentosSAT &lt; $v_reintentosSAT</condition>
+                                      <sequence name="SeqReintentoWsSAT">
+                                        <assign name="AssignCont">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                            <from>$v_contReintentosSAT + 1</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_contReintentosSAT</to>
+                                          </copy>
+                                        </assign>
+                                        <wait name="Wait">
+                                          <for>'PT2S'</for>
+                                        </wait>
+                                        <extensionActivity>
+                                          <bpelx:replay name="ReplayValidationSAT" scope="ScopeValidaSAT"
+                                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                        </extensionActivity>
+                                      </sequence>
+                                      <else>
+                                        <documentation>
+                                          <![CDATA[ErrorEstatusSAT]]>
+                                        </documentation>
+                                        <assign name="AssignStatusDesc"
+                                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                            <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT']/ns3:Accion)</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                            <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SAT']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                          </copy>
+                                        </assign>
+                                      </else>
+                                    </if>
+                                  </if>
+                                </else>
+                              </if>
+                            </sequence>
+                          </scope>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_FECHA_TIMBRADO">
+                        <if name="IF_V_FECHA_TIMBRADO">
+                          <documentation>
+                            <![CDATA[V_FECHA_TIMBRADO]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_FECHA_TIMBRADO'</condition>
+                          <if name="If_RFCIgual13">
+                            <documentation>
+                              <![CDATA[Validar año actual]]>
+                            </documentation>
+                            <condition>string-length($v_invoiceXML/ns1:Emisor/ns1:Rfc)=13</condition>
+                            <if name="If_anioActual">
+                              <documentation>
+                                <![CDATA[Anio de la factura diferente al actual]]>
+                              </documentation>
+                              <condition>$v_anioTimbradoXML != $v_anioSys</condition>
+                              <assign name="AssignStatusDesc"
+                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:Accion)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FECHA_TIMBRADO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                </copy>
+                              </assign>
+                            </if>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_CUENTA_CONT">
+                        <if name="IF_V_CUENTA_CONT">
+                          <documentation>
+                            <![CDATA[V_CUENTA_CONT]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_CUENTA_CONT'</condition>
+                          <empty name="Empty1"/>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_MONEDA">
+                        <if name="IF_V_MONEDA">
+                          <documentation>
+                            <![CDATA[Compara Moneda de la OC vs Moneda de la Factura en el ERP.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_MONEDA'</condition>
+                          <if name="If_MonedaIgual" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                              <![CDATA[Moneda Diferente]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:CURRENCY != $v_invoiceXML/ns1:Moneda</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_MONEDA']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_MONEDA']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_SUBTOTAL">
+                        <if name="IF_V_SUBTOTAL">
+                          <documentation>
+                            <![CDATA[Se realiza se valida que la diferencia del subtotal de la orden vs el Subtotal del XML menos los Descuentos  del XML si los hay no supere a la tolerancia Definina en el Parametro 1]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_SUBTOTAL'</condition>
+                          <if name="If_ExisteDiferenciaSubTotales">
+                            <documentation>
+                              <![CDATA[DiferenciaMayorTolerancia]]>
+                            </documentation>
+                            <condition>xp20:abs(xp20:abs(number($v_invoice/ns2:G_INVOICES[1]/ns2:SUBTOTAL)) - xp20:abs(number($v_invoiceXML/ns1:SubTotal) - number(substring(concat('0',$v_invoiceXML/ns1:Descuento),( number(string-length('0') + 1) * number(boolean($v_invoiceXML/ns1:Descuento))))) )) &gt; $v_toleranciaSubTotal</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SUBTOTAL']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_SUBTOTAL']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_TOTAL">
+                        <if name="IF_V_TOTAL">
+                          <documentation>
+                            <![CDATA[Se valida que la diferencia entre el Total de la OC vs el total del XML , no exceda la tolerancia definida en el parametro 1.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_TOTAL'</condition>
+                          <if name="If_ExisteDiferenciaTotales">
+                            <documentation>
+                              <![CDATA[DiferenciaMayorTolerancia]]>
+                            </documentation>
+                            <condition>xp20:abs(xp20:abs(number($v_invoice/ns2:G_INVOICES[1]/ns2:TOTAL)) - xp20:abs(number($v_invoiceXML/ns1:Total))) &gt; $v_toleranciaTotal</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_TOTAL']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_TOTAL']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                    </flow>
+                    <flow name="Flow3">
+                      <sequence name="Seq_V_UUID_UNICO">
+                        <if name="IF_V_UUID_UNICO">
+                          <documentation>
+                            <![CDATA[Se realiza la consulta del UUID del XML a Validar y se Revisa si ya se tiene en un estatus Validado en otra factura que no se la misma.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_UUID_UNICO'</condition>
+                          <sequence name="SeqUuidUnico">
+                            <assign name="AssignGetInvoicesAP">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>$v_invoiceXML/ns1:Complemento/ns1:TimbreFiscalDigital/ns1:UUID</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetInvoicesAPRq.GetInvoicesAPByExampleRqPart/ns4:uuid</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>'VALIDADO'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetInvoicesAPRq.GetInvoicesAPByExampleRqPart/ns4:status</to>
+                              </copy>
+                            </assign>
+                            <invoke name="WsAuditControlTecGetInvoicesAP" partnerLink="WsAuditControlTec"
+                                    portType="ns4:AuditControlTecPortType" operation="GetInvoicesAPByExample"
+                                    inputVariable="GetInvoicesAPRq" outputVariable="GetInvoicesAPRs"
+                                    bpelx:invokeAsDetail="no"/>
+                            <if name="If_ExisteUUID">
+                              <documentation>
+                                <![CDATA[UUID exite una vez y ya  esta validado en una factura diferente a esta]]>
+                              </documentation>
+                              <condition>count($GetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns4:Return/ns4:Invoice)=1 and $GetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns4:Return/ns4:Invoice[1]/ns4:invoiceId!=$v_invoice/ns2:G_INVOICES[1]/ns2:INVOICE_ID</condition>
+                              <assign name="AssignStatusDesc"
+                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_UUID_UNICO']/ns3:Accion)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_UUID_UNICO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                </copy>
+                              </assign>
+                              <elseif>
+                                <documentation>
+                                  <![CDATA[UUID Existe 2 Veces]]>
+                                </documentation>
+                                <condition>count($GetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns4:Return/ns4:Invoice)&gt;1</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_UUID_UNICO']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_UUID_UNICO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                              </elseif>
+                            </if>
+                          </sequence>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_USO_CFDI">
+                        <if name="IF_V_USO_CFDI">
+                          <documentation>
+                            <![CDATA[Proceso Valida que que el Uso de CFDI en el XML sea el comfigurado en el PARAMETRO 2  para toda Cuenta en el ERP diferente al configurado en el PARAMETRO 1]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_USO_CFDI'</condition>
+                          <if name="If_cuentaContDifConf">
+                            <documentation>
+                              <![CDATA[Validamos Uso CFDI]]>
+                            </documentation>
+                            <condition>$v_cuentaContInv != $v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_USO_CFDI']/ns3:Parametro2</condition>
+                            <if name="If_UsoCFDIIgual">
+                              <documentation>
+                                <![CDATA[Uso CFDI XML dif a Conf]]>
+                              </documentation>
+                              <condition>$v_usoCFDIXML != $v_usoCFDIConf</condition>
+                              <assign name="AssignStatusDesc"
+                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_USO_CFDI']/ns3:Accion)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_USO_CFDI']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_USO_CFDI']/ns3:Parametro1</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_usoCFDIConf</to>
+                                </copy>
+                              </assign>
+                            </if>
+                            <else>
+                              <documentation>
+                                <![CDATA[No Valida]]>
+                              </documentation>
+                              <empty name="NoAplicaValid"/>
+                            </else>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_CP_RECEPTOR">
+                        <if name="IF_V_CP_RECEPTOR">
+                          <documentation>
+                            <![CDATA[Se Valida que el codigo postal  que se tiene configurado en la entidad legal de el ERP sea el mismo que se tiene en el  receptor del XML de la factura]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_CP_RECEPTOR'</condition>
+                          <if name="If_CPReceptorIguales"
+                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                              <![CDATA[Codigo Postal Receptor Diferentes]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:LEGAL_ENTITY_ZIP_CODE != $v_invoiceXML/ns1:Receptor/ns1:DomicilioFiscalReceptor</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CP_RECEPTOR']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CP_RECEPTOR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_REGIMEN_RECEPTOR">
+                        <if name="IF_V_REGIMEN_RECEPTOR">
+                          <documentation>
+                            <![CDATA[Se Valida que el regimen fiscal  que se tiene configurado en la entidad legal de el ERP sea el mismo que se tiene en el  receptor del XML de la factura]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_REGIMEN_RECEPTOR'</condition>
+                          <if name="If_RegimenReceptorIguales"
+                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                              <![CDATA[Regimen Receptor Diferentes]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:LEGAL_ENTITY_REGIMEN!=$v_invoiceXML/ns1:Receptor/ns1:RegimenFiscalReceptor</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_REGIMEN_RECEPTOR']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_REGIMEN_RECEPTOR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_RFC_RECEPTOR">
+                        <if name="IF_V_RFC_RECEPTOR">
+                          <documentation>
+                            <![CDATA[Se Valida que el RFC que se tiene configurado en la entidad legal en  el ERP sea el mismo que se tiene en el receptor del  XML de la factura]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_RFC_RECEPTOR'</condition>
+                          <if name="If_RFCReceptorIguales">
+                            <documentation>
+                              <![CDATA[RFCs Diferentes]]>
+                            </documentation>
+                            <condition>$v_invoice/ns2:G_INVOICES[1]/ns2:REGISTRATION_RFC!=$v_invoiceXML/ns1:Receptor/ns1:Rfc</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RFC_RECEPTOR']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RFC_RECEPTOR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_LEGAL_ENTITY">
+                        <if name="IF_V_LEGAL_ENTITY">
+                          <documentation>
+                            <![CDATA[Se Valida que el nombre que se tiene configurado en la entidad legal de el ERP sea el mismo que se tiene en el receptor del XML de la factura]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_LEGAL_ENTITY'</condition>
+                          <if name="If_EntidadNegocioIguales"
+                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <documentation>
+                              <![CDATA[Entidad de Negocio Diferentes]]>
+                            </documentation>
+                            <condition>xp20:upper-case($v_invoice/ns2:G_INVOICES[1]/ns2:LEGAL_ENTITY_NAME) !=xp20:upper-case( $v_invoiceXML/ns1:Receptor/ns1:Nombre)</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LEGAL_ENTITY']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_LEGAL_ENTITY']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                    </flow>
+                    <flow name="Flow4">
+                      <sequence name="Seq_V_IVA"><if name="IF_V_IVA"
+                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                            <![CDATA[Se realiza se valida que la diferencia del monto IVA de la orden vs el monto IVA del XML menos los Descuentos  del XML si los hay no supere a la tolerancia Definina en el Parametro 1]]>
+                          </documentation>
+      <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_IVA'</condition>
+      <if name="If_ExisteDiferenciaIVAs">
+         <documentation>
+                              <![CDATA[DiferenciaMayorTolerancia]]>
+                            </documentation>
+         <condition>xp20:abs(xp20:abs(number($v_IVA_MOUNT_XML)) - xp20:abs($v_IVA_MOUNT_INV )) &gt; $v_toleranciaIVA</condition>
+         <assign name="AssignStatusDesc" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IVA']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IVA']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+      </if>
+   </if></sequence>
+                      <sequence name="Seq_V_CONDICION_PAGO">
+                        <if name="IF_V_CONDICION_PAGO">
+                          <documentation>
+                            <![CDATA[El proceso toma la condicion de pago definida en el ERP y busca si se tiene una configuracion en el catalogo de condiciones de pago. Si existe, valida que el metodo de pago definido para la condicion configurada sea igual en el XML, si no existe configuracion no realiza ninguna validacion.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_CONDICION_PAGO'</condition>
+                          <sequence>
+                            <if name="If_ExistCondPago">
+                              <documentation>
+                                <![CDATA[valida Metodo PAgo]]>
+                              </documentation>
+                              <condition>string-length($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case($v_condPagInv)]/ns3:MetodoPago) &gt; 0</condition>
+                              <if name="If_MetodoPagoIgual">
+                                <documentation>
+                                  <![CDATA[Metodo Pago Diferente]]>
+                                </documentation>
+                                <condition>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case($v_condPagInv)]/ns3:MetodoPago)!=xp20:upper-case($v_metodoPagXML)</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case($v_condPagInv)]/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case($v_condPagInv)]/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case($v_condPagInv)]/ns3:MetodoPago)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagConf</to>
+                                  </copy>
+                                </assign>
+                              </if>
+                              <else>
+                                <documentation>
+                                  <![CDATA[No existe configuracion]]>
+                                </documentation>
+                                <if name="If_CondicionPagDEFAULT">
+                                  <documentation>
+                                    <![CDATA[DEFAULT]]>
+                                  </documentation>
+                                  <condition>string-length($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case('DEFAULT')]/ns3:MetodoPago) &gt; 0</condition>
+                                  <if name="If_MetodoPagoIgual"
+                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <documentation>
+                                      <![CDATA[Metodo Pago Diferente]]>
+                                    </documentation>
+                                    <condition>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case('DEFAULT')]/ns3:MetodoPago)!=xp20:upper-case($v_metodoPagXML)</condition>
+                                    <assign name="AssignStatusDesc"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case('DEFAULT')]/ns3:Accion)</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                      </copy>
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case('DEFAULT')]/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                      </copy>
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoCondicionesPago/ns3:CondicionPago[xp20:upper-case(ns3:CondicionPago)=xp20:upper-case('DEFAULT')]/ns3:MetodoPago)</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagConf</to>
+                                      </copy>
+                                    </assign>
+                                  </if>
+                                  <else>
+                                    <documentation>
+                                      <![CDATA[ErrorSinConfgurar]]>
+                                    </documentation>
+                                    <assign name="AssignStatusDesc"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CONDICION_PAGO']/ns3:Accion)</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                      </copy>
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CONDICION_PAGO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                      </copy>
+                                    </assign>
+                                  </else>
+                                </if>
+                              </else>
+                            </if>
+                          </sequence>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_V_FORMA_PAGO">
+                        <if name="IF_V_FORMA_PAGO">
+                          <documentation>
+                            <![CDATA[El proceso considera las reglas según se tengan definidas en el catologo de formas de pago con relacion a un metodo de pago, Se puede asignar una configuracion por DEFAULT en el catalogo para la Forma de Pago esto permite que todas las formas de pago que no esten definidas en el catologo tengan que tener el metodo de pago definido.Para las notas de credito el proceso debe ir a buscar la forma de pago de la factura relacionada para validar contra el metodo de pago de la nota de crediro. PARAMETRO1= FORMA PAGO , PARAMETRO2= METODO PAGO, Variables Para notifiacion Forma de pago XML : @FORMA_PAGO_XML@   Metodo de Pago XML: @METODO_PAGO_XML@ , Metodo de Pago Configurado:@METODO_PAGO_CONF@.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_FORMA_PAGO'</condition>
+                          <scope name="Scope_FORMAPAGO">
+                            <variables>
+                              <variable name="v_errorFactRel" type="xsd:boolean">
+                                <from>false()</from>
+                              </variable>
+                            </variables>
+                            <sequence name="Seq_FORMAPAGO">
+                              <if name="If_IsCREDIT">
+                                <documentation>
+                                  <![CDATA[Busca data FACT REL]]>
+                                </documentation>
+                                <condition>$v_tipoDoc='CREDIT'</condition>
+                                <scope name="ScopeFacturaRel">
+                                  <variables>
+                                    <variable name="GetInvoicesRAPRq" messageType="ns4:GetInvoicesAPByExampleRq"/>
+                                    <variable name="GetInvoicesRAPRs" messageType="ns4:GetInvoicesAPByExampleRs"/>
+                                  </variables>
+                                  <sequence name="SeqFacturaRel"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <assign name="AssignGetInvoicesAP">
+                                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$v_invoiceXML/ns1:CfdiRelacionados/ns1:UUID[1]</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetInvoicesRAPRq.GetInvoicesAPByExampleRqPart/ns4:uuid</to>
+                                      </copy>
+                                    </assign>
+                                    <invoke name="WsAuditControlTecGetInvoicesAP" partnerLink="WsAuditControlTec"
+                                            portType="ns4:AuditControlTecPortType" operation="GetInvoicesAPByExample"
+                                            inputVariable="GetInvoicesRAPRq" outputVariable="GetInvoicesRAPRs"
+                                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                            bpelx:invokeAsDetail="no"/>
+                                    <if name="If_ExistFactRel">
+                                      <documentation>
+                                        <![CDATA[Asignamos valores fact rel para validar]]>
+                                      </documentation>
+                                      <condition>string-length($GetInvoicesRAPRs.GetInvoicesAPByExampleRsPart/ns4:Return/ns4:Invoice[1]/ns4:formaPago)&gt;0</condition>
+                                      <assign name="AssignFormaPagoFactRel">
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                          <from>$GetInvoicesRAPRs.GetInvoicesAPByExampleRsPart/ns4:Return/ns4:Invoice[1]/ns4:metodoPago</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagoFacRel</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                          <from>$v_metodoPagoFacRel</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagXML</to>
+                                        </copy>
+                                      </assign>
+                                      <else>
+                                        <documentation>
+                                          <![CDATA[Asignamos estatus error]]>
+                                        </documentation>
+                                        <assign name="AssignErrorFactRel">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                            <from>true()</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_errorFactRel</to>
+                                          </copy>
+                                        </assign>
+                                      </else>
+                                    </if>
+                                  </sequence>
+                                </scope>
+                              </if>
+                              <if name="If_ExitErrorFactRel">
+                                <documentation>
+                                  <![CDATA[Error consultando fact rel]]>
+                                </documentation>
+                                <condition>$v_errorFactRel</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FACT_REL_NC']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FACT_REL_NC']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                                <else>
+                                  <documentation>
+                                    <![CDATA[no existe error fact rel]]>
+                                  </documentation>
+                                  <if name="If_ExistFormaPago">
+                                    <documentation>
+                                      <![CDATA[Valida Metodo de pago]]>
+                                    </documentation>
+                                    <condition>string-length($v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago=$v_formaPagXML]/ns3:MetodoPago) &gt; 0</condition>
+                                    <if name="If_MetodoPagIguales">
+                                      <documentation>
+                                        <![CDATA[Error metodo de pago no es el configurado]]>
+                                      </documentation>
+                                      <condition>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago=$v_formaPagXML]/ns3:MetodoPago) != $v_metodoPagXML</condition>
+                                      <assign name="AssignStatusDesc"
+                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                          <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago=$v_formaPagXML]/ns3:Accion)</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                          <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago=$v_formaPagXML]/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                          <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago=$v_formaPagXML]/ns3:MetodoPago</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagConf</to>
+                                        </copy>
+                                      </assign>
+                                    </if>
+                                    <else>
+                                      <documentation>
+                                        <![CDATA[Buscamos Forma de Pago Default]]>
+                                      </documentation>
+                                      <if name="If_FormaP_Default">
+                                        <documentation>
+                                          <![CDATA[Valida Metodo Pago]]>
+                                        </documentation>
+                                        <condition>string-length($v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago='DEFAULT']/ns3:MetodoPago) &gt; 0</condition>
+                                        <if name="If_MetodoPagoDefault">
+                                          <documentation>
+                                            <![CDATA[Error en forma de pago]]>
+                                          </documentation>
+                                          <condition>xp20:upper-case($v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago='DEFAULT']/ns3:MetodoPago) != $v_metodoPagXML</condition>
+                                          <assign name="AssignStatusDesc"
+                                                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago='DEFAULT']/ns3:Accion)</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago='DEFAULT']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoFormasPago/ns3:FormaPago[ns3:FormaPago='DEFAULT']/ns3:MetodoPago</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagConf</to>
+                                            </copy>
+                                          </assign>
+                                        </if>
+                                        <else>
+                                          <documentation>
+                                            <![CDATA[Error Forma de pago no valido]]>
+                                          </documentation>
+                                          <assign name="AssignStatusDesc"
+                                                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FORMA_PAGO']/ns3:Accion)</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_FORMA_PAGO']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                            </copy>
+                                          </assign>
+                                        </else>
+                                      </if>
+                                    </else>
+                                  </if>
+                                </else>
+                              </if>
+                              <assign name="AssignVars">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                  <from>$v_invoiceXML/ns1:FormaPago</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_formaPagXML</to>
+                                </copy>
+                                <copy>
+                                  <from>$v_invoiceXML/ns1:MetodoPago</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_metodoPagXML</to>
+                                </copy>
+                              </assign>
+                            </sequence>
+                          </scope>
+                        </if>
+                      </sequence>
+                      <sequence name="Seq_RETENCIONES">
+                        <flow name="Flow5">
+                          <sequence name="Seq_V_IMP_RET_IVA">
+                            <if name="If_V_IMP_RET_IVA">
+                              <documentation>
+                                <![CDATA[Se valida que la diferencia entre la retencion IVA  ya calculada con el subtotal del XML  contra la retencion IVA de la factura calculada con el subtotal , No sea mayor a la tolerancia Establecida en el PARAMETRO1.]]>
+                              </documentation>
+                              <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_IMP_RET_IVA'</condition>
+                              <if name="If_diferenciaRetenciones">
+                                <documentation>
+                                  <![CDATA[Diferencia mayor a tolerancia]]>
+                                </documentation>
+                                <condition>xp20:abs($v_retCalIVAI - $v_retCalIVAXML)&gt;$v_toleranciaRetencionIVA</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_IVA']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_IVA']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                              </if>
+                            </if>
+                          </sequence>
+                          <sequence name="Seq_V_RETENCIONES">
+                            <if name="IF_V_RETENCIONES">
+                              <documentation>
+                                <![CDATA[Valida si el regimen del XML y la cuenta contable de la factura cuentan con una configuracion de retenciones fija, de ser asi valida que la confugracion sea correcta en el XML, el PARAMETRO1 define la tolerancia de diferencia que pueden tener las retenciones.]]>
+                              </documentation>
+                              <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_RETENCIONES'</condition>
+                              <scope name="Scopei_V_RETENCIONES">
+                                <variables>
+                                  <variable name="v_retencionFija" type="xsd:boolean">
+                                    <from>false()</from>
+                                  </variable>
+                                  <variable name="v_statusR" type="xsd:string"/>
+                                  <variable name="v_statusDescR" type="xsd:string"/>
+                                  <variable name="v_errorRetencion" type="xsd:boolean">
+                                    <from>false()</from>
+                                  </variable>
+                                </variables>
+                                <sequence name="Seqi_V_RETENCIONES">
+                                  <extensionActivity>
+                                    <bpelx:exec name="Java_Embedding2">
+                                      <![CDATA[addAuditTrailEntry("data");                                                 
+try{    
+String input = (String)getVariableData("v_IVAXML");                                                 
+                                                 
+                                      
+addAuditTrailEntry("valor input="+input);                                                 
+} catch (Exception e) {                                                 
+  addAuditTrailEntry(" Exception: "+e.getMessage());                                                 
+}                                                 
+addAuditTrailEntry("ended");]]>
+                                    </bpelx:exec>
+                                  </extensionActivity>
+                                  <if name="If_ExistTipoPesona">
+                                    <documentation>
+                                      <![CDATA[si existen retenciones para el tipo persona]]>
+                                    </documentation>
+                                    <condition>count($v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF)][1]/ns3:RegimenFiscal)&gt;0</condition>
+                                    <if name="If_ExisteRegimen">
+                                      <documentation>
+                                        <![CDATA[ExisteConfigRegimen]]>
+                                      </documentation>
+                                      <condition>count($v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML)]/ns3:RegimenFiscal)&gt;0</condition>
+                                      <sequence name="SeqExisteCuenta">
+                                        <if name="If_ExisteCuenta">
+                                          <documentation>
+                                            <![CDATA[Valida Config]]>
+                                          </documentation>
+                                          <condition>string-length($v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and contains(ns3:Cuenta,$v_cuentaContInv)]/ns3:RegimenFiscal)&gt;0</condition>
+                                          <assign name="AssignConfRet">
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and  contains(ns3:RegimenFiscal,$v_regFisEmXML) and contains(ns3:Cuenta,$v_cuentaContInv)][1]/ns3:ISR</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionISRConf</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>true()</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionFija</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and contains(ns3:Cuenta,$v_cuentaContInv)][1]/ns3:IVA</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAConf</to>
+                                            </copy>
+                                            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                                              <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and contains(ns3:Cuenta,$v_cuentaContInv)][1]/ns3:Accion</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusR</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>strClass:replaceAll($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:MensajeNotificacion,'@ERROR_RETENCIONES@',$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:RegimenFiscal,$v_regFisEmXML) and contains(ns3:Cuenta,$v_cuentaContInv)][1]/ns3:MensajeNotificacion)</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDescR</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                              <from>($v_retencionIVAConf  *  $v_IVAXML) div $v_confIVATP</from>
+                                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAConf</to>
+                                            </copy>
+                                          </assign>
+                                          <else>
+                                            <documentation>
+                                              <![CDATA[DEFAULT]]>
+                                            </documentation>
+                                            <if name="If_Exist_DeFault">
+                                              <documentation>
+                                                <![CDATA[ValidaConfig]]>
+                                              </documentation>
+                                              <condition>count($v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and ns3:RegimenFiscal=$v_invoiceXML/ns1:Emisor/ns1:RegimenFiscal and ns3:Cuenta='DEFAULT' ]/ns3:RegimenFiscal)&gt;0</condition>
+                                              <assign name="AssignConfRet"
+                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                                  <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and ns3:Cuenta='DEFAULT'][1]/ns3:ISR</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionISRConf</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>true()</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionFija</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                                  <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and ns3:Cuenta='DEFAULT'][1]/ns3:IVA</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAConf</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:TipoPersona,$v_tipoPersonaF) and contains(ns3:RegimenFiscal,$v_regFisEmXML) and ns3:Cuenta='DEFAULT'][1]/ns3:Accion</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusR</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>strClass:replaceAll($v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_RETENCIONES']/ns3:MensajeNotificacion,'@ERROR_RETENCIONES@',$v_validationsInvoice/ns1:Config/ns3:CatalogoRetenciones/ns3:Retencion[contains(ns3:RegimenFiscal,$v_regFisEmXML) and ns3:Cuenta='DEFAULT'][1]/ns3:MensajeNotificacion)</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDescR</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>($v_retencionIVAConf  *  $v_IVAXML) div $v_confIVATP</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retencionIVAConf</to>
+                                                </copy>
+                                              </assign>
+                                              <else>
+                                                <documentation>
+                                                  <![CDATA[Sin Config]]>
+                                                </documentation>
+                                                <empty name="NoExistConfFija"
+                                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                                              </else>
+                                            </if>
+                                          </else>
+                                        </if>
+                                        <if name="If_ValidaRetFija">
+                                          <documentation>
+                                            <![CDATA[Valida retenciones conf vs retenciones xml]]>
+                                          </documentation>
+                                          <condition>$v_retencionFija</condition>
+                                          <sequence>
+                                            <flow name="Flow6">
+                                              <sequence name="SeqRetFijaISR">
+                                                <if name="If_RetISR_DEFAULT">
+                                                  <documentation>
+                                                    <![CDATA[Retencion Default]]>
+                                                  </documentation>
+                                                  <condition>$v_retencionISRConf='DEFAULT'</condition>
+                                                  <empty name="RetencionNoSeValida"/>
+                                                  <else>
+                                                    <documentation>
+                                                      <![CDATA[Validar Retencion]]>
+                                                    </documentation>
+                                                    <if name="If_RetISRXML_Dif_Conf">
+                                                      <documentation>
+                                                        <![CDATA[Diferencia mayor a tolerancia]]>
+                                                      </documentation>
+                                                      <condition>xp20:abs($v_retencionISRXML - $v_retencionISRConf) &gt; $v_toleranciaPRetenciones</condition>
+                                                      <assign name="AssignError"
+                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                        <copy ignoreMissingFromData="yes"
+                                                              bpelx:insertMissingToData="yes">
+                                                          <from>true()</from>
+                                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_errorRetencion</to>
+                                                        </copy>
+                                                      </assign>
+                                                    </if>
+                                                  </else>
+                                                </if>
+                                              </sequence>
+                                              <sequence name="SeqRetFijaIVA">
+                                                <if name="If_RetIVA_DEFAULT">
+                                                  <documentation>
+                                                    <![CDATA[Retencion Default]]>
+                                                  </documentation>
+                                                  <condition>$v_retencionIVAConf='DEFAULT'</condition>
+                                                  <empty name="RetencionNoSeValida"/>
+                                                  <else>
+                                                    <documentation>
+                                                      <![CDATA[Validar Retencion]]>
+                                                    </documentation>
+                                                    <if name="If_RetIVAXML_Dif_Conf">
+                                                      <documentation>
+                                                        <![CDATA[Diferencia mayor a tolerancia]]>
+                                                      </documentation>
+                                                      <condition>xp20:abs($v_retencionIVAXML - $v_retencionIVAConf) &gt; $v_toleranciaPRetenciones</condition>
+                                                      <assign name="AssignError"
+                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                        <copy ignoreMissingFromData="yes"
+                                                              bpelx:insertMissingToData="yes">
+                                                          <from>true()</from>
+                                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_errorRetencion</to>
+                                                        </copy>
+                                                      </assign>
+                                                    </if>
+                                                  </else>
+                                                </if>
+                                              </sequence>
+                                            </flow>
+                                            <if name="If_ExistError">
+                                              <documentation>
+                                                <![CDATA[Assignar error]]>
+                                              </documentation>
+                                              <condition>$v_errorRetencion</condition>
+                                              <assign name="AssignStatusDesc"
+                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>concat($v_status,$v_statusR)</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                  <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_statusDescR,'&lt;/li&gt;')</from>
+                                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                                </copy>
+                                              </assign>
+                                            </if>
+                                          </sequence>
+                                        </if>
+                                      </sequence>
+                                      <else>
+                                        <documentation>
+                                          <![CDATA[Sin config]]>
+                                        </documentation>
+                                        <empty name="NoExistConfFija"/>
+                                      </else>
+                                    </if>
+                                    <else>
+                                      <documentation>
+                                        <![CDATA[no Existen retenciones para tipo persona de la factura]]>
+                                      </documentation>
+                                      <empty name="NoExistConfFija"
+                                             xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                                    </else>
+                                  </if>
+                                </sequence>
+                              </scope>
+                            </if>
+                          </sequence>
+                          <sequence name="Seq_V_IMP_RET_ISR">
+                            <if name="If_V_IMP_RET_ISR">
+                              <documentation>
+                                <![CDATA[Se valida que la diferencia entre la retencion ISR  ya calculada con el subtotal del XML  contra la retencion ISR de la factura calculada con el subtotal , No sea mayor a la tolerancia Establecida en el PARAMETRO1.]]>
+                              </documentation>
+                              <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_IMP_RET_ISR'</condition>
+                              <if name="If_diferenciaRetenciones">
+                                <documentation>
+                                  <![CDATA[Diferencia mayor a tolerancia]]>
+                                </documentation>
+                                <condition>xp20:abs($v_retCalISRI - $v_retCalISRXML)&gt;$v_toleranciaRetencionISR</condition>
+                                <assign name="AssignStatusDesc"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_ISR']/ns3:Accion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                                  </copy>
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_IMP_RET_ISR']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                  </copy>
+                                </assign>
+                              </if>
+                            </if>
+                          </sequence>
+                        </flow>
+                      </sequence>
+                      <sequence name="Seq_V_CUENTA_PREDIAL">
+                        <if name="IF_CUENTA_PREDIAL">
+                          <documentation>
+                            <![CDATA[Se Valida que exista el nodo predial en el XML para las cuentas definidas en el parametro1 y parametro2.]]>
+                          </documentation>
+                          <condition>$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[$counterValidation]/ns3:Codigo='V_CUENTA_PREDIAL'</condition>
+                          <if name="If_ExisteCuentaPredial">
+                            <documentation>
+                              <![CDATA[NoExisteCuentaPredial]]>
+                            </documentation>
+                            <condition>($v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0][1]/ns2:GCC_SEGMENT5=$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CUENTA_PREDIAL']/ns3:Parametro1 or $v_invoice/ns2:G_INVOICES[1]/ns2:G_INVOICES1[ns2:ID_LINE_TYPE='ITEM' and string-length(ns2:OD_CODE_COMBINATION_ID)&gt;0][1]/ns2:GCC_SEGMENT5=$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CUENTA_PREDIAL']/ns3:Parametro2) and count($v_invoiceXML/ns1:Concepto/ns1:CuentaPredial)=0</condition>
+                            <assign name="AssignStatusDesc"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_status,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CUENTA_PREDIAL']/ns3:Accion)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>concat($v_statusDesc,'&lt;li&gt;' ,$v_validationsInvoice/ns1:Config/ns3:CatalogoValidaciones/ns3:Validacion[ns3:Codigo='V_CUENTA_PREDIAL']/ns3:MensajeNotificacion,'&lt;/li&gt;')</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                              </copy>
+                            </assign>
+                          </if>
+                        </if>
+                      </sequence>
+                    </flow>
+                  </sequence>
+                </else>
+              </if>
+            </scope>
+          </forEach>
+        </sequence>
+      </else>
+    </if>
+    <if name="If_ExistErrors">
+      <documentation>
+        <![CDATA[Validar Factura]]>
+      </documentation>
+      <condition>string-length($v_status)=0</condition>
+      <assign name="AssignVALIDAR">
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>'VALIDAR'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+        </copy>
+      </assign>
+    </if>
+    <assign name="AssignReplace">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">strClass:replaceAll($v_statusDesc,'@STATUS_SAT@',$v_statusSAT)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@STATUS_SAT_CONF@',$v_statusSATConf)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@UUID_RELACIONADO@',$v_uuidRelacionadoXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_TOTAL@',$v_toleranciaTotal)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_SUBTOTAL@',$v_toleranciaSubTotal)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_RETENCION_IVA@',$v_toleranciaRetencionIVA)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOTAL_RET_ISR_LINEAS_INV@',$v_totalLineInvISR)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy>
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_RET_LINEAS_ISR@',$v_toleranciaRetLinesISR)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOTAL_RET_IVA_LINEAS_INV@',$v_totalLineInvISR)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy>
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_RET_LINEAS_IVA@',$v_toleranciaRetLinesISR)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_RETENCION_IVA@',$v_toleranciaRetencionISR)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_P_RETENCIONES@',$v_toleranciaPRetenciones)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_ISR_INV@',$v_retencionISRI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_IVA_INV@',$v_retencionIVAI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_ISR_XML@',$v_retencionISRXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_IVA_XML@',$v_retencionIVAXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_ISR_CONF@',$v_retencionISRConf)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@P_IVA_CONF@',$v_retencionIVAConf)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@CAL_ISR_INV@',$v_retCalISRI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@CAL_IVA_INV@',$v_retCalIVAI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@CAL_ISR_XML@',$v_retCalISRXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@CAL_IVA_XML@',$v_retCalIVAXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOTAL_XML@',$v_totalXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOTAL_OC@',$v_totalI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@SUBTOTAL_XML@',$v_subTotalXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@SUBTOTAL_OC@',$v_subTotalI)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FORMA_PAGO_XML@',$v_formaPagXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FECHA_TIMBRADO@',concat($v_diaTimbradoXML,'-',$v_mesTimbradoXML,'-',$v_anioTimbradoXML))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FECHA_ACTUAL@',concat($v_diaSys,'-',$v_mesSys,'-',$v_anioSys))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FORM_PAG_FACT_R@',$v_formaPagFactRelXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@VERSION_VALIDAS@',$v_estatusCfdiValidos)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@CFDI_VERSION@',$v_cfdiVersionXML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@IVA_XML@',$v_IVA_MOUNT_XML)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@IVA_OC@',$v_IVA_MOUNT_INV)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@TOLERANCIA_IVA@',$v_toleranciaIVA)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FECHA_INICIO@',$v_diaInicial)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>strClass:replaceAll($v_statusDesc,'@FECHA_FIN@',$v_diaFinal)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+      </copy>
+    </assign>
+  </sequence>
+</bpelx:subProcess>

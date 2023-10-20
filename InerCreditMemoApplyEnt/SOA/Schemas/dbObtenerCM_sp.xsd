@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbObtenerCM" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbObtenerCM" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_SISTEMA_ORIGEN" type="string" db:index="1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+            <element name="P_FECHA_PROCESO" type="dateTime" db:index="2" db:type="DATE" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_CREDIT_MEMO_ARRAY" type="db:XXER_AR_APPLY_CM_COLLTYPE" db:index="3" db:type="Array" minOccurs="0" nillable="true"/>
+            <element name="P_ERROR" type="decimal" db:index="4" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_ERROR_DESC" type="string" db:index="5" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="XXER_AR_APPLY_CM_TYPE">
+      <sequence>
+         <element name="BUSINESS_UNIT" type="db:string25" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="CREDIT_MEMO_TRX_NUMBER" type="db:string80" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="INVOICE_TRX_NUMBER" type="db:string80" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="AMOUNT_APPLIED" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="APPLY_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="GL_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="RECEIVABLE_APPLICATION_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="TABLA_PUENTE_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="EXITOSO" type="db:string1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="ERROR_MSG" type="db:string2048" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="XXER_AR_APPLY_CM_COLLTYPE">
+      <sequence>
+         <element name="P_CREDIT_MEMO_ARRAY_ITEM" type="db:XXER_AR_APPLY_CM_TYPE" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <simpleType name="string25">
+      <restriction base="string">
+         <maxLength value="25"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string80">
+      <restriction base="string">
+         <maxLength value="80"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string1">
+      <restriction base="string">
+         <maxLength value="1"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string2048">
+      <restriction base="string">
+         <maxLength value="2048"/>
+      </restriction>
+   </simpleType>
+</schema>

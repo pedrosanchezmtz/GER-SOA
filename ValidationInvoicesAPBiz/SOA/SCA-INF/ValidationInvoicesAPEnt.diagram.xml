@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gReference name="WsMessageTec">
+        <dgm:body borderWidth="2" arcRad="20" X="574" Y="226" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="564" Y="219" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="WsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+            <dgm:item>SendEmailCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="WsAuditControlTec">
+        <dgm:body borderWidth="2" arcRad="20" X="574" Y="26" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="564" Y="19" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="WsAuditControlTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>MergeInvoicesAP</dgm:item>
+            <dgm:item>InsertArElecInvoice</dgm:item>
+            <dgm:item>InsertArElecInvoiceErrors</dgm:item>
+            <dgm:item>MergeIncPaymentComplement</dgm:item>
+            <dgm:item>GetComplementsAP</dgm:item>
+            <dgm:item>MergeComplementsAP</dgm:item>
+            <dgm:item>CreateLog</dgm:item>
+            <dgm:item>MergeCtrlTrans</dgm:item>
+            <dgm:item>GetCtrlTrans</dgm:item>
+            <dgm:item>CreateJobsStatus</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>GetAllValidIncPaymentComplements</dgm:item>
+            <dgm:item>MergeCustomerSiteLog</dgm:item>
+            <dgm:item>GetCustomerSiteLog</dgm:item>
+            <dgm:item>GetInvoicesAPByExample</dgm:item>
+            <dgm:item>GetValPaymentComplementsResume</dgm:item>
+            <dgm:item>GetConfValInvoicesAP</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+</dgm:gDiagram>

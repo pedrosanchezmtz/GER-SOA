@@ -1,0 +1,31 @@
+<wsdl:definitions
+     name="XXER_ERRORES_TEMP_TBL"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/XMLValidatorBiz/XXER_ERRORES_TEMP_TBL"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/XMLValidatorBiz/XXER_ERRORES_TEMP_TBL"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/XXER_ERRORES_TEMP_TBL"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="XXER_ERRORES_TEMP_TBL_plt" >
+    <plt:role name="XXER_ERRORES_TEMP_TBL_role" >
+      <plt:portType name="tns:XXER_ERRORES_TEMP_TBL_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/XXER_ERRORES_TEMP_TBL" schemaLocation="../Schemas/XXER_ERRORES_TEMP_TBL_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="XxerErroresTempTblCollection_msg">
+        <wsdl:part name="XxerErroresTempTblCollection" element="top:XxerErroresTempTblCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="XXER_ERRORES_TEMP_TBL_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:XxerErroresTempTblCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="delete">
+            <wsdl:input message="tns:XxerErroresTempTblCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,748 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Dec 18 14:31:23 CST 2017
+  Author:  Uomo
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelValidatePaymentComplements"
+         targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidatePaymentComplements"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidatePaymentComplements"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/AuditControlTec"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" location="../Schemas/ElectronicInvoiceAP.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelValidatePaymentComplements"
+          location="../WSDLs/bpelValidatePaymentComplements.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelvalidatepaymentcomplements_client" partnerLinkType="client:bpelValidatePaymentComplements"
+                 myRole="bpelValidatePaymentComplementsProvider" partnerRole="bpelValidatePaymentComplementsRequester"/>
+    <partnerLink name="wsAuditControlTecPs" partnerLinkType="ns1:wsAuditControlTecPs"
+                 partnerRole="AuditControlTecPortType"/>
+  </partnerLinks>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelValidatePaymentComplementsRequestMessage"/>
+    <!-- Reference to the message that will be sent back to the requester during callback -->
+    <variable name="outputVariable" messageType="client:bpelValidatePaymentComplementsResponseMessage"/>
+    <variable name="contextInfo" element="ns2:ContextInfo"/>
+    <variable name="lastError" element="cmn:Error"/>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="sequenceCatchAll">
+        <assign name="assignCatchAll">
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[bpelValidatePaymentComplements]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[InvoicesBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <invoke name="callbackClient" partnerLink="bpelvalidatepaymentcomplements_client"
+                portType="client:bpelValidatePaymentComplementsCallback" operation="ValidatePaymentComplementsResponse"
+                inputVariable="outputVariable"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelValidatePaymentComplements.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelvalidatepaymentcomplements_client"
+             portType="client:bpelValidatePaymentComplements" operation="ValidatePaymentComplements"
+             variable="inputVariable" createInstance="yes"/>
+    <scope name="scopeGetAllCandidates">
+      <variables>
+        <variable name="candidatesInput" messageType="ns1:GetAllValidIncPaymentComplementsRq"/>
+        <variable name="candidatesOutput" messageType="ns1:GetAllValidIncPaymentComplementsRs"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[bpelValidatePaymentComplements]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InvoicesBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[bpelValidatePaymentComplements]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InvoicesBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[bpelValidatePaymentComplements]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InvoicesBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[bpelValidatePaymentComplements]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InvoicesBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceGetAllCandidates">
+        <invoke name="invokeGetCandidates" bpelx:invokeAsDetail="no" partnerLink="wsAuditControlTecPs"
+                portType="ns1:AuditControlTecPortType" operation="GetAllValidIncPaymentComplements"
+                inputVariable="candidatesInput" outputVariable="candidatesOutput"/>
+        <if name="IfCorrectGetCandidates">
+          <documentation>
+            <![CDATA[Correct Get Candidates]]>
+          </documentation>
+          <condition>count($candidatesOutput.GetAllValidIncPaymentComplementsRsPart/cmn:Errors/cmn:Error) = 0</condition>
+          <if name="IfAvailableCandidates">
+            <documentation>
+              <![CDATA[Available Candidates]]>
+            </documentation>
+            <condition>count($candidatesOutput.GetAllValidIncPaymentComplementsRsPart/ns1:Return/ns1:IncPaymentComplement) &gt; 0</condition>
+            <sequence name="sequenceAvailableCandidates">
+              <assign name="assignInitContext">
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns2:RetryCount</to>
+                </copy>
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ValidatedCount</to>
+                </copy>
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:NotConnetedCount</to>
+                </copy>
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ErroredCount</to>
+                </copy>
+                <copy>
+                  <from>1</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns2:LastProcessedIndex</to>
+                </copy>
+              </assign>
+              <forEach parallel="no" counterName="counter" name="forEachCandidate">
+                <startCounterValue>1</startCounterValue>
+                <finalCounterValue>count($candidatesOutput.GetAllValidIncPaymentComplementsRsPart/ns1:Return/ns1:IncPaymentComplement)</finalCounterValue>
+                <scope name="scopeForEachCandidate">
+                  <variables>
+                    <variable name="valPaymentInput" element="ns3:ValidatePaymentRq"/>
+                    <variable name="valPaymentOutput" element="ns3:ValidatePaymenyRs"/>
+                    <variable name="currentRow" element="ns1:MergeIncPaymentComplementRq"/>
+                    <variable name="notFoundInvoice" type="xsd:boolean"/>
+                    <variable name="currentPaymentComplement" element="ns2:PaymentComplement"/>
+                  </variables>
+                  <sequence name="sequenceForEachCandidate">
+                    <assign name="assingCurrentRow">
+                      <copy>
+                        <from>$candidatesOutput.GetAllValidIncPaymentComplementsRsPart/ns1:Return/ns1:IncPaymentComplement[$counter]</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentRow</to>
+                      </copy>
+                      <copy>
+                        <from>$counter</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns2:LastProcessedIndex</to>
+                      </copy>
+                    </assign>
+                    <assign name="assignValParams">
+                      <copy>
+                        <from>$currentRow/ns1:RfcIssuer</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentInput/ns3:Payment/ns3:RfcIssuer</to>
+                      </copy>
+                      <copy>
+                        <from>$currentRow/ns1:IncPaymentComplementId</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentInput/ns3:Payment/ns3:InvoiceNumber</to>
+                      </copy>
+                      <copy>
+                        <from>$currentRow/ns1:RfcReceiver</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentInput/ns3:Payment/ns3:RfcReceiver</to>
+                      </copy>
+                      <copy>
+                        <from>$currentRow/ns1:TotalAmount</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentInput/ns3:Payment/ns3:TotalAmount</to>
+                      </copy>
+                      <copy>
+                        <from>$currentRow/ns1:Uuid</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentInput/ns3:Payment/ns3:Uuid</to>
+                      </copy>
+                    </assign>
+                    <extensionActivity>
+                      <bpelx:call name="callValidatePayment"
+                                  xmlns:sp1="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelValidateInvoicesAP"
+                                  target="sp1:sbpelValidateInvoicesAP">
+                        <bpelx:param name="varValidatePaymentRq" copyByValue="yes" variable="valPaymentInput"/>
+                        <bpelx:param name="varValidatePaymentsRs" copyByValue="no" variable="valPaymentOutput"/>
+                      </bpelx:call>
+                    </extensionActivity>
+                    <if name="IfUnavailableSAT">
+                      <documentation>
+                        <![CDATA[Unavailable SAT]]>
+                      </documentation>
+                      <condition>$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Result/cmn:Errors/cmn:Error[1]/cmn:ErrorCode = 'OSB-380002'</condition>
+                      <sequence name="Sequence1">
+                        <if name="IfMoreIntents">
+                          <documentation>
+                            <![CDATA[More Intents]]>
+                          </documentation>
+                          <condition>$contextInfo/ns2:RetryCount &lt; dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","MAX_RETRY_COUNT","Value","","Component","CONFIG")</condition>
+                          <sequence name="sequenceMoreIntents">
+                            <assign name="assignRetryCount">
+                              <copy>
+                                <from>$contextInfo/ns2:RetryCount + 1</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$contextInfo/ns2:RetryCount</to>
+                              </copy>
+                            </assign>
+                            <extensionActivity>
+                              <bpelx:replay name="replayCandidate" scope="scopeForEachCandidate"/>
+                            </extensionActivity>
+                          </sequence>
+                          <else>
+                            <documentation>
+                              <![CDATA[Reached Max Limit]]>
+                            </documentation>
+                            <assign name="assignFixError">
+                              <copy>
+                                <from>$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Result/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Result/cmn:Errors/cmn:Error[1]/cmn:Description</to>
+                              </copy>
+                            </assign>
+                          </else>
+                        </if>
+                      </sequence>
+                      <else>
+                        <documentation>
+                          <![CDATA[Available SAT]]>
+                        </documentation>
+                        <empty name="empty"/>
+                      </else>
+                    </if>
+                    <assign name="transformPaymentComplement">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/MergeIncPaymentComplementRq_To_PaymentComplement.xsl", $currentRow, "valPaymentOutput", $valPaymentOutput)</from>
+                        <to variable="currentPaymentComplement"/>
+                      </copy>
+                    </assign>
+                    <if name="IfNotConnectedAfterRetries">
+                      <documentation>
+                        <![CDATA[Not Connected]]>
+                      </documentation>
+                      <condition>$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Result/cmn:Errors/cmn:Error[1]/cmn:ErrorCode = 'OSB-380002'</condition>
+                      <assign name="assignNotConnectedInfo">
+                        <copy bpelx:insertMissingToData="yes">
+                          <from>$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Result/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:StatusDesc</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes">
+                          <from><literal>NOT_CONNECTED</literal></from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:Status</to>
+                        </copy>
+                        <copy>
+                          <from>$outputVariable.payload/ns2:Return/ns2:NotConnetedCount + 1</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:NotConnetedCount</to>
+                        </copy>
+                      </assign>
+                      <elseif>
+                        <documentation>
+                          <![CDATA[Validated]]>
+                        </documentation>
+                        <condition>$valPaymentOutput/ns3:Return/ns3:Payment/ns3:Valid = 'true'</condition>
+                        <sequence name="sequenceValidated">
+                          <forEach parallel="no" counterName="innerCounter" name="forEachInvoice">
+                            <startCounterValue>1</startCounterValue>
+                            <finalCounterValue>count($currentRow/ns1:Invoice)</finalCounterValue>
+                            <scope name="scopeForEachInvoice">
+                              <variables>
+                                <variable name="invoiceInput" messageType="ns1:GetInvoicesAPByExampleRq"/>
+                                <variable name="invoiceOutput" messageType="ns1:GetInvoicesAPByExampleRs"/>
+                              </variables>
+                              <sequence name="sequenceForEachInvoice">
+                                <assign name="assignParams">
+                                  <copy>
+                                    <from>$currentRow/ns1:Invoice[$innerCounter]/ns1:Uuid</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invoiceInput.GetInvoicesAPByExampleRqPart/ns1:uuid</to>
+                                  </copy>
+                                </assign>
+                                <invoke name="invokeGetInvoiceNumber" bpelx:invokeAsDetail="no"
+                                        partnerLink="wsAuditControlTecPs" portType="ns1:AuditControlTecPortType"
+                                        operation="GetInvoicesAPByExample" inputVariable="invoiceInput"
+                                        outputVariable="invoiceOutput"/>
+                                <if name="IfFoundInvoice">
+                                  <documentation>
+                                    <![CDATA[Found Invoice]]>
+                                  </documentation>
+                                  <condition>count($invoiceOutput.GetInvoicesAPByExampleRsPart/ns1:Return/ns1:Invoice) = 1</condition>
+                                  <assign name="assignInvoiceNumber">
+                                    <copy bpelx:insertMissingToData="yes">
+                                      <from>$invoiceOutput.GetInvoicesAPByExampleRsPart/ns1:Return/ns1:Invoice/ns1:invoiceNumber</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:Invoice[$innerCounter]/ns2:InvoiceNumber</to>
+                                    </copy>
+                                  </assign>
+                                  <else>
+                                    <documentation>
+                                      <![CDATA[Not Found Invoice]]>
+                                    </documentation>
+                                    <sequence name="sequenceNotFoundInvoice">
+                                      <assign name="assignErrorDetails">
+                                        <copy>
+                                          <from><literal>SOA-00010</literal></from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:ErrorCode</to>
+                                        </copy>
+                                        <copy>
+                                          <from><literal>[bpelValidatePaymentComplements]</literal></from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:BusinessProcess</to>
+                                        </copy>
+                                        <copy>
+                                          <from><literal>[InvoicesBiz]</literal></from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:FailedService</to>
+                                        </copy>
+                                        <copy>
+                                          <from>xp20:current-dateTime()</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:TimeStamp</to>
+                                        </copy>
+                                        <copy>
+                                          <from><literal>No data found</literal></from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:ShortDescription</to>
+                                        </copy>
+                                        <copy>
+                                          <from>concat(dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","INVOICE_NOT_FOUND","Value","","Component","MESSAGES"), ' ', $currentRow/ns1:Invoice[$innerCounter]/ns1:Uuid)</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError/cmn:Description</to>
+                                        </copy>
+                                      </assign>
+                                      <assign name="assignAppendError">
+                                        <extensionAssignOperation>
+                                          <bpelx:append>
+                                            <bpelx:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$lastError</bpelx:from>
+                                            <bpelx:to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors</bpelx:to>
+                                          </bpelx:append>
+                                        </extensionAssignOperation>
+                                        <copy>
+                                          <from>true()</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$notFoundInvoice</to>
+                                        </copy>
+                                      </assign>
+                                    </sequence>
+                                  </else>
+                                </if>
+                              </sequence>
+                            </scope>
+                          </forEach>
+                          <if name="IfNotFoundInvoice">
+                            <documentation>
+                              <![CDATA[Not Found Invoice]]>
+                            </documentation>
+                            <condition>$notFoundInvoice = 'true'</condition>
+                            <assign name="assignErroredStatus">
+                              <copy>
+                                <from><literal>ERRORED</literal></from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:Status</to>
+                              </copy>
+                              <copy>
+                                <from>$lastError/cmn:Description</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:StatusDesc</to>
+                              </copy>
+                              <copy>
+                                <from>$outputVariable.payload/ns2:Return/ns2:ErroredCount + 1</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ErroredCount</to>
+                              </copy>
+                            </assign>
+                            <else>
+                              <documentation>
+                                <![CDATA[All Invoices Were Found]]>
+                              </documentation>
+                              <assign name="assignValidatedStatus">
+                                <copy>
+                                  <from><literal>VALIDATED</literal></from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:Status</to>
+                                </copy>
+                                <copy>
+                                  <from><literal>-</literal></from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:StatusDesc</to>
+                                </copy>
+                                <copy>
+                                  <from>$outputVariable.payload/ns2:Return/ns2:ValidatedCount + 1</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ValidatedCount</to>
+                                </copy>
+                              </assign>
+                            </else>
+                          </if>
+                        </sequence>
+                      </elseif>
+                      <else>
+                        <documentation>
+                          <![CDATA[Not Validated]]>
+                        </documentation>
+                        <assign name="assignNotValidatedInfo">
+                          <copy bpelx:insertMissingToData="yes">
+                            <from>$valPaymentOutput/ns3:Return/ns3:Payment[1]/ns3:StatusDesc</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:StatusDesc</to>
+                          </copy>
+                          <copy bpelx:insertMissingToData="yes">
+                            <from><literal>ERRORED</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement/ns2:Status</to>
+                          </copy>
+                          <copy>
+                            <from>$outputVariable.payload/ns2:Return/ns2:ErroredCount + 1</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ErroredCount</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <assign name="assignAppendPaymentComplement">
+                      <extensionAssignOperation>
+                        <bpelx:append keepSrcElementName="no">
+                          <bpelx:from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$currentPaymentComplement</bpelx:from>
+                          <bpelx:to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return</bpelx:to>
+                        </bpelx:append>
+                      </extensionAssignOperation>
+                    </assign>
+                  </sequence>
+                </scope>
+              </forEach>
+              <if name="IfEmptyFirstError">
+                <documentation>
+                  <![CDATA[Empty First Error]]>
+                </documentation>
+                <condition>string-length($outputVariable.payload/cmn:Errors/cmn:Error[1]/cmn:ErrorCode) = 0</condition>
+                <sequence name="sequenceEmptyFirstError">
+                  <assign name="assingRemoveFirstError">
+                    <extensionAssignOperation>
+                      <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error[1]</bpelx:target>
+                      </bpelx:remove>
+                    </extensionAssignOperation>
+                  </assign>
+                  <if name="IfNoErrors">
+                    <documentation>
+                      <![CDATA[No More Errors]]>
+                    </documentation>
+                    <condition>count($outputVariable.payload/cmn:Errors/cmn:Error) = 0</condition>
+                    <assign name="assignRemoveErrors">
+                      <extensionAssignOperation>
+                        <bpelx:remove>
+                          <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors</bpelx:target>
+                        </bpelx:remove>
+                      </extensionAssignOperation>
+                    </assign>
+                    <else>
+                      <documentation>
+                        <![CDATA[Found Errors]]>
+                      </documentation>
+                      <assign name="assignRemoveSuccess">
+                        <extensionAssignOperation>
+                          <bpelx:remove>
+                            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+                          </bpelx:remove>
+                        </extensionAssignOperation>
+                      </assign>
+                    </else>
+                  </if>
+                </sequence>
+                <else>
+                  <documentation>
+                    <![CDATA[Non-empty First Error]]>
+                  </documentation>
+                  <assign name="assignRemoveSuccess">
+                    <extensionAssignOperation>
+                      <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+                      </bpelx:remove>
+                    </extensionAssignOperation>
+                  </assign>
+                </else>
+              </if>
+            </sequence>
+            <else>
+              <documentation>
+                <![CDATA[No Candidates]]>
+              </documentation>
+              <assign name="assingZeroValues">
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ValidatedCount</to>
+                </copy>
+                <copy>
+                  <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+                </copy>
+                <extensionAssignOperation>
+                  <bpelx:remove>
+                    <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors</bpelx:target>
+                  </bpelx:remove>
+                </extensionAssignOperation>
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:ErroredCount</to>
+                </copy>
+                <copy>
+                  <from>0</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return/ns2:NotConnetedCount</to>
+                </copy>
+              </assign>
+            </else>
+          </if>
+          <else>
+            <documentation>
+              <![CDATA[Unable to Get Candidates]]>
+            </documentation>
+            <assign name="assignErrorInfo">
+              <copy>
+                <from><literal>SOA-00009</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Return</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy>
+                <from>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","UNABLE_TO_GET_CANDIDATES","Value","","Component","MESSAGES")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+              </copy>
+              <copy>
+                <from><literal>Error to get Report</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+              </copy>
+              <copy>
+                <from><literal>[bpelValidatePaymentComplements]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+              </copy>
+              <copy>
+                <from><literal>[InvoicesBiz]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+              </copy>
+              <copy>
+                <from>xp20:current-dateTime()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+    <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+    <invoke name="callbackClient" partnerLink="bpelvalidatepaymentcomplements_client"
+            portType="client:bpelValidatePaymentComplementsCallback" operation="ValidatePaymentComplementsResponse"
+            inputVariable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorJournalEnt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/JournalEnt" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="SendFileJournal" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendFileJournal.bpelSendFileJournal.SendFileJournal">
+            <action>
+               <assign>
+                  <copy expression="$in.SendFileJournalRq/tns:SendFileJournalRq"
+                        target="$out.SendFileJournalRq/tns:SendFileJournalRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/JournalEnt"/>
+               </assign>
+               <invoke reference="bpelSendFileJournal.bpelSendFileJournal" operation="SendFileJournal">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.SendFileJournalRs/ns1:SendFileJournalRs"
+                              target="$out.SendFileJournalRs/ns1:SendFileJournalRs"
+                              xmlns:ns1="http://soa.estrellaroja.com.mx/JournalEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="SendFileJournals" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendFileJournals.bpelsendfilejournals_client.SendFileJournals">
+            <action>
+               <assign>
+                  <copy expression="$in.SendFileJournalsRq/tns:SendFileJournalRq"
+                        target="$out.payload/tns:SendFileJournalRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/JournalEnt"/>
+               </assign>
+               <invoke reference="bpelSendFileJournals.bpelsendfilejournals_client" operation="SendFileJournals"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

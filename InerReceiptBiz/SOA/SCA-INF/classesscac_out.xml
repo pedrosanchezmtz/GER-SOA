@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>bpelDigitalStampReceipts.componentType</file>
+      <name>bpelDigitalStampReceipts.componentType</name>
+      <fix/>
+      <msg>puede que el componente BPEL bpelDigitalStampReceipts no entienda la propiedad "oracle.webservices.httpConnTimeout". Es probable que sea ignorada.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>bpelDigitalStampReceipts.componentType</file>
+      <name>bpelDigitalStampReceipts.componentType</name>
+      <fix/>
+      <msg>puede que el componente BPEL bpelDigitalStampReceipts no entienda la propiedad "oracle.webservices.httpReadTimeout". Es probable que sea ignorada.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='sequenceMain']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='scope'][@name='scopeDigitalStampReceipts']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='sequenceDigitalStampReceipts']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='IfDMInput']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='sequenceCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='IfProcResult']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='else']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='IfResultProcReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='SequenceForCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='forEach'][@name='ForCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='scope'][@name='ScopeCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='SequenceCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='IfReceiptProcessed']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='scope'][@name='scopeSuccessCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='sequenceSuccessCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='assignSuccessCreateReceipt']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy'][2]/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>600</line>
+      <col/>
+      <file>BPELs/bpelDigitalStampReceipts.bpel</file>
+      <name>BPELs/bpelDigitalStampReceipts.bpel</name>
+      <fix>Add function definition for this function "decimal" to the validator</fix>
+      <msg>Unknown function "decimal" used in &lt;bpel:from></msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>bpelReceiptApply.componentType</file>
+      <name>bpelReceiptApply.componentType</name>
+      <fix/>
+      <msg>puede que el componente BPEL bpelReceiptApply no entienda la propiedad "oracle.webservices.httpConnTimeout". Es probable que sea ignorada.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>bpelReceiptApply.componentType</file>
+      <name>bpelReceiptApply.componentType</name>
+      <fix/>
+      <msg>puede que el componente BPEL bpelReceiptApply no entienda la propiedad "oracle.webservices.httpReadTimeout". Es probable que sea ignorada.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://schemas.oracle.com/bpel/extension'][local-name()='subProcess']</loc>
+      <line>2</line>
+      <col/>
+      <file>BPELs/sbpelNotifyHtmlControl.sbpel</file>
+      <name>BPELs/sbpelNotifyHtmlControl.sbpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpelx:subProcess> "sbpelNotifyHtmlControl" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+</Faults>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGetInvoiceCFDIFromERP" targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+   <plnk:partnerLinkType name="BpelGetInvoiceCFDIFromERP">
+      <plnk:role name="BpelGetInvoiceCFDIFromERPProvider" portType="client:BpelGetInvoiceCFDIFromERP"/>
+      <plnk:role name="BpelGetInvoiceCFDIFromERPRequester" portType="client:BpelGetInvoiceCFDIFromERPCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/CFDITec" schemaLocation="oramds:/apps/SOA/CFDITec/CFDITec.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="BpelGetInvoiceCFDIFromERPRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetInvoiceCFDIFromERPRq"/>
+   </wsdl:message>
+   <wsdl:message name="BpelGetInvoiceCFDIFromERPResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetInvoiceCFDIFromERPRs"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelGetInvoiceCFDIFromERP">
+      <wsdl:operation name="GetInvoiceCFDIFromERP">
+         <wsdl:input message="client:BpelGetInvoiceCFDIFromERPRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="BpelGetInvoiceCFDIFromERPCallback">
+      <wsdl:operation name="GetInvoiceCFDIFromERPResponse">
+         <wsdl:input message="client:BpelGetInvoiceCFDIFromERPResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

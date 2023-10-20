@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" targetNamespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" elementFormDefault="qualified">
+   <xsd:complexType name="MetadataType">
+      <xsd:sequence>
+         <xsd:element name="CallerSystem" type="CallerSystemType" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>Identifying values for the caller system. The ID may be used to reference a primary-key value within a database or in a particular implementation.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="Environment" type="EnvironmentType" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>Elements for identifying environment of the service operation.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="UserInformation" minOccurs="0" type="UserInformationType">
+            <xsd:annotation>
+               <xsd:documentation>User information to help recognize who call or execute the service. </xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="AdditionalInformation" type="AdditionalInformationType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UserInformationType">
+      <xsd:sequence>
+         <xsd:element name="UserId" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Used to identify the source of the caller user by ID or code.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="UserName" minOccurs="0" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Used to identify the source of the caller user by name.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EmptyType">
+      <xsd:annotation>
+         <xsd:documentation>
+        Setting an empty element of this type indicates no values or elements are needed.
+      </xsd:documentation>
+      </xsd:annotation>
+   </xsd:complexType>
+   <xsd:complexType name="SuccessType">
+      <xsd:annotation>
+         <xsd:documentation>Returning an empty element of this type indicates the
+                         successful processing of a message</xsd:documentation>
+      </xsd:annotation>
+   </xsd:complexType>
+   <xsd:complexType name="ErrorsType">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="en">A collection of errors that occurred
+                                       during the processing of a message.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="Error" type="ErrorType" maxOccurs="99" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation xml:lang="en">An error that occurred during the
+                                           processing of a message.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ErrorType">
+      <xsd:annotation>
+         <xsd:documentation xml:lang="en">Standard way to indicate that an error
+                                       occurred during the Web Service
+                                       processing. If the message successfully
+                                       processes, but there are business errors,
+                                       those errors should be passed in the
+                                       warning element.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element name="ErrorCode" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>The Error element MUST contain the Type
+                             that uses a recommended set of values to indicate
+                             the error type. The validating XSD can expect to
+                             accept values that it has NOT been explicitly coded
+                             for and process them by using Type ="Unknown".</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="ShortDescription" type="xsd:string"/>
+         <xsd:element name="Description" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Details of the error.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="BusinessProcess" type="xsd:string"/>
+         <xsd:element name="FailedService" type="xsd:string"/>
+         <xsd:element name="TimeStamp" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CallerSystemType">
+      <xsd:sequence>
+         <xsd:element name="SystemId" minOccurs="1" maxOccurs="1" type="xsd:string">
+            <xsd:annotation>
+               <xsd:documentation>Used to identify the source of the caller System by ID or code.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="SystemName" type="xsd:string" maxOccurs="1" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>Used to identify the source of the caller System by name.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="EnvironmentType">
+      <xsd:sequence>
+         <xsd:element name="Context" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="ProccesName" type="xsd:string" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>Generally the operation name or business name.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AdditionalInformationType">
+      <xsd:sequence>
+         <xsd:element name="CompanyName" type="xsd:string" minOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>Identifies a company by code or name.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="TransactionId" type="xsd:string" minOccurs="0" maxOccurs="1">
+            <xsd:annotation>
+               <xsd:documentation>A unique identifying value assigned by the creating system. The ID may be used to reference a primary-key value within a database or in a particular implementation.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+         <xsd:element name="TimeStamp" type="xsd:dateTime" minOccurs="0">
+            <xsd:annotation>
+               <xsd:documentation>Indicates the creation date and time of the message in UTC using the following format specified by ISO 8601; YYYY-MM-DDThh:mm:ssZ with time values using the 24 hour clock (e.g. 01 December 2016, 1:59:38 pm UTC becomes 2016-12-01T13:59:38Z).</xsd:documentation>
+            </xsd:annotation>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="BaseRsType">
+      <xsd:sequence>
+         <xsd:element name="Success" minOccurs="0" maxOccurs="1" type="SuccessType"/>
+         <xsd:element name="Errors" maxOccurs="1" minOccurs="0" type="ErrorsType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

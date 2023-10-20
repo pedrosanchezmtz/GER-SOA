@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelManagementsStatementsBankSantander" targetNamespace="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails" xmlns:ns6="http://soa.estrellaroja.com.mx/MessageBiz" xmlns:ns7="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns8="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz">
+   <plnk:partnerLinkType name="bpelManagementsStatementsBankSantander">
+      <plnk:role name="bpelManagementsStatementsBankSantanderProvider" portType="client:bpelManagementsStatementsBankSantander"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/MessageBiz" location="oramds:/apps/SOA/MessageBiz/MessageBiz.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpReadFileSant" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" schemaLocation="../Schemas/SFTPEstrellaRojaEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpReadFileSant" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureCodeBank" schemaLocation="../Schemas/StructureBankCode.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpReadFileSant" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" schemaLocation="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpReadFileSant" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" schemaLocation="../Schemas/Banks/ftpReadFileSantander.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/BankCodes" schemaLocation="../Schemas/BankCodes.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureCodeBank" xmlns:ns3="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes" xmlns:ns5="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails" schemaLocation="../Schemas/StructureBankDetails.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz" schemaLocation="oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelManagementsStatementsBankSantanderRequestMessage">
+      <wsdl:part name="payload" element="ns3:estadoCta"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelManagementsStatementsBankSantander">
+      <wsdl:operation name="ManagementsStatementsBankSantander">
+         <wsdl:input message="client:bpelManagementsStatementsBankSantanderRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

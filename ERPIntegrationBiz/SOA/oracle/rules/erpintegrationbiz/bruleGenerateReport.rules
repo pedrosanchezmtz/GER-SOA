@@ -1,0 +1,1834 @@
+<?xml version = '1.0'?>
+<RuleDictionary id="G}-7b89213e:15d98fdb3cf:-7bed" xmlns="http://xmlns.oracle.com/rules/dictionary">
+  <Name>bruleGenerateReport</Name>
+  <Alias>bruleGenerateReport</Alias>
+  <Package>erpintegrationbiz</Package>
+  <Version>12.1.1.0.0</Version>
+  <DataModel id="L}1">
+    <CreationUpdateNumber>2</CreationUpdateNumber>
+    <QualifierPattern>{member} of {fact}</QualifierPattern>
+    <JaxbFactType id="J}mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory">
+      <Name>mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory</Name>
+      <Alias>mx.com.estrellaroja.soa_EstrellaRojaCommons_ObjectFactory</Alias>
+      <Visible>false</Visible>
+      <CreationUpdateNumber>3</CreationUpdateNumber>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.SuccessType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createSuccessType()">
+        <Name>createSuccessType</Name>
+        <Alias>createSuccessType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}15">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.SuccessType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.SuccessType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.MetadataType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createMetadataType()">
+        <Name>createMetadataType</Name>
+        <Alias>createMetadataType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}17">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.MetadataType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.MetadataType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.UserInformationType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createUserInformationType()">
+        <Name>createUserInformationType</Name>
+        <Alias>createUserInformationType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}19">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.UserInformationType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.UserInformationType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.EnvironmentType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createEnvironmentType()">
+        <Name>createEnvironmentType</Name>
+        <Alias>createEnvironmentType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}21">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.EnvironmentType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.EnvironmentType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.CallerSystemType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createCallerSystemType()">
+        <Name>createCallerSystemType</Name>
+        <Alias>createCallerSystemType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}23">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.CallerSystemType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.CallerSystemType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.AdditionalInformationType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createAdditionalInformationType()">
+        <Name>createAdditionalInformationType</Name>
+        <Alias>createAdditionalInformationType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}25">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.AdditionalInformationType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.AdditionalInformationType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.EmptyType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createEmptyType()">
+        <Name>createEmptyType</Name>
+        <Alias>createEmptyType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}27">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.EmptyType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.EmptyType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createErrorType()">
+        <Name>createErrorType</Name>
+        <Alias>createErrorType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}29">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.BaseRsType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createBaseRsType()">
+        <Name>createBaseRsType</Name>
+        <Alias>createBaseRsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}31">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.BaseRsType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.BaseRsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorsType mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory.createErrorsType()">
+        <Name>createErrorsType</Name>
+        <Alias>createErrorsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}33">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorsType</IDofType>
+        <Type>mx.com.estrellaroja.soa.EstrellaRojaCommons.ErrorsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public mx.com.estrellaroja.soa.EstrellaRojaCommons.ObjectFactory()">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Visible>false</Visible>
+        <Modifiers id="L}13">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>3</ValidationUpdateNumber>
+      <Source>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}34">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <JAXB2.0>true</JAXB2.0>
+    </JaxbFactType>
+    <JaxbFactType id="J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType">
+      <Name>mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType</Name>
+      <Alias>BRuleGenerateReportRqType</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>3</CreationUpdateNumber>
+      <Property id="J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType.{targetInterface}">
+        <Name>targetInterface</Name>
+        <Alias>targetInterface</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <IDofType>J}java.lang.String</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>String</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}43">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Method id="J}public void mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType.setTargetInterface(java.lang.String)">
+        <Name>setTargetInterface</Name>
+        <Alias>setTargetInterface</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7beb">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}40">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public java.lang.String mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType.getTargetInterface()">
+        <Name>getTargetInterface</Name>
+        <Alias>getTargetInterface</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}42">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}java.lang.String</IDofType>
+        <Type>String</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType()">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Visible>true</Visible>
+        <Modifiers id="L}38">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>3</ValidationUpdateNumber>
+      <Source>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}44">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <XmlName>//xs:complexType[@name='BRuleGenerateReportRqType']</XmlName>
+      <JAXB2.0>true</JAXB2.0>
+      <NodeName>BRuleGenerateReportRqType</NodeName>
+      <Namespace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz</Namespace>
+    </JaxbFactType>
+    <JaxbFactType id="J}mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory">
+      <Name>mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory</Name>
+      <Alias>mx.com.estrellaroja.soa_erpintegrationbiz_ObjectFactory</Alias>
+      <Visible>false</Visible>
+      <CreationUpdateNumber>3</CreationUpdateNumber>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudRs(mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType)">
+        <Name>createImportToERPCloudRs</Name>
+        <Alias>createImportToERPCloudRs</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7bea">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}50">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.OutDataType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createOutDataType()">
+        <Name>createOutDataType</Name>
+        <Alias>createOutDataType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}52">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.OutDataType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.OutDataType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRsType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createGenerateReportRsType()">
+        <Name>createGenerateReportRsType</Name>
+        <Alias>createGenerateReportRsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}54">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRsType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudRq(mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRqType)">
+        <Name>createImportToERPCloudRq</Name>
+        <Alias>createImportToERPCloudRq</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be9">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRqType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}56">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ProcessesType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createProcessesType()">
+        <Name>createProcessesType</Name>
+        <Alias>createProcessesType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}58">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ProcessesType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ProcessesType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleImportToERPCloudRs(mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRsType)">
+        <Name>createBRuleImportToERPCloudRs</Name>
+        <Alias>createBRuleImportToERPCloudRs</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be8">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRsType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}60">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createFileTypeDocumentTitle(java.lang.String)">
+        <Name>createFileTypeDocumentTitle</Name>
+        <Alias>createFileTypeDocumentTitle</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be7">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}62">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createFileTypeDocumentId(java.lang.String)">
+        <Name>createFileTypeDocumentId</Name>
+        <Alias>createFileTypeDocumentId</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be6">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}64">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleImportToERPCloudRq(mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRqType)">
+        <Name>createBRuleImportToERPCloudRq</Name>
+        <Alias>createBRuleImportToERPCloudRq</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be5">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRqType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}66">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudCallbackRs(mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType)">
+        <Name>createImportToERPCloudCallbackRs</Name>
+        <Alias>createImportToERPCloudCallbackRs</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be4">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}68">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ParamValueType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createParamValueType()">
+        <Name>createParamValueType</Name>
+        <Alias>createParamValueType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}70">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ParamValueType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ParamValueType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleGenerateReportRs(mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType)">
+        <Name>createBRuleGenerateReportRs</Name>
+        <Alias>createBRuleGenerateReportRs</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be3">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}72">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleGenerateReportRqType()">
+        <Name>createBRuleGenerateReportRqType</Name>
+        <Alias>createBRuleGenerateReportRqType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}74">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType</IDofType>
+        <Type>BRuleGenerateReportRqType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportReturnType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createGenerateReportReturnType()">
+        <Name>createGenerateReportReturnType</Name>
+        <Alias>createGenerateReportReturnType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}76">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportReturnType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportReturnType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createGenerateReportRq(mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRqType)">
+        <Name>createGenerateReportRq</Name>
+        <Alias>createGenerateReportRq</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be2">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRqType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}78">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createGenerateReportRs(mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRsType)">
+        <Name>createGenerateReportRs</Name>
+        <Alias>createGenerateReportRs</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be1">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRsType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}80">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createFileTypeContentType(java.lang.String)">
+        <Name>createFileTypeContentType</Name>
+        <Alias>createFileTypeContentType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7be0">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}82">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudRsType()">
+        <Name>createImportToERPCloudRsType</Name>
+        <Alias>createImportToERPCloudRsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}84">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ProcessType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createProcessType()">
+        <Name>createProcessType</Name>
+        <Alias>createProcessType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}86">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ProcessType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ProcessType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ArrayOfStringType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createArrayOfStringType()">
+        <Name>createArrayOfStringType</Name>
+        <Alias>createArrayOfStringType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}88">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ArrayOfStringType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ArrayOfStringType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRqType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudRqType()">
+        <Name>createImportToERPCloudRqType</Name>
+        <Alias>createImportToERPCloudRqType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}90">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRqType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudRqType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRqType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createGenerateReportRqType()">
+        <Name>createGenerateReportRqType</Name>
+        <Alias>createGenerateReportRqType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}92">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRqType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.GenerateReportRqType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleGenerateReportRsType()">
+        <Name>createBRuleGenerateReportRsType</Name>
+        <Alias>createBRuleGenerateReportRsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}94">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType</IDofType>
+        <Type>BRuleGenerateReportRsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createFileTypeDocumentName(java.lang.String)">
+        <Name>createFileTypeDocumentName</Name>
+        <Alias>createFileTypeDocumentName</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7bdf">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}96">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudReturnType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createImportToERPCloudReturnType()">
+        <Name>createImportToERPCloudReturnType</Name>
+        <Alias>createImportToERPCloudReturnType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}98">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudReturnType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ImportToERPCloudReturnType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ParamNameValueType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createParamNameValueType()">
+        <Name>createParamNameValueType</Name>
+        <Alias>createParamNameValueType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}100">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ParamNameValueType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.ParamNameValueType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleGenerateReportRq(mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType)">
+        <Name>createBRuleGenerateReportRq</Name>
+        <Alias>createBRuleGenerateReportRq</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7bde">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}102">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRqType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleImportToERPCloudRqType()">
+        <Name>createBRuleImportToERPCloudRqType</Name>
+        <Alias>createBRuleImportToERPCloudRqType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}104">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRqType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRqType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRsType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createBRuleImportToERPCloudRsType()">
+        <Name>createBRuleImportToERPCloudRsType</Name>
+        <Alias>createBRuleImportToERPCloudRsType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}106">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRsType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.BRuleImportToERPCloudRsType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.FileType mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createFileType()">
+        <Name>createFileType</Name>
+        <Alias>createFileType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}108">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.FileType</IDofType>
+        <Type>mx.com.estrellaroja.soa.erpintegrationbiz.FileType</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory.createProcesses(mx.com.estrellaroja.soa.erpintegrationbiz.ProcessesType)">
+        <Name>createProcesses</Name>
+        <Alias>createProcesses</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7bdd">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}mx.com.estrellaroja.soa.erpintegrationbiz.ProcessesType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}110">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.ObjectFactory()">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Visible>false</Visible>
+        <Modifiers id="L}48">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>3</ValidationUpdateNumber>
+      <Source>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}111">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <JAXB2.0>true</JAXB2.0>
+    </JaxbFactType>
+    <JaxbFactType id="J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType">
+      <Name>mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType</Name>
+      <Alias>BRuleGenerateReportRsType</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>3</CreationUpdateNumber>
+      <Property id="J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}">
+        <Name>pathName</Name>
+        <Alias>pathName</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <IDofType>J}java.lang.String</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>String</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}120">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Method id="J}public java.lang.String mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.getPathName()">
+        <Name>getPathName</Name>
+        <Alias>getPathName</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Modifiers id="L}117">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}java.lang.String</IDofType>
+        <Type>String</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public void mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.setPathName(java.lang.String)">
+        <Name>setPathName</Name>
+        <Alias>setPathName</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <OverloadedParameter id="G}-7b89213e:15d98fdb3cf:-7bdc">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <IDsOfType>J}java.lang.String</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}119">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType()">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Visible>true</Visible>
+        <Modifiers id="L}115">
+          <CreationUpdateNumber>3</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>3</ValidationUpdateNumber>
+      <Source>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}121">
+        <CreationUpdateNumber>3</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <XmlName>//xs:complexType[@name='BRuleGenerateReportRsType']</XmlName>
+      <JAXB2.0>true</JAXB2.0>
+      <NodeName>BRuleGenerateReportRsType</NodeName>
+      <Namespace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz</Namespace>
+    </JaxbFactType>
+    <SupportsXPathEnabled>false</SupportsXPathEnabled>
+    <DecisionFunction id="G}-7b89213e:15d98fdb3cf:-7bda">
+      <Name>S</Name>
+      <Alias>S</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>3</CreationUpdateNumber>
+      <WebService>true</WebService>
+      <CheckRuleFlow>true</CheckRuleFlow>
+      <Stateless>true</Stateless>
+      <DecisionFunctionInput id="G}-7b89213e:15d98fdb3cf:-7bd9">
+        <Name>BRuleGenerateReportRq</Name>
+        <Alias>BRuleGenerateReportRq</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>5</CreationUpdateNumber>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType</IDofType>
+        <List>false</List>
+        <Tree>true</Tree>
+      </DecisionFunctionInput>
+      <DecisionFunctionRuleSet id="L}124">
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Form>rule set</Form>
+        <Ruleset>rsGenerateReport</Ruleset>
+        <refID>G}-7b89213e:15d98fdb3cf:-7bdb</refID>
+      </DecisionFunctionRuleSet>
+      <DecisionFunctionOutput id="G}-7b89213e:15d98fdb3cf:-7bd8">
+        <Name>BRuleGenerateReportRs</Name>
+        <Alias>BRuleGenerateReportRs</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>6</CreationUpdateNumber>
+        <IDofType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType</IDofType>
+        <List>false</List>
+        <Tree>false</Tree>
+      </DecisionFunctionOutput>
+      <ValidationUpdateNumber>19</ValidationUpdateNumber>
+      <RuleFiringLimit>10000</RuleFiringLimit>
+      <RuleFiringLimitError>true</RuleFiringLimitError>
+      <UniqueRulesets>false</UniqueRulesets>
+    </DecisionFunction>
+    <UpdateNumber>232</UpdateNumber>
+    <ValidationUpdateNumber>232</ValidationUpdateNumber>
+    <UpdateTime>0</UpdateTime>
+  </DataModel>
+  <RuleSet id="G}-7b89213e:15d98fdb3cf:-7bdb">
+    <Name>rsGenerateReport</Name>
+    <Alias>rsGenerateReport</Alias>
+    <ValidationUpdateNumber>324</ValidationUpdateNumber>
+    <Active>true</Active>
+    <CalendarForm>DateTime</CalendarForm>
+    <RuleSheet id="G}-7b89213e:15d98fdb3cf:-7bd6">
+      <Name>dtGenerateReport</Name>
+      <Alias>dtGenerateReport</Alias>
+      <ValidationUpdateNumber>324</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}157">
+        <FactType>BRuleGenerateReportRqType</FactType>
+        <IDofFactType>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType</IDofFactType>
+        <FactPath>BRuleGenerateReportRqType</FactPath>
+        <FactPathIDs>L}157</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Dimension id="L}153">
+        <IDofSharedBucketSet>B}nil</IDofSharedBucketSet>
+        <DimensionNode id="L}577">
+          <BucketIDTable>G}-6cd92451:1602241a80c:-7bed</BucketIDTable>
+          <Values>"PaymentComplements"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}593">
+          <BucketIDTable>G}28385f16:1604b3a8b1c:-7acf</BucketIDTable>
+          <Values>"ElecInvoice"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}616">
+          <BucketIDTable>G}28385f16:1604b3a8b1c:-7ace</BucketIDTable>
+          <Values>"InvoiceValidation"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}657">
+          <BucketIDTable>G}-1972b2cc:1604d313a64:-7b7a</BucketIDTable>
+          <Values>"PrePayments"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}696">
+          <BucketIDTable>G}-3a0fed36:160753afa8b:-7bf0</BucketIDTable>
+          <Values>"CatalogsERP"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}716">
+          <BucketIDTable>G}-610c4638:16075f1e096:-7bf0</BucketIDTable>
+          <Values>"ValidatePaymentComplements"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}746">
+          <BucketIDTable>G}7cf38596:16075e7b08b:-7be6</BucketIDTable>
+          <Values>"TrxInterface"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}760">
+          <BucketIDTable>G}7cf38596:16075e7b08b:-7be5</BucketIDTable>
+          <Values>"CashInterface"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}780">
+          <BucketIDTable>G}7ea49ac3:1609a071f2f:-7bee</BucketIDTable>
+          <Values>"TrxType"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}802">
+          <BucketIDTable>G}474ad775:161338e5a39:-7bea</BucketIDTable>
+          <Values>"InterfaceControl"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}187">
+          <BucketIDTable>G}-7b89213e:15d98fdb3cf:-7bd1</BucketIDTable>
+          <Values>otherwise</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}821">
+          <BucketIDTable>G}-2b3aaae8:178d530fc89:70e9</BucketIDTable>
+          <Values>"InvoiceValidationAutomatica"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}848">
+          <BucketIDTable>G}74133dd0:179007f1d19:-7293</BucketIDTable>
+          <Values>"ReValidateAP"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}874">
+          <BucketIDTable>G}30899ee8:17c612e30bb:-30af</BucketIDTable>
+          <Values>"RegisterAssetStatus"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}928">
+          <BucketIDTable>G}30899ee8:17c612e30bb:-302b</BucketIDTable>
+          <Values>"Conciliation"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <DimensionNode id="L}971">
+          <BucketIDTable>G}30899ee8:17c612e30bb:-2f97</BucketIDTable>
+          <Values>"ComplementValidation"</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes/>
+        </DimensionNode>
+        <PrivateBucketSet id="G}-7b89213e:15d98fdb3cf:-7bd2">
+          <Visible>true</Visible>
+          <CreationUpdateNumber>13</CreationUpdateNumber>
+          <IDofType>J}java.lang.String</IDofType>
+          <ListContentID>B}nil</ListContentID>
+          <Type>String</Type>
+          <Form>Default</Form>
+          <Bucket id="G}-7b89213e:15d98fdb3cf:-7bd1">
+            <Name>otherwise</Name>
+            <Alias>otherwise</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>13</CreationUpdateNumber>
+            <Inclusive>true</Inclusive>
+            <Otherwise>true</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}158">
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}30d56462:1600ab1c488:-7bf0">
+            <Name>"OrgSetCodes"</Name>
+            <Alias>"OrgSetCodes"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>142</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}557">
+              <Value>"OrgSetCodes"</Value>
+              <ResolvedValue>"OrgSetCodes"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-6cd92451:1602241a80c:-7bed">
+            <Name>"PaymentComplements"</Name>
+            <Alias>"PaymentComplements"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>149</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}585">
+              <Value>"PaymentComplements"</Value>
+              <ResolvedValue>"PaymentComplements"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}28385f16:1604b3a8b1c:-7acf">
+            <Name>"ElecInvoice"</Name>
+            <Alias>"ElecInvoice"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>157</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}601">
+              <Value>"ElecInvoice"</Value>
+              <ResolvedValue>"ElecInvoice"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}28385f16:1604b3a8b1c:-7ace">
+            <Name>"InvoiceValidation"</Name>
+            <Alias>"InvoiceValidation"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>163</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}624">
+              <Value>"InvoiceValidation"</Value>
+              <ResolvedValue>"InvoiceValidation"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-1972b2cc:1604d313a64:-7b7e">
+            <Name>"PaymentIncome"</Name>
+            <Alias>"PaymentIncome"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>169</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}662">
+              <Value>"PaymentIncome"</Value>
+              <ResolvedValue>"PaymentIncome"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-1972b2cc:1604d313a64:-7b7d">
+            <Name>"PaymentOutcome"</Name>
+            <Alias>"PaymentOutcome"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>172</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}680">
+              <Value>"PaymentOutcome"</Value>
+              <ResolvedValue>"PaymentOutcome"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-1972b2cc:1604d313a64:-7b7a">
+            <Name>"PrePayments"</Name>
+            <Alias>"PrePayments"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>177</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}685">
+              <Value>"PrePayments"</Value>
+              <ResolvedValue>"PrePayments"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-3a0fed36:160753afa8b:-7bf0">
+            <Name>"CatalogsERP"</Name>
+            <Alias>"CatalogsERP"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>187</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}704">
+              <Value>"CatalogsERP"</Value>
+              <ResolvedValue>"CatalogsERP"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-610c4638:16075f1e096:-7bf0">
+            <Name>"ValidatePaymentComplements"</Name>
+            <Alias>"ValidatePaymentComplements"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>201</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}724">
+              <Value>"ValidatePaymentComplements"</Value>
+              <ResolvedValue>"ValidatePaymentComplements"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}7cf38596:16075e7b08b:-7be6">
+            <Name>"TrxInterface"</Name>
+            <Alias>"TrxInterface"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>204</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}728">
+              <Value>"TrxInterface"</Value>
+              <ResolvedValue>"TrxInterface"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}7cf38596:16075e7b08b:-7be5">
+            <Name>"CashInterface"</Name>
+            <Alias>"CashInterface"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>205</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}731">
+              <Value>"CashInterface"</Value>
+              <ResolvedValue>"CashInterface"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}7ea49ac3:1609a071f2f:-7bee">
+            <Name>"TrxType"</Name>
+            <Alias>"TrxType"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>219</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}785">
+              <Value>"TrxType"</Value>
+              <ResolvedValue>"TrxType"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}474ad775:161338e5a39:-7bea">
+            <Name>"InterfaceControl"</Name>
+            <Alias>"InterfaceControl"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>227</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}810">
+              <Value>"InterfaceControl"</Value>
+              <ResolvedValue>"InterfaceControl"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}-2b3aaae8:178d530fc89:70e9">
+            <Name>"InvoiceValidationAutomatica"</Name>
+            <Alias>"InvoiceValidationAutomatica"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>241</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}837">
+              <Value>"InvoiceValidationAutomatica"</Value>
+              <ResolvedValue>"InvoiceValidationAutomatica"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}74133dd0:179007f1d19:-7293">
+            <Name>"ReValidateAP"</Name>
+            <Alias>"ReValidateAP"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>258</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}863">
+              <Value>"ReValidateAP"</Value>
+              <ResolvedValue>"ReValidateAP"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}30899ee8:17c612e30bb:-30af">
+            <Name>"RegisterAssetStatus"</Name>
+            <Alias>"RegisterAssetStatus"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>275</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}887">
+              <Value>"RegisterAssetStatus"</Value>
+              <ResolvedValue>"RegisterAssetStatus"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}30899ee8:17c612e30bb:-302b">
+            <Name>"Conciliation"</Name>
+            <Alias>"Conciliation"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>287</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}941">
+              <Value>"Conciliation"</Value>
+              <ResolvedValue>"Conciliation"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}30899ee8:17c612e30bb:-2f97">
+            <Name>"ComplementValidation"</Name>
+            <Alias>"ComplementValidation"</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>297</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}984">
+              <Value>"ComplementValidation"</Value>
+              <ResolvedValue>"ComplementValidation"</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <CalendarForm>Date</CalendarForm>
+          <Excluded>false</Excluded>
+          <ValidationUpdateNumber>297</ValidationUpdateNumber>
+        </PrivateBucketSet>
+        <Expression id="L}154">
+          <Value>BRuleGenerateReportRqType.targetInterface</Value>
+          <ResolvedValue>`L}157`.`J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRqType.{targetInterface}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Dimension>
+      <DTAction id="L}173">
+        <Form>Assert New</Form>
+        <Target>BRuleGenerateReportRsType</Target>
+        <ResolvedTarget>`J}public mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType()`</ResolvedTarget>
+        <Expression id="L}177">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>pathName</ParameterAlias>
+          <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+          <DTActionParameterName>pathName</DTActionParameterName>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+        <AlwaysSelected>true</AlwaysSelected>
+        <DTActionNode id="L}579">
+          <Selected>false</Selected>
+          <Expression id="L}582">
+            <Value>"/Custom/ER_INTEGRATION/ER03_AR_Timbrado_de_Complementos_de_Pago/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER03_AR_Timbrado_de_Complementos_de_Pago/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}595">
+          <Selected>false</Selected>
+          <Expression id="L}598">
+            <Value>"/Custom/ER_INTEGRATION/ER04_AR_Timbrado_de_Transacciones/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER04_AR_Timbrado_de_Transacciones/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}618">
+          <Selected>false</Selected>
+          <Expression id="L}621">
+            <Value>"/Custom/ER_INTEGRATION/ER11_AP_Validacion_de_Facturas/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER11_AP_Validacion_de_Facturas/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}659">
+          <Selected>false</Selected>
+          <Expression id="L}663">
+            <Value>"/Custom/ER_INTEGRATION/ER02_AR_Timbrado_de_Anticipos/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER02_AR_Timbrado_de_Anticipos/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}698">
+          <Selected>false</Selected>
+          <Expression id="L}701">
+            <Value>"/Custom/ER_OUTBOUND/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_OUTBOUND/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}718">
+          <Selected>false</Selected>
+          <Expression id="L}721">
+            <Value>"/Custom/ER_INTEGRATION/ER10_AP_Validacion_de_Complementos_de_pago/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER10_AP_Validacion_de_Complementos_de_pago/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}748">
+          <Selected>false</Selected>
+          <Expression id="L}763">
+            <Value>"/Custom/ER_INTEGRATION/ER01_AR_Creacion_de_transacciones/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER01_AR_Creacion_de_transacciones/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}762">
+          <Selected>false</Selected>
+          <Expression id="L}766">
+            <Value>"/Custom/ER_INTEGRATION/ER05_AR_Creacion_de_recibos/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER05_AR_Creacion_de_recibos/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}782">
+          <Selected>false</Selected>
+          <Expression id="L}786">
+            <Value>"/Custom/ER_INTEGRATION/ER07_CE_Importacion estados de cuenta/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER07_CE_Importacion estados de cuenta/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}804">
+          <Selected>false</Selected>
+          <Expression id="L}807">
+            <Value>"/Custom/ER_INTEGRATION/Commons/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/Commons/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}189">
+          <Selected>false</Selected>
+          <Expression id="L}192">
+            <Value>"NA"</Value>
+            <ResolvedValue>"NA"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}823">
+          <Selected>false</Selected>
+          <Expression id="L}827">
+            <Value>"/Custom/ER_INTEGRATION/ER13_AP_Validacion_automatica/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER13_AP_Validacion_automatica/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}850">
+          <Selected>false</Selected>
+          <Expression id="L}854">
+            <Value>"/Custom/ER_INTEGRATION/ER24_Reportes_SOA/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER24_Reportes_SOA/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}876">
+          <Selected>false</Selected>
+          <Expression id="L}880">
+            <Value>"/Custom/ER_INTEGRATION/ER06_SC_Ordenes_De_Trabajo/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER06_SC_Ordenes_De_Trabajo/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}930">
+          <Selected>false</Selected>
+          <Expression id="L}934">
+            <Value>"/Custom/ER_INTEGRATION/ER25_AR_Concilation_Cash_TP/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER25_AR_Concilation_Cash_TP/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+        <DTActionNode id="L}973">
+          <Selected>false</Selected>
+          <Expression id="L}977">
+            <Value>"/Custom/ER_INTEGRATION/ER23_AP_ValidacionComplementos/Data Models/"</Value>
+            <ResolvedValue>"/Custom/ER_INTEGRATION/ER23_AP_ValidacionComplementos/Data Models/"</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>pathName</ParameterAlias>
+            <ParameterID>J}mx.com.estrellaroja.soa.erpintegrationbiz.BRuleGenerateReportRsType.{pathName}</ParameterID>
+            <DTActionParameterName>pathName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+      </DTAction>
+      <DTRule id="L}578">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>147</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}594">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>155</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}617">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>161</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}658">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>168</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}697">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>185</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}717">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>199</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}747">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>208</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}761">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>209</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}781">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>218</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}803">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>225</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}188">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>22</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}822">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>238</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}849">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>255</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}875">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>272</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}929">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>284</CreationUpdateNumber>
+      </DTRule>
+      <DTRule id="L}972">
+        <Override/>
+        <RunBefore/>
+        <NoConflict/>
+        <OverriddenBy/>
+        <RunAfter/>
+        <CreationUpdateNumber>294</CreationUpdateNumber>
+      </DTRule>
+      <AllowGaps>true</AllowGaps>
+      <ConflictPolicy>manual</ConflictPolicy>
+      <OrderRulesByBucket>false</OrderRulesByBucket>
+      <VerticalOrientation>true</VerticalOrientation>
+    </RuleSheet>
+    <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
+    <CreationUpdateNumber>3</CreationUpdateNumber>
+  </RuleSet>
+  <ValidationUpdateNumber>324</ValidationUpdateNumber>
+  <UpdateNumber>325</UpdateNumber>
+  <ResourceBundle>bruleGenerateReport</ResourceBundle>
+  <TestModel id="L}3">
+    <ValidationUpdateNumber>1</ValidationUpdateNumber>
+    <UpdateNumber>1</UpdateNumber>
+    <Validation>true</Validation>
+    <AutoSync>true</AutoSync>
+  </TestModel>
+  <Preferences id="G}-7b89213e:15d98fdb3cf:-7bec">
+    <RulesExecutionAlgorithm>RETE</RulesExecutionAlgorithm>
+    <DisallowErrorSuppression>false</DisallowErrorSuppression>
+    <PhraseSuggestions>All</PhraseSuggestions>
+    <RestrictAutoSuggestions>true</RestrictAutoSuggestions>
+    <IncludeChainedExpressions>true</IncludeChainedExpressions>
+  </Preferences>
+  <decisionModel id="L}4">
+    <CreationUpdateNumber>2</CreationUpdateNumber>
+  </decisionModel>
+</RuleDictionary>

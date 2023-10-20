@@ -1,0 +1,1631 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <xsd:import schemaLocation="Commons/EstrellaRojaCommons.xsd" namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+   <xsd:element name="FindOrganizationRq" type="tns:FindType"/>
+   <xsd:element name="FindOrganizationRs" type="tns:FindCustomerRsType"/>
+   <xsd:element name="MergeOrganizationRq" type="tns:MergeOrganizationRqType"/>
+   <xsd:element name="MergeOrganizationRs" type="tns:CustomerRsType"/>
+   <xsd:element name="FindCustomerAccountRq" type="tns:FindType"/>
+   <xsd:element name="FindCustomerAccountRs" type="tns:FindCustomerAccountRsType"/>
+   <xsd:element name="FindPersonRq" type="tns:FindType"/>
+   <xsd:element name="FindPersonRs" type="tns:FindCustomerRsType"/>
+   <xsd:element name="MergePersonRq" type="tns:MergePersonRqType"/>
+   <xsd:element name="MergePersonRs" type="tns:CustomerRsType"/>
+   <xsd:element name="LoadInterfaceRq" type="tns:LoadInterfaceRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="LoadInterfaceRs" type="tns:LoadInterfaceRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UploadFileRq" type="tns:UploadFileRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UploadFileRs" type="tns:UploadFileRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="JournalImportRq" type="tns:JournalImportRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="JournalImportRs" type="tns:JournalImportRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateObjectRq" type="tns:UpdateObjectRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateObjectRs" type="tns:UpdateObjectRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="CreateOrganizationRq" type="tns:CreateOrganizationRqType"/>
+   <xsd:element name="CreateOrganizationRs" type="tns:CustomerRsType"/>
+   <xsd:element name="CreatePersonRq" type="tns:CreatePersonRqType"/>
+   <xsd:element name="CreatePersonRs" type="tns:CustomerRsType"/>
+   <xsd:element name="CreatePersonSiteRq" type="tns:CreatePersonSiteRqType"/>
+   <xsd:element name="CreatePersonSiteRs" type="tns:CustomerSiteRsType"/>
+   <xsd:element name="CreateOrganizationSiteRq" type="tns:CreateOrganizationSiteRqType"/>
+   <xsd:element name="CreateOrganizationSiteRs" type="tns:CustomerSiteRsType"/>
+   <xsd:element name="CreateCustomerAccountRq" type="tns:CreateCustomerAccountRqType"/>
+   <xsd:element name="CreateCustomerAccountRs" type="tns:CreateCustomerAccountRsType"/>
+   <xsd:element name="AssignSiteToAccountRq" type="tns:AssignSiteToAccountRqType"/>
+   <xsd:element name="AssignSiteToAccountRs" type="tns:AssignSiteToAccountRsType"/>
+   <xsd:element name="CreateLocationRq" type="tns:CreateLocationRqType"/>
+   <xsd:element name="CreateLocationRs" type="tns:CreateLocationRsType"/>
+   <xsd:element name="MergeLocationRq" type="tns:MergeLocationRqType"/>
+   <xsd:element name="MergeLocationRs" type="tns:CreateLocationRsType"/>
+   <xsd:element name="CreateOrderTransactionsRq" type="tns:CreateOrderTransactionsRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="CreateOrderTransactionsRs" type="tns:CreateOrderTransactionsRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="RunDataModelRq" type="tns:RunDataModelRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="RunDataModelRs" type="tns:RunDataModelRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetEssJobStatusRq" type="tns:GetEssJobStatusRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetEssJobStatusRs" type="tns:GetEssJobStatusRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="DownloadESSJobExecutionDetailsRq" type="tns:DownloadESSJobExecutionDetailsRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="DownloadESSJobExecutionDetailsRs" type="tns:DownloadESSJobExecutionDetailsRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="CreateReceiptRq" type="tns:CreateReceiptRqType"/>
+   <xsd:element name="CreateReceiptRs" type="tns:CreateReceiptRsType"/>
+   <xsd:element name="CancelInvoiceRq" type="tns:CancelInvoiceRqType"/>
+   <xsd:element name="CancelInvoiceRs" type="tns:CancelInvoiceRsType"/>
+   <xsd:element name="InsertSingleHoldRq" type="tns:InsertSingleHoldRqType"/>
+   <xsd:element name="InsertSingleHoldRs" type="tns:InsertSingleHoldRsType"/>
+   <xsd:element name="ReleaseSingleHoldRq" type="tns:ReleaseSingleHoldRqType"/>
+   <xsd:element name="ReleaseSingleHoldRs" type="tns:ReleaseSingleHoldRsType"/>
+   <xsd:element name="UploadAttachmentRq" type="tns:UploadAttachmentRqType"/>
+   <xsd:element name="UploadAttachmentRs" type="tns:UploadAttachmentRsType"/>
+   <xsd:element name="DownloadAttachmentRq" type="tns:DownloadAttachmentRqType"/>
+   <xsd:element name="DownloadAttachmentRs" type="tns:DownloadAttachmentRsType"/>
+   <xsd:element name="CreateApplyReceiptRq" type="tns:CreateApplyReceiptRqType"/>
+   <xsd:element name="CreateApplyReceiptRs" type="tns:CreateApplyReceiptRsType"/>
+   <xsd:complexType name="DownloadAttachmentRqType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="tns:DownloadAttachmentDtlsType" name="Attachment"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadAttachmentRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" type="tns:DownloadedAttachmentType" name="Return"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadedAttachmentType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="AttachmentType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AttachmentContent" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadAttachmentDtlsType">
+      <xsd:sequence>
+         <xsd:element name="EntityName" type="xsd:string"/>
+         <xsd:element name="CategoryName" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyA" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyB" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyC" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyD" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyE" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadAttachmentRqType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="entityName"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="categoryName"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="allowDuplicate"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="tns:AttachmentDetailsType" name="attachmentRows"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadAttachmentRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GenericReturnType" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GenericReturnType">
+      <xsd:sequence>
+         <xsd:element name="Result" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AttachmentDetailsType">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <xsd:attribute>Title</xsd:attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="UserKeyA" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyB" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyC" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyD" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyE" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AttachmentType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Content" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CancelInvoiceRqType">
+      <xsd:sequence>
+         <xsd:element name="Invoice" type="tns:InvoiceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CancelInvoiceRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GenericReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="InsertSingleHoldRqType">
+      <xsd:sequence>
+         <xsd:element name="Invoice" type="tns:InvoiceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InsertSingleHoldRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GenericReturnType" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ReleaseSingleHoldRqType">
+      <xsd:sequence>
+         <xsd:element name="Invoice" type="tns:InvoiceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ReleaseSingleHoldRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GenericReturnType" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="InvoiceType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="BusinessUnitName"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="SupplierName"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="SupplierNumber"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="InvoiceNumber"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="VoucherNumber"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="HoldLookupCode"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" type="xsd:string" name="releaseLookupCode"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ResourceType">
+      <xsd:sequence>
+         <xsd:element name="ResourceSequence" type="xsd:integer"/>
+         <xsd:element name="ResourceCode" type="xsd:string"/>
+         <xsd:element name="TransactionQuantity" type="xsd:double"/>
+         <xsd:element name="UnitCode" type="xsd:string"/>
+         <xsd:element name="TransactionTypeCode" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ResourcesType">
+      <xsd:sequence>
+         <xsd:element name="Resource" type="tns:ResourceType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionLotsType">
+      <xsd:sequence>
+         <xsd:element name="TransactionLot" maxOccurs="unbounded" type="tns:TransactionLotType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionLotType">
+      <xsd:sequence>
+         <xsd:element name="LotNumber" type="xsd:string"/>
+         <xsd:element name="UnitCode" type="xsd:string"/>
+         <xsd:element name="TransactionQuantity" type="xsd:double"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="LoadInterfaceRqType">
+      <xsd:sequence>
+         <xsd:element name="JobPackageName" type="xsd:string"/>
+         <xsd:element name="JobDefinitionName" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="paramList" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="LoadInterfaceRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:LoadInterfaceReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="LoadInterfaceReturnType">
+      <xsd:sequence>
+         <xsd:element name="Result" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadFileRqType">
+      <xsd:sequence>
+         <xsd:element name="Content" nillable="true" type="xsd:base64Binary"/>
+         <xsd:element name="FileName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ContentType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentTitle" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAuthor" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentSecurityGroup" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAccount" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UploadFileRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:UploadFileReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UploadFileReturnType">
+      <xsd:sequence>
+         <xsd:element name="Result" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="JournalImportRqType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="BatchName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="BatchDescription" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LedgerId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="AccountingPeriodName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AccountingDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="UserSourceName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserCategoryName" nillable="true" type="xsd:string"/>
+         <xsd:element default="false" minOccurs="0" name="ErrorToSuspenseFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element default="false" minOccurs="0" name="SummaryFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element default="N" minOccurs="0" name="ImportDescriptiveFlexField" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="GlInterface" type="tns:GlInterfaceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GlInterfaceType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="Reference4" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference5" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LedgerId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="PeriodName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AccountingDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="UserJeSourceName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserJeCategoryName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="GroupId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ChartOfAccountsId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="BalanceType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CodeCombinationId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="Segment1" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment2" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment3" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment4" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment5" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment6" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment7" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment8" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment9" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment10" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment11" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment12" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment13" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment14" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment15" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment16" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment17" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment18" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment19" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment20" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment21" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment22" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment23" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment24" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment25" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment26" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment27" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment28" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment29" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Segment30" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CurrencyCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="EnteredCrAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="EnteredDrAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="AccountedCr" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="AccountedDr" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="StatisticalValue" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="UserCurrencyConversionType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CurrencyConversionDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="CurrencyConversionRate" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="CurrencyConversionType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference1" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference2" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference3" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference6" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference7" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference8" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference9" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference10" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference11" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference12" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference13" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference14" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference15" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference16" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference17" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference18" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference19" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference20" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference21" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference22" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference23" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference24" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference25" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference26" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference27" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference28" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference29" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference30" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReferenceDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="Attribute1" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute2" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute3" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute4" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute5" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute6" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute7" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute8" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute9" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute10" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute11" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute12" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute13" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute14" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute15" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute16" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute17" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute18" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute19" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Attribute20" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AttributeCategory" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AttributeCategory2" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AttributeCategory3" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AverageJournalFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element minOccurs="0" name="BalancingSegmentValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DescrFlexErrorMessage" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="GlSlLinkId" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="GlSlLinkTable" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InvoiceAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="InvoiceDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="InvoiceIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="JeCategoryName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="JeSourceName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="JgzzReconReference" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ManagementSegmentValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ObjectVersionNumber" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="OriginatingBalSegValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SetOfBooksId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="Status" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TaxCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="USSGLTransactionCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="GlInterfaceId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="AccountKFF" type="tns:AccountType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AccountType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="JgzzReconFlag" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Reference3" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FinancialCategory" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SummaryFlag" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DetailPostingAllowedFlag" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AccountType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DetailBudgetingAllowedFlag" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="_FLEX_StructureInstanceCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="_FLEX_StructureInstanceId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="StartDateActive" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="EndDateActive" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="EnabledFlag" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="_CODE_COMBINATION_ID" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="_CHART_OF_ACCOUNTS_ID" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="FND_ACFF_ConcatenatedStorage" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FND_ACFF_Delimiter" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="JournalImportRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:JournalImportReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="JournalImportReturnType">
+      <xsd:sequence>
+         <xsd:element name="Result" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateObjectRqType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="1" minOccurs="0" name="document" nillable="true" type="tns:DocumentDetailsType"/>
+         <xsd:element name="operationMode" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="1" minOccurs="0" name="object" nillable="true" type="tns:ErpObjectDetailsType"/>
+         <xsd:element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DocumentDetailsType">
+      <xsd:sequence>
+         <xsd:element name="Content" nillable="true" type="xsd:base64Binary"/>
+         <xsd:element name="FileName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ContentType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentTitle" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAuthor" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentSecurityGroup" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAccount" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ErpObjectDetailsType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="EntityName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ContextValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyA" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyB" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyC" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyD" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="UserKeyE" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DFFAttributes" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateObjectRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:UpdateObjectReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateObjectReturnType">
+      <xsd:sequence>
+         <xsd:element name="Result" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrderTransactionsRqType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="BatchCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceSystemCode" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="MaterialTransactionInput" type="tns:MaterialTransactionInputType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MaterialTransactionInputType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="HeaderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Organization" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderSerial" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="OperationSequence" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="TransactionDate" nillable="true" type="xsd:dateTime"/>
+         <xsd:element minOccurs="0" name="TransactionType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionNote" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InventoryItemNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ItemRevision" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionQuantity" nillable="true" type="tns:MeasureType"/>
+         <xsd:element minOccurs="0" name="TransactionUnitOfMeasure" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Subinventory" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Locator" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkDefinition" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderSubType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceHeaderReference" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceHeaderReferenceIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="SourceLineReference" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceLineReferenceIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ReasonCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PONumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="POLineNumber" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="SoldToLegalEntityName" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="TransactionLotInput" type="tns:TransactionLotInputType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="TransactionSerialInput" type="tns:TransactionSerialInputType"/>
+         <xsd:element minOccurs="0" name="OrderlessTransactionDFF" type="tns:WorkOrderDFFType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionLotInputType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="LotNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionQuantity" nillable="true" type="tns:MeasureType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionSerialInputType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="LotNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FromSerialNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ToSerialNumber" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="WorkOrderDFFType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="WorkOrderId" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="__FLEX_Context" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="__FLEX_Context_DisplayValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="_FLEX_NumOfSegments" nillable="true" type="xsd:int"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrderTransactionsRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:CreateOrderTransactionsReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrderTransactionsReturnType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InterfaceBatchStatus" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceSystemType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceSystemCode" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="MaterialTransactionHeader" type="tns:MaterialTransactionHeaderType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="TransactionInterfaceMessage" type="tns:TransactionInterfaceMessageType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="ProcessStatusTranslation" type="tns:ProcessStatusTranslationType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MaterialTransactionHeaderType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InterfaceStatusCode" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InvTransactionId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="HeaderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Organization" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderSerial" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="OperationSequence" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="TransactionDate" type="xsd:dateTime"/>
+         <xsd:element minOccurs="0" name="TransactionType" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InventoryItemNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ItemRevision" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionQuantity" type="tns:MeasureType"/>
+         <xsd:element minOccurs="0" name="TransactionUnitOfMeasure" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Subinventory" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Locator" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="WorkDefinition" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkDefinitionVersion" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="WorkOrderType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkOrderSubType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceHeaderReference" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceHeaderReferenceIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="SourceLineReference" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceLineReferenceIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ReasonCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PONumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="POLineNumber" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="SoldToLegalEntityName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="WorkMethod" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="MessageDetail" type="tns:MessageDetailType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="TransactionLotHeader" type="tns:TransactionLotHeaderType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="TransactionSerialHeader" type="tns:TransactionSerialHeaderType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionInterfaceMessageType">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/"/>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="HeaderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ExceptionMessage" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InterfaceBatchId" nillable="true" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessStatusTranslationType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InterfaceBatchDescription" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InterfaceBatchId" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="InterfaceBatchName" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Language" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceLang" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MessageDetailType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="ErrorText" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ErrorMessageText" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionLotHeaderType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="LotNumber" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionQuantity" type="tns:MeasureType"/>
+         <xsd:element minOccurs="0" name="ParentSerialNumber" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionSerialHeaderType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="LotNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FromSerialNumber" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ToSerialNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ParentSerialNumber" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RunDataModelRqType">
+      <xsd:sequence>
+         <xsd:element name="reportRequest" type="tns:ReportRequestType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ReportRequestType">
+      <xsd:sequence>
+         <xsd:element name="XDOPropertyList" nillable="true" type="tns:MetaDataListType"/>
+         <xsd:element name="attributeCalendar" nillable="true" type="xsd:string"/>
+         <xsd:element name="attributeFormat" nillable="true" type="xsd:string"/>
+         <xsd:element name="attributeLocale" nillable="true" type="xsd:string"/>
+         <xsd:element name="attributeTemplate" nillable="true" type="xsd:string"/>
+         <xsd:element name="attributeTimezone" nillable="true" type="xsd:string"/>
+         <xsd:element name="attributeUILocale" nillable="true" type="xsd:string"/>
+         <xsd:element name="byPassCache" nillable="true" type="xsd:boolean"/>
+         <xsd:element name="dynamicDataSource" nillable="true" type="tns:BIPDataSourceType"/>
+         <xsd:element name="flattenXML" nillable="true" type="xsd:boolean"/>
+         <xsd:element name="parameterNameValues" nillable="true" type="tns:ParamNameValuesType"/>
+         <xsd:element name="reportAbsolutePath" nillable="true" type="xsd:string"/>
+         <xsd:element name="reportData" nillable="true" type="xsd:base64Binary"/>
+         <xsd:element name="reportOutputPath" nillable="true" type="xsd:string"/>
+         <xsd:element name="reportRawData" nillable="true" type="xsd:string"/>
+         <xsd:element name="sizeOfDataChunkDownload" nillable="true" type="xsd:int"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MetaDataListType">
+      <xsd:sequence>
+         <xsd:element name="metaDataList" nillable="true" type="tns:ArrayOfMetaDataType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfMetaDataType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:MetaDataType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MetaDataType">
+      <xsd:sequence>
+         <xsd:element name="metaDataName" nillable="true" type="xsd:string"/>
+         <xsd:element name="metaDataValue" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="BIPDataSourceType">
+      <xsd:sequence>
+         <xsd:element name="JDBCDataSource" nillable="true" type="tns:JDBCDataSourceType"/>
+         <xsd:element name="fileDataSource" nillable="true" type="tns:FileDataSourceType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="JDBCDataSourceType">
+      <xsd:sequence>
+         <xsd:element name="JDBCDriverClass" nillable="true" type="xsd:string"/>
+         <xsd:element name="JDBCDriverType" nillable="true" type="xsd:string"/>
+         <xsd:element name="JDBCPassword" nillable="true" type="xsd:string"/>
+         <xsd:element name="JDBCURL" nillable="true" type="xsd:string"/>
+         <xsd:element name="JDBCUserName" nillable="true" type="xsd:string"/>
+         <xsd:element name="dataSourceName" nillable="true" type="xsd:string"/>
+         <xsd:element name="postProcessFunc" nillable="true" type="xsd:string"/>
+         <xsd:element name="preProcessFunc" nillable="true" type="xsd:string"/>
+         <xsd:element name="useProxyAuth" type="xsd:boolean"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FileDataSourceType">
+      <xsd:sequence>
+         <xsd:element name="dynamicDataSourcePath" nillable="true" type="xsd:string"/>
+         <xsd:element name="temporaryDataSource" type="xsd:boolean"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ParamNameValuesType">
+      <xsd:sequence>
+         <xsd:element name="listOfParamNameValues" nillable="true" type="tns:ArrayOfParamNameValueType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfParamNameValueType">
+      <xsd:sequence>
+         <xsd:element name="item" type="tns:ParamNameValueType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ParamNameValueType">
+      <xsd:sequence>
+         <xsd:element name="UIType" nillable="true" type="xsd:string"/>
+         <xsd:element name="dataType" nillable="true" type="xsd:string"/>
+         <xsd:element name="dateFormatString" nillable="true" type="xsd:string"/>
+         <xsd:element name="dateFrom" nillable="true" type="xsd:string"/>
+         <xsd:element name="dateTo" nillable="true" type="xsd:string"/>
+         <xsd:element name="defaultValue" nillable="true" type="xsd:string"/>
+         <xsd:element name="fieldSize" nillable="true" type="xsd:string"/>
+         <xsd:element name="label" nillable="true" type="xsd:string"/>
+         <xsd:element name="lovLabels" nillable="true" type="tns:ArrayOfStringType"/>
+         <xsd:element name="multiValuesAllowed" type="xsd:boolean"/>
+         <xsd:element name="name" nillable="true" type="xsd:string"/>
+         <xsd:element name="refreshParamOnChange" type="xsd:boolean"/>
+         <xsd:element name="selectAll" type="xsd:boolean"/>
+         <xsd:element name="templateParam" type="xsd:boolean"/>
+         <xsd:element name="useNullForAll" type="xsd:boolean"/>
+         <xsd:element name="values" nillable="true" type="tns:ArrayOfStringType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ArrayOfStringType">
+      <xsd:sequence>
+         <xsd:element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RunDataModelRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:RunDataModelReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="RunDataModelReturnType">
+      <xsd:sequence>
+         <xsd:element name="metaDataList" nillable="true" type="tns:MetaDataListType"/>
+         <xsd:element name="reportBytes" nillable="true" type="xsd:base64Binary"/>
+         <xsd:element name="reportContentType" nillable="true" type="xsd:string"/>
+         <xsd:element name="reportFileID" nillable="true" type="xsd:string"/>
+         <xsd:element name="reportLocale" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetEssJobStatusRqType">
+      <xsd:sequence>
+         <xsd:element name="requestId" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetEssJobStatusRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetEssJobStatusReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetEssJobStatusReturnType">
+      <xsd:sequence>
+         <xsd:element name="result" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadESSJobExecutionDetailsRqType">
+      <xsd:sequence>
+         <xsd:element name="requestId" type="xsd:string"/>
+         <xsd:element name="fileType" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadESSJobExecutionDetailsRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:DownloadESSJobExecutionDetailsReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="DownloadESSJobExecutionDetailsReturnType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="Result" type="tns:DocumentDetailsType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AttachmentType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FileContent" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FileName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="Data" nillable="true" type="xsd:base64Binary"/>
+         <xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="URL" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DataTypeCode" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="PaymentType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="PaymentMethodCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PaymentTransactionIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="PaymentSetIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="SourceTransactionPaymentIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PaymentMethod" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SalesCreditType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="SourceTransactionSalesCreditIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SalesPerson" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SalesPersonIdentifier" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="Percent" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="SalesCreditTypeCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SalesCreditTypeReference" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="HeaderEffCategoriesType">
+      <xsd:sequence>
+         <xsd:element default="0" minOccurs="0" name="Category" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HeaderId" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OrderProcessingPreferencesType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="CreateCustomerInformationFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element minOccurs="0" name="SubmitFlag" nillable="true" type="xsd:boolean"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="BillingPlanType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="BillingPlanTypeCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PeriodicityCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="NumberOfBillingPeriods" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="BillingPeriodStartDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="BillingPeriodEndDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="BillingTrxDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="BillingPeriodNumber" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="OverridePeriod" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="OverridePeriodAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="OverridePeriodQuantity" nillable="true" type="tns:MeasureType"/>
+         <xsd:element minOccurs="0" name="CancellationEffectiveDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="SourceBillingPlanId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ChargeType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="ChargeDefinition" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeDefinitionCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeSubtype" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeSubtypeCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PriceType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PriceTypeCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PricedQuantity" nillable="true" type="tns:MeasureType"/>
+         <xsd:element minOccurs="0" name="PricedQuantityUOM" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PricedQuantityUOMCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PrimaryFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element minOccurs="0" name="ApplyTo" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="RollupFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element minOccurs="0" name="SourceChargeIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeTypeCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeCurrencyName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeCurrencyCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SequenceNumber" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="PricePeriodicityCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="GSAUnitPrice" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="AverageUnitSellingPrice" nillable="true" type="tns:AmountType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="OrderChargeComponent" type="tns:ChargeComponentType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DocumentReferenceType">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>SourceTransactionLineIdentifier</attribute>
+               <attribute>SourceTransactionScheduleIdentifier</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="DocumentReferenceType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentLineIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalLineIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalSubLineIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentSubLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAdditionalSubLineNumber" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="LotSerialType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="SourceTransactionLotIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LotNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SerialNumberFrom" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SerialNumberTo" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ItemRevisionNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LocatorIdentifier" nillable="true" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionAttributeType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="SourceTransactionLineAttributeIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionAttributeName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CharacterValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="NumberValue" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="DateValue" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="TimestampValue" nillable="true" type="xsd:dateTime"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FulfillLineEffCategoriesType">
+      <xsd:sequence>
+         <xsd:element default="0" minOccurs="0" name="Category" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FulfillLineId" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ChargeComponentType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="ChargeCurrencyName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeCurrencyCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HeaderCurrencyName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HeaderCurrencyCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HeaderCurrencyExtendedAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="PriceElement" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PriceElementCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SequenceNumber" nillable="true" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="PriceElementUsage" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PriceElementUsageCode" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeCurrencyUnitPrice" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="HeaderCurrencyUnitPrice" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="RollupFlag" nillable="true" type="xsd:boolean"/>
+         <xsd:element minOccurs="0" name="SourceParentChargeComponentId" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceChargeIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceChargeComponentIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChargeCurrencyExtendedAmount" nillable="true" type="tns:AmountType"/>
+         <xsd:element minOccurs="0" name="Explanation" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AmountType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:decimal">
+            <xsd:attribute name="currencyCode" type="xsd:normalizedString" use="optional"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+   <xsd:complexType name="MeasureType">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:decimal">
+            <xsd:attribute name="unitCode" type="xsd:normalizedString" use="optional"/>
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrdersRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:CreateOrdersReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrdersReturnType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="result" type="tns:OrderImportResponseType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OrderImportResponseType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="SourceTransactionNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionSystem" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="OrderNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="HeaderId" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="OrderStatus" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReturnStatus" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="MessageName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="MessageText" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FlowType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ChangeVersionNumber" nillable="true" type="xsd:string"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="OrderImportResponseLine" type="tns:OrderImportResponseLine"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OrderImportResponseLine">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>LineId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="SourceTransactionIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionSystem" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionLineIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionScheduleNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceTransactionScheduleIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceParentTransactionLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceParentTransactionLineIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceParentTransactionScheduleNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="SourceParentTransactionScheduleIdentifier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LineId" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FulfillLineNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FulfillLineId" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="MessageName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="MessageText" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FindControlType">
+      <xsd:sequence>
+         <xsd:element default="false" name="retrieveAllTranslations" type="xsd:boolean"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FindCriteriaType">
+      <xsd:sequence>
+         <xsd:element default="0" name="fetchStart" type="xsd:int"/>
+         <xsd:element default="-1" name="fetchSize" type="xsd:int"/>
+         <xsd:element minOccurs="0" name="filter" type="tns:ViewCriteriaType"/>
+         <xsd:element minOccurs="0" name="sortOrder" type="tns:SortOrderType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="findAttribute" nillable="true" type="xsd:string"/>
+         <xsd:element default="false" name="excludeAttribute" type="xsd:boolean"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="childFindCriteria" type="tns:ChildFindCriteriaType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ViewCriteriaType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="conjunction" type="tns:ConjunctionType"/>
+         <xsd:element maxOccurs="unbounded" name="group" type="tns:ViewCriteriaRowType"/>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="nested" type="tns:ViewCriteriaType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SortOrderType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" name="sortAttribute" type="tns:SortAttributeType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="SortAttributeType">
+      <xsd:sequence>
+         <xsd:element name="name" type="xsd:string"/>
+         <xsd:element default="false" name="descending" type="xsd:boolean"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ChildFindCriteriaType">
+      <xsd:complexContent>
+         <xsd:extension base="tns:FindCriteriaType">
+            <xsd:sequence>
+               <xsd:element name="childAttrName" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:simpleType name="ConjunctionType">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="And"/>
+         <xsd:enumeration value="Or"/>
+         <xsd:enumeration value="Not"/>
+         <xsd:enumeration value="AndNot"/>
+         <xsd:enumeration value="OrNot"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="ViewCriteriaRowType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="conjunction" type="tns:ConjunctionType"/>
+         <xsd:element default="false" name="upperCaseCompare" type="xsd:boolean"/>
+         <xsd:element maxOccurs="unbounded" name="item" type="tns:ViewCriteriaItemType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ViewCriteriaItemType">
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="conjunction" type="tns:ConjunctionType"/>
+         <xsd:element default="false" name="upperCaseCompare" type="xsd:boolean"/>
+         <xsd:element name="attribute" type="xsd:string"/>
+         <xsd:element name="operator" type="xsd:string"/>
+         <xsd:choice>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="value" type="xsd:string"/>
+            <xsd:element name="nested" type="tns:ViewCriteriaType"/>
+         </xsd:choice>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="FindAttributeRq" nillable="true" type="tns:FindAttributeRqType"/>
+   <xsd:complexType name="FindAttributeRqType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="findAttribute" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateReceiptRqType">
+      <xsd:sequence>
+         <xsd:element name="CashReceiptId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="Amount" type="xsd:string"/>
+         <xsd:element name="DepositDate" type="xsd:date"/>
+         <xsd:element name="CurrencyCode" type="xsd:string"/>
+         <xsd:element name="OrganizationId" type="xsd:string"/>
+         <xsd:element name="CustomerSiteUseId" type="xsd:string"/>
+         <xsd:element name="CustomerId" type="xsd:string"/>
+         <xsd:element name="ReceiptDate" type="xsd:date"/>
+         <xsd:element name="ReceiptMethodId" type="xsd:string"/>
+         <xsd:element name="ReceiptNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ReceiptFlex" type="tns:ReceiptFlexType"/>
+         <xsd:element minOccurs="0" name="StandardReceiptGdfVA" type="tns:StandardReceiptGdfType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ReceiptFlexType">
+      <xsd:sequence>
+         <xsd:element name="Reference" type="xsd:string"/>
+         <xsd:element name="ReferenceExtend" type="xsd:string"/>
+         <xsd:element name="Concept" type="xsd:string"/>
+         <xsd:element name="DateTime" type="xsd:string"/>
+         <xsd:element name="FormPay" type="xsd:string"/>
+         <xsd:element name="superInterface" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateReceiptRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:ReceiptReturnType" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ReceiptReturnType">
+      <xsd:sequence>
+         <xsd:element name="Receipt" type="tns:ReceiptType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ReceiptType">
+      <xsd:sequence>
+         <xsd:element name="CashReceiptId" type="xsd:string"/>
+         <xsd:element name="ReceiptNumber" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreatePersonRqType">
+      <xsd:sequence>
+         <xsd:element name="Person" type="tns:PersonType" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrganizationRqType">
+      <xsd:sequence>
+         <xsd:element name="Organization" type="tns:OrganizationType" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="PersonType">
+      <xsd:sequence>
+         <xsd:element name="FirstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="LastName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="FiscalCode" type="xsd:string"/>
+            <xsd:element name="DunsNumber" type="xsd:string"/>
+         </xsd:choice>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="OrganizationType">
+      <xsd:sequence>
+         <xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="FiscalCode" type="xsd:string"/>
+            <xsd:element name="DunsNumber" type="xsd:string"/>
+         </xsd:choice>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="PartySiteType">
+      <xsd:sequence>
+         <xsd:element name="PartyId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="PartySiteName" minOccurs="1" maxOccurs="1" type="xsd:string"/>
+         <xsd:element name="LocationId" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="AddressType" minOccurs="1" maxOccurs="1" type="tns:SiteUseCode"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerAddressType">
+      <xsd:sequence>
+         <xsd:element name="PostalCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="StreetName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="InternalNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="ExternalNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="County" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="City" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="State" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Country" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="AddressType" minOccurs="1" maxOccurs="1" type="tns:SiteUseCode"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerAccountType">
+      <xsd:sequence>
+         <xsd:element name="Name" maxOccurs="1" minOccurs="1" type="xsd:string"/>
+         <xsd:element name="Description" maxOccurs="1" minOccurs="1" type="xsd:string"/>
+         <xsd:element name="CustomerType" maxOccurs="1" minOccurs="1" type="xsd:string"/>
+         <xsd:element name="CustomerClassCode" maxOccurs="1" minOccurs="1" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="PartyId" type="xsd:long"/>
+                        <xsd:element name="PartyNumber" type="xsd:string"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateCustomerAccountRqType">
+      <xsd:sequence>
+         <xsd:element name="PartyId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="CustomerAccount" type="tns:CustomerAccountType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateCustomerAccountRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="PartyId" type="xsd:long"/>
+                        <xsd:element name="CustomerAccountId" type="xsd:long"/>
+                        <xsd:element name="CustomerAccountNumber" type="xsd:string"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreatePersonSiteRqType">
+      <xsd:sequence>
+         <xsd:element name="PersonSite" type="tns:PartySiteType" maxOccurs="1" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateOrganizationSiteRqType">
+      <xsd:sequence>
+         <xsd:element name="OrganizationSite" type="tns:PartySiteType" maxOccurs="1" minOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerSiteRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:CustomerSiteType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="AssignSiteToAccountRqType">
+      <xsd:sequence>
+         <xsd:element name="CustomerAccountSiteId" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="CustomerAccountId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="PartyId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="PartySiteId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="SetId" minOccurs="1" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="SiteUseIdPrimaryBillTo" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+         <xsd:element name="AddressType" minOccurs="1" maxOccurs="1" type="tns:SiteUseCode"/>
+         <xsd:element name="PartySiteUseId" minOccurs="0" maxOccurs="1" type="xsd:long"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AssignSiteToAccountRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="CustomerAccountId" type="xsd:long"/>
+                        <xsd:element name="AccountName" type="xsd:string"/>
+                        <xsd:element name="CustAccountSite" minOccurs="1" maxOccurs="unbounded" type="tns:CustAccountSitetype"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateLocationRqType">
+      <xsd:sequence>
+         <xsd:element name="Location" minOccurs="1" maxOccurs="1" type="tns:CustomerAddressType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateLocationRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="1" maxOccurs="1">
+                  <xsd:complexType>
+                     <xsd:sequence>
+                        <xsd:element name="LocationId" minOccurs="1" type="xsd:long" maxOccurs="1"/>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerResultType">
+      <xsd:choice minOccurs="1" maxOccurs="1">
+         <xsd:element name="Organization">
+            <xsd:complexType>
+               <xsd:complexContent>
+                  <xsd:extension base="tns:OrganizationType">
+                     <xsd:sequence>
+                        <xsd:element name="CustomerSite" type="tns:CustomerSiteType" minOccurs="1" maxOccurs="unbounded"/>
+                        <xsd:element name="PartyId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="PartyNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="OrganizationProfileId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                     </xsd:sequence>
+                  </xsd:extension>
+               </xsd:complexContent>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Person">
+            <xsd:complexType>
+               <xsd:complexContent>
+                  <xsd:extension base="tns:PersonType">
+                     <xsd:sequence>
+                        <xsd:element name="CustomerSite" type="tns:CustomerSiteType" minOccurs="1" maxOccurs="unbounded"/>
+                        <xsd:element name="PartyId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="PartyNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="PersonProfileId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                     </xsd:sequence>
+                  </xsd:extension>
+               </xsd:complexContent>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:choice>
+   </xsd:complexType>
+   <xsd:complexType name="FindCustomerRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Customer" type="tns:CustomerResultType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerSiteType">
+      <xsd:sequence>
+         <xsd:element name="PartyId" type="xsd:long"/>
+         <xsd:element name="PartySiteId" type="xsd:long"/>
+         <xsd:element name="PartySiteNumber" type="xsd:string"/>
+         <xsd:element name="LocationId" type="xsd:long"/>
+         <xsd:element name="SiteUse" minOccurs="1" maxOccurs="2">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="UseId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="UseCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="SiteUseCode">
+      <xsd:restriction base="xsd:string">
+         <xsd:enumeration value="BILL_TO"/>
+         <xsd:enumeration value="SHIP_TO"/>
+         <xsd:enumeration value="BILL_TO/SHIP_TO"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="FindType">
+      <xsd:sequence>
+         <xsd:element name="findCriteria" type="tns:FindCriteriaType"/>
+         <xsd:element name="findControl" type="tns:FindControlType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="FindCustomerAccountRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="CustomerAccountResult" type="tns:CustomerAccountResultType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerAccountResultType">
+      <xsd:sequence>
+         <xsd:element name="CustomerAccount" minOccurs="1" maxOccurs="1">
+            <xsd:complexType>
+               <xsd:complexContent>
+                  <xsd:extension base="tns:CustomerAccountType">
+                     <xsd:sequence>
+                        <xsd:element name="CustAccountSite" type="tns:CustAccountSitetype" minOccurs="1" maxOccurs="unbounded"/>
+                        <xsd:element name="CustomerAccountId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="PartyId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                     </xsd:sequence>
+                  </xsd:extension>
+               </xsd:complexContent>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustAccountSitetype">
+      <xsd:sequence>
+         <xsd:element name="PartySiteId" type="xsd:string"/>
+         <xsd:element name="CustAccountSiteId" type="xsd:string"/>
+         <xsd:element name="SiteUse" minOccurs="1" maxOccurs="2">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="UseId" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="UseCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="MergeOrganizationRqType">
+      <xsd:complexContent>
+         <xsd:extension base="tns:OrganizationType">
+            <xsd:sequence>
+               <xsd:element name="PartyId" type="xsd:long" maxOccurs="1"/>
+               <xsd:element name="OrganizationProfileId" type="xsd:long" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="MergePersonRqType">
+      <xsd:complexContent>
+         <xsd:extension base="tns:PersonType">
+            <xsd:sequence>
+               <xsd:element name="PartyId" type="xsd:long" maxOccurs="1"/>
+               <xsd:element name="PersonProfileId" type="xsd:long" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="MergeLocationRqType">
+      <xsd:complexContent>
+         <xsd:extension base="tns:CreateLocationRqType">
+            <xsd:sequence>
+               <xsd:element name="LocationId" type="xsd:long" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateApplyReceiptRqType">
+      <xsd:sequence>
+         <xsd:element name="ApplyReceiptType" maxOccurs="unbounded" type="tns:ApplyReceiptType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ApplyReceiptType">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <xsd:attribute>ReceivableApplicationId</xsd:attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="AmountApplied" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="ReceiptId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CustomerTrxId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="Discount" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="Instalment" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ReceiptNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionNumber" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReceiptAmount" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="ReceiptDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="CustomerName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="TransactionDate" nillable="true" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="TransactionSource" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="AmountReceiptCurrency" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="ReceiptCurrency" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ExchangeRate" nillable="true" type="xsd:decimal"/>
+         <xsd:element minOccurs="0" name="ApplicationDate" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="AccountingDate" type="xsd:date"/>
+         <xsd:element minOccurs="0" name="ApplyClosedInvoices" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="InstalmentId" nillable="true" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ReceivableApplicationFLEXVA" type="tns:ReceivableApplicationFLEX"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ReceivableApplicationFLEX">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <xsd:attribute>ReceivableApplicationId</xsd:attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="ReceivableApplicationId" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="ListoParaTimbre" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ListoParaTimbreDisplayValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReProceso" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ReProcesoDisplayValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FLEXContext" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FLEXContextDisplayValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="FLEXNumOfSegments" nillable="true" type="xsd:int"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CreateApplyReceiptRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:CreateApplyReceiptReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CreateApplyReceiptReturnType">
+      <xsd:sequence>
+         <xsd:element maxOccurs="unbounded" minOccurs="0" name="Value" type="tns:ApplyReceiptType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ApplyReceiptResult"/>
+   <xsd:complexType name="StandardReceiptGdfType">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>CashReceiptId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="CashReceiptId" type="xsd:long"/>
+         <xsd:element minOccurs="0" name="FLEX_PARAM_GLOBAL_COUNTRY_CODE" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="__FLEX_Context" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="__FLEX_Context_DisplayValue" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="_FLEX_NumOfSegments" nillable="true" type="xsd:int"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

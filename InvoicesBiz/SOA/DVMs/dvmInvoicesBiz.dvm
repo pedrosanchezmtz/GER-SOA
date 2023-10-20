@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmInvoicesBiz" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" qualifier="true" order="1"/>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>RespIHSI</cell>
+         <cell>A hold was placed on the invoice.</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>RespIHSE</cell>
+         <cell>Se coloco una retención en la factura.</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>paramEntity</cell>
+         <cell>AP_INVOICES_ALL</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>paramCategoryName</cell>
+         <cell>AP_SUPPORTING_DOC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>paramHoldLookupCode</cell>
+         <cell>ER Error en CFDI</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>paramReleaseLookupCode</cell>
+         <cell>ER Sustitución de CFDI</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CONFIG</cell>
+         <cell>MAX_RETRY_COUNT</cell>
+         <cell>3</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MESSAGES</cell>
+         <cell>UNABLE_TO_GET_CANDIDATES</cell>
+         <cell>No se pudieron recuperar los complementos de pago candidatos</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MESSAGES</cell>
+         <cell>INVOICE_NOT_FOUND</cell>
+         <cell>No se ha podido resolver la factura</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MESSAGES</cell>
+         <cell>NO_PAYMENT_INFO_FOUND</cell>
+         <cell>No hay información de pago para</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MESSAGES</cell>
+         <cell>INVALID_MERGE</cell>
+         <cell>No se han podido guardar los cambios para</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CONFIG</cell>
+         <cell>VALIDATE_PAYMENT_COMPLEMENTS_INTNAME</cell>
+         <cell>InvoicesEnt$ValidatePaymentComplements</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>paramIntegrationName</cell>
+         <cell>ValidateInvoicesAP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UpdateUuId</cell>
+         <cell>OperationMode</cell>
+         <cell>single</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UpdateUuId</cell>
+         <cell>NotificationCode</cell>
+         <cell>10</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UpdateUuId</cell>
+         <cell>ContextValue</cell>
+         <cell>Contabilidad Electronica (MX)</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UpdateUuId</cell>
+         <cell>EntityName</cell>
+         <cell>Receivables Invoice</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UpdateUuId</cell>
+         <cell>IntegrationName</cell>
+         <cell>InterfacceUpdateInvoices</cell>
+      </row>
+      <row markdefault="false">
+         <cell>BuildInvoices</cell>
+         <cell>NameCsv</cell>
+         <cell>RaInterfaceLinesAll.csv</cell>
+      </row>
+      <row markdefault="false">
+         <cell>BuildInvoices</cell>
+         <cell>PathFileZip</cell>
+         <cell>/u01/data/domains/ERSOAPRD_domain/PROD/TMP_DIR/</cell>
+      </row>
+      <row markdefault="false">
+         <cell>BuildInvoices</cell>
+         <cell>BuildInvoices</cell>
+         <cell>AR_Invoices_</cell>
+      </row>
+      <row>
+         <cell>BuildInvoices</cell>
+         <cell>Emails</cell>
+         <cell>yoselani.espinosa@estrellaroja.com.mx ,nereida.ramon@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>originSystem</cell>
+         <cell>APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>documentTypeDescriptionFactura</cell>
+         <cell>FACTURA-DIRECTA</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>invoiceTypeFactura</cell>
+         <cell>INVOICE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>documentTypeDescriptionNC</cell>
+         <cell>NOTA-DE-CREDITO-DIRECTA</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>invoiceTypeNC</cell>
+         <cell>CREDITNOTE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>calculoIntegracion</cell>
+         <cell>true</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>CorreoPruebas</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>Pruebas</cell>
+         <cell>true</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>Reintentos</cell>
+         <cell>3</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DigitalStamp</cell>
+         <cell>AdjuntosDuplicados</cell>
+         <cell>no</cell>
+      </row>
+      <row>
+         <cell>DigitalStamp</cell>
+         <cell>KEY_FROM</cell>
+         <cell>APOLO</cell>
+      </row>
+      <row>
+         <cell>DigitalStamp</cell>
+         <cell>KEY_TYPE</cell>
+         <cell>I</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SOAUtilitiesImpl" targetNamespace="http://impl.utilities.cloud.estrellaroja.com.mx/" xmlns:tns="http://impl.utilities.cloud.estrellaroja.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <wsdl:types>
+      <xsd:schema xmlns:ns0="http://impl.utilities.cloud.estrellaroja.com.mx/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://impl.utilities.cloud.estrellaroja.com.mx/types">
+         <xsd:complexType name="createZipFileRqType">
+            <xsd:sequence>
+               <xsd:element name="fileNameZip" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="listFilesContentType" type="ns0:filesContentType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+               <xsd:element name="pathFileNameZip" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="createZipFileRsType">
+            <xsd:sequence>
+               <xsd:element name="error" type="ns0:errorType" minOccurs="0"/>
+               <xsd:element name="returnType" type="ns0:createZipFileReturnType" minOccurs="0"/>
+               <xsd:element name="succcess" type="xsd:boolean"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="encodeFileBase64RsType">
+            <xsd:sequence>
+               <xsd:element name="error" type="ns0:errorType" minOccurs="0"/>
+               <xsd:element name="returnType" type="ns0:encodeFileBase64ReturnType" minOccurs="0"/>
+               <xsd:element name="succcess" type="xsd:boolean"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="getDateByTimeZoneRqType">
+            <xsd:sequence>
+               <xsd:element name="dateToChange" type="xsd:dateTime" minOccurs="0"/>
+               <xsd:element name="timeZone" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="htmlControlRqType">
+            <xsd:sequence>
+               <xsd:element name="errorsDetails" type="ns0:errorDetailsType" minOccurs="0"/>
+               <xsd:element name="totalErrors" type="xsd:int" minOccurs="0"/>
+               <xsd:element name="totalProcessed" type="xsd:int" minOccurs="0"/>
+               <xsd:element name="totalSucceeded" type="xsd:int" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="htmlControlRsType">
+            <xsd:sequence>
+               <xsd:element name="error" type="ns0:errorType" minOccurs="0"/>
+               <xsd:element name="returnType" type="ns0:htmlControlReturnType" minOccurs="0"/>
+               <xsd:element name="success" type="xsd:boolean"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="filesContentType">
+            <xsd:sequence>
+               <xsd:element name="fileNameToCompress" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="pathFileNameToCompress" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="errorType">
+            <xsd:sequence>
+               <xsd:element name="businessProcess" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="errorCode" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="failedService" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="shortDescription" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="createZipFileReturnType">
+            <xsd:sequence>
+               <xsd:element name="encodeBase64" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="encodeFileBase64ReturnType">
+            <xsd:sequence>
+               <xsd:element name="encodeBase64" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="fileName" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="errorDetailsType">
+            <xsd:sequence>
+               <xsd:element name="errorDetail" type="ns0:errorDetailType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="errorDetailType">
+            <xsd:sequence>
+               <xsd:element name="dataValue" type="xsd:string" minOccurs="0"/>
+               <xsd:element name="errorMessage" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="htmlControlReturnType">
+            <xsd:sequence>
+               <xsd:element name="htmlControl" type="xsd:string" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+      <xsd:schema targetNamespace="http://impl.utilities.cloud.estrellaroja.com.mx/" xmlns:tns="http://impl.utilities.cloud.estrellaroja.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://impl.utilities.cloud.estrellaroja.com.mx/types">
+         <xsd:import namespace="http://impl.utilities.cloud.estrellaroja.com.mx/types"/>
+         <xsd:complexType name="getDateByTimeZone">
+            <xsd:sequence>
+               <xsd:element name="arg0" type="ns1:getDateByTimeZoneRqType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getDateByTimeZone" type="tns:getDateByTimeZone"/>
+         <xsd:complexType name="getDateByTimeZoneResponse">
+            <xsd:sequence>
+               <xsd:element name="return" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getDateByTimeZoneResponse" type="tns:getDateByTimeZoneResponse"/>
+         <xsd:complexType name="getHtmlControl">
+            <xsd:sequence>
+               <xsd:element name="arg0" type="ns1:htmlControlRqType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getHtmlControl" type="tns:getHtmlControl"/>
+         <xsd:complexType name="getHtmlControlResponse">
+            <xsd:sequence>
+               <xsd:element name="return" type="ns1:htmlControlRsType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getHtmlControlResponse" type="tns:getHtmlControlResponse"/>
+         <xsd:complexType name="getDecodedContent">
+            <xsd:sequence>
+               <xsd:element name="arg0" type="xsd:string"/>
+               <xsd:element name="arg1" type="xsd:boolean"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getDecodedContent" type="tns:getDecodedContent"/>
+         <xsd:complexType name="getDecodedContentResponse">
+            <xsd:sequence>
+               <xsd:element name="return" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="getDecodedContentResponse" type="tns:getDecodedContentResponse"/>
+         <xsd:complexType name="createZipFile">
+            <xsd:sequence>
+               <xsd:element name="arg0" type="ns1:createZipFileRqType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="createZipFile" type="tns:createZipFile"/>
+         <xsd:complexType name="createZipFileResponse">
+            <xsd:sequence>
+               <xsd:element name="return" type="ns1:createZipFileRsType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="createZipFileResponse" type="tns:createZipFileResponse"/>
+         <xsd:complexType name="encodeFileBase64">
+            <xsd:sequence>
+               <xsd:element name="arg0" type="xsd:string"/>
+               <xsd:element name="arg1" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="encodeFileBase64" type="tns:encodeFileBase64"/>
+         <xsd:complexType name="encodeFileBase64Response">
+            <xsd:sequence>
+               <xsd:element name="return" type="ns1:encodeFileBase64RsType"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="encodeFileBase64Response" type="tns:encodeFileBase64Response"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="getDateByTimeZoneInput">
+      <wsdl:part name="parameters" element="tns:getDateByTimeZone"/>
+   </wsdl:message>
+   <wsdl:message name="getDateByTimeZoneOutput">
+      <wsdl:part name="parameters" element="tns:getDateByTimeZoneResponse"/>
+   </wsdl:message>
+   <wsdl:message name="getHtmlControlInput">
+      <wsdl:part name="parameters" element="tns:getHtmlControl"/>
+   </wsdl:message>
+   <wsdl:message name="getHtmlControlOutput">
+      <wsdl:part name="parameters" element="tns:getHtmlControlResponse"/>
+   </wsdl:message>
+   <wsdl:message name="getDecodedContentInput">
+      <wsdl:part name="parameters" element="tns:getDecodedContent"/>
+   </wsdl:message>
+   <wsdl:message name="getDecodedContentOutput">
+      <wsdl:part name="parameters" element="tns:getDecodedContentResponse"/>
+   </wsdl:message>
+   <wsdl:message name="createZipFileInput">
+      <wsdl:part name="parameters" element="tns:createZipFile"/>
+   </wsdl:message>
+   <wsdl:message name="createZipFileOutput">
+      <wsdl:part name="parameters" element="tns:createZipFileResponse"/>
+   </wsdl:message>
+   <wsdl:message name="encodeFileBase64Input">
+      <wsdl:part name="parameters" element="tns:encodeFileBase64"/>
+   </wsdl:message>
+   <wsdl:message name="encodeFileBase64Output">
+      <wsdl:part name="parameters" element="tns:encodeFileBase64Response"/>
+   </wsdl:message>
+   <wsdl:portType name="SOAUtilitiesImpl">
+      <wsdl:operation name="getDateByTimeZone">
+         <wsdl:input message="tns:getDateByTimeZoneInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+         <wsdl:output message="tns:getDateByTimeZoneOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+      </wsdl:operation>
+      <wsdl:operation name="getHtmlControl">
+         <wsdl:input message="tns:getHtmlControlInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+         <wsdl:output message="tns:getHtmlControlOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+      </wsdl:operation>
+      <wsdl:operation name="getDecodedContent">
+         <wsdl:input message="tns:getDecodedContentInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+         <wsdl:output message="tns:getDecodedContentOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+      </wsdl:operation>
+      <wsdl:operation name="createZipFile">
+         <wsdl:input message="tns:createZipFileInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+         <wsdl:output message="tns:createZipFileOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+      </wsdl:operation>
+      <wsdl:operation name="encodeFileBase64">
+         <wsdl:input message="tns:encodeFileBase64Input" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+         <wsdl:output message="tns:encodeFileBase64Output" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl" ns1:Action=""/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

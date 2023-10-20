@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Fri Jan 03 16:43:58 CST 2020
+  Author:  ivanr
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="DecodeBase64"
+               targetNamespace="http://xmlns.oracle.com/ER_AssetsApplication_BPEL/DecodeBase64/DecodeBase64"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/ER_AssetsApplication_BPEL/DecodeBase64/DecodeBase64"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://soa.estrellaroja.com.mx/DecodeBase64"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer">
+  <import namespace="http://xmlns.oracle.com/ER_AssetsApplication_BPEL/DecodeBase64/DecodeBase64"
+          location="../WSDLs/DecodeBase64.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <import location="oracle.soa.common.util.Base64Decoder" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <partnerLink name="DecodeBase64Service" partnerLinkType="client:DecodeBase64" myRole="DecodeBase64Provider"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:requestMessage"/>
+    <variable name="outputVariable" messageType="client:replyMessage"/>
+    <variable name="Base64Var" type="xsd:base64Binary"/>
+    <variable name="decodedValue" type="xsd:string"/>
+  </variables>
+  <sequence name="main">
+    <receive name="Receive" partnerLink="DecodeBase64Service" portType="client:execute_ptt" operation="execute"
+             variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignEncoded">
+      <copy>
+        <from>$inputVariable.part1/ns1:input</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Base64Var</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Decoded">
+        <![CDATA[addAuditTrailEntry("decoding started");    
+String encodedString = (String)getVariableData("Base64Var");    
+Base64Decoder Decoder = new Base64Decoder();    
+addAuditTrailEntry("encoded String = "+encodedString);    
+try    
+{    
+String decoded = Base64Decoder.decode(encodedString);    
+addAuditTrailEntry("decoded string = "+decoded);     
+setVariableData("decodedValue",decoded);    
+}    
+catch(Exception e)    
+{    
+  addAuditTrailEntry("Exception: "+e.getMessage());    
+}]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <assign name="AssignDecoded">
+      <copy>
+        <from>$decodedValue</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.part1/ns1:output</to>
+      </copy>
+    </assign>
+    <reply name="Reply" partnerLink="DecodeBase64Service" variable="outputVariable" portType="client:execute_ptt"
+           operation="execute"/>
+  </sequence>
+</process>

@@ -1,0 +1,627 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Jan 24 15:38:14 CST 2023
+  Author:  pedro
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelGetInvoiceCFDIFromERP"
+         targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ns4="http://soa.estrellaroja.com.mx/CFDI"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/AuditControlTec">
+  <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+          location="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP"
+          location="../WSDLs/BpelGetInvoiceCFDIFromERP.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelgetinvoicecfdifromerp_client" partnerLinkType="client:BpelGetInvoiceCFDIFromERP"
+                 myRole="BpelGetInvoiceCFDIFromERPProvider" partnerRole="BpelGetInvoiceCFDIFromERPRequester"/>
+    <partnerLink name="wsErpIntegrationTec" partnerLinkType="ns5:wsErpIntegrationTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="WsSOAUtilitiesTec" partnerLinkType="ns6:WsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="BpelGetCFDIFromFile.bpelgetcfdifromfile_client" partnerLinkType="ns7:BpelGetCFDIFromFile"
+                 partnerRole="BpelGetCFDIFromFileProvider"/>
+    <partnerLink name="WsAuditControlTec" partnerLinkType="ns8:WsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+  </partnerLinks>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelGetInvoiceCFDIFromERPRequestMessage"/>
+    <!-- Reference to the message that will be sent back to the requester during callback -->
+    <variable name="outputVariable" messageType="client:BpelGetInvoiceCFDIFromERPResponseMessage"/>
+    <variable name="v_invoices" element="ns3:DATA_DS"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><sequence name="Sequence5"><assign name="AssignError"
+                                                                                                                                   xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>'SOA-301100'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultAsString()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getCompositeName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getComponentName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+          </copy>
+        </assign>
+        <invoke name="callbackClient" partnerLink="bpelgetinvoicecfdifromerp_client"
+                portType="client:BpelGetInvoiceCFDIFromERPCallback" operation="GetInvoiceCFDIFromERPResponse"
+                inputVariable="outputVariable" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence></catchAll>
+  </faultHandlers>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelGetInvoiceCFDIFromERP.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelgetinvoicecfdifromerp_client"
+             portType="client:BpelGetInvoiceCFDIFromERP" operation="GetInvoiceCFDIFromERP" variable="inputVariable"
+             createInstance="yes"/>
+    <assign name="assignRs" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+            ignoreMissingFromData="yes">
+        <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+            ignoreMissingFromData="yes">
+        <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors</to>
+      </copy>
+      <extensionAssignOperation>
+        <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+          <?audit suppress oracle.ide.xml.validation-incomplete?>
+          <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors</bpelx:target>
+        </bpelx:remove>
+      </extensionAssignOperation>
+    </assign>
+    <scope name="ScopeRunReport">
+      <variables>
+        <variable name="v_xmlString" type="xsd:string"/>
+        <variable name="wsErpIntegrationTecRunDataModelRs" messageType="ns5:RunDataModelRs"/>
+        <variable name="wsErpIntegrationTecRunDataModelRq" messageType="ns5:RunDataModelRq"/>
+      </variables>
+      <sequence name="SeqRunReport">
+        <if name="If_ID_REPORT">
+          <documentation>
+            <![CDATA[Reporte por IDs]]>
+          </documentation>
+          <condition>count($inputVariable.payload/ns1:IdInvoice)&gt;0</condition><assign name="assignParams"
+                                                                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","PathID","Value","","Component","CFDITec")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:reportAbsolutePath</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'P_INVOICE_ID'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:name</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>oraext:create-delimited-string($inputVariable.payload/ns1:IdInvoice,',')</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:values/ns5:item</to>
+      </copy></assign><else>
+            <documentation>
+              <![CDATA[Reporte Numero Fecha]]>
+            </documentation><assign name="assignParams"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","Path","Value","","Component","CFDITec")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:reportAbsolutePath</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'P_FECHA_FIN'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:name</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$inputVariable.payload/ns1:FechaFin</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:values/ns5:item</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'P_FECHA_INICIO'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[2]/ns5:name</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$inputVariable.payload/ns1:FechaInicio</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[2]/ns5:values/ns5:item</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'P_INVOICE_NUM'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[3]/ns5:name</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$inputVariable.payload/ns1:InvoiceNumber</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsErpIntegrationTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[3]/ns5:values/ns5:item</to>
+      </copy></assign></else>
+        </if>
+        <invoke name="RunDataModel" partnerLink="wsErpIntegrationTec" portType="ns5:ERPIntegrationTecPortType"
+                operation="RunDataModel" inputVariable="wsErpIntegrationTecRunDataModelRq"
+                outputVariable="wsErpIntegrationTecRunDataModelRs" bpelx:invokeAsDetail="no"/>
+        <if name="If_ExistErrorRunReport">
+          <documentation>
+            <![CDATA[Success]]>
+          </documentation>
+          <condition>count($wsErpIntegrationTecRunDataModelRs.RunDataModelRsPart/ns2:Errors/ns2:Error)=0</condition>
+          <sequence name="seqRRSuccess">
+            <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <bpelx:exec name="JavaDecoded" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <![CDATA[addAuditTrailEntry("Base64decode started");                                                  
+try{   
+XMLElement input = (XMLElement) getVariableData("wsErpIntegrationTecRunDataModelRs","RunDataModelRsPart","ns5:Return/ns5:reportBytes");                                                  
+String input_str = input.getTextContent();                                                  
+addAuditTrailEntry("Base64decode input_str="+input_str);                                                  
+oracle.soa.common.util.Base64Decoder decoder = new oracle.soa.common.util.Base64Decoder();                                                      
+String decoded = null;                                                     
+decoded = decoder.decode(input_str);                                          
+                                                                     
+decoded = "<DATA_DS xmlns=\"http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA\">"+ decoded.substring(decoded.indexOf("<DATA_DS>") + ("<DATA_DS>".length()), decoded.length());                                         
+                                          
+addAuditTrailEntry("Base64decode decoded="+decoded);                                                  
+setVariableData("v_xmlString",decoded);                                                  
+} catch (Exception e) {                                                  
+  addAuditTrailEntry("Base64decode Exception: "+e.getMessage());                                                  
+}                                                  
+addAuditTrailEntry("Base64decode ended");]]>
+              </bpelx:exec>
+            </extensionActivity>
+            <assign name="AssignParseStringXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy>
+                <from>oraext:parseXML($v_xmlString)</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoices</to>
+              </copy>
+            </assign>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[Error]]>
+            </documentation><assign name="AssignError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+   <extensionAssignOperation>
+                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                               xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$wsErpIntegrationTecRunDataModelRs.RunDataModelRsPart/ns2:Errors/ns2:Error/ns2:ErrorCode</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$wsErpIntegrationTecRunDataModelRs.RunDataModelRsPart/ns2:Errors/ns2:Error/ns2:ShortDescription</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$wsErpIntegrationTecRunDataModelRs.RunDataModelRsPart/ns2:Errors/ns2:Error/ns2:Description</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getCompositeName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>concat(ora:getComponentName(),' - ',$wsErpIntegrationTecRunDataModelRs.RunDataModelRsPart/ns2:Errors/ns2:Error/ns2:FailedService)</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy></assign></else>
+        </if>
+      </sequence>
+    </scope>
+    <if name="If_ExistData">
+      <documentation>
+        <![CDATA[Invoices]]>
+      </documentation>
+      <condition>count($v_invoices/ns3:G_INVOICES)&gt;0</condition>
+      <forEach parallel="no" counterName="countInvoices" name="For_Invoices">
+        <startCounterValue>1</startCounterValue>
+        <finalCounterValue>count($v_invoices/ns3:G_INVOICES)</finalCounterValue>
+        <scope name="Scope1">
+          <variables>
+            <variable name="DownloadAttachmentRq" messageType="ns5:DownloadAttachmentRq"/>
+            <variable name="DownloadAttachmentRs" messageType="ns5:DownloadAttachmentRs"/>
+            <variable name="v_invoice" element="ns1:GetInvoiceCFDIFromERPRs"/>
+            <variable name="counterXML" type="xsd:int">
+              <from>0</from>
+            </variable>
+          </variables>
+          <sequence name="Sequence1">
+            <assign name="assignInvoice"
+                                             xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    ignoreMissingFromData="yes">
+                <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Success</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    ignoreMissingFromData="yes">
+                <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <?audit suppress oracle.ide.xml.validation-incomplete?>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>$v_invoices/ns3:G_INVOICES[$countInvoices]</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns3:DATA_DS/ns3:G_INVOICES</to>
+              </copy>
+              <copy>
+                <from>0</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$counterXML</to>
+              </copy>
+            </assign><assign name="assignDownloadAttachmentRq" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>$v_invoice/ns1:INVOICE[1]/ns3:DATA_DS/ns3:G_INVOICES[1]/ns3:BUSINESS_UNIT</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns5:Attachment/ns5:UserKeyA</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>$v_invoice/ns1:INVOICE[1]/ns3:DATA_DS/ns3:G_INVOICES[1]/ns3:INVOICE_NUMBER</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns5:Attachment/ns5:UserKeyB</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>$v_invoice/ns1:INVOICE[1]/ns3:DATA_DS/ns3:G_INVOICES[1]/ns3:SUPPLIER_NUMBER</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns5:Attachment/ns5:UserKeyC</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","C_ENTITY_NAME","Value","","Component","CFDITec")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns5:Attachment/ns5:EntityName</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","V_CATEGORIA_ADJ","Value","","Component","CFDITec")</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns5:Attachment/ns5:CategoryName</to>
+              </copy>
+            </assign>
+            <invoke name="DownloadAttachment" partnerLink="wsErpIntegrationTec" portType="ns5:ERPIntegrationTecPortType"
+                    operation="DownloadAttachment" inputVariable="DownloadAttachmentRq"
+                    outputVariable="DownloadAttachmentRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+            <if name="If_existAttaschments" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <documentation>
+                <![CDATA[Existen]]>
+              </documentation>
+              <condition>count($DownloadAttachmentRs.DownloadAttachmentRs/ns5:Return/ns5:AttachmentContent)&gt;0</condition>
+              <sequence name="SeqAttachments">
+                <forEach parallel="no" counterName="counterAttachments" name="ForEachAttachments">
+                  <startCounterValue>1</startCounterValue>
+                  <finalCounterValue>count($DownloadAttachmentRs.DownloadAttachmentRs/ns5:Return)</finalCounterValue>
+                  <scope name="ScopeAttachment">
+                    <variables>
+                      <variable name="GetCFDIFromFileRq" messageType="ns7:BpelGetCFDIFromFileRequestMessage"/>
+                      <variable name="GetCFDIFromFileRs" messageType="ns7:BpelGetCFDIFromFileResponseMessage"/>
+                    </variables>
+                    <sequence name="SeqAttachament">
+                      <assign name="AssignGetCFDIFromFileRq">
+                        <copy>
+                          <from>$DownloadAttachmentRs.DownloadAttachmentRs/ns5:Return[$counterAttachments]/ns5:AttachmentContent</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFromFileRq.payload/ns1:FileBase64</to>
+                        </copy>
+                      </assign>
+                      <invoke name="GetCFDIFromFile" bpelx:invokeAsDetail="no"
+                              partnerLink="BpelGetCFDIFromFile.bpelgetcfdifromfile_client"
+                              portType="ns7:BpelGetCFDIFromFile" operation="GetCFDIFromFile"
+                              inputVariable="GetCFDIFromFileRq" outputVariable="GetCFDIFromFileRs"/>
+                      <if name="If_isXML">
+                        <documentation>
+                          <![CDATA[AsignarXML]]>
+                        </documentation>
+                        <condition>string-length($GetCFDIFromFileRs.payload/ns1:Comprobante/@Version)&gt;0</condition>
+                        <assign name="assignComprobante">
+                          <copy>
+                            <from>$counterXML + 1</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$counterXML</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$GetCFDIFromFileRs.payload/ns1:Comprobante</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE[1]/ns1:Comprobante[$counterXML]</to>
+                          </copy>
+                        </assign>
+                      </if>
+                    </sequence>
+                  </scope>
+                </forEach>
+                <if name="If_notXML">
+                  <documentation>
+                    <![CDATA[numXML igual a 0]]>
+                  </documentation>
+                  <condition>$counterXML=0</condition><assign name="AssignError"
+                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+   <extensionAssignOperation>
+                      <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Success</bpelx:target>
+         </bpelx:remove>
+                    </extensionAssignOperation><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'SOA-301002'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'La factura contiene ajuntos pero ninguno es XML valido'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'La factura contiene ajuntos pero ninguno es XML'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getCompositeName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getComponentName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy></assign><elseif>
+                    <documentation>
+                      <![CDATA[numXML mayor a 1]]>
+                    </documentation>
+                    <condition>$counterXML&gt;1</condition><assign name="AssignError"
+                                                                   xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+   <extensionAssignOperation>
+                        <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Success</bpelx:target>
+         </bpelx:remove>
+                      </extensionAssignOperation><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                       xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'SOA-301003'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'La factura contiene mas de un ajunto  XML'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'La factura contiene mas de un ajunto  XML'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getCompositeName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getComponentName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy></assign></elseif>
+                </if>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[NoExist]]>
+                </documentation><assign name="AssignError"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+   <extensionAssignOperation>
+                    <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Success</bpelx:target>
+         </bpelx:remove>
+                  </extensionAssignOperation><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'SOA-301001'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'No existen ajuntos en la categoria'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>'No existen ajuntos en la categoria'</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:Description</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getCompositeName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getComponentName()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:FailedService</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>xp20:current-dateTime()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns1:INVOICE/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+      </copy></assign></else>
+            </if>
+            <if name="If_GetResponse" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <documentation>
+                <![CDATA[GetResponse]]>
+              </documentation>
+              <condition>$inputVariable.payload/ns1:GetResponse</condition>
+              <assign name="assignResponseInvoice" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                  <from>$v_invoice/ns1:INVOICE</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:INVOICE[$countInvoices]</to>
+                </copy>
+              </assign>
+            </if>
+            <if name="If_sendReport">
+              <documentation>
+                <![CDATA[sendReport]]>
+              </documentation>
+              <condition>$inputVariable.payload/ns1:SendReport</condition>
+              <scope name="Scope2">
+                <variables>
+                  <variable name="MergeInvoicesAPRq" messageType="ns8:MergeInvoicesAPRq"/>
+                  <variable name="MergeInvoicesAPRs" messageType="ns8:MergeInvoicesAPRs"/>
+                </variables>
+                <sequence name="Sequence4">
+                  <assign name="Trs_Invoice_to_MergeInvoiceAP">
+                    <bpelx:annotation>
+                      <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy>
+                      <from>ora:doXSLTransformForDoc("../Transformations/Trs_Invoice_to_MergeInvoiceAP.xsl", $v_invoice)</from>
+                      <to variable="MergeInvoicesAPRq" part="MergeInvoicesAPRq"/>
+                    </copy>
+                  </assign>
+                  <invoke name="MergeComplementsAP" partnerLink="WsAuditControlTec" portType="ns8:AuditControlTecPortType"
+                          operation="MergeInvoicesAP" inputVariable="MergeInvoicesAPRq"
+                          outputVariable="MergeInvoicesAPRs" bpelx:invokeAsDetail="no"/>
+                </sequence>
+              </scope>
+            </if>
+          </sequence>
+        </scope>
+      </forEach>
+      <else>
+        <documentation>
+          <![CDATA[No Data]]>
+        </documentation>
+        <empty name="EmptyData"/>
+      </else>
+    </if>
+    <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+    <invoke name="callbackClient" partnerLink="bpelgetinvoicecfdifromerp_client"
+            portType="client:BpelGetInvoiceCFDIFromERPCallback" operation="GetInvoiceCFDIFromERPResponse"
+            inputVariable="outputVariable"/>
+  </sequence>
+</process>

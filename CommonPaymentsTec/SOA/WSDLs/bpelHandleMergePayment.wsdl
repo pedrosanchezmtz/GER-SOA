@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelHandleMergePayment" targetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec" schemaLocation="oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelHandleMergePaymentRequestMessage">
+      <wsdl:part name="payload" element="ns1:MergePaymentRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelHandleMergePaymentResponseMessage">
+      <wsdl:part name="payload" element="ns1:MergePaymentRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelHandleMergePayment">
+      <wsdl:operation name="HandleMergePayment">
+         <wsdl:input message="client:bpelHandleMergePaymentRequestMessage"/>
+         <wsdl:output message="client:bpelHandleMergePaymentResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelHandleMergePayment">
+      <plnk:role name="bpelHandleMergePaymentProvider" portType="client:bpelHandleMergePayment"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

@@ -1,0 +1,2999 @@
+<ValidaCartaPorteRq xmlns="http://soa.estrellaroja.com.mx/XMLValidatorBiz" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/XMLValidatorEnt/ftpValidadorZAM" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/CartaPorte" xmlns:ns4="http://soa.estrellaroja.com.mx/XMLValidatorBiz/types" xmlns:opaque="http://xmlns.oracle.com/pcbpel/adapter/opaque/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soa.estrellaroja.com.mx/XMLValidatorBiz" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   
+   <CartaPorte xmlns="http://soa.estrellaroja.com.mx/CartaPorte">
+      <ID_Carga_WTMS >15554246</ID_Carga_WTMS>
+      <NumTotalMercancias >57</NumTotalMercancias>
+      <RFCTransportista >VER870629GN3</RFCTransportista>
+      <RFCDestinatario >NWM9709244W4</RFCDestinatario>
+      <SubTipoRem >CTR002</SubTipoRem>
+      <FechaCargaOrigen >2023-02-21T07:00:34-06:00</FechaCargaOrigen>
+      <FechaCitaDestino >2023-02-22T23:59:00-06:00</FechaCitaDestino>
+      <trasladoMercancias >
+         <Remolque>
+            <Placa>89AS9N</Placa>
+            <Traslados>
+               <Traslado>
+                  <FacturaDestino>7498020595</FacturaDestino>
+                  <IDDestino>4713</IDDestino>
+                  <DireccionDestino>
+                     <Calle>LAS PALMAS ENTRE ALAMO Y PARAISO</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>15.7</DistanciaRecorrida>
+                  <Mercancias>
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>41.38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>15.36</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>6</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>31.29</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>14.994</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>9</CantidadTipo>
+                        <CantidadItem>12</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>30.242</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>5.117</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.96</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>2.028</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>7.158</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307024</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pepinos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>81.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404106</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cilantro</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>34</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.27</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>43.88</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020596</FacturaDestino>
+                  <IDDestino>3353</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AV ANDROMEDA MZ 633 LTS 19 AL 23</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>2.3</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38.246</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>8.24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>18.87</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>9.6</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.35</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>8</CantidadTipo>
+                        <CantidadItem>9</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36.1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19.96</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>.96</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>2.028</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Botanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>18.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>101.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404106</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cilantro</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.49</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Champiñón</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1.28</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.94</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405632</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón poblano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020597</FacturaDestino>
+                  <IDDestino>2630</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>ESTELARIS 180</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>1.7</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>39.56</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>31.84</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38.994</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.35</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>9</CantidadTipo>
+                        <CantidadItem>11</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>41.244</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17.412</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>26.96</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.849</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19.198</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50221200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cereales procesados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>81.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404106</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cilantro</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.49</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.94</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405625</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón jalapeño</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>9.65</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405632</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón poblano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Papas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020598</FacturaDestino>
+                  <IDDestino>3518</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AVE METROPLEX MZ 220 LT 01</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>2.5</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>49.87</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>47.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>22.37</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>32.294</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.6</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>8</CantidadTipo>
+                        <CantidadItem>9</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>26.355</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>14.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>28.36</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.76</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>2.028</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>18.45</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50221200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cereales procesados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>60.9</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020599</FacturaDestino>
+                  <IDDestino>3266</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AV ALAMO # 401</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>3.1</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36.54</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>46.08</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>7</CantidadTipo>
+                        <CantidadItem>9</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>53.72</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>82.388</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.35</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>17</CantidadTipo>
+                        <CantidadItem>30</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>107.048</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>27.752</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>29.08</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.76</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.849</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192301</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Postres preparados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.32</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>8</CantidadTipo>
+                        <CantidadItem>8</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>45.013</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>60.54</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307024</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pepinos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>101.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>22.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.27</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>43.88</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>60</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020600</FacturaDestino>
+                  <IDDestino>1451</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AV AMERICA</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66601</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>5.7</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>35.47</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>23.6</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>33.11</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112005</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, procesada con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>12</CantidadTipo>
+                        <CantidadItem>12</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>53.095</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>8.872</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.96</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>2.028</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>39.88</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>121.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>57</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11.2</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404106</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cilantro</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Coles</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>14</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>40.98</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Champiñón</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1.28</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>65.82</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405625</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón jalapeño</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19.3</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405632</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón poblano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Papas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020601</FacturaDestino>
+                  <IDDestino>3991</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AV REAL DE STA ROSA LT 1 A 10 MZ 18</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66610</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>5.3</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>41.43</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>44.14</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>8</CantidadTipo>
+                        <CantidadItem>12</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>70.76</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>85.082</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>17</CantidadTipo>
+                        <CantidadItem>28</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>92.266</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>19.865</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>31.52</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>2.028</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Botanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>34</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192301</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Postres preparados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.29</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>6</CantidadTipo>
+                        <CantidadItem>6</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>32.148</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50221200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cereales procesados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>100.9</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>36</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307024</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pepinos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>8</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>162.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>76</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>22.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404106</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cilantro</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Coles</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>14</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>63.81</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Champiñón</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1.28</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>65.82</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405625</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón jalapeño</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>9.65</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405632</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón poblano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>13.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Papas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Calabazas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>16.89</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>10</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>120</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020602</FacturaDestino>
+                  <IDDestino>2836</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AV ANDROMEDA 201</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66612</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>2.2</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111513</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, mínimamente procesada sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111515</BienesTransp>
+                        <CantidadTipo>4</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, mínimamente procesado sin aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>49.69</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>28.78</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>15.65</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>31.094</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112011</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pollo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>11</CantidadTipo>
+                        <CantidadItem>12</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>64.466</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>3</CantidadTipo>
+                        <CantidadItem>4</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24.52</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161800</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de confitería</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.318</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50161813</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Chocolate o sustituto de chocolate, confite</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>3.849</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Botanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>17</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>12.04</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50221200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cereales procesados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50304100</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Limones</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50305000</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Naranjas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>101.5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>57</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401736</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacate haas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50402500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Zanahorias</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>22.4</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50404621</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Lechuga romana</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>41.76</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.94</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405625</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón jalapeño</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>9.65</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405632</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pimentón poblano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>6.7</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Papas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Calabazas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>16.89</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>24</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50406511</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Tomates verde</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>11</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+
+               <Traslado>
+                  <FacturaDestino>7498020603</FacturaDestino>
+                  <IDDestino>4499</IDDestino>
+
+                  <DireccionDestino>
+                     <Calle>AVE TORRES DE BUGAMBILIAS LC 1 MZ 2</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>64000</CodigoPostal>
+                  </DireccionDestino>
+                  <IDOrigen>7498</IDOrigen>
+
+                  <DireccionOrigen>
+                     <Calle>CARR MONTERREY LAREDO 430 KM 24</Calle>
+                     <Estado>NLE</Estado>
+                     <Pais>MEX</Pais>
+                     <CodigoPostal>66550</CodigoPostal>
+                  </DireccionOrigen>
+                  <UnidadPeso>KGM</UnidadPeso>
+                  <DistanciaRecorrida>33.8</DistanciaRecorrida>
+
+                  <Mercancias>
+
+                     <Mercancia>
+                        <BienesTransp>50111522</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>5</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Pavo, mínimamente procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>55.44</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112000</BienesTransp>
+                        <CantidadTipo>6</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carnes procesadas y preparadas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>40.06</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112005</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Carne, procesada con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>5</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50112009</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cerdo, procesado con aditivos</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>41.988</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131700</BienesTransp>
+                        <CantidadTipo>18</CantidadTipo>
+                        <CantidadItem>23</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Productos de leche y mantequilla</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>88.08</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131800</BienesTransp>
+                        <CantidadTipo>5</CantidadTipo>
+                        <CantidadItem>7</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>22.367</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131802</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>3</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Queso procesado</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>23.8</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50131803</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Imitación de queso</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>10.38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192301</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Postres preparados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>5.1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50192400</BienesTransp>
+                        <CantidadTipo>2</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Mermeladas y gelatinas y pastas de untar de nuez y dulce y conservas de fruta</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>8.536</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50221200</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cereales procesados</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>1</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50301500</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Manzanas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>20.18</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50307025</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Platano</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>40.6</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50401700</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>2</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Aguacates</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>38</PesoEnKg>
+                     </Mercancia>
+
+                     <Mercancia>
+                        <BienesTransp>50405300</BienesTransp>
+                        <CantidadTipo>1</CantidadTipo>
+                        <CantidadItem>1</CantidadItem>
+                        <ClaveUnidad>KGM</ClaveUnidad>
+                        <CveMaterialPeligroso>0</CveMaterialPeligroso>
+                        <Descripcion>Cebollas</Descripcion>
+                        <DescripEmbalaje>No</DescripEmbalaje>
+                        <MaterialPeligroso>0</MaterialPeligroso>
+                        <PesoEnKg>21.94</PesoEnKg>
+                     </Mercancia>
+                  </Mercancias>
+               </Traslado>
+            </Traslados>
+         </Remolque>
+      </trasladoMercancias>
+   </CartaPorte>
+</ValidaCartaPorteRq>

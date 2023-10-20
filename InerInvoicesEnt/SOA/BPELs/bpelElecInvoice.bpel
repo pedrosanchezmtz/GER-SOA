@@ -1,0 +1,153 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Dec 12 15:02:44 CST 2017
+  Author:  AlexCeja
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelElecInvoice" targetNamespace="http://xmlns.oracle.com/InvoicesEnt/InvoicesEnt/bpelElecInvoice"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/InvoicesEnt/InvoicesEnt/bpelElecInvoice"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://soa.estrellaroja.com.mx/InvoicesEnt"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/InvoicesEnt/InvoicesEnt/bpelElecInvoice"
+          location="../WSDLs/bpelElecInvoice.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+          
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="ElecInvoice" partnerLinkType="client:bpelElecInvoice" myRole="bpelElecInvoiceProvider"/>
+    <partnerLink name="wsInvoicesBiz" partnerLinkType="ns4:wsInvoicesBiz" partnerRole="InvoicesBizPortType"
+                 myRole="InvoicesBizCallbackPortType"/>
+    <partnerLink name="wsERPIntegrationBiz" partnerLinkType="ns1:wsERPIntegrationBiz"
+                 partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelElecInvoiceRequestMessage"/>
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:bpelElecInvoiceResponseMessage"/>
+    <variable name="varInvokeWsERPIntegrationBizGenerateReportRq" messageType="ns1:GenerateReportRq"/>
+    <variable name="varInvokeWsERPIntegrationBizGenerateReportRs" messageType="ns1:GenerateReportRs"/>
+    <variable name="varInvokeWsInvoiceBizDigitalStampRq" messageType="ns4:DigitalStampRq"/>
+    <variable name="varInvokeWsInvoiceBizDigitalStampRs" messageType="ns4:DigitalStampRs"/>
+    <variable name="varTitle" type="xsd:string"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelElecInvoice.wsdl) -->
+    <receive name="receiveInput" partnerLink="ElecInvoice" portType="client:bpelElecInvoice" operation="ElecInvoice"
+             variable="inputVariable" createInstance="yes"/>
+    <assign name="assignGenerateReports">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from><literal><Element xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/></literal></from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+      </copy>
+      <extensionAssignOperation>
+        <bpelx:remove>
+          <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors</bpelx:target>
+        </bpelx:remove>
+      </extensionAssignOperation>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>'ElecInvoice'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:TargetInterface</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+        <from>'ElecInvoice'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:IntegrationName</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>'ElecInvoice'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:ProcessName</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>'XXER_AR_ELECTRONIC_INVOICE.xdm'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:ReportName</to>
+      </copy>
+      <copy>
+        <from>oraext:setFlowInstanceTitle('ElecInvoices')</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varTitle</to>
+      </copy>
+    </assign>
+    <invoke name="invokeWsERPIntegrationBiz" inputVariable="varInvokeWsERPIntegrationBizGenerateReportRq"
+            outputVariable="varInvokeWsERPIntegrationBizGenerateReportRs"
+            partnerLink="wsERPIntegrationBiz" portType="ns1:ERPIntegrationBizPortType" operation="GenerateReport"
+            bpelx:invokeAsDetail="no"/>
+    <if name="IfErrorsGenerateReport">
+      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizGenerateReportRs.GenerateReportRs/ns2:Errors</condition>
+      <assign name="assigErrorGenerateReport">
+        <extensionAssignOperation>
+          <bpelx:remove>
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+          </bpelx:remove>
+        </extensionAssignOperation>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>$varInvokeWsERPIntegrationBizGenerateReportRs.GenerateReportRs/ns2:Errors</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error</to>
+        </copy>
+      </assign>
+      <else>
+        <sequence>
+          <if name="IfData">
+            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeWsERPIntegrationBizGenerateReportRs.GenerateReportRs/ns1:Return/ns1:xmlOut/ns1:xml) &gt;90</condition>
+            <sequence>
+              <assign name="assingInvoiceBiz">
+                <copy>
+                  <from>$varInvokeWsERPIntegrationBizGenerateReportRs.GenerateReportRs/ns1:Return/ns1:xmlOut/ns1:xml</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsInvoiceBizDigitalStampRq.DigitalStampRq/ns4:xml</to>
+                </copy>
+              </assign>
+              <invoke name="invokeWsInvoiceBiz" partnerLink="wsInvoicesBiz" portType="ns4:InvoicesBizPortType"
+                      operation="DigitalStamp" inputVariable="varInvokeWsInvoiceBizDigitalStampRq"
+                      outputVariable="varInvokeWsInvoiceBizDigitalStampRs" bpelx:invokeAsDetail="no"/>
+            </sequence>
+          </if>
+        </sequence>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="ElecInvoice" portType="client:bpelElecInvoice" operation="ElecInvoice"
+           variable="outputVariable"/>
+  </sequence>
+</process>

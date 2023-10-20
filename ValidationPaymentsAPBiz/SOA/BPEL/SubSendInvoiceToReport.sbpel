@@ -1,0 +1,493 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="SubSendInvoiceToReport" targetNamespace="http://xmlns.oracle.com/GER_SOA_OCI/ValidationPaymentsAPBiz/SubSendInvoiceToReport" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/GER_SOA_OCI/ValidationPaymentsAPBiz/SubSendInvoiceToReport" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns4="http://www.sat.gob.mx/cfd/3" xmlns:ns5="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec" xmlns:ns6="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" xmlns:ns8="http://www.sat.gob.mx/Pagos" xmlns:ns7="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:ns9="http://www.sat.gob.mx/cfd/4" xmlns:ns12="http://www.sat.gob.mx/ConsumoDeCombustibles11" xmlns:ns13="http://www.sat.gob.mx/EstadoDeCuentaCombustible12" xmlns:ns11="http://www.sat.gob.mx/CartaPorte20" xmlns:ns14="http://www.sat.gob.mx/nomina12" xmlns:ns10="http://www.sat.gob.mx/Pagos20" xmlns:ns15="http://soa.estrellaroja.com.mx/AuditControlTec">
+   <import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" location="oramds:/apps/Common/Report/XXER_ValidationComplement.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+   <partnerLinks>
+      <partnerLink name="WsERPIntegrationServiceTec" partnerLinkType="ns1:WsERPIntegrationServiceTec" partnerRole="ERPIntegrationTecPortType"/>
+      <partnerLink name="WsSOAUtilitiesTec" partnerLinkType="ns3:WsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+      <partnerLink name="wsAuditControlTec" partnerLinkType="ns15:wsAuditControlTec" partnerRole="AuditControlTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="v_numFatura" type="xsd:string"/>
+      <variable name="v_numProveedor" type="xsd:integer"/>
+      <variable name="v_nombUnit" type="xsd:string"/>
+      <variable name="v_countXML" type="xsd:int">
+         <from>0</from>
+      </variable>
+      <variable name="v_invoice" element="ns6:DATA_DS"/>
+      <variable name="WsERPIntegrationServiceTecDownloadAttachmentRq" messageType="ns1:DownloadAttachmentRq"/>
+      <variable name="WsERPIntegrationServiceTecDownloadAttachmentRs" messageType="ns1:DownloadAttachmentRs"/>
+      <variable name="v_status" type="xsd:string">
+         <from>'success'</from>
+      </variable>
+      <variable name="WsAuditControlTecMergeInvoicesAPRq" messageType="ns15:MergeInvoicesAPRq"/>
+      <variable name="WsAuditControlTecMergeInvoicesAPRs" messageType="ns15:MergeInvoicesAPRs"/>
+   </variables>
+   <sequence name="main">
+      <assign name="assignDownloadAttachmentRq" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <copy>
+            <from>$v_invoice/ns6:G_1/ns6:G_2/ns6:UNIDAD_NEGOCIO</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecDownloadAttachmentRq.DownloadAttachmentRq/ns1:Attachment/ns1:UserKeyA</to>
+         </copy>
+         <copy>
+            <from>$v_invoice/ns6:G_1/ns6:G_2/ns6:NUMERO_DOCUMENTO</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecDownloadAttachmentRq.DownloadAttachmentRq/ns1:Attachment/ns1:UserKeyB</to>
+         </copy>
+         <copy>
+            <from>$v_invoice/ns6:G_1/ns6:G_2/ns6:NUMERO_PROVEEDOR</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecDownloadAttachmentRq.DownloadAttachmentRq/ns1:Attachment/ns1:UserKeyC</to>
+         </copy>
+         <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","paramEntity","Value","","Component","AttachmentsAP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecDownloadAttachmentRq.DownloadAttachmentRq/ns1:Attachment/ns1:EntityName</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","paramCategoryName","Value","","Component","AttachmentsAP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecDownloadAttachmentRq.DownloadAttachmentRq/ns1:Attachment/ns1:CategoryName</to>
+         </copy>
+      </assign>
+      <invoke name="WsERPIntegrationServiceTecDownloadAttachmentRq" inputVariable="WsERPIntegrationServiceTecDownloadAttachmentRq" outputVariable="WsERPIntegrationServiceTecDownloadAttachmentRs" partnerLink="WsERPIntegrationServiceTec" portType="ns1:ERPIntegrationTecPortType" operation="DownloadAttachment" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+      <forEach parallel="no" counterName="counterDocuments" name="Fo_documents">
+         <startCounterValue>1</startCounterValue>
+         <finalCounterValue>count($WsERPIntegrationServiceTecDownloadAttachmentRs.DownloadAttachmentRs/ns1:Return)</finalCounterValue>
+         <scope name="ScopeDocument">
+            <variables>
+               <variable name="WsSOAUtilitiesTecDecodeRq" messageType="ns3:DecodeRq"/>
+               <variable name="WsSOAUtilitiesTecDecodeRs" messageType="ns3:DecodeRs"/>
+               <variable name="v_invoiceXML" element="ns4:Comprobante"/>
+               <variable name="v_invoiceXML40" element="ns9:Comprobante"/>
+            </variables>
+            <faultHandlers>
+               <catchAll>
+                  <empty name="NoXML"/>
+               </catchAll>
+            </faultHandlers>
+            <sequence name="SeqAdjuntosR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <assign name="AssignDecode">
+                  <copy ignoreMissingFromData="yes">
+                     <from>$WsERPIntegrationServiceTecDownloadAttachmentRs.DownloadAttachmentRs/ns1:Return[$counterDocuments]/ns1:AttachmentContent</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTecDecodeRq.DecodeRq/ns3:charChain</to>
+                  </copy>
+               </assign>
+               <invoke name="WsSOAUtilitiesTec" partnerLink="WsSOAUtilitiesTec" portType="ns3:SOAUtilitiesTecPortType" operation="Decode" inputVariable="WsSOAUtilitiesTecDecodeRq" outputVariable="WsSOAUtilitiesTecDecodeRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+               <assign name="assignParseXML4.0" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>oraext:parseXML($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns3:Return/ns3:xmlOut)</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML40</to>
+                  </copy>
+                  <copy>
+                     <from>$v_countXML+1</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_countXML</to>
+                  </copy>
+               </assign>
+               <assign name="InsertaValidation4.0" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:CreationDate</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Version</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:versionXml</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Receptor/@RegimenFiscalReceptor</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:receptorRegimenXml</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Emisor/@RegimenFiscal</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:emisorRegimenXml</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Conceptos/ns9:Concepto[1]/@ObjetoImp</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:objetoImpXml</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>concat($v_invoiceXML40/ns9:Impuestos/ns9:Retenciones/ns9:Retencion/@Impuesto,' - ',$v_invoiceXML40/ns9:Impuestos/ns9:Traslados/ns9:Traslado/@Impuesto)</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:ish</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>'Registro insertado por integracion de Validacion de complementos de Pago'</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:estatusValidacionDesc</to>
+                  </copy>
+                  <copy>
+                     <from>'VALIDADO'</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:status</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>'true'</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:estatusValidacion</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Total</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute2</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Impuestos/@TotalImpuestosRetenidos</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:retenidoIsr</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Impuestos/@TotalImpuestosTrasladados</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:retenidoIva</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Total</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:iva8</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Total</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:total</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:combustible</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:totalIeps</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:iva16</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoice/ns6:G_1[1]/ns6:G_2[1]/ns6:ID_FACTURA</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:invoiceId</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoice/ns6:G_1[1]/ns6:NOMBRE_EMPRESA</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:businessUnit</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoice/ns6:G_1[1]/ns6:NOMBRE_EMPRESA</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:unidadNegocio</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Emisor/@Nombre</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute5</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Conceptos/ns9:Concepto[1]/ns9:InformacionAduanera[1]/@NumeroPedimento</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute3</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Emisor/@Rfc</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute1</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoice/ns6:G_1[1]/ns6:G_2[1]/ns6:NUMERO_DOCUMENTO</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:invoiceNumber</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:supplierNumber</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Receptor/@ResidenciaFiscal</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:sitioProveedor</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tercerSegmCotable</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:quintoSegmContable</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Emisor/@Nombre</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:nombreEmisor</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@SubTotal</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:subtotal</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Conceptos/ns9:Concepto[1]/@Descripcion</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:conceptos</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Moneda</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:moneda</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Total</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:amount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Conceptos/ns9:Concepto/ns9:CuentaPredial/@Numero</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:LastUpdatedBy</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@TipoDeComprobante</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoComprobante</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Complemento/ns7:TimbreFiscalDigital/@FechaTimbrado</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:fechaTimbrado</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:CfdiRelacionados/@TipoRelacion</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoRelacion</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:CfdiRelacionados/ns9:CfdiRelacionado[1]/@UUID</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:uuidRelacion</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@Descuento</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:descuento</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@TipoCambio</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoCambio</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@MetodoPago</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:metodoPago</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/@FormaPago</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:formaPago</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Receptor/@UsoCFDI</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:usoCfdi</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:upper-case($v_invoiceXML40/ns9:Complemento/ns7:TimbreFiscalDigital/@UUID)</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:uuid</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Emisor/@Rfc</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:emisorRfc</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$v_invoiceXML40/ns9:Receptor/@Rfc</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:receptorRfc</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>'Validacion Automatica Complementos'</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:CreatedBy</to>
+                  </copy>
+               </assign>
+               <sequence name="SequenceMergeTP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <if name="If_CFDI3.3">
+                     <condition>string-length($v_invoiceXML40/ns9:Complemento/ns7:TimbreFiscalDigital/@UUID)=0</condition>
+                     <sequence name="SeqCFDI3.3">
+                        <assign name="AssignInvoiceXML">
+                           <copy ignoreMissingFromData="yes">
+                              <from>oraext:parseXML($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns3:Return/ns3:xmlOut)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML</to>
+                           </copy>
+                        </assign>
+                        <assign name="InsertaValidation">
+                           <copy ignoreMissingFromData="yes">
+                              <from>xp20:current-dateTime()</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:CreationDate</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>concat($v_invoiceXML/ns4:Impuestos/ns4:Retenciones/ns4:Retencion/@Impuesto,' - ',$v_invoiceXML/ns4:Impuestos/ns4:Traslados/ns4:Traslado/@Impuesto)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:ish</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>'Registro insertado por integracion de Validacion de complementos de Pago'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:estatusValidacionDesc</to>
+                           </copy>
+                           <copy>
+                              <from>'VALIDADO'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:status</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>'true'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:estatusValidacion</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Total</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute2</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Impuestos/@TotalImpuestosRetenidos</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:retenidoIsr</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Impuestos/@TotalImpuestosTrasladados</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:retenidoIva</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Total</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:iva8</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Total</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:total</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:combustible</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:totalIeps</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:iva16</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoice/ns6:G_1[1]/ns6:G_2[1]/ns6:ID_FACTURA</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:invoiceId</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoice/ns6:G_1[1]/ns6:NOMBRE_EMPRESA</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:businessUnit</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoice/ns6:G_1[1]/ns6:NOMBRE_EMPRESA</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:unidadNegocio</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Emisor/@Nombre</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute5</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Conceptos/ns4:Concepto[1]/ns4:InformacionAduanera[1]/@NumeroPedimento</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute3</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Emisor/@Rfc</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:attribute1</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoice/ns6:G_1[1]/ns6:G_2[1]/ns6:NUMERO_DOCUMENTO</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:invoiceNumber</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:supplierNumber</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Receptor/@ResidenciaFiscal</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:sitioProveedor</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tercerSegmCotable</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>''</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:quintoSegmContable</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Emisor/@Nombre</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:nombreEmisor</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@SubTotal</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:subtotal</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Conceptos/ns4:Concepto[1]/@Descripcion</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:conceptos</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Moneda</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:moneda</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Total</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:amount</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Conceptos/ns4:Concepto/ns4:CuentaPredial/@Numero</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:LastUpdatedBy</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@TipoDeComprobante</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoComprobante</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Complemento/ns7:TimbreFiscalDigital/@FechaTimbrado</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:fechaTimbrado</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:CfdiRelacionados/@TipoRelacion</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoRelacion</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>xp20:upper-case($v_invoiceXML/ns4:CfdiRelacionados/ns4:CfdiRelacionado[1]/@UUID)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:uuidRelacion</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@Descuento</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:descuento</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@TipoCambio</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:tipoCambio</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@MetodoPago</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:metodoPago</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/@FormaPago</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:formaPago</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Receptor/@UsoCFDI</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:usoCfdi</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>xp20:upper-case($v_invoiceXML/ns4:Complemento/ns7:TimbreFiscalDigital/@UUID)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:uuid</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Emisor/@Rfc</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:emisorRfc</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>$v_invoiceXML/ns4:Receptor/@Rfc</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:receptorRfc</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes">
+                              <from>'Validacion Automatica'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecMergeInvoicesAPRq.MergeInvoicesAPRq/ns15:Invoices/ns15:Invoice/ns15:CreatedBy</to>
+                           </copy>
+                        </assign>
+                     </sequence>
+                  </if>
+                  <invoke name="WsAuditControlTec" partnerLink="wsAuditControlTec" portType="ns15:AuditControlTecPortType" operation="MergeInvoicesAP" inputVariable="WsAuditControlTecMergeInvoicesAPRq" outputVariable="WsAuditControlTecMergeInvoicesAPRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+                  <if name="If_statusMerge">
+                     <documentation><![CDATA[success]]></documentation>
+                     <condition>count($WsAuditControlTecMergeInvoicesAPRs.MergeInvoicesAPRs/ns2:Errors/ns2:Error)=0</condition>
+                     <assign name="Assignsuccess">
+                        <copy>
+                           <from>'success'</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                        </copy>
+                     </assign>
+                     <else>
+                        <documentation><![CDATA[error]]></documentation>
+                        <assign name="Assignerror" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                           <copy>
+                              <from>'error'</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+                           </copy>
+                        </assign>
+                     </else>
+                  </if>
+               </sequence>
+            </sequence>
+         </scope>
+      </forEach>
+      <if name="IfExistXML">
+         <documentation><![CDATA[NoExistXML]]></documentation>
+         <condition>$v_countXML=0</condition>
+         <assign name="AssignNoXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+               <from>'noXML'</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_status</to>
+            </copy>
+         </assign>
+      </if>
+   </sequence>
+</bpelx:subProcess>

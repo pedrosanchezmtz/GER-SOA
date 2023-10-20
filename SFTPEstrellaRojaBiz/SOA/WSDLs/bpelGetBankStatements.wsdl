@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetBankStatements"
+                  targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/bpelGetBankStatements"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/bpelGetBankStatements"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/CeStatementBalanceInt"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementLinesInt"
+                  xmlns:ns6="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementHeaderInt">
+  <plnk:partnerLinkType name="bpelGetBankStatements">
+    <plnk:role name="bpelGetBankStatementsProvider" portType="client:bpelGetBankStatements"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"
+              schemaLocation="oramds:/apps/SOA/SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/CeStatementBalanceInt"
+                  schemaLocation="../Schemas/CeStatementBalanceInt.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementLinesInt"
+                  schemaLocation="../Schemas/CeStatementLinesInt.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/bpelGetBankStatements"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                xmlns:ns5="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                xmlns:ns3="http://soa.estrellaroja.com.mx/CeStatementBalanceInt"
+                xmlns:ns4="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementLinesInt"
+                xmlns:ns6="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementHeaderInt">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz/CeStatementHeaderInt"
+                  schemaLocation="../Schemas/CeStatementHeaderInt.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetBankStatementsRq">
+    <wsdl:part name="GetBankStatementsRq" element="ns1:GetBankStatementsRq"/>
+  </wsdl:message>
+  <wsdl:message name="GetBankStatementsRs">
+    <wsdl:part name="GetBankStatementsRs" element="ns1:GetBankStatementsRs"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelGetBankStatements">
+    <wsdl:operation name="GetBankStatements">
+      <wsdl:input message="client:GetBankStatementsRq"/>
+      <wsdl:output message="client:GetBankStatementsRs"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

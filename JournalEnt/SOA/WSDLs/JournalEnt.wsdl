@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="JournalEnt"
+     targetNamespace="http://soa.estrellaroja.com.mx/JournalEnt"
+     xmlns:tns="http://soa.estrellaroja.com.mx/JournalEnt"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:ns0="http://soa.estrellaroja.com.mx/JournalEnt"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soa.estrellaroja.com.mx/JournalEnt/types"
+             elementFormDefault="qualified">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/JournalEnt" schemaLocation="oramds:/apps/SOA/JournalEnt/JournalEnt.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="SendFileJournalRq">
+        <wsdl:part name="SendFileJournalRq" element="tns:SendFileJournalRq"/>
+    </wsdl:message>
+    <wsdl:message name="SendFileJournalRs">
+        <wsdl:part name="SendFileJournalRs" element="tns:SendFileJournalRs"/>
+    </wsdl:message>
+    <wsdl:message name="SendFileJournalsRq">
+        <wsdl:part name="SendFileJournalsRq" element="tns:SendFileJournalRq"/>
+    </wsdl:message>
+    <wsdl:portType name="JournalEntPortType">
+        <wsdl:operation name="SendFileJournal">
+            <wsdl:input message="tns:SendFileJournalRq"/>
+            <wsdl:output message="tns:SendFileJournalRs"/>
+        </wsdl:operation>
+        <wsdl:operation name="SendFileJournals">
+            <wsdl:input message="tns:SendFileJournalsRq"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="JournalEntBinding" type="tns:JournalEntPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SendFileJournal">
+            <soap:operation soapAction="http://soa.estrellaroja.com.mx/JournalEnt/SendFileJournal"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="SendFileJournalRq"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="SendFileJournalRs"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SendFileJournals">
+            <soap:operation soapAction="http://soa.estrellaroja.com.mx/JournalEnt/SendFileJournals"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="SendFileJournalsRq"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="JournalEntPortService">
+        <wsdl:port name="JournalEntPort" binding="tns:JournalEntBinding">
+            <soap:address location="http://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073/soa-infra/services/PROD/JournalEnt/JournalEnt"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

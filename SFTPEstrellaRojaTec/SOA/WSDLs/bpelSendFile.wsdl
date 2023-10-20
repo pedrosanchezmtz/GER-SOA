@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelSendFile" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec/bpelSendFile" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec/bpelSendFile" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec" schemaLocation="oramds:/apps/SOA/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SendFileRq">
+      <wsdl:part name="SendFileRq" element="ns1:SendFileRq"/>
+   </wsdl:message>
+   <wsdl:message name="SendFileRs">
+      <wsdl:part name="SendFileRs" element="ns1:SendFileRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelSendFile">
+      <wsdl:operation name="SendFile">
+         <wsdl:input message="client:SendFileRq"/>
+         <wsdl:output message="client:SendFileRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelSendFile">
+      <plnk:role name="bpelSendFileProvider" portType="client:bpelSendFile"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetMileageExcel" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/GetMileageExcel" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="GetMileageExcelInput" type="GetMileageExcelInput"/>
+   <xs:complexType name="GetMileageExcelInput">
+      <xs:sequence>
+         <xs:element name="fechaInicio" type="xs:date" nillable="true"/>
+         <xs:element name="fechaFin" type="xs:date" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="GetMileageExcelOutputCollection" type="GetMileageExcelOutputCollection"/>
+   <xs:complexType name="GetMileageExcelOutputCollection">
+      <xs:sequence>
+         <xs:element name="GetMileageExcelOutput" type="GetMileageExcelOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="GetMileageExcelOutput">
+      <xs:sequence>
+         <xs:element name="ASSET_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ORIGIN" type="xs:string" nillable="true"/>
+         <xs:element name="READING_DATE" type="xs:date" nillable="true"/>
+         <xs:element name="READING_VALUE" type="xs:decimal" nillable="true"/>
+         <xs:element name="STATUS" type="xs:string" nillable="true"/>
+         <xs:element name="ERROR_MESSAGE" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelUploadAttachments" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelUploadAttachments" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelUploadAttachments" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <partnerLinks>
+      <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns2:wsERPIntegrationServiceTec" partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varUploadAttachmentsRq" element="ns1:UploadAttachmentsRq"/>
+      <variable name="varUploadAttachmentsRs" element="ns1:UploadAttachmentsRs"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <empty name="empty"/>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="mainUploadAttachments">
+      <forEach parallel="no" counterName="counterAttachments" name="forEachAttachments">
+         <startCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">1</startCounterValue>
+         <finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varUploadAttachmentsRq/ns2:attachmentRows)</finalCounterValue>
+         <scope name="scopeAttachments">
+            <variables>
+               <variable name="invokeWsERPIntegrationServiceTecUploadAttachmentRq" messageType="ns2:UploadAttachmentRq"/>
+               <variable name="invokeWsERPIntegrationServiceTecUploadAttachmentRs" messageType="ns2:UploadAttachmentRs"/>
+            </variables>
+            <sequence name="sequenceAttachments">
+               <assign name="assignCurrentAttachment">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:entityName</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:entityName</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:categoryName</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:categoryName</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:allowDuplicate</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:allowDuplicate</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyA</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:UserKeyA</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyB</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:UserKeyB</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyC</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:UserKeyC</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyD</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:UserKeyD</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyE</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:UserKeyE</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:AttachmentType</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:AttachmentType</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:Title</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:Title</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:Content</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecUploadAttachmentRq.UploadAttachmentRq/ns2:attachmentRows/ns2:Content</to>
+                  </copy>
+               </assign>
+               <invoke name="invokeWsERPIntegrationServiceTecUploadAttachment" partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType" operation="UploadAttachment" inputVariable="invokeWsERPIntegrationServiceTecUploadAttachmentRq" outputVariable="invokeWsERPIntegrationServiceTecUploadAttachmentRs" bpelx:invokeAsDetail="no"/>
+               <if name="IfSuccess">
+                  <documentation><![CDATA[Success]]></documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">contains(xp20:upper-case($invokeWsERPIntegrationServiceTecUploadAttachmentRs.UploadAttachmentRs/ns2:Return/ns2:Result),'SUCCEED')</condition>
+                  <assign name="assignSuccessRs">
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyB</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:InvoiceNumber</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>
+                              <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Success</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>
+                              <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                  </assign>
+                  <else>
+                     <documentation><![CDATA[Error]]></documentation>
+                     <assign name="assignErrorRs">
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$varUploadAttachmentsRq/ns2:attachmentRows[$counterAttachments]/ns2:UserKeyB</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:InvoiceNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$invokeWsERPIntegrationServiceTecUploadAttachmentRs.UploadAttachmentRs/ns2:Return/ns2:Result</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors/ns3:Error/ns3:Description</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>'Failed Upload Attachment.'</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                        </copy>
+                        <copy keepSrcElementName="no" bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>sbpelUploadAttachments</literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                        </copy>
+                        <copy ignoreMissingFromData="no" bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>InvoicesBiz</literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                           <from>xp20:current-dateTime()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Success</to>
+                        </copy>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:Result/ns3:Success</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                     </assign>
+                  </else>
+               </if>
+               <if name="ifIsValidDocument">
+                  <documentation><![CDATA[RemoveInvalid]]></documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">contains($varUploadAttachmentsRq/ns2:attachmentRows/ns2:Title,'Valido')</condition>
+                  <assign name="assignValid">
+                     <copy ignoreMissingFromData="no" bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>
+                              <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:InvalidInvoice</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>
+                              <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:ValidInvoice</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:InvalidInvoice</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                  </assign>
+                  <else>
+                     <documentation><![CDATA[RemoveInvalid]]></documentation>
+                     <assign name="assignInvalidValid">
+                        <copy ignoreMissingFromData="no" bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:InvalidInvoice</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:ValidInvoice</to>
+                        </copy>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUploadAttachmentsRs/ns1:Return/ns1:Attachment[$counterAttachments]/ns1:ValidInvoice</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                     </assign>
+                  </else>
+               </if>
+            </sequence>
+         </scope>
+      </forEach>
+   </sequence>
+</bpelx:subProcess>

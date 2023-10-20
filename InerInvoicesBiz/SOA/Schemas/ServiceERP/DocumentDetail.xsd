@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/" sdoJava:package="oracle.apps.financials.commonModules.shared.model.erpIntegrationService" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:sdoJava="commonj.sdo/java" xmlns="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+         <name>Document Information SDO</name>
+         <description>The document information that is uploaded to the Oracle
+                Universal Content Management. For example, filename, content
+                type, content, and author.</description>
+         <oer:attributes>
+            <oer:attribute description="The attribute holds the content of the document." name="Content"/>
+            <oer:attribute description="The attribute holds the name of the file specified by the document." name="FileName"/>
+            <oer:attribute description="The attribute holds the content type of the document." name="ContentType"/>
+            <oer:attribute description="The attribute holds the title of the document." name="DocumentTitle"/>
+            <oer:attribute description="The attribute holds the name of the author of the document." name="DocumentAuthor"/>
+            <oer:attribute description="The attribute holds the name of the security group securing the document." name="DocumentSecurityGroup"/>
+            <oer:attribute description="The attribute holds the account the document should belong to." name="DocumentAccount"/>
+            <oer:attribute description="The attribute holds the name of the document." name="DocumentName"/>
+            <oer:attribute description="The attribute holds the document identifier." name="DocumentId"/>
+         </oer:attributes>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+   <xsd:complexType name="DocumentDetail">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>FileName</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="Content" nillable="true" type="ns0:base64Binary-DataHandler"/>
+         <xsd:element minOccurs="0" name="FileName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ContentType" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentTitle" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAuthor" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentSecurityGroup" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentAccount" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="DocumentId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="documentDetail" type="DocumentDetail"/>
+</xsd:schema>

@@ -1,0 +1,827 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelGenerateReport" targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS"
+         xmlns:ns5="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReport_S"
+         xmlns:ns6="http://xmlns.oracle.com/bpel"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbXXMC_Transactions">
+  <documentation>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación GenerateReport del servicio ERPIntegrationBiz.]]>
+  </documentation>
+  <import namespace="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS"
+          location="../WSDLs/bruleGenerateReportDS.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport"
+          location="../WSDLs/bpelGenerateReport.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelGenerateReport" partnerLinkType="client:bpelGenerateReport"
+                 myRole="bpelGenerateReportProvider"/>
+    <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns2:wsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns3:wsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+    <partnerLink name="bruleGenerateReport.bruleGenerateReportDS"
+                 partnerLinkType="ns4:bruleGenerateReport.bruleGenerateReportDS" partnerRole="IDecisionService"/>
+    <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns1:wsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:GenerateReportRq"/>
+    <variable name="outputVariable" messageType="client:GenerateReportRs"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <faultHandlers>
+    <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation>
+        <assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[GenerateReport]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[ERPIntegrationBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <reply name="replyOutput" partnerLink="bpelGenerateReport" variable="outputVariable"
+               portType="client:bpelGenerateReport" operation="GenerateReport">
+          <documentation>
+            <![CDATA[Se indica la salida del proceso BPEL.]]>
+          </documentation>
+        </reply>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelGenerateReport.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelGenerateReport" portType="client:bpelGenerateReport"
+             operation="GenerateReport" variable="inputVariable" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeGenerateReport">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Negocio. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varInvokeWsERPIntegrationServiceTecRunDataModelRq" messageType="ns1:RunDataModelRq"/>
+        <variable name="varInvokeWsERPIntegrationServiceTecRunDataModelRs" messageType="ns1:RunDataModelRs"/>
+        <variable name="varInvokeBase64_DecodeRq" messageType="ns2:DecodeRq"/>
+        <variable name="varFlag" type="xsd:boolean">
+          <from>true()</from>
+        </variable>
+        <variable name="varInvokeBase64_DecodeRs" messageType="ns2:DecodeRs"/>
+        <variable name="varParamDate" type="ns1:ParamNameValueType"/>
+        <variable name="varCount" type="xsd:int"/>
+        <variable name="varInvokeAuditControl_GetCtrlTransRq" messageType="ns3:getCtrlTransRq"/>
+        <variable name="varInvokeAuditControl_GetCtrlTransRs" messageType="ns3:getCtrlTransRs"/>
+        <variable name="varInvokeAuditControlTecCreateLog_CreateLogRq" messageType="ns3:CreateLogRq"/>
+        <variable name="varInvokeAuditControlTecCreateLog_CreateLogRs" messageType="ns3:CreateLogRs"/>
+        <variable name="varInstanceId" element="ns0:varInstanceId"/>
+        <variable name="varPathNamebrRs" type="xsd:string"/>
+        <variable name="varStartDate" type="xsd:dateTime"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GenerateReport]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GenerateReport]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GenerateReport]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[GenerateReport]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceGenerateReport">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <scope name="BRuleGenerateReport">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:decide"></bpelx:pattern>
+          </bpelx:annotation>
+          <variables>
+            <variable name="dsIn" messageType="ns4:callFunctionStatelessMessage"/>
+            <variable name="dsOut" messageType="ns4:callFunctionStatelessDecisionMessage"/>
+          </variables>
+          <sequence name="SequenceBusinessRule">
+            <assign name="Facts_To_Rule_Service">
+              <copy>
+                <from>$inputVariable.GenerateReportRq/ns0:TargetInterface</from>
+                <to>$dsIn.payload/ns4:parameterList/ns0:BRuleGenerateReportRq/ns0:TargetInterface</to>
+              </copy>
+            </assign>
+            <assign name="BPEL_Header">
+              <copy>
+                <from>"bruleGenerateReportDS"</from>
+                <to>$dsIn.payload/@name</to>
+              </copy>
+            </assign>
+            <invoke name="Invoke" partnerLink="bruleGenerateReport.bruleGenerateReportDS"
+                    portType="ns4:IDecisionService" operation="callFunctionStateless" inputVariable="dsIn"
+                    outputVariable="dsOut"/>
+            <assign name="Rule_Service_To_Facts">
+              <copy bpelx:insertMissingToData="yes">
+                <from>$dsOut.payload/ns4:resultList/ns0:BRuleGenerateReportRs/ns0:PathName</from>
+                <to>$varPathNamebrRs</to>
+              </copy>
+            </assign>
+          </sequence>
+        </scope>
+        <if name="IfValidInterface">
+          <documentation>
+            <![CDATA[ValidInterface]]>
+          </documentation>
+          <condition>$varPathNamebrRs != 'NA'</condition>
+          <sequence name="SequenceRunDataModel">
+            <assign name="assignPathName">
+              <copy bpelx:insertMissingToData="yes">
+                <from>concat($varPathNamebrRs,$inputVariable.GenerateReportRq/ns0:ReportName)</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.GenerateReportRq/ns0:ReportName</to>
+              </copy>
+            </assign>
+            <assign name="trBpelRqToWsERPIntegrationServiceTecRunDataModelRq">
+              <documentation>
+                <![CDATA[Se transforma la entrada del servicio Técnico a partir de la entrada del BPEL.]]>
+              </documentation>
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationServiceTecRunDataModelRq.xsl", $inputVariable.GenerateReportRq)</from>
+                <to variable="varInvokeWsERPIntegrationServiceTecRunDataModelRq" part="RunDataModelRqPart"/>
+              </copy>
+            </assign>
+            <if name="IfValidStartDate">
+              <documentation>
+                <![CDATA[InvalidStartDate]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($inputVariable.GenerateReportRq/ns0:StartDate)=0</condition>
+              <sequence name="SequenceGetControlTrans">
+                <assign name="assignGetProcess">
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                    <from>$inputVariable.GenerateReportRq/ns0:IntegrationName</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeAuditControl_GetCtrlTransRq.GetCtrlTransRq/ns3:integrationName</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                    <from>$inputVariable.GenerateReportRq/ns0:ProcessName</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeAuditControl_GetCtrlTransRq.GetCtrlTransRq/ns3:processName</to>
+                  </copy>
+                </assign>
+                <invoke name="invokeAuditControl" partnerLink="wsAuditControlTec"
+                        portType="ns3:AuditControlTecPortType" operation="GetCtrlTrans"
+                        inputVariable="varInvokeAuditControl_GetCtrlTransRq"
+                        outputVariable="varInvokeAuditControl_GetCtrlTransRs" bpelx:invokeAsDetail="no"/>
+                <if name="IfValidateDate">
+                  <documentation>
+                    <![CDATA[Continue]]>
+                  </documentation>
+                  <condition>count( $varInvokeAuditControl_GetCtrlTransRs.GetCtrlTransRs/cmn:Success)&gt;0</condition>
+                  <assign name="assignParamDate" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>count($varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item)</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$varCount+1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$varInvokeAuditControl_GetCtrlTransRs.GetCtrlTransRs/ns3:Return/ns3:importCreationDate</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStartDate</to>
+                    </copy>
+                    <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                      <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:format-dateTime($varStartDate,'[Y0001]-[M01]-[D01] [H01]:[m01]:[s01].[f001]')</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:values/ns1:item</to>
+                    </copy>
+                    <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                      <from>"p_startDate"</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:name</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[$varCount]</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$varCount +1</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                    </copy>
+                  </assign>
+                  <else>
+                    <documentation>
+                      <![CDATA[assing]]>
+                    </documentation>
+                    <bpelx:annotation>
+                      <bpelx:documentation>
+                        <![CDATA[assing]]>
+                      </bpelx:documentation>
+                    </bpelx:annotation><assign name="assignParamDate"
+                                               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>count($varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item)</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$varCount+1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                      </copy>
+                      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                        <from>xp20:current-date()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStartDate</to>
+                      </copy>
+                      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:format-dateTime($varStartDate,'[Y0001]-[M01]-[D01] [H01]:[m01]:[s01].[f001]')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:values/ns1:item</to>
+                      </copy>
+                      <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>"p_startDate"</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:name</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[$varCount]</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$varCount +1</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                      </copy>
+                    </assign></else>
+                </if>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[ValidStartDate]]>
+                </documentation><assign name="assignParamDate"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from>count($varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item)</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from>$varCount+1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                    <from>$inputVariable.GenerateReportRq/ns0:StartDate</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStartDate</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:format-dateTime($varStartDate,'[Y0001]-[M01]-[D01] [H01]:[m01]:[s01].[f001]')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:values/ns1:item</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from>"p_startDate"</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:name</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[$varCount]</to>
+                  </copy>
+                  <copy>
+                    <from>$varCount+1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount</to>
+                  </copy>
+                </assign></else>
+            </if>
+            <if name="IfValidEndDate">
+              <documentation>
+                <![CDATA[ValidEndDate]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($inputVariable.GenerateReportRq/ns0:EndDate)&gt;0</condition>
+              <assign name="AssignEndDate">
+                <copy bpelx:insertMissingToData="yes">
+                  <from>'p_endDate'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:name</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>xp20:format-dateTime($inputVariable.GenerateReportRq/ns0:EndDate,'[Y0001]-[M01]-[D01] [H01]:[m01]:[s01].[f001]')</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:values/ns1:item</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varParamDate</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[$varCount]</to>
+                </copy>
+              </assign>
+              <else>
+                <documentation>
+                  <![CDATA[ValidateInterface]]>
+                </documentation>
+                <sequence name="Sequence1">
+                  <if name="ifInterfaceIsSaveWorkOrders">
+                    <documentation>
+                      <![CDATA[isSaveWorkOrders]]>
+                    </documentation>
+                    <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$inputVariable.GenerateReportRq/ns0:ProcessName = 'SaveWorkOrders'</condition><assign name="AssignEndDate"
+                                                                                                                                                                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>'p_endDate'</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:name</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>xp20:format-dateTime(xp20:add-dayTimeDuration-to-dateTime($varStartDate,'PT12H'),'[Y0001]-[M01]-[D01] [H01]:[m01]:[s01].[f001]')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamDate/ns1:values/ns1:item</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$varParamDate</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[$varCount]</to>
+                      </copy>
+                    </assign><else>
+                      <documentation>
+                        <![CDATA[Nothing]]>
+                      </documentation>
+                      <empty name="empty"/>
+                    </else>
+                  </if>
+                </sequence>
+              </else>
+            </if>
+            <invoke name="invokeWsERPIntegrationServiceTecRunDataModel"
+                    inputVariable="varInvokeWsERPIntegrationServiceTecRunDataModelRq"
+                    outputVariable="varInvokeWsERPIntegrationServiceTecRunDataModelRs" bpelx:invokeAsDetail="no"
+                    partnerLink="wsERPIntegrationServiceTec" portType="ns1:ERPIntegrationTecPortType"
+                    operation="RunDataModel">
+              <documentation>
+                <![CDATA[Se invoca a la operación RunDataModel del servicio Técnico ERPIntegrationServiceTec.]]>
+              </documentation>
+            </invoke>
+            <if name="IfValidateRunDataModel">
+              <documentation>
+                <![CDATA[Continue]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart/ns1:Return/ns1:reportBytes)&gt;0</condition>
+              <sequence name="sequenceBase64">
+                <assign name="assignBase64">
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>$varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart/ns1:Return/ns1:reportBytes</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeBase64_DecodeRq.DecodeRq/ns2:charChain</to>
+                  </copy>
+                </assign>
+                <invoke name="InvokeBase64" partnerLink="wsSOAUtilitiesTec" portType="ns2:SOAUtilitiesTecPortType"
+                        operation="Decode" inputVariable="varInvokeBase64_DecodeRq"
+                        outputVariable="varInvokeBase64_DecodeRs" bpelx:invokeAsDetail="no"/>
+                <assign name="trDecodeBase64ToGenerateReportRs">
+                  <bpelx:annotation>
+                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                    <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trDecodeBase64Rs_ToGeneratereprtRs.xsl", $varInvokeBase64_DecodeRs.DecodeRs)</from>
+                    <to variable="outputVariable" part="GenerateReportRs"/>
+                  </copy>
+                </assign>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[Error]]>
+                </documentation>
+                <sequence name="SequenceErroorBase64">
+                  <assign name="trWsRunDataModelRs_To_BpelRs">
+                    <bpelx:annotation>
+                      <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy>
+                      <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsRunDataModelRs_To_BpelRs.xsl", $varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart)</from>
+                      <to variable="outputVariable" part="GenerateReportRs"/>
+                    </copy>
+                  </assign>
+                  <assign name="assignFlag">
+                    <copy>
+                      <from>false()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                    </copy>
+                  </assign>
+                </sequence>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[InvalidInterface]]>
+            </documentation>
+            <assign name="assignInvalidInterface" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Success</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>
+            <literal>SOA-00007</literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>'Invalid TargetInterface parameter.'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>'The current interface is not support for to load.'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:Description</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from><literal>[GenerateReport]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>
+            <literal>[ERPIntegrationBiz]</literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>xp20:current-dateTime()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.GenerateReportRs/ns0:Return</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>false()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+        <if name="ifExistsErrors" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[SaveErrors]]>
+      </documentation>
+      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag = false()</condition>
+      <sequence name="sequenceSaveErros">
+            <assign name="assignInstanceId">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>ora:getInstanceId()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInstanceId</to>
+              </copy>
+            </assign>
+            <assign name="trBpelRs_To_WsAuditControlTecCreateLogRq">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelReportRs_To_WsAuditControlTecCreateLogRq.xsl", $outputVariable.GenerateReportRs, "varInstanceId", $varInstanceId)</from>
+                <to variable="varInvokeAuditControlTecCreateLog_CreateLogRq" part="CreateLogRq"/>
+              </copy>
+            </assign>
+            <invoke name="invokeAuditControlTecCreateLog" partnerLink="wsAuditControlTec"
+                 portType="ns3:AuditControlTecPortType" operation="CreateLog"
+                 inputVariable="varInvokeAuditControlTecCreateLog_CreateLogRq"
+                 outputVariable="varInvokeAuditControlTecCreateLog_CreateLogRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    bpelx:invokeAsDetail="no"/>
+      </sequence>
+      <else>
+         <documentation>
+            <![CDATA[Success]]>
+         </documentation>
+         <empty name="empty"/>
+      </else>
+   </if>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelGenerateReport" portType="client:bpelGenerateReport"
+           operation="GenerateReport" variable="outputVariable">
+      <documentation>
+        <![CDATA[Salida del proceso BPEL.]]>
+      </documentation>
+    </reply>
+  </sequence>
+</process>

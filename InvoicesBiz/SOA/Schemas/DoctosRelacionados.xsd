@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="UTF-8">
+   <xsd:element name="RelatedDocs">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="RelatedDoc" minOccurs="1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="InvoiceNumber" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|" nxsd:quotedBy="&quot;"/>
+                     <xsd:element name="Uuid" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=SampleData.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=SampleData.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

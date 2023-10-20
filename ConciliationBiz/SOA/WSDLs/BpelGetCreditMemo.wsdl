@@ -1,0 +1,38 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="BpelGetCreditMemo"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_AR_NOTA_CREDITO">
+  <plnk:partnerLinkType name="BpelGetCreditMemo">
+    <plnk:role name="BpelGetCreditMemoProvider" portType="client:BpelGetCreditMemo"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationBiz"
+              schemaLocation="oramds:/apps/SOA/ConciliationBiz/ConciliationBiz.xsd"/>
+    </schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationTec"
+              schemaLocation="oramds:/apps/OSB/ConciliationTec/ConciliationTec.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_AR_NOTA_CREDITO"
+                  schemaLocation="oramds:/apps/Common/Report/XXER_AR_NOTA_CREDITO.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="BpelGetCreditMemoRequestMessage">
+    <wsdl:part name="payload" element="ns1:GetCreditMemoRq"/>
+  </wsdl:message>
+  <wsdl:message name="BpelGetCreditMemoResponseMessage">
+    <wsdl:part name="payload" element="ns1:GetCreditMemoRs"/>
+  </wsdl:message>
+  <wsdl:portType name="BpelGetCreditMemo">
+    <wsdl:operation name="GetCreditMemo">
+      <wsdl:input message="client:BpelGetCreditMemoRequestMessage"/>
+      <wsdl:output message="client:BpelGetCreditMemoResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

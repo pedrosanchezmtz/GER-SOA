@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="Configuration" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="PropertyName"/>
+      <column name="PropertyValue"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>INTEGRATION_NAME</cell>
+         <cell>MessageBiz</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GENERIC_ERROR_MESSAGE</cell>
+         <cell>El formato del archivo adjunto no es válido</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NO_ATTATCHMENT_FOUND_MESSAGE</cell>
+         <cell>No se ha encontrado el archivo adjunto</cell>
+      </row>
+      <row markdefault="false">
+         <cell>FLOW_LOCATOR_ID</cell>
+         <cell>- flujo</cell>
+      </row>
+   </rows>
+</dvm>

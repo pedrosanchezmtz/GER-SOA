@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt" elementFormDefault="qualified">
+   <xsd:element name="AccountStatementSantander" type="tns:AccountStatementSantanderType"/>
+   <xsd:element name="AccountStatementBanamexRq" type="tns:StatementBanamexHeaderType"/>
+   <xsd:complexType name="StatementBanamexHeaderType">
+      <xsd:sequence>
+         <xsd:element name="RequestDate" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="RequestAccountNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="TransactionsQuantity" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="BranchNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="BankAccountNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="TypeSignFirst" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="StartBalance" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="QuantityCashOutOfMoney" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="AmountCashOutOfMoney" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="QuantityChargerOfMoney" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="TotalAmount" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="TypeSignSecond" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="FinalBalance" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ConstantValueN" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="AccountName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="BranchName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="AccountNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ConstantValueF" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ConstantType" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="FinalBalanceAccount" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="Lines" type="tns:StatementBanamexLineType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="StatementBanamexLineType">
+      <xsd:sequence>
+         <xsd:element name="Line" maxOccurs="unbounded" type="tns:StatementBanamexType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="StatementBanamexType">
+      <xsd:sequence>
+         <xsd:element name="TypeTransaction" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="AuthorizationNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="BanamexCode" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="BranchNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ReferenceNumber" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="ReferenceAlphanumeric" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="Amount" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="OperationSubCode" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="TransactionsType">
+      <xsd:sequence>
+         <xsd:element name="AccountNumber" type="xsd:string"/>
+         <xsd:element name="StatementDate" type="xsd:string"/>
+         <xsd:element name="HourTransaction" type="xsd:string"/>
+         <xsd:element name="BranchNameBank" type="xsd:string"/>
+         <xsd:element name="BankCode" type="xsd:string"/>
+         <xsd:element name="Description" type="xsd:string"/>
+         <xsd:element name="SignType" type="xsd:string"/>
+         <xsd:element name="Amount" type="xsd:string"/>
+         <xsd:element name="Balance" type="xsd:string"/>
+         <xsd:element name="Reference" type="xsd:string"/>
+         <xsd:element name="Concept" type="xsd:string"/>
+         <xsd:element name="Additional" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="AccountStatementSantanderType">
+      <xsd:sequence>
+         <xsd:element name="Transactions" type="tns:TransactionsType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="StatamentsAccountBanorteTokenize" type="tns:StatamentsAccountBanorteTokenizeType"/>
+   <xsd:complexType name="StatamentsAccountBanorteTokenizeType">
+      <xsd:sequence>
+         <xsd:element name="StatamentsBanorte" type="tns:StatamentsBanorteType" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="StatamentsBanorteType">
+      <xsd:sequence>
+         <xsd:element name="Token" type="xsd:string" maxOccurs="14"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

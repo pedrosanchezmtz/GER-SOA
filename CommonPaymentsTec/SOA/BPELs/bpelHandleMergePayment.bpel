@@ -1,0 +1,92 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Nov 16 18:41:12 CST 2017
+  Author:  Uomo
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelHandleMergePayment"
+               targetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy">
+
+    <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment" location="../WSDLs/bpelHandleMergePayment.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelhandlemergepayment_client" partnerLinkType="client:bpelHandleMergePayment" myRole="bpelHandleMergePaymentProvider"/>
+    <partnerLink name="dbHierarchy" partnerLinkType="ns1:dbHierarchy_plt" partnerRole="dbHierarchy_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelHandleMergePaymentRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:bpelHandleMergePaymentResponseMessage"/>
+    <variable name="hierarchyInput" messageType="ns1:XxerPaymentsCollection_msg"/>
+    <variable name="hierarchyOutput" messageType="ns1:XxerPaymentsCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelHandleMergePayment.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelhandlemergepayment_client" portType="client:bpelHandleMergePayment"
+             operation="HandleMergePayment" variable="inputVariable" createInstance="yes"/>
+    <assign name="transformInput">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/MergePaymentRq_To_XXERPaymentsCollection.xsl", $inputVariable.payload)</from>
+        <to variable="hierarchyInput" part="XxerPaymentsCollection"/>
+      </copy>
+    </assign>
+    <invoke name="invokeDbHierarchy" bpelx:invokeAsDetail="no" partnerLink="dbHierarchy"
+            portType="ns1:dbHierarchy_ptt" operation="merge" inputVariable="hierarchyInput"
+            outputVariable="hierarchyOutput"/>
+    <assign name="transformOutput">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/XXERPaymentsCollection_To_MergePaymentRs.xsl", $hierarchyOutput.XxerPaymentsCollection)</from>
+        <to variable="outputVariable" part="payload"/>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelhandlemergepayment_client" portType="client:bpelHandleMergePayment"
+           operation="HandleMergePayment" variable="outputVariable"/>
+  </sequence>
+</process>

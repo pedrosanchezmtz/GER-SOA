@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmValidationPaymentsAPEnt" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>ValidationPaymentsAP</cell>
+         <cell>Path</cell>
+         <cell>/Custom/ER_INTEGRATION/ER23_AP_ValidacionComplementos/Data Models/XXER_ValidationComplement.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidationPaymentsAP</cell>
+         <cell>TargetInterface</cell>
+         <cell>ComplementValidation</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidationPaymentsAP</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_ValidationComplement.xdm</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorERPIntegrationBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz">
+   <operation name="ImportToERPCloud" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelImportToERPCloud.bpelimporttoerpcloud.ImportToERPCloud">
+            <action>
+               <assign>
+                  <copy expression="$in.ImportToERPCloudRq/tns:ImportToERPCloudRq" target="$out.payload/tns:ImportToERPCloudRq" xmlns:tns="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"/>
+               </assign>
+               <invoke reference="bpelImportToERPCloud.bpelimporttoerpcloud" operation="ImportToERPCloud">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:ImportToERPCloudRs" target="$out.ImportToERPCloudRs/ns1:ImportToERPCloudRs" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+                  <onCallback operation="ImportToERPCloudResponse">
+                     <assign>
+                        <copy expression="$in.payload/ns1:ImportToERPCloudRs" target="$out.ImportToERPCloudCallbackRs/ns1:ImportToERPCloudCallbackRs" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"/>
+                     </assign>
+                     <callback operation="ImportToERPCloudCallback"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GenerateReport" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGenerateReport.bpelGenerateReport.GenerateReport">
+            <action>
+               <assign>
+                  <copy expression="$in.GenerateReportRq/tns:GenerateReportRq" target="$out.GenerateReportRq/tns:GenerateReportRq" xmlns:tns="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"/>
+               </assign>
+               <invoke reference="bpelGenerateReport.bpelGenerateReport" operation="GenerateReport">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GenerateReportRs/ns1:GenerateReportRs" target="$out.GenerateReportRs/ns1:GenerateReportRs" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetJobsStatus" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetJobsStatus.bpelGetJobsStatus.GetJobsStatus">
+            <action>
+               <assign>
+                  <copy expression="$in.GetJobsStatusRq" target="$out.GetJobsStatusRq"/>
+               </assign>
+               <invoke reference="bpelGetJobsStatus.bpelGetJobsStatus" operation="GetJobsStatus">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetJobsStatusRs" target="$out.GetJobsStatusRs"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

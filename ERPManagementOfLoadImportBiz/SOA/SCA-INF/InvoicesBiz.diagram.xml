@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gReference name="wsERPIntegrationServiceTec">
+        <dgm:body borderWidth="2" arcRad="20" X="908" Y="330" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="898" Y="323" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationServiceTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>FindOrganization</dgm:item>
+            <dgm:item>FindCustomerAccount</dgm:item>
+            <dgm:item>FindPerson</dgm:item>
+            <dgm:item>LoadInterface</dgm:item>
+            <dgm:item>UploadFile</dgm:item>
+            <dgm:item>JournalImport</dgm:item>
+            <dgm:item>UpdateObject</dgm:item>
+            <dgm:item>CreateOrderTransactions</dgm:item>
+            <dgm:item>RunDataModel</dgm:item>
+            <dgm:item>GetEssJobStatus</dgm:item>
+            <dgm:item>DownloadESSJobExecutionDetails</dgm:item>
+            <dgm:item>CreateReceipt</dgm:item>
+            <dgm:item>CreateOrganization</dgm:item>
+            <dgm:item>CreatePerson</dgm:item>
+            <dgm:item>CreatePersonSite</dgm:item>
+            <dgm:item>CreateOrganizationSite</dgm:item>
+            <dgm:item>CreateCustomerAccount</dgm:item>
+            <dgm:item>CreateLocation</dgm:item>
+            <dgm:item>AssignSiteToAccount</dgm:item>
+            <dgm:item>CancelInvoice</dgm:item>
+            <dgm:item>InsertSingleHold</dgm:item>
+            <dgm:item>ReleaseSingleHold</dgm:item>
+            <dgm:item>UploadAttachment</dgm:item>
+            <dgm:item>DownloadAttachment</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSOAUtilitiesTec">
+        <dgm:body borderWidth="2" arcRad="20" X="908" Y="142" width="136" height="156">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="898" Y="135" width="156" height="170">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSOAUtilitiesTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetDateByTimeZone</dgm:item>
+            <dgm:item>GenerateZipFile</dgm:item>
+            <dgm:item>transformNumberToLetter</dgm:item>
+            <dgm:item>Decode</dgm:item>
+            <dgm:item>Encode</dgm:item>
+            <dgm:item>EncodeFileBase64</dgm:item>
+            <dgm:item>GetHtmlControl</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsMessageTec">
+        <dgm:body borderWidth="2" arcRad="20" X="908" Y="26" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="898" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+</dgm:gDiagram>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelSendCFDIToSFTP" targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec" xmlns:ns3="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL">
+   <plnk:partnerLinkType name="BpelSendCFDIToSFTP">
+      <plnk:role name="BpelSendCFDIToSFTPProvider" portType="client:BpelSendCFDIToSFTP"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/CFDITec" location="oramds:/apps/SOA/CFDITec/CFDITec.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/MessageTec" location="oramds:/apps/SOA/MessageTec/MessageTec.wsdl"/>
+   <wsdl:types>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL" schemaLocation="../Schemas/nxsd_URLCFDI.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="BpelSendCFDIToSFTPRequestMessage">
+      <wsdl:part name="payload" element="ns1:SendCFDIToSFTPRq"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelSendCFDIToSFTP">
+      <wsdl:operation name="SendCFDIToSFTP">
+         <wsdl:input message="client:BpelSendCFDIToSFTPRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

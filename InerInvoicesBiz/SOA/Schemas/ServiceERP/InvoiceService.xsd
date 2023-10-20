@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/types/" xmlns:ns0="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" xmlns:ns1="http://xmlns.oracle.com/adf/svc/types/" xmlns:tns="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/types/" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <import namespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" schemaLocation="InvoiceStatus.xsd"/>
+   <import namespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/"
+           schemaLocation="InvoiceInstallment.xsd"/>
+   <element name="createURLAttachment">
+      <complexType>
+         <sequence>
+            <element name="imageURL" type="string"/>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="createURLAttachmentResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="cancelInvoice">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="cancelInvoiceResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="createURLAttachmentAsync">
+      <complexType>
+         <sequence>
+            <element name="imageURL" type="string"/>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="createURLAttachmentAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="cancelInvoiceAsync">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="cancelInvoiceAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="insertSingleHold">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+            <element name="holdLookupCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="insertSingleHoldResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="releaseSingleHold">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+            <element name="holdLookupCode" type="string"/>
+            <element name="releaseLookupCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="releaseSingleHoldResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="insertSingleHoldAsync">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+            <element name="holdLookupCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="insertSingleHoldAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="releaseSingleHoldAsync">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="voucherNumber" type="string"/>
+            <element name="holdLookupCode" type="string"/>
+            <element name="releaseLookupCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="releaseSingleHoldAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceStatus">
+      <complexType>
+         <sequence>
+            <element name="invoiceId" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceStatusResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:InvoiceStatus"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="findInvoiceStatus">
+      <complexType>
+         <sequence>
+            <element name="findCriteria" type="ns1:FindCriteria"/>
+            <element name="findControl" type="ns1:FindControl"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="findInvoiceStatusResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:InvoiceStatusResult"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceStatusAsync">
+      <complexType>
+         <sequence>
+            <element name="invoiceId" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceStatusAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:InvoiceStatus"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="findInvoiceStatusAsync">
+      <complexType>
+         <sequence>
+            <element name="findCriteria" type="ns1:FindCriteria"/>
+            <element name="findControl" type="ns1:FindControl"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="findInvoiceStatusAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:InvoiceStatusResult"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceInstallments">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="installmentNumber" nillable="true" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceInstallmentsResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:InvoiceInstallment"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceInstallmentsAsync">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="installmentNumber" nillable="true" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getInvoiceInstallmentsAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:InvoiceInstallment"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInvoiceInstallments">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="installmentNumber" type="string"/>
+            <element name="dueDate" type="string"/>
+            <element name="firstDiscAmount" type="string"/>
+            <element name="firstDiscDate" type="string"/>
+            <element name="secondDiscAmount" type="string"/>
+            <element name="secondDiscDate" type="string"/>
+            <element name="thirdDiscAmount" type="string"/>
+            <element name="thirdDiscDate" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInvoiceInstallmentsResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInvoiceInstallmentsAsync">
+      <complexType>
+         <sequence>
+            <element name="businessUnitName" type="string"/>
+            <element name="supplierName" type="string"/>
+            <element name="supplierNumber" type="string"/>
+            <element name="invoiceNumber" type="string"/>
+            <element name="installmentNumber" type="string"/>
+            <element name="dueDate" type="string"/>
+            <element name="firstDiscAmount" type="string"/>
+            <element name="firstDiscDate" type="string"/>
+            <element name="secondDiscAmount" type="string"/>
+            <element name="secondDiscDate" type="string"/>
+            <element name="thirdDiscAmount" type="string"/>
+            <element name="thirdDiscDate" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInvoiceInstallmentsAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

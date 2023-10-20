@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpServiceReaderFileSantander" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpServiceReaderFileSantander" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpServiceReaderFileSantander" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:imp1="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander">
+   <plt:partnerLinkType name="Get_plt">
+      <plt:role name="Get_role">
+         <plt:portType name="tns:Get_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander" schemaLocation="../Schemas/Banks/ftpReadFileSantander.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="Get_msg">
+      <wsdl:part name="body" element="imp1:estadoCta"/>
+   </wsdl:message>
+   <wsdl:portType name="Get_ptt">
+      <wsdl:operation name="Get">
+         <wsdl:input message="tns:Get_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

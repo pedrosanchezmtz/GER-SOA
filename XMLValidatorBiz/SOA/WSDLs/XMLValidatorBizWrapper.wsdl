@@ -1,0 +1,22 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ValidaCartaPorteEnt"
+     targetNamespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="BpelValidaCP">
+        <plnk:role name="XMLValidatorBizPortType" portType="tns:XMLValidatorBizPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz" location="oramds:/apps/SOA/XMLValidatorBiz/XMLValidatorBiz.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz" schemaLocation="oramds:/apps/SOA/XMLValidatorBiz/XMLValidatorBiz.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>

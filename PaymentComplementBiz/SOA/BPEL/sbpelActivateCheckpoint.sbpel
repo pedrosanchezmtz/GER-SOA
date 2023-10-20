@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelActivateCheckpoint"
+                  targetNamespace="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelActivateCheckpoint"
+                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                  xmlns:client="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelActivateCheckpoint"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                  xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                  xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+                  xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/AuditControlTec"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+  <partnerLinks>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns1:wsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="integrationName" type="xsd:string"/>
+    <variable name="processName" type="xsd:string"/>
+    <variable name="lastDate" type="xsd:dateTime"/>
+    <variable name="mergeInput" messageType="ns1:MergeCtrlTransRq"/>
+    <variable name="mergeOutput" messageType="ns1:MergeCtrlTransRs"/>
+  </variables>
+  <sequence name="sequenceMain">
+    <if name="IfLastUpdateDate">
+      <documentation>
+        <![CDATA[Provided Date]]>
+      </documentation>
+      <condition>string-length(string($lastDate)) &gt; 0</condition>
+      <sequence name="sequenceWithDate">
+        <assign name="assignParams">
+          <copy>
+            <from>$integrationName</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mergeInput.MergeCtrlTransRq/ns1:integrationTransactions/ns1:integrationName</to>
+          </copy>
+          <copy>
+            <from>$processName</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mergeInput.MergeCtrlTransRq/ns1:integrationTransactions/ns1:processName</to>
+          </copy>
+          <copy>
+            <from>$lastDate</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mergeInput.MergeCtrlTransRq/ns1:integrationTransactions/ns1:importCreationDate</to>
+          </copy>
+        </assign>
+        <invoke name="invokeCheckpoint" partnerLink="wsAuditControlTec" portType="ns1:AuditControlTecPortType"
+                operation="MergeCtrlTrans" inputVariable="mergeInput" outputVariable="mergeOutput"
+                bpelx:invokeAsDetail="no"/>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[Empty Date]]>
+        </documentation>
+        <empty name="emptyDate"/>
+      </else>
+    </if>
+  </sequence>
+</bpelx:subProcess>

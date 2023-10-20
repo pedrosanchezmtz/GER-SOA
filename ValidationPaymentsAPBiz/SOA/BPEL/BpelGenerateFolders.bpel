@@ -1,0 +1,493 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Jun 15 11:13:43 CDT 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelGenerateFolders"
+               targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelGenerateFolders"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelGenerateFolders"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_DEV_OLD/ValidationPaymentsAPBiz/ftpGetFile"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_DEV_OLD/ValidationPaymentsAPBiz/ftpPutFile"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_DEV_OCI/ValidationPaymentsAPBiz/FTP_ER_SOA"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/Reports/XXER_Bank_Accounts"
+         xmlns:ns11="http://soa.estrellaroja.com.mx/SftpTec">
+   <import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_Bank_Accounts"
+           location="oramds:/apps/Common/Report/XXER_Bank_Accounts.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+   <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelGenerateFolders"
+           location="../WSDLs/External/BpelGenerateFolders.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+<import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelgeneratefolders_client" partnerLinkType="client:BpelGenerateFolders" myRole="BpelGenerateFoldersProvider"/>
+      <partnerLink name="WsERPIntegrationBiz" partnerLinkType="ns8:WsERPIntegrationBiz"
+                   partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+      <partnerLink name="wsSftpTec" partnerLinkType="ns11:wsSftpTec" partnerRole="SftpTec_ptt"/>
+   </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelGenerateFoldersRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BpelGenerateFoldersResponseMessage"/>
+   </variables>
+  <faultHandlers>
+    <catchAll><sequence name="sequenceCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+      </documentation>
+      <assign name="assignCatchAll">
+         <documentation>
+                  <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+               </documentation>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+               <literal>SOA-00001</literal>
+            </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getFaultName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:Description</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[GenerateFolders]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[ValidationPaymentAPBiz]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:FailedService</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>xp20:current-dateTime()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+               <literal>
+                  <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+               </literal>
+            </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <?audit suppress oracle.ide.xml.validation-incomplete?>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign>
+      <reply name="replyOutput" partnerLink="bpelgeneratefolders_client" variable="outputVariable"
+             portType="client:BpelGenerateFolders" operation="GenerateFolders">
+         <documentation>
+            
+         <![CDATA[Se indica la salida del proceso BPEL.]]></documentation>
+      </reply>
+   </sequence></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelGenerateFolders.wsdl) --><receive name="receiveInput" partnerLink="bpelgeneratefolders_client" portType="client:BpelGenerateFolders" operation="GenerateFolders" variable="inputVariable" createInstance="yes"/>
+    <scope name="Scope1">
+         <variables>
+            <variable name="WsErpIntegrationBizGenerateReportRq" messageType="ns8:GenerateReportRq"/>
+            <variable name="WsErpIntegrationBizGenerateReportRs" messageType="ns8:GenerateReportRs"/>
+            <variable name="v_stringXML" type="xsd:string"/>
+            <variable name="v_Carpetas" element="ns10:DATA_DS"/>
+            <variable name="v_fecha" type="xsd:string"/>
+         </variables>
+         <faultHandlers>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables"><assign name="assignInvalidVariables" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                     <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>SOA-00003</literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from><literal>[GenerateFolders]</literal></from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from><literal>[ValidationPaymentAPBiz]</literal></from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign></catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure"><assign name="assignSelectionFailure" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                     <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>SOA-00004</literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[GenerateFolders]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[ValidationPaymentAPBiz]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:FailedService</to>
+               </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign></catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault"><assign name="assignRemoteFault" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                     <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>SOA-00005</literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[GenerateFolders]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[ValidationPaymentAPBiz]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:FailedService</to>
+               </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign></catch>
+        <catch bpelx:name="TimeOut" faultName="bpelx:timeout"><assign name="assignTimeout" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+                     <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>SOA-00002</literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[GenerateFolders]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from><literal>[ValidationPaymentAPBiz]</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:FailedService</to>
+               </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors/ns3:Error/ns3:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign></catch>
+      </faultHandlers>
+      <sequence>
+            <if name="IfExistData">
+               <documentation>
+                  <![CDATA[sifecha]]>
+               </documentation>
+               <condition>string-length($inputVariable.payload/ns2:FECHA)&gt;0</condition>
+               <if name="If_FechaValida">
+                  <documentation>
+                     <![CDATA[formatoValido]]>
+                  </documentation>
+                  <condition>string-length(xp20:format-dateTime($inputVariable.payload/ns2:FECHA,"[Y0001][M01] [Mn][D01]"))&gt;0</condition>
+                  <assign name="AssignFecha">
+                     <copy>
+                        <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                     <copy>
+                        <from>$inputVariable.payload/ns2:FECHA</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_fecha</to>
+                     </copy>
+                  </assign>
+                  <else>
+                     <documentation>
+                        <![CDATA[noHayFechaValida]]>
+                     </documentation>
+                     <assign name="AssignSysdate">
+                        <copy>
+                           <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</to>
+                        </copy>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                        <copy>
+                           <from>xp20:current-date()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_fecha</to>
+                        </copy>
+                        <copy>
+                           <from>'No se ingreso la fecha a general por lo cual se generan las carpetas con fecha del dia actual por Default'</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                        </copy>
+                     </assign>
+                  </else>
+               </if>
+               <else>
+                  <documentation>
+                     <![CDATA[no hay fecha]]>
+                  </documentation><assign name="AssignSysdate"
+                                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                     <copy>
+                        <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Errors</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                     <copy>
+                        <from>xp20:add-dayTimeDuration-to-dateTime(xp20:current-date(), dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","generateDirDays","Value","","Component","Vars"))</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_fecha</to>
+                     </copy>
+                     <copy>
+                        <from>'No se ingreso la fecha a general por lo cual se generan las carpetas con fecha del dia actual por Default'</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns3:Success</to>
+                     </copy>
+                  </assign></else>
+            </if>
+            <assign name="assignParams" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","TargetInterface","Value","","Component","ValidationPaymentsBiz")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns8:TargetInterface</to>
+               </copy>
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getCompositeName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns8:IntegrationName</to>
+               </copy>
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getComponentName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns8:ProcessName</to>
+               </copy>
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","ReportName","Value","","Component","GetBanksFolder")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns8:ReportName</to>
+               </copy>
+            </assign>
+            <invoke name="WsErpIntegrationBiz" partnerLink="WsERPIntegrationBiz"
+                        portType="ns8:ERPIntegrationBizPortType" operation="GenerateReport"
+                        inputVariable="WsErpIntegrationBizGenerateReportRq"
+                        outputVariable="WsErpIntegrationBizGenerateReportRs"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+            <assign name="AssignParseStringXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy>
+                  <from>concat('&lt;DATA_DS xmlns="http://soa.estrellaroja.com.mx/Reports/XXER_Bank_Accounts"&gt;',substring-after($WsErpIntegrationBizGenerateReportRs.GenerateReportRs/ns8:Return/ns8:xmlOut,'&lt;DATA_DS&gt;'))</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_stringXML</to>
+               </copy>
+               <copy>
+                  <from>oraext:parseXML($v_stringXML)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_Carpetas</to>
+               </copy>
+            </assign><forEach parallel="no" counterName="counterCarpetas" name="For_Carpetas">
+               <startCounterValue>1</startCounterValue>
+               <finalCounterValue>count($v_Carpetas/ns10:G_1)</finalCounterValue>
+               <scope name="ScopePutFile">
+                  <variables>
+                     <variable name="v_fileName" type="xsd:string"/>
+                     <variable name="v_rutaFile" type="xsd:string"/>
+                     <variable name="PutFileERRq" messageType="ns11:PutFileERRqM"/>
+                     <variable name="PutFileERRs" messageType="ns11:PutFileERRsM"/>
+                  </variables>
+                  <sequence name="SeqPutFile">
+                     <assign name="AssignPutFTP">
+                        <copy>
+                           <from>'Inf.txt'</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_fileName</to>
+                        </copy>
+                        <copy>
+                           <from>concat(dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","dir","Value","","Component","sftp"),xp20:format-dateTime($v_fecha," [Y0001]"),'/',xp20:format-dateTime($v_fecha,"[M01] [Mn]"),'/',xp20:format-dateTime($v_fecha,"[D01]"),'/',$v_Carpetas/ns10:G_1[$counterCarpetas]/ns10:NOMBRE_CARPETA,'/')</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_rutaFile</to>
+                        </copy>
+                        <copy>
+                           <from>'QXJjaGl2byBkZSBnZW5lcmFjaW9uIGF1dG9tYXRpY2EgZGUgY2FycGV0YXM='</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns11:FileB64</to>
+                        </copy>
+                        <copy>
+                           <from>$v_rutaFile</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns11:DirName</to>
+                        </copy>
+                        <copy>
+                           <from>$v_fileName</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns11:FileName</to>
+                        </copy>
+                     </assign>
+                     <invoke name="wsSftpTec" partnerLink="wsSftpTec" portType="ns11:SftpTec_ptt"
+                             inputVariable="PutFileERRq" operation="PutFileER"
+                             outputVariable="PutFileERRs" bpelx:invokeAsDetail="no"/>
+                  </sequence>
+               </scope>
+            </forEach>
+         </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelgeneratefolders_client" portType="client:BpelGenerateFolders" operation="GenerateFolders" variable="outputVariable"/>
+  </sequence>
+</process>

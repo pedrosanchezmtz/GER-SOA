@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/ConciliationEnt/NXSDBankPayments" targetNamespace="http://soa.estrellaroja.com.mx/ConciliationEnt/NXSDBankPayments" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="UTF-8">
+   <xsd:element name="Payments">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="payment" minOccurs="1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="NumOperacion" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Sucursal" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Referencia" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Usuario" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="UsrTrx" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="TipoPago" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Lote" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="NombreArchivo" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Tarjeta" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="NombreTH" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Autorizacion" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Afiliacion" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="NombreAfiliacion" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Importe" type="xsd:decimal" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="Moneda" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="FechaOperacion" type="xsd:date" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="HoraOperacion" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="TipoTarjeta" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="MarcaTarjeta" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="BancoEmisor" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="TipoOperacion" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="|"/>
+                     <xsd:element name="FechaDeposito" type="xsd:date" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=C:\Users\PedroSánchezMartínez\Desktop\conciliacion\Estrella Roja\prva0670060821.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

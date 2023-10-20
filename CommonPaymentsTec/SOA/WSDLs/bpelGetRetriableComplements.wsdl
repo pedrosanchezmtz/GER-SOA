@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetRetriableComplements" targetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetRetriableComplements" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetRetriableComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec" schemaLocation="oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelGetRetriableComplementsRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetRetriableComplementsRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelGetRetriableComplementsResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetRetriableComplementsRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetRetriableComplements">
+      <wsdl:operation name="GetRetriableComplements">
+         <wsdl:input message="client:bpelGetRetriableComplementsRequestMessage"/>
+         <wsdl:output message="client:bpelGetRetriableComplementsResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetRetriableComplements">
+      <plnk:role name="bpelGetRetriableComplementsProvider" portType="client:bpelGetRetriableComplements"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

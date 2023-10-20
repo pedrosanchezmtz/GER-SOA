@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmReceiptBiz" xmlns="http://xmlns.oracle.com/dvm">
+   <description>Target interface entry values</description>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>Currency</cell>
+         <cell>MXN</cell>
+      </row>
+      <row markdefault="false">
+         <cell>EntityName</cell>
+         <cell>AR_CASH_RECEIPTS_ALL</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CategoryName</cell>
+         <cell>CUSTOMER_RECEIPT</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AllowDuplicate</cell>
+         <cell>Yes</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UserKeyE</cell>
+         <cell>#NULL</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentType</cell>
+         <cell>TEXT</cell>
+      </row>
+      <row markdefault="false">
+         <cell>VALIDATE_CREATE_APPLY_RECEIPT</cell>
+         <cell>ReceiptEnt$CreateApplyReceipt</cell>
+      </row>
+   </rows>
+</dvm>

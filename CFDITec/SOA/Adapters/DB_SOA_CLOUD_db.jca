@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="DB_SOA_CLOUD" adapter="db" wsdlLocation="../WSDLs/DB_SOA_CLOUD.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIConnectionName="BDOCI" location="eis/DB/ERSEPDB1"/>
+   <endpoint-interaction portType="DB_SOA_CLOUD_ptt" operation="UpdateStatusSFTP">
+      <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+         <property name="SqlString" value="UPDATE ER_FACTURACION_GENERAL_TBL@REPCONTROL.ESTRELLAROJA.COM.MX SET ESTATUS_DESCARGA_SFTP=#ESTATUS_DESCARGA_SFTP WHERE ID=#ID "/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

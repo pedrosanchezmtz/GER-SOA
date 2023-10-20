@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMOriginPriority" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginPriority" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginPriority" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <plt:partnerLinkType name="EAMOriginPriority_plt">
+      <plt:role name="EAMOriginPriority_role">
+         <plt:portType name="tns:EAMOriginPriority_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginPriority" schemaLocation="../../Schemas/OriginPriority/EAMOriginPriority.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMOriginPriorityInput_msg">
+      <wsdl:part name="EAMOriginPriorityInput_msg" element="db:EAMOriginPriorityInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMOriginPriorityOutputCollection_msg">
+      <wsdl:part name="EAMOriginPriorityOutputCollection" element="db:EAMOriginPriorityOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMOriginPriority_ptt">
+      <wsdl:operation name="EAMOriginPriority">
+         <wsdl:input message="tns:EAMOriginPriorityInput_msg"/>
+         <wsdl:output message="tns:EAMOriginPriorityOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="EAMOriginPriority_pttSOAP11Binding" type="tns:EAMOriginPriority_ptt">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="EAMOriginPriority">
+         <soap:operation style="document" soapAction="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginPriority/EAMOriginPriority"/>
+         <wsdl:input>
+            <soap:body use="literal" parts="EAMOriginPriorityInput_msg"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" parts="EAMOriginPriorityOutputCollection"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

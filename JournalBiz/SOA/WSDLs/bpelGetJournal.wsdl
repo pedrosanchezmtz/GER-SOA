@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetJournal" targetNamespace="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournal"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournal"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns3="http://TargetNamespace.com/ServiceName"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/FinancialsTec">
+  <plnk:partnerLinkType name="bpelGetJournal">
+    <plnk:role name="bpelGetJournalProvider" portType="client:bpelGetJournal"/>
+  </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl"/>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournal"
+            xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+            xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+            xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://TargetNamespace.com/ServiceName">
+      <import namespace="http://soa.estrellaroja.com.mx/JournalBiz"
+              schemaLocation="oramds:/apps/SOA/JournalBiz/JournalBiz.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournal"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://TargetNamespace.com/ServiceName">
+      <xsd:import namespace="http://TargetNamespace.com/ServiceName" schemaLocation="../Schemas/nxsdFileJournal.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/FinancialsTec"
+                  schemaLocation="oramds:/apps/OSB/FinancialsTec/FinancialsTec.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetJournalRq">
+    <wsdl:part name="GetJournalRq" element="ns1:GetJournalRq"/>
+  </wsdl:message>
+    <wsdl:message name="GetJournalRs">
+    <wsdl:part name="GetJournalRs" element="ns1:GetJournalRs"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelGetJournal">
+    <wsdl:operation name="GetJournal">
+      <wsdl:input message="client:GetJournalRq"/>
+      <wsdl:output message="client:GetJournalRs"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

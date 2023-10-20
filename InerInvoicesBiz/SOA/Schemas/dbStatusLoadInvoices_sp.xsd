@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbStatusLoadInvoices" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbStatusLoadInvoices" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_INVOICE_LOAD_STATUS" type="db:XERINTUSER.XXER_INVOICE_LOAD_STATUS_TTYPE" db:index="1" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_TOTAL_SUCCESSFUL" type="decimal" db:index="2" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_TOTAL_ERRORS" type="decimal" db:index="3" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_TOTAL_PROCESSED" type="decimal" db:index="4" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_ERROR_MESSAGES_INV" type="db:XERINTUSER.XXER_ERROR_MESSAGES_INV_TTYPE" db:index="5" db:type="Array" minOccurs="0" nillable="true"/>
+            <element name="P_ERROR" type="decimal" db:index="6" db:type="NUMBER" minOccurs="0" nillable="true"/>
+            <element name="P_ERROR_DESC" type="string" db:index="7" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="XERINTUSER.XXER_INVOICE_LOAD_STATUS_TYPE">
+      <sequence>
+         <element name="STATUS" type="db:string20" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="TRX_NUMBER" type="db:string100" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="MESSAGE_TEXT" type="db:string500" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="INVALID_VALUE" type="db:string500" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="XERINTUSER.XXER_ERROR_MESSAGES_INV_TTYPE">
+      <sequence>
+         <element name="P_ERROR_MESSAGES_INV_ITEM" type="db:XERINTUSER.XXER_ERROR_MESSAGES_INV_TYPE" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="XERINTUSER.XXER_INVOICE_LOAD_STATUS_TTYPE">
+      <sequence>
+         <element name="P_INVOICE_LOAD_STATUS_ITEM" type="db:XERINTUSER.XXER_INVOICE_LOAD_STATUS_TYPE" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="XERINTUSER.XXER_ERROR_MESSAGES_INV_TYPE">
+      <sequence>
+         <element name="MESSAGE" type="db:string500" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="DATA_VALUE" type="db:string250" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <simpleType name="string20">
+      <restriction base="string">
+         <maxLength value="20"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string100">
+      <restriction base="string">
+         <maxLength value="100"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string500">
+      <restriction base="string">
+         <maxLength value="500"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string250">
+      <restriction base="string">
+         <maxLength value="250"/>
+      </restriction>
+   </simpleType>
+</schema>

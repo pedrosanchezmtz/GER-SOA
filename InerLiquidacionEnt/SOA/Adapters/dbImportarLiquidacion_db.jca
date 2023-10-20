@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="dbImportarLiquidacion" adapter="db" wsdlLocation="../WSDLs/dbImportarLiquidacion.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIConnectionName="ERSEDBCS" location="eis/DB/ERSEPDB1"/>
+   <endpoint-interaction portType="dbImportarLiquidacion_ptt" operation="dbImportarLiquidacion">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="SchemaName" value="PXERINTUSER"/>
+         <property name="PackageName" value="INER_XXER_CALL_FUSION_SOAP_PKG"/>
+         <property name="ProcedureName" value="XXER_SUBMIT_INVOICE_WS_PRC"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

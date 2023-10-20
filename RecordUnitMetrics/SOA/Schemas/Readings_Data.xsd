@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+   <xsd:element name="G_2">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="FECHA" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="VALOR_CARGA" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="VALOR_MOSTRADO" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="NUMERO_ITEM" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="FECHA_EJECUCION" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="CODIGO" type="xsd:date" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="NAME" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ASSET_NUMBER" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="NAME_UM" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ORGANIZATION_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="NOMBRE_ORGANIZACION" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ACTIVE_START_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ACTIVE_END_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="METER_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

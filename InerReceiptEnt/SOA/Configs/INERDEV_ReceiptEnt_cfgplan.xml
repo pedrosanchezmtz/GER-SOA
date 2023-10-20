@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata"
+               xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+               xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
+               xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+  <composite name="ReceiptEnt">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/INER_ReceiptEnt/ReceiptEnt</search>
+        <replace>oramds:/apps/SOA/INERDEV_ReceiptEnt/ReceiptEnt</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/INER_ReceiptBiz/ReceiptBiz</search>
+        <replace>oramds:/apps/SOA/INERDEV_ReceiptBiz/ReceiptBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/INER_FinancialBiz/FinancialBiz</search>
+        <replace>oramds:/apps/SOA/INERDEV_FinancialBiz/FinancialBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+        <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+    </import>
+    <service name="ReceiptEnt">
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/ReceiptEnt#wsdl.endpoint(ReceiptEnt/ReceiptEntPort)</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>NEVER</replace>
+        </property>
+      </binding>
+    </service>
+    <property name="compositeID">
+      <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+    </property>
+    <property name="productVersion">
+      <replace>12.2.1.4.0.190828</replace>
+    </property>
+    <component name="bpelCreateReceipts">
+      <property name="bpel.config.transaction">
+        <replace>notSupported</replace>
+      </property>
+    </component>
+    <reference name="wsERPIntegrationBiz">
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsFinancialsBiz">
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/FinancialBiz#wsdl.endpoint(FinancialBiz/FinancialBizPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/INERDEV_FinancialBiz/FinancialBiz.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsReceiptBiz">
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/ReceiptBiz#wsdl.endpoint(ReceiptBiz/ReceiptBizPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/INERDEV_ReceiptBiz/ReceiptBiz.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+        <property name="oracle.webservices.httpConnTimeout">
+          <replace>600000</replace>
+        </property>
+        <property name="oracle.webservices.httpReadTimeout">
+          <replace>600000</replace>
+        </property>
+      </binding>
+    </reference>
+  </composite>
+  <wsdlAndSchema name="Schemas/EstrellaRojaCommons.xsd|Schemas/ReceiptBiz.xsd|Schemas/StructureCash.xsd|Schemas/StructureReceipt.xsd|Schemas/StructureTrxCust.xsd|WSDLs/bpelCreateReceipts.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/FinancialBizWrapper.wsdl|WSDLs/ReceiptBiz.wsdl|WSDLs/ReceiptBizWrapper.wsdl">
+    <searchReplace>
+      <search>oramds:/apps/SOA/INER_ReceiptEnt/ReceiptEnt</search>
+      <replace>oramds:/apps/SOA/INERDEV_ReceiptEnt/ReceiptEnt</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/INER_ReceiptBiz/ReceiptBiz</search>
+      <replace>oramds:/apps/SOA/INERDEV_ReceiptBiz/ReceiptBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/INER_FinancialBiz/FinancialBiz</search>
+      <replace>oramds:/apps/SOA/INERDEV_FinancialBiz/FinancialBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>http://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073/soa-infra/services/INER/ReceiptBiz/ReceiptBiz</search>
+      <replace>http://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073/soa-infra/services/INERDEV/ReceiptBiz/ReceiptBiz</replace>
+    </searchReplace>
+  </wsdlAndSchema>
+</SOAConfigPlan>

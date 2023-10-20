@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorReceiptBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="DigitalStampReceipts" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelDigitalStampReceipts.bpelDigitalStampReceipts.DigitalStampReceipts">
+            <action>
+               <assign>
+                  <copy expression="$in.DigitalStampReceiptsRq/tns:DigitalStampReceiptsRq"
+                        target="$out.DigitalStampReceiptsRq/tns:DigitalStampReceiptsRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/ReceiptBiz"/>
+               </assign>
+               <invoke reference="bpelDigitalStampReceipts.bpelDigitalStampReceipts" operation="DigitalStampReceipts">
+                  <onCallback operation="DigitalStampReceiptsCallback">
+                     <assign>
+                        <copy expression="$in.DigitalStampReceiptsRs/ns1:DigitalStampReceiptsRs"
+                              target="$out.DigitalStampReceiptsRs/ns1:DigitalStampReceiptsRs"
+                              xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptBiz"/>
+                     </assign>
+                     <callback operation="DigitalStampReceiptsCallback"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ReceiptApply" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelReceiptApply.bpelReceiptApply.ReceiptApply">
+            <action>
+               <assign>
+                  <copy expression="$in.ReceiptApplyRq/tns:ReceiptApplyRq"
+                        target="$out.ReceiptApplyRq/tns:ReceiptApplyRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/ReceiptBiz"/>
+               </assign>
+               <invoke reference="bpelReceiptApply.bpelReceiptApply" operation="ReceiptApply">
+                  <onCallback operation="ReceiptApplyCallback">
+                     <assign>
+                        <copy expression="$in.ReceiptApplyRs/ns1:ReceiptApplyRs"
+                              target="$out.ReceiptApplyRs/ns1:ReceiptApplyRs"
+                              xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptBiz"/>
+                     </assign>
+                     <callback operation="ReceiptApplyCallback"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

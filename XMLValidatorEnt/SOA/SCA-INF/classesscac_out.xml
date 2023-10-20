@@ -1,0 +1,33 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='scope'][@name='ScopeGetConfigsTbl']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='Sequence4']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='AssignGetURLsCFDIs']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy'][1]/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>120</line>
+      <col/>
+      <file>BPEL/BpelXMLValidadorSftpZAM.bpel</file>
+      <name>BPEL/BpelXMLValidadorSftpZAM.bpel</name>
+      <fix>Add function definition for this function "strClass:replaceAll" to the validator</fix>
+      <msg>Unknown function "strClass:replaceAll" used in &lt;bpel:from></msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='AssignParseStringXML']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy'][1]/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>156</line>
+      <col/>
+      <file>BPEL/BpelXMLValidadorSftpZAM.bpel</file>
+      <name>BPEL/BpelXMLValidadorSftpZAM.bpel</name>
+      <fix>Add function definition for this function "strClass:replaceAll" to the validator</fix>
+      <msg>Unknown function "strClass:replaceAll" used in &lt;bpel:from></msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='if'][@name='If_Exist_Errors']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='condition']</loc>
+      <line>174</line>
+      <col/>
+      <file>BPEL/BpelXMLValidadorSftpZAM.bpel</file>
+      <name>BPEL/BpelXMLValidadorSftpZAM.bpel</name>
+      <fix>Make sure that the expression in &lt;bpel:condition> is a boolean expression.</fix>
+      <msg>The expression $ValidaCartaPorteRs.ValidaCartaPorteRsPart/ns5:S ... in &lt;bpel:condition> is not a boolean expression.</msg>
+   </Fault>
+</Faults>

@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="LetterPorteTec"
+     targetNamespace="http://soa.estrellaroja.com.mx/LetterPorteTec"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:WL5G3N2="http://soa.estrellaroja.com.mx/LetterPorteTec"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsLetterPorteTec">
+        <plnk:role name="LetterPorteTec_ptt" portType="WL5G3N2:LetterPorteTec_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/LetterPorteTec" location="oramds:/apps/OSB/LetterPorteTec/LetterPorteTec.wsdl"/>
+</wsdl:definitions>

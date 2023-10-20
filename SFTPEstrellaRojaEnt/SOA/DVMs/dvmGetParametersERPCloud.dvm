@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmGetParametersERPCloud" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>domain1-value1</cell>
+         <cell>domain2-value1</cell>
+      </row>
+   </rows>
+</dvm>

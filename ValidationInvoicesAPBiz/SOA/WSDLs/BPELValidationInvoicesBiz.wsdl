@@ -1,0 +1,51 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BPELValidationInvoicesBiz"
+     targetNamespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+     xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+     xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String"
+    >
+    <plnk:partnerLinkType name="BPELValidationInvoicesBiz">
+        <plnk:role name="BPELValidationInvoicesBizProvider" portType="client:BPELValidationInvoicesBiz"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/MessageTec" location="oramds:/apps/SOA/MessageTec/MessageTec.wsdl"/>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" location="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.wsdl"/>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl"/>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz" location="oramds:/apps/SOA/ValidationInvoicesAPBiz/ValidationInvoicesAPBiz.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+             xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+             xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+             xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+             xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz" schemaLocation="oramds:/apps/SOA/ValidationInvoicesAPBiz/ValidationInvoicesAPBiz.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="http://www.sat.gob.mx/cfd/4" schemaLocation="oramds:/apps/Common/XSD/CFDI40/cfdv40.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="http://www.sat.gob.mx/cfd/3" schemaLocation="oramds:/apps/Common/XSD/CFDI/cfdv33.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+                 schemaLocation="oramds:/apps/Common/Report/XXER_AP_INVOICE_VALIDATION_AUTOMATICA.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="BPELValidationInvoicesBizRequestMessage">
+        <wsdl:part name="payload" element="ns1:ValidateInvoicesAPRq"/>
+    </wsdl:message>
+    <wsdl:portType name="BPELValidationInvoicesBiz">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:BPELValidationInvoicesBizRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

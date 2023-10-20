@@ -1,0 +1,616 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/" xmlns:ns0="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/" xmlns:ns1="http://xmlns.oracle.com/adf/svc/types/" xmlns:tns="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/"
+           schemaLocation="EssJob.xsd"/>
+   <import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <import namespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/"
+           schemaLocation="DocumentDetails.xsd"/>
+   <import namespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/"
+           schemaLocation="DocumentDetail.xsd"/>
+   <element name="getESSJobStatus">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSJobStatusResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDfltObjAttrHints">
+      <complexType>
+         <sequence>
+            <element name="viewName" type="string"/>
+            <element name="localeName" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDfltObjAttrHintsResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns1:ObjAttrHints"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getServiceLastUpdateTime">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="getServiceLastUpdateTimeResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns1:dateTime-Timestamp"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getEntityList">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="getEntityListResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns1:ServiceViewInfo"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getEntityListAsync">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="getEntityListAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns1:ServiceViewInfo"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSJobStatusAsync">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSJobStatusAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDfltObjAttrHintsAsync">
+      <complexType>
+         <sequence>
+            <element name="viewName" type="string"/>
+            <element name="localeName" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDfltObjAttrHintsAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns1:ObjAttrHints"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getServiceLastUpdateTimeAsync">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="getServiceLastUpdateTimeAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns1:dateTime-Timestamp"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitESSJobRequest">
+      <complexType>
+         <sequence>
+            <element name="jobPackageName" type="string"/>
+            <element name="jobDefinitionName" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="paramList" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitESSJobRequestResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitESSJobRequestAsync">
+      <complexType>
+         <sequence>
+            <element name="jobPackageName" type="string"/>
+            <element name="jobDefinitionName" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="paramList" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitESSJobRequestAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitJobWithOutput">
+      <complexType>
+         <sequence>
+            <element name="jobPackageName" type="string"/>
+            <element name="jobDefinitionName" type="string"/>
+            <element name="callbackURL" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="paramList" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitJobWithOutputResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitJobWithOutputAsync">
+      <complexType>
+         <sequence>
+            <element name="jobPackageName" type="string"/>
+            <element name="jobDefinitionName" type="string"/>
+            <element name="callbackURL" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="paramList" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="submitJobWithOutputAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentIdsForFilePrefix">
+      <complexType>
+         <sequence>
+            <element name="prefix" type="string"/>
+            <element name="account" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentIdsForFilePrefixResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentIdsForFilePrefixAsync">
+      <complexType>
+         <sequence>
+            <element name="prefix" type="string"/>
+            <element name="account" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentIdsForFilePrefixAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentForDocumentId">
+      <complexType>
+         <sequence>
+            <element name="DocumentId" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentForDocumentIdResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentForDocumentIdAsync">
+      <complexType>
+         <sequence>
+            <element name="DocumentId" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentForDocumentIdAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentsForFilePrefix">
+      <complexType>
+         <sequence>
+            <element name="prefix" type="string"/>
+            <element name="account" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentsForFilePrefixResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentsForFilePrefixAsync">
+      <complexType>
+         <sequence>
+            <element name="prefix" type="string"/>
+            <element name="account" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getDocumentsForFilePrefixAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="uploadFileToUcm">
+      <complexType>
+         <sequence>
+            <element name="document" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="uploadFileToUcmResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="uploadFileToUcmAsync">
+      <complexType>
+         <sequence>
+            <element name="document" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="uploadFileToUcmAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadESSJobExecutionDetails">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="string"/>
+            <element name="fileType" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadESSJobExecutionDetailsResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="appendFileComment">
+      <complexType>
+         <sequence>
+            <element name="documentId" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="appendFileCommentResponse">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="appendFileCommentAsync">
+      <complexType>
+         <sequence>
+            <element name="documentId" type="string"/>
+            <element name="comments" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="appendFileCommentAsyncResponse">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="downloadESSJobExecutionDetailsAsync">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="string"/>
+            <element name="fileType" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadESSJobExecutionDetailsAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadExportOutput">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadExportOutputResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadExportOutputAsync">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="downloadExportOutputAsyncResponse">
+      <complexType>
+         <sequence>
+            <element maxOccurs="unbounded" minOccurs="0" name="result" type="ns0:DocumentDetails"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="loadAndImportData">
+      <complexType>
+         <sequence>
+            <element name="document" type="ns0:DocumentDetails"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="jobList" type="ns0:EssJob"/>
+            <element maxOccurs="1" minOccurs="0" name="interfaceDetails" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="loadAndImportDataResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="loadAndImportDataAsync">
+      <complexType>
+         <sequence>
+            <element name="document" type="ns0:DocumentDetails"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="jobList" type="ns0:EssJob"/>
+            <element maxOccurs="1" minOccurs="0" name="interfaceDetails" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="loadAndImportDataAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="confirmExtractConsumption">
+      <complexType>
+         <sequence>
+            <element name="jobName" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="documentIDs" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="confirmExtractConsumptionResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="confirmExtractConsumptionAsync">
+      <complexType>
+         <sequence>
+            <element name="jobName" type="string"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="documentIDs" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="confirmExtractConsumptionAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInterfaceData">
+      <complexType>
+         <sequence>
+            <element name="processName" type="string"/>
+            <element name="loadRequestId" type="string"/>
+            <element name="document" type="ns1:base64Binary-DataHandler"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInterfaceDataResponse">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="updateInterfaceDataAsync">
+      <complexType>
+         <sequence>
+            <element name="processName" type="string"/>
+            <element name="loadRequestId" type="string"/>
+            <element name="document" type="ns1:base64Binary-DataHandler"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="updateInterfaceDataAsyncResponse">
+      <complexType>
+         <sequence/>
+      </complexType>
+   </element>
+   <element name="importBulkData">
+      <complexType>
+         <sequence>
+            <element maxOccurs="1" minOccurs="0" name="document" nillable="true" type="ns0:DocumentDetail"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="jobDetails" type="ns0:EssJob"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="importBulkDataResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="importBulkDataAsync">
+      <complexType>
+         <sequence>
+            <element maxOccurs="1" minOccurs="0" name="document" nillable="true" type="ns0:DocumentDetail"/>
+            <element maxOccurs="unbounded" minOccurs="0" name="jobDetails" type="ns0:EssJob"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="importBulkDataAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="extractAndPurge">
+      <complexType>
+         <sequence>
+            <element name="requestIds" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="extractAndPurgeResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="extractAndPurgeAsync">
+      <complexType>
+         <sequence>
+            <element name="requestIds" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="notificationCode" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="callbackURL" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="extractAndPurgeAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="exportBulkData">
+      <complexType>
+         <sequence>
+            <element name="jobName" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="parameterList" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+            <element name="callbackURL" type="string"/>
+            <element name="notificationCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="exportBulkDataResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="exportBulkDataAsync">
+      <complexType>
+         <sequence>
+            <element name="jobName" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="parameterList" nillable="true" type="string"/>
+            <element maxOccurs="1" minOccurs="0" name="jobOptions" nillable="true" type="string"/>
+            <element name="callbackURL" type="string"/>
+            <element name="notificationCode" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="exportBulkDataAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="long"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSExecutionDetails">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="long"/>
+            <element name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSExecutionDetailsResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSExecutionDetailsAsync">
+      <complexType>
+         <sequence>
+            <element name="requestId" type="long"/>
+            <element name="jobOptions" nillable="true" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="getESSExecutionDetailsAsyncResponse">
+      <complexType>
+         <sequence>
+            <element name="result" type="string"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

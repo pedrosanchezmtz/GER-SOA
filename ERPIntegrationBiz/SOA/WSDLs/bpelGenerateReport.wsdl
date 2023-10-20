@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGenerateReport" targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS">
+   <plnk:partnerLinkType name="bpelGenerateReport">
+      <plnk:role name="bpelGenerateReportProvider" portType="client:bpelGenerateReport"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS" location="bruleGenerateReportDS.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelGenerateReport" xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS">
+         <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" schemaLocation="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GenerateReportRq">
+      <wsdl:part name="GenerateReportRq" element="ns1:GenerateReportRq"/>
+   </wsdl:message>
+   <wsdl:message name="GenerateReportRs">
+      <wsdl:part name="GenerateReportRs" element="ns1:GenerateReportRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGenerateReport">
+      <wsdl:operation name="GenerateReport">
+         <wsdl:input message="client:GenerateReportRq"/>
+         <wsdl:output message="client:GenerateReportRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,78 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tns:MessageRq xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String" xmlns:erp="http://soa.estrellaroja.com.mx/InvoicesBiz/ERPIntegrationServiceTec" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soa.estrellaroja.com.mx/MessageTec">
+   <tns:Message>
+      <tns:Body>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+&lt;html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es" style="background:&amp;!hash;eee!important">
+	&lt;head>
+		&lt;title>Boleto&lt;/title>
+		&lt;style> @media only screen { html { min-height: 100%; background: &amp;!hash;f3f3f3 } } @media only screen and (max-width: 596px) { table.body img { width: auto; height: auto } table.body center { min-width: 0 !important } table.body .container { width: 95% !important } table.body .columns { height: auto !important; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding-left: 16px !important; padding-right: 16px !important } th.small-1 { display: inline-block !important; width: 8.33333% !important } th.small-3 { display: inline-block !important; width: 25% !important } th.small-4 { display: inline-block !important; width: 33.33333% !important } th.small-6 { display: inline-block !important; width: 50% !important } th.small-7 { display: inline-block !important; width: 58.33333% !important } th.small-10 { display: inline-block !important; width: 83.33333% !important } th.small-12 { display: inline-block !important; width: 100% !important } .columns th.small-12 { display: block !important; width: 100% !important } table.menu { width: 100% !important } table.menu td, table.menu th { width: auto !important; display: inline-block !important } table.menu.vertical td, table.menu.vertical th { display: block !important } table.menu[align=center] { width: auto !important } } @media only screen and (max-width: 596px) { .first, .last { padding-left: 0 !important; padding-right: 0 !important } .columns, th.large-2, th.large-3 { padding-left: 0 !important; padding-right: 0 !important } } &lt;/style>
+	&lt;/head>
+	&lt;body style="-moz-box-sizing:border-box;-ms-text-size-adjust:100%;-webkit-box-sizing:border-box;-webkit-text-size-adjust:100%;Margin:0;background:&amp;!hash;eee!important;box-sizing:border-box;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;min-width:100%;padding:0;text-align:left;width:100%!important;">
+		&lt;table bgcolor="&amp;!hash;000" class="wrapper container-fluid" align="center" style="background-color:&amp;!hash;eee;background-size:cover;border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;">
+			&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+				&lt;td class="wrapper-inner" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;">
+					&lt;table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;">
+						&lt;tbody>
+							&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+								&lt;td height="50px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:&amp;!hash;0a0a0a;font-size:50px;font-weight:400;hyphens:auto;line-height:50px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;"> &amp;&amp;!hash;xA0; &lt;/td>
+							&lt;/tr>
+						&lt;/tbody>
+					&lt;/table>
+					&lt;table align="center" class="container email-body" style="Margin:0 auto;background:&amp;!hash;fefefe;border-collapse:collapse;border-radius:25px!important;border-spacing:0;margin:0 auto;padding:0;text-align:inherit;vertical-align:top;width:580px;">
+						&lt;tbody>
+							&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+								&lt;td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;">
+									&lt;table class="row" style="border-collapse:collapse;border-spacing:0;display:table;padding:0;position:relative;text-align:left;vertical-align:top;width:100%;">
+										&lt;tbody>
+											&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+												&lt;th class="small-12 large-12 columns first last" style="Margin:0 auto;color:&amp;!hash;0a0a0a;float:left;font-size:16px;font-weight:400;line-height:1.3;margin:0 auto;padding:0;padding-bottom:16px;padding-left:16px;padding-right:16px;text-align:left;width:564px;">
+													&lt;table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;">
+														&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+															&lt;th style="Margin:0;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0;text-align:left;">
+																&lt;table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;">
+																	&lt;tbody>
+																		&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+																			&lt;td height="32px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:&amp;!hash;0a0a0a;font-size:32px;font-weight:400;hyphens:auto;line-height:32px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;"> &amp;&amp;!hash;xA0; &lt;/td>
+																		&lt;/tr>
+																	&lt;/tbody>
+																&lt;/table>
+																&lt;p style="color: &amp;!hash;000; font-size: .8em; font-weight: 400; line-height: 1.3; margin: 20; padding: 0;" align="right">2022-06-15&lt;/p>
+																&lt;h3 class="text-center" style="text-transform:uppercase;Margin:0;Margin-bottom:10px;color:inherit;font-size:22px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:center;word-wrap:normal;">
+																	&lt;b>Resultado de validación de comprobante Oracle&lt;/b>
+																&lt;/h3>
+																&lt;table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%;">
+																	&lt;tbody>
+																		&lt;tr style="padding:0;text-align:left;vertical-align:top;">
+																			&lt;td height="16px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;hyphens:auto;line-height:16px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word;"> &amp;&amp;!hash;xA0; &lt;/td>
+																		&lt;/tr>
+																	&lt;/tbody>
+																&lt;/table>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> ¡Estimado(a)! &lt;strong style="color: &amp;!hash;005cb9; text-transform: uppercase;">SupplierName930&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Se ha realizado el proceso de validación de tu comprobante que enviaste a través de nuestro portal de proveedores con los siguientes resultados: &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;">Estatus de validación: &lt;strong style="color:#DB4437" id="idValid" >RECHAZADA&lt;/strong>.&lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Folio: &lt;strong style="color: &amp;!hash;005cb9;">937&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> UUID: &lt;strong style="color: &amp;!hash;005cb9;">WERETRHGJYH&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Monto: &lt;strong style="color: &amp;!hash;005cb9;">9280.71&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Orden de compra: &lt;strong style="color: &amp;!hash;005cb9;">962&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Mensaje de estatus: &lt;strong style="color: &amp;!hash;005cb9;">message16&lt;/strong>. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify; Margin:0;Margin-bottom:10px;color:inherit;font-size:18px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;word-wrap:normal;"> Si el resultado de validación es exitoso, tu comprobante será enviado para aprobación y programación de pago, en caso contrario comunicate con nosotros para cualquier aclaración o duda. &lt;/h4>
+																&lt;h4 class="tittle" style="text-align:justify;color:inherit;font-size:12px;font-weight:400;line-height:1.3;margin-top:30px;margin-bottom:10px;padding:0;word-wrap:normal;"> Favor de no responder este correo. &lt;/h4>
+															&lt;/th>
+															&lt;th class="expander" style="Margin:0;color:&amp;!hash;0a0a0a;font-size:16px;font-weight:400;line-height:1.3;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0;"> &lt;/th>
+														&lt;/tr>
+													&lt;/table>
+												&lt;/th>
+											&lt;/tr>
+										&lt;/tbody>
+									&lt;/table>
+								&lt;/td>
+							&lt;/tr>
+						&lt;/tbody>
+					&lt;/table>
+				&lt;/td>
+			&lt;/tr>
+		&lt;/table>
+	&lt;/body>
+&lt;/html></tns:Body>
+   </tns:Message>
+</tns:MessageRq>

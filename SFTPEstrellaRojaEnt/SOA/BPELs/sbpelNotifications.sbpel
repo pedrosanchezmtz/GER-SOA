@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelNotifications" targetNamespace="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/sbpelNotifications" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/sbpelNotifications" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/MessageBiz" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsMessageBiz" partnerLinkType="ns1:wsMessageBiz" partnerRole="MessageBizPortType" myRole="MessageBizCallbackPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varMessageRq" messageType="ns1:MessageRq"/>
+      <variable name="varMessageRs" type="ns2:BaseRsType"/>
+   </variables>
+   <sequence name="main">
+      <scope name="Scope1">
+         <variables>
+            <variable name="varInvokeWSMessageBizSendEmailRq" messageType="ns1:MessageRq"/>
+         </variables>
+         <faultHandlers>
+            <catchAll>
+               <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00001</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[GenerateReport]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[SalesOrdersEnt]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catchAll>
+         </faultHandlers>
+         <sequence name="Sequence1">
+            <assign name="assignWsMessageRq">
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varMessageRq.MessageRq</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageBizSendEmailRq.MessageRq</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                  <from>$varMessageRq.CustomHeader</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageBizSendEmailRq.CustomHeader</to>
+               </copy>
+            </assign>
+            <invoke name="invokeWSMessageBizSendEmail" inputVariable="varInvokeWSMessageBizSendEmailRq" bpelx:invokeAsDetail="no" partnerLink="wsMessageBiz" portType="ns1:MessageBizPortType" operation="SendEmail"/>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

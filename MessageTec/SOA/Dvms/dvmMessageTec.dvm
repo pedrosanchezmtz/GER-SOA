@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmMessageTec" xmlns="http://xmlns.oracle.com/dvm">
+   <description>Configuración de Integraciones</description>
+   <columns>
+      <column name="IntegrationName"/>
+      <column name="Subject"/>
+      <column name="To"/>
+      <column name="CC" order="1"/>
+   </columns>
+   <rows> 
+      <row markdefault="false">
+         <cell>MessageBiz</cell>
+         <cell>MessageBiz</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InvoicesEnt$ValidatePaymentComplements</cell>
+         <cell>InvoicesEnt$ValidatePaymentComplements</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrePaymentsEnt</cell>
+         <cell>PrePaymentsEnt</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>CustomerBiz</cell>
+         <cell>CustomerBiz</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PaymentComplementEnt</cell>
+         <cell>PaymentComplementEnt</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InvoicesEnt$ElecInvoices</cell>
+         <cell>Timbrado Facturas</cell>
+         <cell>Timbrado Facturas</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InventoryBiz</cell>
+         <cell>Consumos de Diesel</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>Validación de Facturas AP</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReceiptEnt$CreateApplyReceipt</cell>
+         <cell>Creation and Application of Receipts</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfaceBankStatements</cell>
+         <cell>Resumen de procesamiento de importación de los Estados de Cuenta</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>JournalNEL1</cell>
+         <cell>Resumen de pólizas de Nomina de Empleados Libro ER</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>JournalNEL2</cell>
+         <cell>Resumen de pólizas de Nomina de Empleados Secundario ER</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>JournalTMSL1</cell>
+         <cell>Resumen de pólizas de Viajado Libro ER</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>JournalTMS1</cell>
+         <cell>Resumen de pólizas de Viajado Libro ER</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfacceAutoInvoiceImport</cell>
+         <cell>Procesamiento de Importación de Facturas</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row markdefault="false">
+         <cell>InterfacceUpdateInvoices</cell>
+         <cell>Procesamiento de actualización de Facturas</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row>
+         <cell>RegisterAssetStatus</cell>
+         <cell>Bloqueo/Desbloqueo de Unidades ZAM</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row>
+         <cell>RecordUnitMetrics</cell>
+         <cell>Bitácora de lectura de kilometros</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+      <row>
+         <cell>DailyRatesBiz</cell>
+         <cell>DailyRatesBiz</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+         <cell>jairo.rojas@estrellaroja.com.mx,pedro.sanchez@forteinnovation.mx</cell>
+      </row>
+                  <row>
+         <cell>Conciliation</cell>
+         <cell>Conciliacion TP Cash y AR</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+      </row> 
+      <row>
+         <cell>LetterPorteBiz</cell>
+         <cell>Proceso Carta Porte</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+      </row> 
+   </rows>
+</dvm>

@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorInvoicesBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="BuildInvoicesZip" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelBuildInvoicesZip.bpelBuildInvoicesZip.BuildInvoicesZip">
+            <action>
+               <assign>
+                  <copy expression="$in.BuildInvoicesZipRq/tns:BuildInvoicesZipRq" target="$out.BuildInvoicesZipRq/tns:BuildInvoicesZipRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelBuildInvoicesZip.bpelBuildInvoicesZip" operation="BuildInvoicesZip">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.BuildInvoicesZipRs/ns1:BuildInvoicesZipRs" target="$out.BuildInvoicesZipRs/ns1:BuildInvoicesZipRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ValidateInvoicesAP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelValidateInvoicesAP.bpelvalidateinvoicesap.ValidateInvoicesAP">
+            <action>
+               <assign>
+                  <copy expression="$in.ValidateInvoicesAPRq/tns:ValidateInvoicesAPRq" target="$out.payload/tns:ValidateInvoicesAPRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelValidateInvoicesAP.bpelvalidateinvoicesap" operation="ValidateInvoicesAP">
+                  <onCallback operation="ValidateInvoicesAPCallback">
+                     <assign>
+                        <copy expression="$in.payload/ns1:ValidateInvoicesAPRs" target="$out.ValidateInvoicesAPRs/ns1:ValidateInvoicesAPRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <callback operation="ValidateInvoicesAP"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="DigitalStamp" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelDigitalStamp.bpelDigitalStamp.DigitalStamp">
+            <action>
+               <assign>
+                  <copy expression="$in.DigitalStampRq/tns:DigitalStampRq" target="$out.DigitalStampRq/tns:DigitalStampRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelDigitalStamp.bpelDigitalStamp" operation="DigitalStamp">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.DigitalStampRs/ns1:DigitalStampRs" target="$out.DigitalStampRs/ns1:DigitalStampRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="ValidatePaymentComplements" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client.ValidatePaymentComplements">
+            <action>
+               <assign>
+                  <copy expression="$in.ValidatePaymentComplementsRqPart/tns:ValidatePaymentComplementsRq" target="$out.payload/tns:ValidatePaymentComplementsRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client" operation="ValidatePaymentComplements">
+                  <onCallback operation="ValidatePaymentComplementsResponse">
+                     <assign>
+                        <copy expression="$in.payload/ns1:ValidatePaymentComplementsRs" target="$out.ValidatePaymentComplementsRsPart/ns1:ValidatePaymentComplementsRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <callback operation="ValidatePaymentComplements"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="UploadPaymentComplements" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelUploadPaymentComplements.bpeluploadpaymentcomplements_client.UploadPaymentComplements">
+            <action>
+               <assign>
+                  <copy expression="$in.UploadPaymentComplementsRqPart/tns:UploadPaymentComplementsRq" target="$out.payload/tns:UploadPaymentComplementsRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelUploadPaymentComplements.bpeluploadpaymentcomplements_client" operation="UploadPaymentComplements">
+                  <onCallback operation="UploadPaymentComplementsResponse">
+                     <assign>
+                        <copy expression="$in.payload/ns1:UploadPaymentComplementsRs" target="$out.UploadPaymentComplementsRsPart/ns1:UploadPaymentComplementsRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <callback operation="UploadPaymentComplements"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="NotifyLoadInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelNotifyLoadInvoices.bpelNotifyLoadInvoices.NotifyLoadInvoices">
+            <action>
+               <assign>
+                  <copy expression="$in.NotifyLoadInvoicesRqPart/tns:NotifyLoadInvoicesRq" target="$out.NotifyLoadInvoicesRq/tns:NotifyLoadInvoicesRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelNotifyLoadInvoices.bpelNotifyLoadInvoices" operation="NotifyLoadInvoices">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.NotifyLoadInvoicesRs/ns1:NotifyLoadInvoicesRs" target="$out.NotifyLoadInvoicesRsPart/ns1:NotifyLoadInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="StatusLoadInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelStatusLoadInvoices.bpelStatusLoadInvoices.StatusLoadInvoices">
+            <action>
+               <assign>
+                  <copy expression="$in.StatusLoadInvoicesRq/tns:StatusLoadInvoicesRq" target="$out.StatusLoadInvoicesRq/tns:StatusLoadInvoicesRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelStatusLoadInvoices.bpelStatusLoadInvoices" operation="StatusLoadInvoices">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.StatusLoadInvoicesRs/ns1:StatusLoadInvoicesRs" target="$out.StatusLoadInvoicesRs/ns1:StatusLoadInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="UpdateUuid" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelUpdateUuid.bpelUpdateUuid.UpdateUuid">
+            <action>
+               <assign>
+                  <copy expression="$in.UpdateUuidRqPart/tns:UpdateUuidRq" target="$out.UpdateUuidRq/tns:UpdateUuidRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelUpdateUuid.bpelUpdateUuid" operation="UpdateUuid">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.UpdateUuidRs/ns1:UpdateUuidRs" target="$out.UpdateUuidRsPart/ns1:UpdateUuidRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetComplementToUpdInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetComplementToUpdInvoices.bpelGetComplementToUpdInvoices.GetComplementToUpdInvoices">
+            <action>
+               <assign>
+                  <copy expression="$in.GetComplementToUpdInvoicesRqPart/tns:GetComplementToUpdInvoicesRq" target="$out.GetComplementToUpdInvoicesRq/tns:GetComplementToUpdInvoicesRq" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+               </assign>
+               <invoke reference="bpelGetComplementToUpdInvoices.bpelGetComplementToUpdInvoices" operation="GetComplementToUpdInvoices">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetComplementToUpdInvoicesRs/ns1:GetComplementToUpdInvoicesRs" target="$out.GetComplementToUpdInvoicesRsPart/ns1:GetComplementToUpdInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="UpdateStatusInvoices" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelUpdateStatusInvoices.bpelUpdateStatusInvoices.UpdateStatusInvoices">
+            <action>
+               <assign>
+                  <copy expression="$in.UpdateStatusInvoicesRqPart" target="$out.UpdateStatusInvoicesRq"/>
+               </assign>
+               <invoke reference="bpelUpdateStatusInvoices.bpelUpdateStatusInvoices" operation="UpdateStatusInvoices">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.UpdateStatusInvoicesRs/ns1:UpdateStatusInvoicesRs" target="$out.UpdateStatusInvoicesRsPart/ns1:UpdateStatusInvoicesRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

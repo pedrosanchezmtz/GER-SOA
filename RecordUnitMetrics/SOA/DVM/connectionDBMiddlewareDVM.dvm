@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="connectionDBMiddlewareDVM" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Enviroment"/>
+      <column name="JNDIConnection"/>
+      <column name="SequenceValue"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>DEV</cell>
+         <cell>jdbc/ERSEPDB1DS</cell>
+         <cell>xxer_error_log_seq</cell>
+      </row>
+      <row>
+         <cell>PROD</cell>
+         <cell>jdbc/ERSEPDB1DS</cell>
+         <cell>xxer_error_log_seq</cell>
+      </row>
+   </rows>
+</dvm>

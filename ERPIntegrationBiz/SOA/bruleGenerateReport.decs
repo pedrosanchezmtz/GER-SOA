@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="bruleGenerateReport">
+    <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+        <repository type="SCA-Archive">
+            <path>ERPIntegrationBiz/oracle/rules/erpintegrationbiz/bruleGenerateReport.rules</path>
+        </repository>
+    </ruleEngineProvider>
+    <decisionService name="bruleGenerateReportDS" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/bruleGenerateReport/bruleGenerateReportDS">
+        <catalog>bruleGenerateReport</catalog>
+        <pattern name="CallFunctionStateless">
+            <arguments>
+                <call>erpintegrationbiz.bruleGenerateReport.S</call>
+            </arguments>
+        </pattern>
+        <pattern name="CallFunctionStateful">
+            <arguments>
+                <call>erpintegrationbiz.bruleGenerateReport.S</call>
+            </arguments>
+        </pattern>
+    </decisionService>
+    <schemaInformation>
+        <dictionary fqnPackage="erpintegrationbiz" fqnName="bruleGenerateReport" updateNumber="325">
+            <schemaBrowser>
+                <package>mx.com.estrellaroja.soa.erpintegrationbiz</package>
+                <namespace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz</namespace>
+            </schemaBrowser>
+            <schemaImport namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" localPart="ERPIntegrationBiz.xsd" schemaLocation="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd">
+                <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" localPart="ERPIntegrationBiz.xsd" schemaLocation="oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.xsd"/>
+                <import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" localPart="EstrellaRojaCommons.xsd" schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+            </schemaImport>
+        </dictionary>
+    </schemaInformation>
+</decisionServices>

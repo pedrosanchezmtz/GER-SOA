@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SelectDeliverAssets" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverAssets" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverAssets" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverAssets" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="SelectDeliverAssets_plt">
+      <plt:role name="SelectDeliverAssets_role">
+         <plt:portType name="tns:SelectDeliverAssets_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverAssets" schemaLocation="../../Schemas/Assets/SelectDeliverAssets.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SelectDeliverAssetsInput_msg">
+      <wsdl:part name="SelectDeliverAssetsInput_msg" element="db:SelectDeliverAssetsInput"/>
+   </wsdl:message>
+   <wsdl:message name="SelectDeliverAssetsOutputCollection_msg">
+      <wsdl:part name="SelectDeliverAssetsOutputCollection" element="db:SelectDeliverAssetsOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="SelectDeliverAssets_ptt">
+      <wsdl:operation name="SelectDeliverAssets">
+         <wsdl:input message="tns:SelectDeliverAssetsInput_msg"/>
+         <wsdl:output message="tns:SelectDeliverAssetsOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

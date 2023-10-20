@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="RegisterAssetStatusService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="986" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="979" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="RegisterAssetStatusService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus#wsdl.interface(RegisterAssetStatus_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>RegisterAssetStatus</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="wsDateService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="26" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsDateService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_UtilityTec/GetSysDate#wsdl.interface(GetSysDate_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetSysDate</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectDeliverAssetService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="144" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="137" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectDeliverAssetService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverAssets#wsdl.interface(SelectDeliverAssets_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectDeliverAssets</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectTratecsaAssetsService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="262" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="255" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectTratecsaAssetsService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaAssets#wsdl.interface(SelectTratecsaAssets_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectTratecsaAssets</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectTratecsaTravel">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="380" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="373" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectTratecsaTravel" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaTravleTraffic#wsdl.interface(SelectTratecsaTravleTraffic_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectTratecsaTravleTraffic</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectDeliverOrder">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="498" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="491" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectDeliverOrder" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverOrders#wsdl.interface(SelectDeliverOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectDeliverOrders</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectTratecsaOrder">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="616" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="609" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectTratecsaOrder" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders#wsdl.interface(SelectTratecsaOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectTratecsaOrders</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMSelectDeliverTravelTraffic">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="734" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="727" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMSelectDeliverTravelTraffic" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverTravelTraffic#wsdl.interface(SelectDeliverTravelTraffic_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SelectDeliverTravelTraffic</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsEAMWorkOrdersExecutionsService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="852" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="845" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsEAMWorkOrdersExecutionsService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMWorkOrdersExecutions#wsdl.interface(EAMWorkOrdersExecutions_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>insert</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSOAUtilitiesService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="970" width="136" height="156">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="963" width="156" height="170">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSOAUtilitiesService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetDateByTimeZone</dgm:item>
+            <dgm:item>GenerateZipFile</dgm:item>
+            <dgm:item>transformNumberToLetter</dgm:item>
+            <dgm:item>Decode</dgm:item>
+            <dgm:item>Encode</dgm:item>
+            <dgm:item>EncodeFileBase64</dgm:item>
+            <dgm:item>GetHtmlControl</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSendMailService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1160" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1153" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSendMailService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+            <dgm:item>SendEmailCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsInsertWorkOrdersService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1526" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1519" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsInsertWorkOrdersService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMInsertWorkOrders#wsdl.interface(EAMInsertWorkOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>insert</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsUpdateWorkOrdersService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1408" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1401" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsUpdateWorkOrdersService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMUpdateWorkOrders#wsdl.interface(EAMUpdateWorkOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>update</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSelectWorkOrdersService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1290" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1283" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSelectWorkOrdersService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrders#wsdl.interface(EAMSelectWorkOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>EAMSelectWorkOrdersSelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsZAMBlockAssetService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1762" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1755" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsZAMBlockAssetService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMBlockAsset#wsdl.interface(ZAMBlockAsset_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ZAMBlockAsset</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="ZAMUnblockAssetService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1644" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1637" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ZAMUnblockAssetService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset#wsdl.interface(ZAMUnblockAsset_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ZAMUnblockAsset</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsEAMSelectWorkOrdersByUnit">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1880" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1873" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsEAMSelectWorkOrdersByUnit" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByUnit#wsdl.interface(EAMSelectWorkOrdersByUnit_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>EAMSelectWorkOrdersByUnit</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsEAMSelectUnprocessedWorkOrders">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="1998" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="1991" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsEAMSelectUnprocessedWorkOrders" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectUnprocessedWorkOrders#wsdl.interface(EAMSelectUnprocessedWorkOrders_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>EAMSelectUnprocessedWorkOrders</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsEAMSelectWorkOrdersByStatusService">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="2116" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="2109" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsEAMSelectWorkOrdersByStatusService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus#wsdl.interface(EAMSelectWorkOrdersByStatus_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>EAMSelectWorkOrdersByStatus</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsERPIntegrationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="2234" width="136" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="2227" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ImportToERPCloud</dgm:item>
+            <dgm:item>GenerateReport</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>ImportToERPCloudCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsERPIntegrationAPITec">
+        <dgm:body borderWidth="2" arcRad="20" X="756" Y="2388" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="746" Y="2381" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationAPITec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec#wsdl.interface(postInvoicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>postInvoice</dgm:item>
+            <dgm:item>updateFlexMaintenanceWO</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="RegisterAssetStatus">
+        <dgm:body borderWidth="2" arcRad="20" X="392" Y="971" width="130" height="536">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="382" Y="964" width="150" height="552">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="RegisterAssetStatusService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus#wsdl.interface(RegisterAssetStatus_ptt)"/>
+        <dgm:outputPort name="wsDateService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_UtilityTec/GetSysDate#wsdl.interface(GetSysDate_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectDeliverAssetService" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverAssets#wsdl.interface(SelectDeliverAssets_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectTratecsaAssetsService" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaAssets#wsdl.interface(SelectTratecsaAssets_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectTratecsaTravel" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaTravleTraffic#wsdl.interface(SelectTratecsaTravleTraffic_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectDeliverOrder" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverOrders#wsdl.interface(SelectDeliverOrders_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectTratecsaOrder" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders#wsdl.interface(SelectTratecsaOrders_ptt)"/>
+        <dgm:outputPort name="wsZAMSelectDeliverTravelTraffic" X="120" Y="165" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverTravelTraffic#wsdl.interface(SelectDeliverTravelTraffic_ptt)"/>
+        <dgm:outputPort name="wsEAMWorkOrdersExecutionsService" X="120" Y="190" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMWorkOrdersExecutions#wsdl.interface(EAMWorkOrdersExecutions_ptt)"/>
+        <dgm:outputPort name="wsSOAUtilitiesService" X="120" Y="215" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:outputPort name="wsSendMailService" X="120" Y="240" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+        <dgm:outputPort name="wsSelectWorkOrdersService" X="120" Y="265" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrders#wsdl.interface(EAMSelectWorkOrders_ptt)"/>
+        <dgm:outputPort name="wsUpdateWorkOrdersService" X="120" Y="290" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMUpdateWorkOrders#wsdl.interface(EAMUpdateWorkOrders_ptt)"/>
+        <dgm:outputPort name="wsInsertWorkOrdersService" X="120" Y="315" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMInsertWorkOrders#wsdl.interface(EAMInsertWorkOrders_ptt)"/>
+        <dgm:outputPort name="ZAMUnblockAssetService" X="120" Y="340" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset#wsdl.interface(ZAMUnblockAsset_ptt)"/>
+        <dgm:outputPort name="wsZAMBlockAssetService" X="120" Y="365" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMBlockAsset#wsdl.interface(ZAMBlockAsset_ptt)"/>
+        <dgm:outputPort name="wsEAMSelectWorkOrdersByUnit" X="120" Y="390" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByUnit#wsdl.interface(EAMSelectWorkOrdersByUnit_ptt)"/>
+        <dgm:outputPort name="wsEAMSelectUnprocessedWorkOrders" X="120" Y="415" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectUnprocessedWorkOrders#wsdl.interface(EAMSelectUnprocessedWorkOrders_ptt)"/>
+        <dgm:outputPort name="wsEAMSelectWorkOrdersByStatusService" X="120" Y="440" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus#wsdl.interface(EAMSelectWorkOrdersByStatus_ptt)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="465" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationAPITec" X="120" Y="490" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec#wsdl.interface(postInvoicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="RegisterAssetStatus/wsDateService" target="wsDateService" width="2">
+        <dgm:gSegment X1="532" Y1="996" X2="556" Y2="996"/>
+        <dgm:gSegment X1="556" Y1="996" X2="556" Y2="36"/>
+        <dgm:gSegment X1="556" Y1="36" X2="746" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectDeliverAssetService" target="wsZAMSelectDeliverAssetService" width="2">
+        <dgm:gSegment X1="532" Y1="1021" X2="571" Y2="1021"/>
+        <dgm:gSegment X1="571" Y1="1021" X2="571" Y2="154"/>
+        <dgm:gSegment X1="571" Y1="154" X2="746" Y2="154"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectTratecsaAssetsService" target="wsZAMSelectTratecsaAssetsService" width="2">
+        <dgm:gSegment X1="532" Y1="1046" X2="586" Y2="1046"/>
+        <dgm:gSegment X1="586" Y1="1046" X2="586" Y2="272"/>
+        <dgm:gSegment X1="586" Y1="272" X2="746" Y2="272"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectTratecsaTravel" target="wsZAMSelectTratecsaTravel" width="2">
+        <dgm:gSegment X1="532" Y1="1071" X2="601" Y2="1071"/>
+        <dgm:gSegment X1="601" Y1="1071" X2="601" Y2="390"/>
+        <dgm:gSegment X1="601" Y1="390" X2="746" Y2="390"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectDeliverOrder" target="wsZAMSelectDeliverOrder" width="2">
+        <dgm:gSegment X1="532" Y1="1096" X2="616" Y2="1096"/>
+        <dgm:gSegment X1="616" Y1="1096" X2="616" Y2="508"/>
+        <dgm:gSegment X1="616" Y1="508" X2="746" Y2="508"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectTratecsaOrder" target="wsZAMSelectTratecsaOrder" width="2">
+        <dgm:gSegment X1="532" Y1="1121" X2="631" Y2="1121"/>
+        <dgm:gSegment X1="631" Y1="1121" X2="631" Y2="626"/>
+        <dgm:gSegment X1="631" Y1="626" X2="746" Y2="626"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMSelectDeliverTravelTraffic" target="wsZAMSelectDeliverTravelTraffic" width="2">
+        <dgm:gSegment X1="532" Y1="1146" X2="646" Y2="1146"/>
+        <dgm:gSegment X1="646" Y1="1146" X2="646" Y2="744"/>
+        <dgm:gSegment X1="646" Y1="744" X2="746" Y2="744"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsEAMWorkOrdersExecutionsService" target="wsEAMWorkOrdersExecutionsService" width="2">
+        <dgm:gSegment X1="532" Y1="1171" X2="661" Y2="1171"/>
+        <dgm:gSegment X1="661" Y1="1171" X2="661" Y2="862"/>
+        <dgm:gSegment X1="661" Y1="862" X2="746" Y2="862"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsSOAUtilitiesService" target="wsSOAUtilitiesService" width="2">
+        <dgm:gSegment X1="532" Y1="1196" X2="676" Y2="1196"/>
+        <dgm:gSegment X1="676" Y1="1196" X2="676" Y2="980"/>
+        <dgm:gSegment X1="676" Y1="980" X2="746" Y2="980"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsSendMailService" target="wsSendMailService" width="2">
+        <dgm:gSegment X1="532" Y1="1221" X2="691" Y2="1221"/>
+        <dgm:gSegment X1="691" Y1="1221" X2="691" Y2="1170"/>
+        <dgm:gSegment X1="691" Y1="1170" X2="746" Y2="1170"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsSelectWorkOrdersService" target="wsSelectWorkOrdersService" width="2">
+        <dgm:gSegment X1="532" Y1="1246" X2="691" Y2="1246"/>
+        <dgm:gSegment X1="691" Y1="1246" X2="691" Y2="1300"/>
+        <dgm:gSegment X1="691" Y1="1300" X2="746" Y2="1300"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsUpdateWorkOrdersService" target="wsUpdateWorkOrdersService" width="2">
+        <dgm:gSegment X1="532" Y1="1271" X2="676" Y2="1271"/>
+        <dgm:gSegment X1="676" Y1="1271" X2="676" Y2="1418"/>
+        <dgm:gSegment X1="676" Y1="1418" X2="746" Y2="1418"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsInsertWorkOrdersService" target="wsInsertWorkOrdersService" width="2">
+        <dgm:gSegment X1="532" Y1="1296" X2="661" Y2="1296"/>
+        <dgm:gSegment X1="661" Y1="1296" X2="661" Y2="1536"/>
+        <dgm:gSegment X1="661" Y1="1536" X2="746" Y2="1536"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/ZAMUnblockAssetService" target="ZAMUnblockAssetService" width="2">
+        <dgm:gSegment X1="532" Y1="1321" X2="646" Y2="1321"/>
+        <dgm:gSegment X1="646" Y1="1321" X2="646" Y2="1654"/>
+        <dgm:gSegment X1="646" Y1="1654" X2="746" Y2="1654"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsZAMBlockAssetService" target="wsZAMBlockAssetService" width="2">
+        <dgm:gSegment X1="532" Y1="1346" X2="631" Y2="1346"/>
+        <dgm:gSegment X1="631" Y1="1346" X2="631" Y2="1772"/>
+        <dgm:gSegment X1="631" Y1="1772" X2="746" Y2="1772"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsEAMSelectWorkOrdersByUnit" target="wsEAMSelectWorkOrdersByUnit" width="2">
+        <dgm:gSegment X1="532" Y1="1371" X2="616" Y2="1371"/>
+        <dgm:gSegment X1="616" Y1="1371" X2="616" Y2="1890"/>
+        <dgm:gSegment X1="616" Y1="1890" X2="746" Y2="1890"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsEAMSelectUnprocessedWorkOrders" target="wsEAMSelectUnprocessedWorkOrders" width="2">
+        <dgm:gSegment X1="532" Y1="1396" X2="601" Y2="1396"/>
+        <dgm:gSegment X1="601" Y1="1396" X2="601" Y2="2008"/>
+        <dgm:gSegment X1="601" Y1="2008" X2="746" Y2="2008"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsEAMSelectWorkOrdersByStatusService" target="wsEAMSelectWorkOrdersByStatusService" width="2">
+        <dgm:gSegment X1="532" Y1="1421" X2="586" Y2="1421"/>
+        <dgm:gSegment X1="586" Y1="1421" X2="586" Y2="2126"/>
+        <dgm:gSegment X1="586" Y1="2126" X2="746" Y2="2126"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatusService" target="RegisterAssetStatus/RegisterAssetStatusService" width="2">
+        <dgm:gSegment X1="168" Y1="996" X2="382" Y2="996"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="532" Y1="1446" X2="571" Y2="1446"/>
+        <dgm:gSegment X1="571" Y1="1446" X2="571" Y2="2244"/>
+        <dgm:gSegment X1="571" Y1="2244" X2="746" Y2="2244"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="RegisterAssetStatus/wsERPIntegrationAPITec" target="wsERPIntegrationAPITec" width="2">
+        <dgm:gSegment X1="532" Y1="1471" X2="556" Y2="1471"/>
+        <dgm:gSegment X1="556" Y1="1471" X2="556" Y2="2398"/>
+        <dgm:gSegment X1="556" Y1="2398" X2="746" Y2="2398"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="3" name="funcXqyvalidatepaymentsrs_to_uploadattachmentsrq1">
+      <source_tree_view last.visible.row="43" last.visible.path="/sourceRoot[[0]]/ValidateInvoicesAPRq[[1]]/InvoicesAP[[0]]/InvoiceAP[[0]]/OrderNumber[[39]]" first.visible.path="/sourceRoot[[0]]/ValidatePaymenyRs[[0]]" expanded.paths="/sourceRoot[[0]]/ValidateInvoicesAPRq[[1]]&#xA;/sourceRoot[[0]]/ValidateInvoicesAPRq[[1]]/InvoicesAP[[0]]&#xA;/sourceRoot[[0]]/ValidateInvoicesAPRq[[1]]/InvoicesAP[[0]]/InvoiceAP[[0]]" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="12" last.visible.path="/TargetRoot[[0]]/UploadAttachmentsRq[[0]]/attachmentRows[[3]]/Content[[7]]" first.visible.path="/TargetRoot[[0]]/UploadAttachmentsRq[[0]]" expanded.paths="/TargetRoot[[0]]/UploadAttachmentsRq[[0]]&#xA;/TargetRoot[[0]]/UploadAttachmentsRq[[0]]/attachmentRows[[3]]" first.visible.row="0" selected.paths=""/>
+   </function>
+</view_states>

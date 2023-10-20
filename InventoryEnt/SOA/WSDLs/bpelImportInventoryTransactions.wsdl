@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelImportInventoryTransactions" targetNamespace="http://soa.estrellaroja.com.mx/InventoryEnt/bpelImportInventoryTransactions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryEnt/bpelImportInventoryTransactions" xmlns:ns0="http://soa.estrellaroja.com.mx/InventoryEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz">
+   <plnk:partnerLinkType name="bpelImportInventoryTransactions">
+      <plnk:role name="bpelImportInventoryTransactionsProvider" portType="client:bpelImportInventoryTransactions"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/InventoryEnt" location="oramds:/apps/SOA/InventoryEnt/InventoryEnt.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/InventoryEnt" schemaLocation="oramds:/apps/SOA/InventoryEnt/InventoryEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/InventoryBiz" schemaLocation="oramds:/apps/SOA/InventoryBiz/InventoryBiz.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="ImportInventoryRq">
+      <wsdl:part name="ImportInventoryRq" element="ns0:ImportInventoryRq"/>
+   </wsdl:message>
+   <wsdl:message name="ImportInventoryRs">
+      <wsdl:part name="ImportInventoryRs" element="ns0:ImportInventoryRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelImportInventoryTransactions">
+      <wsdl:operation name="ImportInventory">
+         <wsdl:input message="client:ImportInventoryRq"/>
+         <wsdl:output message="client:ImportInventoryRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

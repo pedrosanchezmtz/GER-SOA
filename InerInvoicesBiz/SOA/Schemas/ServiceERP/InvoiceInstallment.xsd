@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" sdoJava:package="oracle.apps.financials.payables.invoices.transactions.invoiceService" xmlns:ns0="http://xmlns.oracle.com/adf/svc/types/" xmlns:ns1="http://xmlns.oracle.com/apps/flex/financials/payables/invoices/transactions/installmentsGdf/" xmlns:ns2="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/flex/installments/" xmlns:sdo="commonj.sdo" xmlns:sdoJava="commonj.sdo/java" xmlns:sdoXML="commonj.sdo/xml" xmlns="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/invoiceService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+         <name>Invoice Installment SDO</name>
+         <description>Information related to Invoice Installments.</description>
+         <oer:attributes>
+            <oer:attribute description="Indicates the amount unpaid/remaining for an installment." name="UnpaidAmount"/>
+            <oer:attribute description="Invoice unique identifier." name="InvoiceId"/>
+            <oer:attribute description="Installment identifier." name="InstallmentNumber"/>
+            <oer:attribute description="Object Version Number" name="ObjectVersionNumber"/>
+            <oer:attribute description="Indicates the first discount amount available on an installment." name="FirstDiscountAmount"/>
+            <oer:attribute description="Indicates the discount amount remaining on an installment." name="DiscountAmountRemaining"/>
+            <oer:attribute description="Indicates the first discount date on an installment." name="FirstDiscountDate"/>
+            <oer:attribute description="Indicates the due date of an installment." name="DueDate"/>
+            <oer:attribute description="Indicates the gross amount of an installment." name="GrossAmount"/>
+            <oer:attribute description="Business unit identifier." name="OrgId"/>
+            <oer:attribute description="Indicates the payment method identifier of an installment." name="PaymentMethodCode"/>
+            <oer:attribute description="Indicates the payment status of an installment." name="PaymentStatus"/>
+            <oer:attribute description="Third party address identifier." name="RemitToAddressId"/>
+            <oer:attribute description="Third party address name." name="RemitToAddressName"/>
+            <oer:attribute description="Third party supplier identifier." name="RemitToSupplierId"/>
+            <oer:attribute description="Third party supplier name." name="RemitToSupplier"/>
+            <oer:attribute description="Indicates the second discount amount available on an installment." name="SecondDiscountAmount"/>
+            <oer:attribute description="Indicates the second discount date on an installment." name="SecondDiscountDate"/>
+            <oer:attribute description="Indicates the third discount amount available on an installment." name="ThirdDiscountAmount"/>
+            <oer:attribute description="Indicates the third discount date on an installment." name="ThirdDiscountDate"/>
+            <oer:attribute description="Indicates the user who created the row." name="CreatedBy"/>
+            <oer:attribute description="Indicates the date and time of the creation of the row." name="CreationDate"/>
+            <oer:attribute description="Indicates the user who last updated the row." name="LastUpdatedBy"/>
+            <oer:attribute description="Indicates the date and time of the last update of the row." name="LastUpdateDate"/>
+            <oer:attribute description="Indicates if the installment is selected for payment." name="CheckrunId"/>
+            <oer:attribute description="Indicates if the invoice is selected for validation." name="ValidationRequestId"/>
+            <oer:attribute description="Indicates invoice type." name="InvoiceTypeLookupCode"/>
+            <oer:attribute description="Currency code used on the invoice." name="InvoiceCurrencyCode"/>
+            <oer:attribute description="Indicates the payment method name of the installment." name="PaymentMethod"/>
+            <oer:attribute description="Invoice Installments GDF." name="InstallmentsGdf"/>
+            <oer:attribute description="Invoice Installments DFF." name="InstallmentsDffVO"/>
+         </oer:attributes>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="http://xmlns.oracle.com/adf/svc/types/" schemaLocation="BC4JService.xsd"/>
+   <xsd:import namespace="http://xmlns.oracle.com/apps/flex/financials/payables/invoices/transactions/installmentsGdf/"
+               schemaLocation="InstallmentsGdf.xsd"/>
+   <xsd:import namespace="http://xmlns.oracle.com/apps/financials/payables/invoices/transactions/flex/installments/"
+               schemaLocation="InstallmentsDff.xsd"/>
+   <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+   <xsd:import namespace="commonj.sdo/xml" schemaLocation="sdoXML.xsd"/>
+   <xsd:import namespace="commonj.sdo" schemaLocation="sdoModel.xsd"/>
+   <xsd:complexType name="InvoiceInstallment">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>InvoiceId</attribute>
+               <attribute>PaymentNum</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="InvoiceId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="InstallmentNumber" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="OrgId" type="xsd:long" sdoXML:dataType="sdoJava:LongObject"/>
+         <xsd:element minOccurs="0" name="DueDate" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="UnpaidAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="GrossAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="FirstDiscountAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="FirstDiscountDate" nillable="true" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="SecondDiscountAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="SecondDiscountDate" nillable="true" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="ThirdDiscountAmount" nillable="true" type="ns0:AmountType"/>
+         <xsd:element minOccurs="0" name="ThirdDiscountDate" nillable="true" type="ns0:date-Date"/>
+         <xsd:element minOccurs="0" name="PaymentMethod" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="PaymentStatus" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="RemitToAddressName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="RemitToSupplier" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CreatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="CreationDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="LastUpdatedBy" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="LastUpdateDate" type="ns0:dateTime-Timestamp"/>
+         <xsd:element minOccurs="0" name="InstallmentsGdf" type="ns1:InstallmentsGdf" sdoXML:dataType="sdo:DataObject"/>
+         <xsd:element minOccurs="0" name="InstallmentsDffVO" type="ns2:InstallmentsDff" sdoXML:dataType="sdo:DataObject"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="invoiceInstallment" type="InvoiceInstallment"/>
+</xsd:schema>

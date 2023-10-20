@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelStampPaymentComplement" targetNamespace="http://soa.estrellaroja.com.mx/PaymentComplementEnt/bpelStampPaymentComplement" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/PaymentComplementEnt/bpelStampPaymentComplement" xmlns:ns0="http://soa.estrellaroja.com.mx/PaymentComplementEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension">
+   <plnk:partnerLinkType name="bpelStampPaymentComplement">
+      <plnk:role name="bpelStampPaymentComplementProvider" portType="client:bpelStampPaymentComplement"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/PaymentComplementEnt/bpelStampPaymentComplement" xmlns:ns0="http://soa.estrellaroja.com.mx/PaymentComplementEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension">
+         <import namespace="http://soa.estrellaroja.com.mx/PaymentComplementEnt" schemaLocation="oramds:/apps/SOA/PaymentComplementEnt/PaymentComplementEnt.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="StampPaymentComplementRq">
+      <wsdl:part name="StampPaymentComplementRq" element="ns0:StampPaymentComplementRq"/>
+   </wsdl:message>
+   <wsdl:message name="StampPaymentComplementRs">
+      <wsdl:part name="StampPaymentComplementRs" element="ns0:StampPaymentComplementRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelStampPaymentComplement">
+      <wsdl:operation name="StampPaymentComplement">
+         <wsdl:input message="client:StampPaymentComplementRq"/>
+         <wsdl:output message="client:StampPaymentComplementRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='Tr_MetricsReadingResponse']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>264</line>
+      <col/>
+      <file>BPEL/RecordUnitMterics.bpel</file>
+      <name>BPEL/RecordUnitMterics.bpel</name>
+      <fix>Please define this prefix in the BPEL source file.</fix>
+      <msg>Namespace prefix "" qualifying "Out_GetMileageSine.reply" cannot be resolved.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='Tr_MetricsReadingResponse']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>264</line>
+      <col/>
+      <file>BPEL/RecordUnitMterics.bpel</file>
+      <name>BPEL/RecordUnitMterics.bpel</name>
+      <fix>Please define this prefix in the BPEL source file.</fix>
+      <msg>Namespace prefix "" qualifying "Out_GetMileageOmnitracs.reply" cannot be resolved.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='Tr_MetricsReadingResponse']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>264</line>
+      <col/>
+      <file>BPEL/RecordUnitMterics.bpel</file>
+      <name>BPEL/RecordUnitMterics.bpel</name>
+      <fix>Please define this prefix in the BPEL source file.</fix>
+      <msg>Namespace prefix "" qualifying "Out_GetTomTom.reply" cannot be resolved.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='Tr_MetricsReadingResponse']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>264</line>
+      <col/>
+      <file>BPEL/RecordUnitMterics.bpel</file>
+      <name>BPEL/RecordUnitMterics.bpel</name>
+      <fix>Please define this prefix in the BPEL source file.</fix>
+      <msg>Namespace prefix "" qualifying "Out_GetMileageExcel.GetMileageExcelOutputCollection" cannot be resolved.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='process']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='sequence'][@name='main']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='assign'][@name='Tr_GetHTMLResponse']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='copy']/*[namespace-uri()='http://docs.oasis-open.org/wsbpel/2.0/process/executable'][local-name()='from']</loc>
+      <line>1530</line>
+      <col/>
+      <file>BPEL/RecordUnitMterics.bpel</file>
+      <name>BPEL/RecordUnitMterics.bpel</name>
+      <fix>Please define this prefix in the BPEL source file.</fix>
+      <msg>Namespace prefix "" qualifying "Out_EAMSelectErrorRecord.EAMSelectErrorRecordOutputCollection" cannot be resolved.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:wire/ns:target.uri[.='wsERPFusionReportService']</loc>
+      <line>209</line>
+      <col>19</col>
+      <file>D:\Drive\Work\GER_SOA_OCI\RecordUnitMetrics\SOA\composite.xml</file>
+      <name>D:\Drive\Work\GER_SOA_OCI\RecordUnitMetrics\SOA\composite.xml</name>
+      <fix/>
+      <msg>Fallo de validación de esquema con la excepción "null"</msg>
+   </Fault>
+</Faults>

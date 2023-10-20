@@ -1,0 +1,474 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmValidationPaymentsBiz" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+      <column name="Description" order="1"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>ComplementoPagoValidadoManual</cell>
+         <cell>COMPLEMENTO SUJETO A VALIDACION MANUAL</cell>
+         <cell>Sujeto del mensaje de notifiacion para proveedores de los cuales en el pago se a asignado un motivo para validacion manual</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>ComplementoPagoValidadoManual</cell>
+         <cell>Favor de no Responder este correo, es solo para notificar que no es necesario el envio de adjuntos de este pago, ya que se realizara la validacion Manual de este Pago  debido a: </cell>
+         <cell>Cuerpo de mensaje de notifiacion proveedores de los cuales en el pago se a asignado un motivo para validacion manua</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>ComplementoPagoProvExt</cell>
+         <cell>COMPLEMENTO DE PAGO EXTRANJERO VALIDADO</cell>
+         <cell>Sujeto del mensaje de notifiacion para proveedores extranjeros</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>ComplementoPagoProvExt</cell>
+         <cell>Pago Proveedor extranjero ya se encuentra en el Sistema</cell>
+         <cell>Cuerpo de mensaje de notifiacion para proveedores extranjeros</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>ComplementoPagoNoP</cell>
+         <cell>COMPLEMENTO DE PAGO RECHAZADO</cell>
+         <cell>Subject del correo para error en tipo de comprobante no es tipo P</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>ComplementoPagoNoP</cell>
+         <cell>El CFDI recibido no es tipo de comprobante P, por favor envie un comprobante tipo P valido</cell>
+         <cell>Cuerpo de mensaje de notifiacion para tipo de comprobante no es tipo P</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>EmailPagoNC</cell>
+         <cell>Notificación de comprobante bancario</cell>
+         <cell>Subject del correo para notificar envio de comprobante bancario para notas de credito</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>EmailPagoNC</cell>
+         <cell>Favor de no responder este correo, solo es de informacion de compensacion de facturas y/o aplicacion de nota de credito según detalle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para envio comprobante bancario para notas de credito</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>PagoYaSupendidoYaNoValida</cell>
+         <cell>Notificación error validando pago</cell>
+         <cell>Subject del correo para error cuando el pago ya esta en un estatus suspendido ya no valida pagos</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>PagoYaSupendidoYaNoValida</cell>
+         <cell>Favor de no responder este correo, solo es de informacion el pago no puede ser validado ya que esta en un estatus suspendido por no enviar comprobantes en tiempo</cell>
+         <cell>Cuerpo de mensaje de notifiacion para cuando el pago ya esta en un estatus suspendido ya no valida pagos</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_F_S_XML</cell>
+         <cell>COMPLEMENTO DE PAGO RECHAZADO</cell>
+         <cell>Subject del correo para error en obteniendo datos de uno de uno de los XML de las facturas relacionadas al Pago</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_F_S_XML</cell>
+         <cell>FALTA RELACIONAR 1 O MAS UUID DE LAS FACTURAS PAGADAS EN ESTE COMPLEMENTO</cell>
+         <cell>Cuerpo de mensaje de notifiacion para error en obteniendo datos de uno de uno de los XML de las facturas relacionadas al Pago</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_F_R</cell>
+         <cell>COMPLEMENTO DE PAGO RECHAZADO</cell>
+         <cell>Subject del correo para Cuando ocurre un error obteniendo la informacion del XML de las facturas Relacionadas al Pago</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_F_R</cell>
+         <cell>INCORRECTO EL UUID RELACIONADO EN EL COMPLEMENTO</cell>
+         <cell>Cuerpo de mensaje de notifiacion para Cuando ocurre un error obteniendo la informacion del XML de las facturas Relacionadas al Pago</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_E_N_P</cell>
+         <cell>ERROR DE RECEPCION DE COMPLEMENTO DE PAGO</cell>
+         <cell>Subject del correo de error no controlado para el envio de notificaciones</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_E_N_P</cell>
+         <cell>POR FAVOR PONGASE EN CONTACTO CON SOPORTE TECNICO DE GER PARA SU SOLUCION</cell>
+         <cell>Cuerpo de mensaje de notifiacion para error no controlado para el envio de notificaciones</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>S_Adj</cell>
+         <cell>Solicitud de complemento de pago</cell>
+         <cell>Subject del correo para solicitud de adjuntos para validacion</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>S_Adj</cell>
+         <cell>Se adjunta el comprobante bancario por su pago realizado. Favor de adjuntar su complemento de pago (XML y PDF)</cell>
+         <cell>Cuerpo de mensaje de notifiacion para solicitud de adjuntos para validacion</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>R_S_Adj</cell>
+         <cell>RECORDATORIO DE SOLICITUD DE COMPLEMENTO DE PAGO</cell>
+         <cell>Subject del correo para Recordatorio de solicitud de adjuntos para validacion</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>R_S_Adj</cell>
+         <cell>Favor de adjuntar su complemento de pago (XML y PDF). De lo contrario nos veremos en la necesidad de suspender sus pagos futuros.</cell>
+         <cell>Cuerpo de mensaje de notifiacion para Recordatorio de solicitud de adjuntos para validacion</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>P_C_O</cell>
+         <cell>NOTIFICACIÓN DE SUSPENCIÓN DE PAGOS</cell>
+         <cell>Subject del correo notificacion de suspencion de Pagos</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>P_C_O</cell>
+         <cell>Debido a la falta de complemento de pago (XML y PDF). Se notifica la suspensión de sus futuros pagos.</cell>
+         <cell>Cuerpo de mensaje de notifiacion para suspencion de Pagos</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>P_SN_C</cell>
+         <cell>PAGO SIN COMPROBANTE</cell>
+         <cell>PAGO SIN COMPROBANTE</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>P_SN_C</cell>
+         <cell>Existe pago registrado y conciliado sin comprobante adjunto. Adjunta comprobante para que se pueda enviar al proveedor.</cell>
+         <cell>Cuerpo de mensaje de notifiacion para cuando no es posible el envio del comprobante de pago ya que bno se encontro en el SFTP</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>P_Y_V</cell>
+         <cell>COMPLEMENTO DE PAGO YA VALIDADO</cell>
+         <cell>Subject del correo para cuando el pago ya fue Validado previamente</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>P_Y_V</cell>
+         <cell>EL COMPLEMENTO DE PAGO NO PUEDE SER VALIDADO POR QUE YA SE ENCUENTRA EN ESTATUS VALIDADO EN EL SISTEMA</cell>
+         <cell>Cuerpo de mensaje de notifiacion para cuando el pago ya fue Validado previamente</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>N_P_O</cell>
+         <cell>Notificación de comprobante bancario</cell>
+         <cell>Subject del correo para solo notificar y enviar comprobante bancario</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>N_P_O</cell>
+         <cell>Favor de no responder este correo. Se adjunta el comprobante bancario por su pago realizado. Confirmar en su estado de cuenta el deposito recibido.</cell>
+         <cell>Cuerpo de mensaje de notifiacion para solo notificar y enviar comprobante bancario</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>P_V</cell>
+         <cell>COMPLEMENTO DE PAGO VALIDADO CORRECTAMENTE</cell>
+         <cell>Subject del correo para pago validado correctamente</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>P_V</cell>
+         <cell>EL COMPLEMENTO DE PAGO FUE VALIDADO DE MANERA EXITOSA EN EL SISTEMA</cell>
+         <cell>Cuerpo de mensaje de notifiacion para pago validado correctamente</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MensajeDesc</cell>
+         <cell>P_V_L</cell>
+         <cell>LA LINEA DEL PAGO FUE VALIDADA DE MANERA EXITOSA EN EL SISTEMA</cell>
+         <cell>descripcion de linea validada correctamente</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_P_SN_XML</cell>
+         <cell>COMPLEMENTO DE PAGO RECHAZADO</cell>
+         <cell>Subject del correo para cuando responden correo electronico sin .XML o mas de un .XML</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_P_SN_XML</cell>
+         <cell>SOLO DEBE ENVIAR UN COMPLEMENTO DE PAGO  RELACIONANDO LOS UUID DE TODAS LAS FACTURAS PAGADAS</cell>
+         <cell>Cuerpo de mensaje de notifiacion para cuando responden correo electronico sin .XML o mas de un .XML</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_F_N_V</cell>
+         <cell>COMPLEMENTOS DE PAGO RECHAZADOS XML NO VALIDO</cell>
+         <cell>Asunto del mensaje de correo para cuando el formato del XML rebido por la validacion no es correcto</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_F_N_V</cell>
+         <cell>EL XML DEL PAGO NO CONTIENE FORMATO DE COMPROBANTE DEL SAT VALIDO</cell>
+         <cell>Cuerpo del mensaje de correo para cuando el formato del XML rebido por la validacion no es correcto</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MensajeSubjet</cell>
+         <cell>E_P_N_APOLO</cell>
+         <cell>PAGO NO EXISTENTE ORACLE</cell>
+         <cell>Subject del correo para error cuando el pago que se quiere validar no existe en APOLO</cell>
+      </row>
+      <row>
+         <cell>MensajeDesc</cell>
+         <cell>E_P_N_APOLO</cell>
+         <cell>EL PAGO QUE DESEA VALIDAR NO EXISTE EN ORACLE, FAVOR DE VALIDAR</cell>
+         <cell>Cuerpo de mensaje de notifiacion par cuando el pago que se quiere validar no existe en APOLOa</cell>
+      </row>
+      <row>
+         <cell>MensajeSubjet</cell>
+         <cell>E_V_APOLO</cell>
+         <cell>COMPLEMENTO DE PAGO NO VALIDO</cell>
+         <cell>Subject del correo para error de validacion a nivel lineas</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MensajeDesc</cell>
+         <cell>E_V_APOLO</cell>
+         <cell>EL PAGO NO CUMPLE CON LAS SIGUIENTES VALIDACIONES:</cell>
+         <cell>Cuerpo de mensaje de notifiacion de inicio de errores a nivel lineas</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>PA</cell>
+         <cell>Pago de Adelanto</cell>
+         <cell>estatus que se coloca en el Reporte de APEX en caso de ser un pago adelanto</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>VM</cell>
+         <cell>Validacion Manual</cell>
+         <cell>estatus que se coloca en el Reporte de APEX de haber agregado texto en la casilla de validacion manual</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MensajeDesc</cell>
+         <cell>P_E_L</cell>
+         <cell>Pago con error en alguna de sus lineas</cell>
+         <cell>mensaje de descripcion APEX de error en lineas</cell>
+      </row>
+      <row markdefault="false">
+         <cell>MensajeDesc</cell>
+         <cell>P_E_HL</cell>
+         <cell>Pago con errores en complemento y lineas: </cell>
+         <cell>mensaje de descripcion APEX de error en lineas</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>PFC</cell>
+         <cell>Pago de factura contado (método de pago PUE)</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  en caso de ser u npago ocn facturas tipo PUE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>PAyPFC</cell>
+         <cell>Pago Adelanto y factura contado (método de pago PUE)</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  en caso de ser adelanto y tener facturas tipo PUE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>CC</cell>
+         <cell>CC</cell>
+         <cell>estatus que se coloca en el Reporte de APEX en caso de ser correcta la validacion</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>CCL</cell>
+         <cell>Linea Complemento correcta</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  de ser Linea Complemento correcta</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>EE</cell>
+         <cell>Complemento rechazado ¿ En espera de corrección de complemento</cell>
+         <cell>estatus que se coloca en el Reporte de APEX en caso de haber un error</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>ENCE</cell>
+         <cell>Ocurrio un error en el proceso de envio de comprobante de pago, por favor contacte a soporte tecnico de GER</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  en caso de no encontrar comprobante adjunto en el SFTP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>PRC</cell>
+         <cell>Pendiente de recibir complemento</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  cuando aun no se a realizado la validacion de complemento por medio del correo de respuesta del proveedor</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>FSXML</cell>
+         <cell>No cuenta con XML adjunto de la factura Relacionada</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  cuando una linea de las facturas relacionadas al pago no cuenta con XML ajunto</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Status</cell>
+         <cell>FEI</cell>
+         <cell>Error procesando datos de factura Relacionada</cell>
+         <cell>estatus que se coloca en el Reporte de APEX  cuando se intenta obtener datos de una de las facturas relacionadas al pago y da un error en el proceso</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_LUGAR_EXPEDICION</cell>
+         <cell>El XML Version 4.0 debe contar con Lugar de Expedicion</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del Lugar de Expedicion exista en el XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_NOMBRE_EMISOR</cell>
+         <cell>El XML Version 4.0 debe contar con Nombre del Emisor</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del Nombre del Emisor exista en el XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_REGIMEN_EMISOR</cell>
+         <cell>El XML Version 4.0 debe contar con Regimen del Emisor</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del Regimen del Emisor exista en el XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_NOMBRE_RECEPTOR</cell>
+         <cell>Nombre del Receptor en XML Distinto del Nombre en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de Nombre Receptor XML vs Nombre Oracle</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_DOMICILIO_FISCAL_RECEPTOR</cell>
+         <cell>Domicilio Fiscal del Receptor en XML Distinto del Domicilio Fiscal en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de Domicilio Fiscal Receptor XML vs Domicilio Fiscal Oracle</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_REGIMEN_FISCAL_RECEPTOR</cell>
+         <cell>Regimen Fiscal del Receptor en XML Distinto del Regimen Fiscal definido en la configuracion</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de Regimen Fiscal Receptor XML vs Configuracion Tabla DVM</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_USO_CFDI</cell>
+         <cell>El parametro Uso de CFDI en el XML debe ser CP01</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de Uso de CFDI del XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_PROD_SERV</cell>
+         <cell>El parametro clave producto servicio en el XML debe ser 84111506</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de clave producto servicio en el XML debe ser 84111506</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_CLAVE_UNIDAD</cell>
+         <cell>El parametro clave Unidad en el XML debe ser ACT</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de clave Unidad en el XML debe ser ACT</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_OBJETO_IMPUESTO</cell>
+         <cell>No existe el parametro no tiene Objeto Impuesto en el XML</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de Objeto Impuesto en el XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_RFC_EMISOR</cell>
+         <cell>RFC Emisor en XML Distinto del RFC del proveedor en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del RFC Emisor</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_RFC_RECEPTOR</cell>
+         <cell>RFC Receptor en XML Distinto Del RFC de la UN Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del RFC Receptor</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_MONEDA</cell>
+         <cell>La moneda del Pago en XML Distinto a la moneda del Pago en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de moneda del pago xml vs oracle</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_FECHA_PAGO</cell>
+         <cell>Fecha de pago en XML Distinta de la fecha de pago en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion de la fecha de pago</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_IMPORTE_PAGO</cell>
+         <cell>Monto de pago en XML Con variación mayor al rango permitido +- $TOLERANCIA.00 vs importe de pago en Oracle</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del monto del pago</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_MAS_LINES_XML</cell>
+         <cell>El numero de documentos Relacionados del XML es mayor al Pago en APOLO</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del numero de lineas en caso que se mayor a las que se tienen en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_UUID_LINE_REPEAT</cell>
+         <cell>El numero de documentos Relacionados del XML para el UUID: $UUID_F es mayor a uno </cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del numero de lineas de un uuid en el XML es mayor a uno esto no es valido</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_MONTO_LINE</cell>
+         <cell>La Factura de ERP $NUM_FACTURA con documento Relacionado UUID: $UUID_F, Monto de la linea en XML $MONTO_LXML Con variación mayor al rango permitido +- $TOLERANCIA.00 vs importe de linea en Oracle $MONTO_FL</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del monto a nivel linea</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_MENOS_LINES_XML</cell>
+         <cell>El numero de documentos Relacionados del XML es menor al numero de facturas aplicadas en el Pago en APOLO</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error de la validacion del numero de lineas en caso que se menor a las que se tienen en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_RET_ISR</cell>
+         <cell>La Factura de ERP $NUM_FACTURA con documento Relacionado UUID: $UUID_F, no contiene el desglose del impuesto Retencion ISR correcto, Retencion ISR ERP $RET_ISR_F, Retencion ISR XML $RET_ISR_XML , Con variación mayor al rango permitido +- $TOLERANCIA.00</cell>
+         <cell>cuerpo de mensaje de validacion de Desglose de retencion ISR si se tiene configurado en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_RET_IVA</cell>
+         <cell>La Factura de ERP $NUM_FACTURA con documento Relacionado UUID: $UUID_F, no contiene el desglose del impuesto Retencion IVA correcto, RET IVA ERP $RET_IVA_F, RET IVA XML $RET_IVA_XML ,Con variación mayor al rango permitido +- $TOLERANCIA.00</cell>
+         <cell>cuerpo de mensaje de validacion de Desglose de retencion IVA si se tiene configurado en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_NO_EXISTE_UUID_XML</cell>
+         <cell>La Factura de ERP $NUM_FACTURA con UUID $UUID_F no se encuentra dentro de los UUIDs de los documentos Relacionados del Complemento Adjunto</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error cuando no se encuentra el UUID registrado en APOLO en los documentos relacionados en el PAGO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_NO_EXISTE_FACTURA_REG</cell>
+         <cell>No se encuentra Resgistro del UUID de la Factura $NUM_FACTURA en la BD</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error al realizar la busqueda de la informacion relacionada a las factura relacionada al complemento de pago</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_OBJETO_IMPUESTO_D</cell>
+         <cell>El campo objeto impuesto definido en el XML $OBJ_IMP_XML no es el que esta definido en la configuracion $OBJ_IMP_D </cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error al validar valor objeto impuesto de complemento de pago de valor definido en configuracion</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Validation</cell>
+         <cell>V_OBJETO_IMP_DR</cell>
+         <cell>La Factura de ERP $NUM_FACTURA con documento Relacionado UUID: $UUID_F, El objeto impuesto DR del XML del complemento $OBJ_IMP_DR_XML no es el mismo al XML de la factura relacionada $OBJ_IMP_F_XML</cell>
+         <cell>Cuerpo de mensaje de notifiacion para el error al validar valor objeto impuesto de documento relacionado del xml del complemento contra el objeto impuesto del XML de la factura relacionada</cell>
+      </row>
+   </rows>
+</dvm>

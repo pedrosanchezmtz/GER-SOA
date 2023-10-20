@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesAP" elementFormDefault="qualified">
+   <xsd:element name="DATA_DS">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="G_INVOICES" maxOccurs="unbounded" minOccurs="0">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element type="xsd:long" name="SUPPLIER_ID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIER_RFC"/>
+                     <xsd:element type="xsd:float" name="TOTAL"/>
+                     <xsd:element type="xsd:short" name="SUBTOTAL" minOccurs="0"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERNAME"/>
+                     <xsd:element type="xsd:dateTime" name="INVOICEDATE"/>
+                     <xsd:element type="xsd:dateTime" name="CREATION_DATE"/>
+                     <xsd:element type="xsd:dateTime" name="LAST_UPDATE_DATE"/>
+                     <xsd:element type="xsd:string" name="CURRENCY"/>
+                     <xsd:element type="xsd:string" name="RECEPTOR_RFC"/>
+                     <xsd:element type="xsd:string" name="NAME_RFC"/>
+                     <xsd:element type="xsd:long" name="INVOICE_ID"/>
+                     <xsd:element type="xsd:short" name="SUPPLIER_NUMBER"/>
+                     <xsd:element type="xsd:string" name="INVOICE_NUMBER"/>
+                     <xsd:element type="xsd:short" name="TOTAL_TAX_AMOUNT" minOccurs="0"/>
+                     <xsd:element type="xsd:string" name="APPROVAL_STATUS"/>
+                     <xsd:element type="xsd:string" name="BUSINESS_UNIT"/>
+                     <xsd:element type="xsd:string" name="INVOICESOURCE"/>
+                     <xsd:element type="xsd:string" name="INVOICETYPE"/>
+                     <xsd:element type="xsd:string" name="INVOICEAWTGROUPID"/>
+                     <xsd:element type="xsd:string" name="INVOICEAWTGROUPCODE"/>
+                     <xsd:element type="xsd:float" name="INVOICE_PERCENTAGE_RATE"/>
+                     <xsd:element type="xsd:string" name="INVOICETERMSID"/>
+                     <xsd:element type="xsd:string" name="INVOICETERMSNAME"/>
+                     <xsd:element type="xsd:string" name="INVOICETERMSDESC"/>
+                     <xsd:element type="xsd:string" name="APPROVALSTATUS"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERPARTYID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERSITEID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERSITECODE"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERSITEBUSINESSUNITID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERSITEAWTGROUPID"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERSITEAWTGROUPCODE"/>
+                     <xsd:element type="xsd:float" name="SUPPLIER_PERCENTAGE_RATE"/>
+                     <xsd:element type="xsd:string" name="SUPPLIERTYPE"/>
+                     <xsd:element type="xsd:string" name="STATE"/>
+                     <xsd:element type="xsd:string" name="CITY"/>
+                     <xsd:element type="xsd:string" name="ADDRESS"/>
+                     <xsd:element type="xsd:string" name="ZIPCODE"/>
+                     <xsd:element type="xsd:string" name="ORDERID"/>
+                     <xsd:element type="xsd:string" name="ORDERNUMBER"/>
+                     <xsd:element type="xsd:string" name="ORDERBILLBUID"/>
+                     <xsd:element type="xsd:string" name="ORDERSUPPLIERID"/>
+                     <xsd:element type="xsd:string" name="ORDEREMAIL"/>
+                     <xsd:element type="xsd:string" name="ORDERTERMSID"/>
+                     <xsd:element type="xsd:string" name="ORGANIZATIONID"/>
+                     <xsd:element type="xsd:string" name="LEGALENTITYID"/>
+                     <xsd:element type="xsd:string" name="LEGALENTITYSEGMENT"/>
+                     <xsd:element type="xsd:string" name="XML"/>
+                     <xsd:element type="xsd:string" name="XML_REGISTRADOS"/>
+                     <xsd:element type="xsd:string" name="PDF"/>
+                     <xsd:element type="xsd:string" name="PDF_REGISTRADOS"/>
+                     <xsd:element name="G_INVOICES1" maxOccurs="unbounded" minOccurs="0">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="IDLINENUMBER" type="xsd:string"/>
+                              <xsd:element name="IDLINETYPE" type="xsd:string"/>
+                              <xsd:element name="IDDESCRIPTION" type="xsd:string"/>
+                              <xsd:element name="IDLINESOURCE" type="xsd:string"/>
+                              <xsd:element name="IDORGANIZATIONID" type="xsd:string"/>
+                              <xsd:element name="IDITEMID" type="xsd:string"/>
+                              <xsd:element name="IDITEMDESCRIPTION" type="xsd:string"/>
+                              <xsd:element name="IDUNITCODE" type="xsd:string"/>
+                              <xsd:element name="IDUNITPRICE" type="xsd:string"/>
+                              <xsd:element name="IDQUANTITY" type="xsd:string"/>
+                              <xsd:element name="IDAMOUNT" type="xsd:string"/>
+                              <xsd:element name="IDBASEAMOUNT" type="xsd:string"/>
+                              <xsd:element name="IDTAXLINEID" type="xsd:string"/>
+                              <xsd:element name="IDTAXREGIMECODE" type="xsd:string"/>
+                              <xsd:element name="IDTAX" type="xsd:string"/>
+                              <xsd:element name="IDTAXJURISDICTIONCODE" type="xsd:string"/>
+                              <xsd:element name="IDTAXSTATUSCODE" type="xsd:string"/>
+                              <xsd:element name="IDTAXRATEID" type="xsd:string"/>
+                              <xsd:element name="IDTAXRATECODE" type="xsd:string"/>
+                              <xsd:element name="IDTAXRATE" type="xsd:string"/>
+                              <xsd:element name="IDTAXCLASSCODE" type="xsd:string"/>
+                              <xsd:element name="IDAWTGROUPID" type="xsd:string"/>
+                              <xsd:element name="IDAWTGROUPCODE" type="xsd:string"/>
+                              <xsd:element name="PERCENTAGE_RATE" type="xsd:float"/>
+                              <xsd:element name="ORDERID" type="xsd:string"/>
+                              <xsd:element name="ORDERDETAILID" type="xsd:string"/>
+                              <xsd:element name="ODDISCOUNT" type="xsd:string"/>
+                              <xsd:element name="ODLISTPRICE" type="xsd:string"/>
+                              <xsd:element name="ODLINETYPEID" type="xsd:string"/>
+                              <xsd:element name="ODITEMID" type="xsd:string"/>
+                              <xsd:element name="ODITEMDESCRIPTION" type="xsd:string"/>
+                              <xsd:element name="ODUNITCODE" type="xsd:string"/>
+                              <xsd:element name="ODUNITPRICE" type="xsd:string"/>
+                              <xsd:element name="ODQUANTITY" type="xsd:string"/>
+                              <xsd:element name="ODAMOUNT" type="xsd:string"/>
+                              <xsd:element name="ODCODECOMBINATIONID" type="xsd:string"/>
+                              <xsd:element name="ODDESTORGANIZATIONID" type="xsd:string"/>
+                              <xsd:element name="GCCACCOUNTTYPE" type="xsd:string"/>
+                              <xsd:element name="GCCSEGMENT1" type="xsd:string"/>
+                              <xsd:element name="GCCSEGMENT2" type="xsd:string"/>
+                              <xsd:element name="GCCSEGMENT3" type="xsd:string"/>
+                              <xsd:element name="GCCSEGMENT4" type="xsd:string"/>
+                              <xsd:element name="GCCSEGMENT5" type="xsd:string"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

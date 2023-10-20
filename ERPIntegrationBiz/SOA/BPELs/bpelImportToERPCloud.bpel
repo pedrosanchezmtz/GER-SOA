@@ -1,0 +1,1049 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Jul 17 10:37:12 CDT 2017
+  Author:  Isai
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelImportToERPCloud"
+         targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelImportToERPCloud"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelImportToERPCloud"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:brerp="http://xmlns.oracle.com/bruleImportToERPCloud/bruleImportToERPCloudDS"
+         xmlns:erpb="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://xmlns.oracle.com/bpel"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/AuditControlTec"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+    <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz/bpelImportToERPCloud" location="../WSDLs/bpelImportToERPCloud.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="bpelimporttoerpcloud" partnerLinkType="client:bpelImportToERPCloud" myRole="bpelImportToERPCloudProvider" partnerRole="bpelImportToERPCloudRequester"/>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns1:wsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+    <partnerLink name="bruleImportToERPCloud.bruleImportToERPCloudDS"
+                 partnerLinkType="brerp:bruleImportToERPCloud.bruleImportToERPCloudDS" partnerRole="IDecisionService"/>
+    <partnerLink name="wsMessageTec" partnerLinkType="ns2:wsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+    <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns3:wsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+  </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:bpelImportToERPCloudRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+           <variable name="outputVariable" messageType="client:bpelImportToERPCloudResponseMessage"/>
+    <variable name="varImportToERPCloudRs" messageType="client:bpelImportToERPCloudResponseMessage"/>
+  </variables>
+    <faultHandlers>
+        <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation>
+        <assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>ImportToERPCloud</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[ERPIntegrationBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+      </sequence>
+    </catchAll>
+    </faultHandlers>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="scopeImportToERPCloud">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in bpelImportToERPCloud.wsdl) -->
+        <receive name="receiveInput" partnerLink="bpelimporttoerpcloud" portType="client:bpelImportToERPCloud" operation="ImportToERPCloud" variable="inputVariable" createInstance="yes"/>
+        <scope name="scopePrincipal">
+      <variables>
+        <variable name="varBRuleImportToERPCloudRs" element="erpb:BRuleImportToERPCloudRs"/>
+        <variable name="varTmpBRuleImportToERPCloudRs" element="erpb:BRuleImportToERPCloudRs"/>
+        <variable name="invokeERPIntegrationTecUploadFileRq" messageType="ns3:UploadFileRq"/>
+        <variable name="invokeERPIntegrationTecUploadFileRs" messageType="ns3:UploadFileRs"/>
+        <variable name="invokeERPIntegrationTecLoadInterfaceRq" messageType="ns3:LoadInterfaceRq"/>
+        <variable name="invokeERPIntegrationTecLoadInterfaceRs" messageType="ns3:LoadInterfaceRs"/>
+        <variable name="varFlag" type="xsd:boolean">
+          <from>true()</from>
+        </variable>
+        <variable name="invokeERPIntegrationTecLoadStandarRq" messageType="ns3:LoadInterfaceRq"/>
+        <variable name="invokeERPIntegrationTecLoadStandarRs" messageType="ns3:LoadInterfaceRs"/>
+        <variable name="varRsImportToERPCloudRs" element="erpb:Processes"/>
+        <variable name="invokeAuditControlTecCreateLogRq" messageType="ns1:CreateLogRq"/>
+        <variable name="invokeAuditControlTecCreateLogRs" messageType="ns1:CreateLogRs"/>
+        <variable name="varInstanceId" element="erpb:varInstanceId"/>
+        <variable name="varInvokeInserProcess_CreateJobsStatusRq" messageType="ns1:CreateJobsStatusRq"/>
+        <variable name="varInvokeInserProcess_CreateJobsStatusRs" messageType="ns1:CreateJobsStatusRs"/>
+        <variable name="varInvokeInsertProcess_CreateJobsStatusRq" messageType="ns1:CreateJobsStatusRq"/>
+        <variable name="varInvokeInsertProcess_CreateJobsStatusRs" messageType="ns1:CreateJobsStatusRs"/>
+        <variable name="invokeWsMessageTecSendEmailRq" messageType="ns2:MessageRq"/>
+      </variables>
+      <faultHandlers>
+                <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="no">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>ImportToERPCloud</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>ImportToERPCloud</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>ImportToERPCloud</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>ImportToERPCloud</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ERPIntegrationBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+            </faultHandlers>
+      <sequence name="sequenceMain">
+        <assign name="assignInstanceId" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getInstanceId()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInstanceId</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+            <from>$varInstanceId</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varImportToERPCloudRs.payload/erpb:Return/erpb:Processes/erpb:Process/erpb:Id</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>"ImportToErpCloud"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varImportToERPCloudRs.payload/erpb:Return/erpb:Processes/erpb:Process/erpb:ProcessName</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><cmn:Errors xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varImportToERPCloudRs.payload/cmn:Errors</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varImportToERPCloudRs.payload/cmn:Errors</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from>"SUCCESS"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varImportToERPCloudRs.payload/erpb:Return/erpb:Processes/erpb:Process/erpb:Status</to>
+          </copy>
+        </assign>
+        <reply name="reply" partnerLink="bpelimporttoerpcloud" variable="varImportToERPCloudRs"
+               portType="client:bpelImportToERPCloud" operation="ImportToERPCloud"/><if name="If_TrxInterfaceFs" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[TrxInterfaceFs]]>
+      </documentation>
+      <condition>$inputVariable.payload/erpb:TargetInterface="TrxInterfaceFs"</condition>
+      <sequence name="SequenceTrxInterfaceFs">
+         
+         
+      <scope name="bruleImportToERPCloud" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:pattern patternName="bpelx:decide"></bpelx:pattern>
+      </bpelx:annotation>
+      <variables>
+         <variable name="dsIn" messageType="brerp:callFunctionStatelessMessage"/>
+         <variable name="dsOut" messageType="brerp:callFunctionStatelessDecisionMessage"/>
+      </variables>
+      <sequence name="Sequence3">
+         <assign name="Facts_To_Rule_Service">
+            <copy>
+               <from variable="inputVariable" part="payload">
+                  <query>erpb:TargetInterface</query>
+               </from>
+               <to variable="dsIn" part="payload">
+                  <query>brerp:parameterList/erpb:BRuleImportToERPCloudRq/erpb:TargetInterface</query>
+               </to>
+            </copy>
+         </assign>
+         <assign name="BPEL_Header">
+            <copy>
+               <from>"bruleImportToERPCloudDS"</from>
+               <to variable="dsIn" part="payload">
+                  <query>@name</query>
+               </to>
+            </copy>
+         </assign>
+         <invoke name="Invoke" partnerLink="bruleImportToERPCloud.bruleImportToERPCloudDS"
+                 portType="brerp:IDecisionService" operation="callFunctionStateless" inputVariable="dsIn"
+                 outputVariable="dsOut"/>
+         <assign name="Rule_Service_To_Facts">
+            <copy>
+               <from>$dsOut.payload/brerp:resultList/erpb:BRuleImportToERPCloudRs</from>
+               <to>$varBRuleImportToERPCloudRs</to>
+            </copy>
+         </assign>
+      </sequence>
+   </scope>
+            <assign name="TrOrgIdToTrx">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/TrOrgIDToTrx_1.xsl", $inputVariable.payload, "varBRuleImportToERPCloudRs", $varBRuleImportToERPCloudRs)</from>
+                <to variable="varTmpBRuleImportToERPCloudRs"/>
+              </copy>
+            </assign>
+            <assign name="TrDateToTrx">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/TrDateToTrx_1.xsl", $varTmpBRuleImportToERPCloudRs)</from>
+                <to variable="varBRuleImportToERPCloudRs"/>
+              </copy>
+            </assign>
+          </sequence>
+      <else>
+         <sequence>
+              <scope name="bruleImportToERPCloud1">
+                <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:decide"></bpelx:pattern>
+                </bpelx:annotation>
+                <variables>
+                  <variable name="dsIn" messageType="brerp:callFunctionStatelessMessage"/>
+                  <variable name="dsOut" messageType="brerp:callFunctionStatelessDecisionMessage"/>
+                </variables>
+                <sequence name="Sequence3">
+                  <assign name="Facts_To_Rule_Service">
+                    <copy>
+                      <from variable="inputVariable" part="payload"><query>erpb:TargetInterface</query></from>
+                      <to variable="dsIn" part="payload"><query>brerp:parameterList/erpb:BRuleImportToERPCloudRq/erpb:TargetInterface</query></to>
+                    </copy>
+                  </assign>
+                  <assign name="BPEL_Header">
+                    <copy>
+                      <from>"bruleImportToERPCloudDS"</from>
+                      <to variable="dsIn" part="payload"><query>@name</query></to>
+                    </copy>
+                  </assign>
+                  <invoke name="Invoke" partnerLink="bruleImportToERPCloud.bruleImportToERPCloudDS"
+                          portType="brerp:IDecisionService" operation="callFunctionStateless" inputVariable="dsIn"
+                          outputVariable="dsOut"/>
+                  <assign name="Rule_Service_To_Facts">
+                    <copy>
+                      <from>$dsOut.payload/brerp:resultList/erpb:BRuleImportToERPCloudRs</from>
+                      <to>$varBRuleImportToERPCloudRs</to>
+                    </copy>
+                  </assign>
+                </sequence>
+              </scope>
+            </sequence>
+      </else>
+   </if><if name="ifIsValidInterface">
+          <documentation>
+            <![CDATA[validInterface]]>
+          </documentation>
+          <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBRuleImportToERPCloudRs/erpb:DocumentAccount != 'NA'</condition>
+          <sequence name="sequenceUploadFile">
+            <assign name="trBruleImportERPCloudToUploadFileRq">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationTecUploadFileRq.xsl", $inputVariable.payload, "varBRuleImportToERPCloudRs", $varBRuleImportToERPCloudRs)</from>
+                <to variable="invokeERPIntegrationTecUploadFileRq" part="UploadFileRqPart"/>
+              </copy>
+            </assign>
+            <invoke name="invokeERPIntegrationTecUploadFile" partnerLink="wsERPIntegrationServiceTec"
+                    portType="ns3:ERPIntegrationTecPortType" operation="UploadFile"
+                    inputVariable="invokeERPIntegrationTecUploadFileRq"
+                    outputVariable="invokeERPIntegrationTecUploadFileRs" bpelx:invokeAsDetail="no"/>
+            <if name="ifFileUploadedToUCM">
+              <documentation>
+                <![CDATA[UploadedFile]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($invokeERPIntegrationTecUploadFileRs.UploadFileRsPart/ns3:Return/ns3:Result) &gt; 0</condition>
+              <sequence name="sequenceLoadInterface">
+                <assign name="trBpelRq_To_WsERPIntegrationTecLoadInterfaceRq">
+                  <bpelx:annotation>
+                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                    <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationTecLoadInterfaceRq.xsl", $varBRuleImportToERPCloudRs)</from>
+                    <to variable="invokeERPIntegrationTecLoadInterfaceRq" part="LoadInterfaceRqPart"/>
+                  </copy>
+                </assign>
+                <assign name="assignUploadFileId">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>$invokeERPIntegrationTecUploadFileRs.UploadFileRsPart/ns3:Return/ns3:Result</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeERPIntegrationTecLoadInterfaceRq.LoadInterfaceRqPart/ns3:paramList[2]</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>$invokeERPIntegrationTecUploadFileRs.UploadFileRsPart/ns3:Return/ns3:Result</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[1]/erpb:Id</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from><literal>FileImport</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[1]/erpb:ProcessName</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>'SUCCEEDED'</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[1]/erpb:Status</to>
+                  </copy>
+                </assign>
+                <invoke name="invokeERPIntegrationTecLoadInterface"
+                        partnerLink="wsERPIntegrationServiceTec" portType="ns3:ERPIntegrationTecPortType"
+                        operation="LoadInterface" inputVariable="invokeERPIntegrationTecLoadInterfaceRq"
+                        outputVariable="invokeERPIntegrationTecLoadInterfaceRs" bpelx:invokeAsDetail="no"/>
+                <if name="IfValidProcessId">
+                  <documentation>
+                    <![CDATA[Valid]]>
+                  </documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($invokeERPIntegrationTecLoadInterfaceRs.LoadInterfaceRsPart/ns3:Return/ns3:Result) &gt; 0</condition>
+                  <empty name="empty"/>
+                  <else>
+                    <documentation>
+                      <![CDATA[Error]]>
+                    </documentation>
+                    <sequence name="sequenceErrorLoadInterface">
+                      <assign name="trWsERPIntegrationTecLoadInterfaceRs_To_BpelRs">
+                        <bpelx:annotation>
+                          <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                          <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsERPIntegrationTecImportToERPCloudRs_To_BpelRs.xsl", $invokeERPIntegrationTecLoadInterfaceRs.LoadInterfaceRsPart)</from>
+                          <to variable="outputVariable" part="payload"/>
+                        </copy>
+                      </assign>
+                      <assign name="assignFlag">
+                        <copy bpelx:insertMissingToData="yes">
+                          <from>false()</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                        </copy>
+                      </assign>
+                    </sequence>
+                  </else>
+                </if>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[ErroUploadFile]]>
+                </documentation>
+                <sequence name="sequenceErrorUploadFile">
+                  <assign name="trWsERPIntegrationTecUploadFileRs_To_BpelRs">
+                    <bpelx:annotation>
+                      <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy>
+                      <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsERPIntegrationTecUploadFileRs_To_BpelRs.xsl", $invokeERPIntegrationTecUploadFileRs.UploadFileRsPart)</from>
+                      <to variable="outputVariable" part="payload"/>
+                    </copy>
+                  </assign>
+                  <assign name="assignFlag">
+                    <copy bpelx:insertMissingToData="yes">
+                      <from>false()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                    </copy>
+                  </assign>
+                </sequence>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[InvalidInterface]]>
+            </documentation>
+            <assign name="assignInvalidInterface">
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <?audit suppress oracle.ide.xml.validation-incomplete?>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Success</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal>SOA-00007</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from>'Invalid TargetInterface parameter.'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from>'The current interface is not support for to load.'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:Description</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal>ImportToERPCloud</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal>[ERPIntegrationBiz]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:FailedService</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from>xp20:current-dateTime()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <?audit suppress oracle.ide.xml.validation-incomplete?>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/erpb:Return</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy bpelx:insertMissingToData="yes">
+                <from>false()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+        <if name="ifContinueImportToInterface">
+          <documentation>
+            <![CDATA[Continue]]>
+          </documentation>
+          <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</condition>
+          <sequence>
+            <scope name="scopeValidateStatusImportToInterface">
+              <variables>
+                <variable name="invokeERPIntegrationTecGetEssJobStatusRq" messageType="ns3:GetEssJobStatusRq"/>
+                <variable name="invokeERPIntegrationTecGetEssJobStatusRs" messageType="ns3:GetEssJobStatusRs"/>
+              </variables>
+              <sequence name="sequenceImportToInterface">
+                <assign name="assignProcessId">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>$invokeERPIntegrationTecLoadInterfaceRs.LoadInterfaceRsPart/ns3:Return/ns3:Result</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeERPIntegrationTecGetEssJobStatusRq.GetEssJobStatusRqPart/ns3:requestId</to>
+                  </copy>
+                </assign>
+                <invoke name="invokeERPIntegrationTecGetEssJobStatus" partnerLink="wsERPIntegrationServiceTec"
+                        portType="ns3:ERPIntegrationTecPortType" operation="GetEssJobStatus"
+                        inputVariable="invokeERPIntegrationTecGetEssJobStatusRq"
+                        outputVariable="invokeERPIntegrationTecGetEssJobStatusRs" bpelx:invokeAsDetail="no"/>
+                <if name="IfInvokeError">
+                  <documentation>
+                    <![CDATA[Error]]>
+                  </documentation>
+                  <condition>count($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/cmn:Errors)&gt;0</condition>
+                  <assign name="AssignErrorToContinue">
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>string('ERROR_INVOKE')</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result</to>
+                    </copy>
+                  </assign>
+                  <else>
+                    <documentation>
+                      <![CDATA[OK]]>
+                    </documentation>
+                    <if name="ifStatusOk">
+                      <documentation>
+                        <![CDATA[ContinueProcess]]>
+                      </documentation>
+                      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'ERROR' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'WARNING' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'SUCCEEDED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'BLOCKED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'CANCELED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'VALIDATION FAILED'</condition>
+                      <assign name="assignStatusProcess">
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                          <from>$invokeERPIntegrationTecLoadInterfaceRs.LoadInterfaceRsPart/ns3:Return/ns3:Result</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[2]/erpb:Id</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes">
+                          <from><literal>LoadInterface</literal></from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[2]/erpb:ProcessName</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                          <from>$invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[2]/erpb:Status</to>
+                        </copy>
+                      </assign>
+                      <else>
+                        <documentation>
+                          <![CDATA[ReplayActivity]]>
+                        </documentation>
+                        <sequence name="sequenceReplay">
+                          <wait name="waitFifthSeconds">
+                            <for>'PT15S'</for>
+                          </wait>
+                          <extensionActivity>
+                            <bpelx:replay name="replay" scope="scopeValidateStatusImportToInterface"/>
+                          </extensionActivity>
+                        </sequence>
+                      </else>
+                    </if>
+                  </else>
+                </if>
+                <if name="ifSucceededImport">
+                  <documentation>
+                    <![CDATA[Success]]>
+                  </documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'SUCCEEDED'</condition>
+                  <sequence name="sequenceLoadStandarERP">
+                    <assign name="trBpelRq_To_WsERPIntegrationTecLoadStandarRq">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationTecLoadStandarRq.xsl", $varBRuleImportToERPCloudRs)</from>
+                        <to variable="invokeERPIntegrationTecLoadStandarRq" part="LoadInterfaceRqPart"/>
+                      </copy>
+                    </assign>
+                    <invoke name="invokeERPIntegrationTecLoadStandar"
+                            partnerLink="wsERPIntegrationServiceTec" portType="ns3:ERPIntegrationTecPortType"
+                            operation="LoadInterface" inputVariable="invokeERPIntegrationTecLoadStandarRq"
+                            outputVariable="invokeERPIntegrationTecLoadStandarRs" bpelx:invokeAsDetail="no"/>
+                    <if name="ifExistsProcessId">
+                      <documentation>
+                        <![CDATA[Exists]]>
+                      </documentation>
+                      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($invokeERPIntegrationTecLoadStandarRs.LoadInterfaceRsPart/cmn:Success) &gt; 0</condition>
+                      <empty name="empty"/>
+                      <else>
+                        <documentation>
+                          <![CDATA[Error]]>
+                        </documentation>
+                        <assign name="trWsERPIntegrationTecLoadStandarRs_To_BpelRs">
+                          <bpelx:annotation>
+                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                          </bpelx:annotation>
+                          <copy>
+                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsERPIntegrationTecImportToERPCloudRs_To_BpelRs.xsl", $invokeERPIntegrationTecLoadStandarRs.LoadInterfaceRsPart)</from>
+                            <to variable="outputVariable" part="payload"/>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[Error]]>
+                    </documentation>
+                    <sequence name="sequenceErrorImport">
+                      <assign name="trWsImportToERPCloudRs_To_BpelRs">
+                        <bpelx:annotation>
+                          <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                          <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsImportToERPCloudErrorRs_To_BpelRs.xsl", $varRsImportToERPCloudRs)</from>
+                          <to variable="outputVariable" part="payload"/>
+                        </copy>
+                      </assign>
+                      <assign name="assignFlag">
+                        <copy bpelx:insertMissingToData="yes">
+                          <from>false()</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                        </copy>
+                      </assign>
+                    </sequence>
+                  </else>
+                </if>
+              </sequence>
+            </scope>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[Skip]]>
+            </documentation>
+            <empty name="empty"/>
+          </else>
+        </if>
+        <if name="ifContinueImportToERP">
+          <documentation>
+            <![CDATA[Continue]]>
+          </documentation>
+          <condition>$varFlag</condition>
+          <scope name="scopeValidateStatusImportToERP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <variables>
+              <variable name="invokeERPIntegrationTecGetEssJobStatusRq" messageType="ns3:GetEssJobStatusRq"/>
+              <variable name="invokeERPIntegrationTecGetEssJobStatusRs" messageType="ns3:GetEssJobStatusRs"/>
+            </variables>
+            <sequence name="sequenceLoadERP">
+              <assign name="assignProcessId">
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                  <from>$invokeERPIntegrationTecLoadStandarRs.LoadInterfaceRsPart/ns3:Return/ns3:Result</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeERPIntegrationTecGetEssJobStatusRq.GetEssJobStatusRqPart/ns3:requestId</to>
+                </copy>
+              </assign>
+              <invoke name="invokeERPIntegrationTecGetEssJobStatus" partnerLink="wsERPIntegrationServiceTec"
+                      portType="ns3:ERPIntegrationTecPortType" operation="GetEssJobStatus"
+                      inputVariable="invokeERPIntegrationTecGetEssJobStatusRq"
+                      outputVariable="invokeERPIntegrationTecGetEssJobStatusRs"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+              <if name="IfInvokeError">
+                <documentation>
+                  <![CDATA[Error]]>
+                </documentation>
+                <condition>count($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/cmn:Errors)&gt;0</condition><assign name="assignStatus"
+                                                                                                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+   <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>false()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+      </copy></assign><else>
+                  <documentation>
+                    <![CDATA[Ok]]>
+                  </documentation>
+                  <if name="ifStatusOk">
+                    <documentation>
+                      <![CDATA[ContinueProcess]]>
+                    </documentation>
+                    <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'ERROR' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'WARNING' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'SUCCEEDED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'BLOCKED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'CANCELED' or xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'VALIDATION FAILED'</condition>
+                    <sequence name="sequenceValidateProcess">
+                      <assign name="assignStatusProcess">
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                          <from>$invokeERPIntegrationTecLoadStandarRs.LoadInterfaceRsPart/ns3:Return/ns3:Result</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[3]/erpb:Id</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes">
+                          <from><literal>ImportToERPCloud</literal></from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[3]/erpb:ProcessName</to>
+                        </copy>
+                      </assign>
+                      <if name="IfValidateImportToERP">
+                        <documentation>
+                          <![CDATA[Success]]>
+                        </documentation>
+                        <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:upper-case($invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result) = 'SUCCEEDED'</condition>
+                        <sequence name="sequenceSuccess">
+                          <assign name="trWsImportToERPCloudSuccessRs_To_BpelRs">
+                            <bpelx:annotation>
+                              <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                            </bpelx:annotation>
+                            <copy>
+                              <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsImportToERPCloudSuccessRs_To_BpelRs.xsl", $varRsImportToERPCloudRs)</from>
+                              <to variable="outputVariable" part="payload"/>
+                            </copy>
+                          </assign>
+                          <assign name="assignResult">
+                            <copy bpelx:insertMissingToData="yes">
+                              <from><literal>[Successful]</literal></from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[3]/erpb:Status</to>
+                            </copy>
+                          </assign>
+                        </sequence>
+                        <else>
+                          <documentation>
+                            <![CDATA[Error]]>
+                          </documentation>
+                          <sequence name="Sequence2">
+                            <assign name="assignStatus">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>$invokeERPIntegrationTecGetEssJobStatusRs.GetEssJobStatusRsPart/ns3:Return/ns3:result</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varRsImportToERPCloudRs/erpb:Process[3]/erpb:Status</to>
+                              </copy>
+                              <copy bpelx:insertMissingToData="yes">
+                                <from>false()</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                              </copy>
+                            </assign>
+                            <assign name="trWsImportToERPCloudErrorRs_To_BpelRs">
+                              <bpelx:annotation>
+                                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                              </bpelx:annotation>
+                              <copy>
+                                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWsImportToERPCloudErrorRs_To_BpelRs.xsl", $varRsImportToERPCloudRs)</from>
+                                <to variable="outputVariable" part="payload"/>
+                              </copy>
+                            </assign>
+                          </sequence>
+                        </else>
+                      </if>
+                    </sequence>
+                    <else>
+                      <documentation>
+                        <![CDATA[ReplayActivity]]>
+                      </documentation>
+                      <sequence name="sequenceReplay">
+                        <wait name="waitFifthSeconds">
+                          <for>'PT15S'</for>
+                        </wait>
+                        <extensionActivity>
+                          <bpelx:replay name="replay" scope="scopeValidateStatusImportToERP"
+                                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                        </extensionActivity>
+                      </sequence>
+                    </else>
+                  </if>
+                </else>
+              </if>
+            </sequence>
+          </scope>
+          <else>
+            <documentation>
+              <![CDATA[Skip]]>
+            </documentation>
+            <empty name="empty"/>
+          </else>
+        </if>
+        <flow name="Flow1">
+          <sequence name="Sequence5">
+            <assign name="trBpelRs_To_wsAuditControl">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRs_To_wsAuditControlProcessRq.xsl", $varRsImportToERPCloudRs, "varInstanceId", $varInstanceId)</from>
+                <to variable="varInvokeInsertProcess_CreateJobsStatusRq" part="CreateJobsStatusRq"/>
+              </copy>
+            </assign>
+            <invoke name="invokeInsertProcess" bpelx:invokeAsDetail="no" partnerLink="wsAuditControlTec"
+                    portType="ns1:AuditControlTecPortType" operation="CreateJobsStatus"
+                    inputVariable="varInvokeInsertProcess_CreateJobsStatusRq"
+                    outputVariable="varInvokeInsertProcess_CreateJobsStatusRs"/>
+          </sequence>
+          <sequence name="Sequence4">
+            <if name="ifExistsErrors">
+              <documentation>
+                <![CDATA[SaveErrors]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag = false()</condition>
+              <sequence name="sequenceSaveErros">
+                <assign name="trBpelRs_To_WsAuditControlTecCreateLogRq">
+                  <bpelx:annotation>
+                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                    <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRs_To_WsAuditControlTecCreateLogRq.xsl", $outputVariable.payload, "varInstanceId", $varInstanceId)</from>
+                    <to variable="invokeAuditControlTecCreateLogRq" part="CreateLogRq"/>
+                  </copy>
+                </assign>
+                <invoke name="invokeAuditControlTecCreateLog" partnerLink="wsAuditControlTec"
+                        portType="ns1:AuditControlTecPortType" operation="CreateLog"
+                        inputVariable="invokeAuditControlTecCreateLogRq"
+                        outputVariable="invokeAuditControlTecCreateLogRs" bpelx:invokeAsDetail="no"/>
+                <if name="ifTargetInterfaceEqJournal">
+                  <documentation>
+                    <![CDATA[Journal]]>
+                  </documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">($inputVariable.payload/erpb:TargetInterface = 'JournalNEL1') or($inputVariable.payload/erpb:TargetInterface = 'JournalNEL2') or($inputVariable.payload/erpb:TargetInterface = 'JournalTMSL1') or($inputVariable.payload/erpb:TargetInterface = 'JournalTMSL2')</condition>
+                  <sequence name="sequenceSendEmail">
+                    <assign name="xqyMessageErrors_To_InvokeWsMessageTecSendEmailRq">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:xquery"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:processXQuery10('../Transformations/XSLs/xqyMessageErrors_To_InvokeWsMessageTecSendEmailRq.xqy', 'outputVariable.payload', $outputVariable.payload)</from>
+                        <to variable="invokeWsMessageTecSendEmailRq" part="MessageRq"/>
+                      </copy>
+                    </assign>
+                    <assign name="assignMessageErrors">
+                      <copy bpelx:insertMissingToData="yes">
+                        <from>'Proceso de Importación Finalizado.'</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsMessageTecSendEmailRq.MessageRq/ns2:Message/ns2:Subject</to>
+                      </copy>
+                      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                        <from>$inputVariable.payload/erpb:TargetInterface</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsMessageTecSendEmailRq.CustomHeader/ns2:IntegrationName</to>
+                      </copy>
+                    </assign>
+                    <invoke name="invokeWsMessageTecSendEmail" bpelx:invokeAsDetail="no" partnerLink="wsMessageTec"
+                            portType="ns2:MessageTecPortType" operation="SendEmail"
+                            inputVariable="invokeWsMessageTecSendEmailRq"/>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[Diferent]]>
+                    </documentation>
+                    <empty name="empty"/>
+                  </else>
+                </if>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[Success]]>
+                </documentation>
+                <empty name="empty"/>
+              </else>
+            </if>
+          </sequence>
+        </flow>
+      </sequence>
+    </scope>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="bpelimporttoerpcloud" portType="client:bpelImportToERPCloudCallback" operation="ImportToERPCloudResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGetComplementCFDI" targetNamespace="http://xmlns.oracle.com/GER_SOA_OCI/CFDITec/BpelGetComplementCFDI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/GER_SOA_OCI/CFDITec/BpelGetComplementCFDI" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/AuditControlTec">
+   <plnk:partnerLinkType name="BpelGetComplementCFDI">
+      <plnk:role name="BpelGetComplementCFDIProvider" portType="client:BpelGetComplementCFDI"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/CFDITec" location="oramds:/apps/SOA/CFDITec/CFDITec.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/AuditControlTec" location="oramds:/apps/OSB/AuditControlTec/AuditControlTec.wsdl"/>
+   <wsdl:message name="BpelGetComplementCFDIRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetComplementCFDIRq"/>
+   </wsdl:message>
+   <wsdl:message name="BpelGetComplementCFDIResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetComplementCFDIRs"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelGetComplementCFDI">
+      <wsdl:operation name="GetComplementCFDI">
+         <wsdl:input message="client:BpelGetComplementCFDIRequestMessage"/>
+         <wsdl:output message="client:BpelGetComplementCFDIResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

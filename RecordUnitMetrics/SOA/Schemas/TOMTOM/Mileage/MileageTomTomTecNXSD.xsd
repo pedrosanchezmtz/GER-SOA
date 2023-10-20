@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/MileageTomTom" targetNamespace="http://soa.estrellaroja.com.mx/MileageTomTom" elementFormDefault="qualified" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" nxsd:version="JSON" nxsd:jsonTopLevelArray="true" nxsd:encoding="US-ASCII">
+   <xsd:element name="GetMileageTomTomRequest">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="fechaInicio" type="xsd:date"/>
+            <xsd:element name="fechaFin" type="xsd:date"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetMileageTomTomResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="topLevelArray" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="nombreViaje" type="xsd:string"/>
+                     <xsd:element name="folioViaje" type="xsd:integer"/>
+                     <xsd:element name="origen" type="xsd:string"/>
+                     <xsd:element name="destino" type="xsd:string"/>
+                     <xsd:element name="conductor" type="xsd:string"/>
+                     <xsd:element name="estatusViaje" type="xsd:integer"/>
+                     <xsd:element name="fechaInicio" type="xsd:string"/>
+                     <xsd:element name="fechaFin" type="xsd:string"/>
+                     <xsd:element name="grupo" type="xsd:string"/>
+                     <xsd:element name="vehiculo" type="xsd:integer"/>
+                     <xsd:element name="duracion" type="xsd:integer"/>
+                     <xsd:element name="parado" type="xsd:integer"/>
+                     <xsd:element name="cuentaKmInicio" type="xsd:double"/>
+                     <xsd:element name="cuentaKmFin" type="xsd:integer"/>
+                     <xsd:element name="recorrido" type="xsd:double"/>
+                     <xsd:element name="consumo" type="xsd:double"/>
+                     <xsd:element name="rendimiento" type="xsd:double"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation xmlns="">
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

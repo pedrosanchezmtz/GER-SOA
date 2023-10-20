@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorCustomerBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="SyncCustomers" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSyncCustomers.bpelSyncCustomers.SyncCustomers">
+            <action>
+               <assign>
+                  <copy expression="$in.SyncCustomersRq" target="$out.SyncCustomersRq"/>
+               </assign>
+               <invoke reference="bpelSyncCustomers.bpelSyncCustomers" operation="SyncCustomers">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.SyncCustomersRs/ns1:SyncCustomersRs" target="$out.SyncCustomersRs/ns1:SyncCustomersRs" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

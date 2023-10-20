@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelBuildInvoicesZip"
+                  targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelBuildInvoicesZip"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelBuildInvoicesZip"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/FinancialsTec"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/StructursInvoicesBiz">
+  <plnk:partnerLinkType name="bpelBuildInvoicesZip">
+    <plnk:role name="bpelBuildInvoicesZipProvider" portType="client:bpelBuildInvoicesZip"/>
+  </plnk:partnerLinkType>
+  <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="SOAUtilitiesTecWrapper.wsdl"/>
+  <wsdl:import namespace="http://soa.estrellaroja.com.mx/FinancialsTec" location="FinancialsTecWrapper.wsdl"/>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelBuildInvoicesZip"
+            xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+            xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+            xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+            xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+            xmlns:ns4="http://soa.estrellaroja.com.mx/FinancialsTec"
+            xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/StructursInvoicesBiz">
+      <import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz"
+              schemaLocation="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelBuildInvoicesZip"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                xmlns:ns4="http://soa.estrellaroja.com.mx/FinancialsTec"
+                xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/StructursInvoicesBiz">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="../Schemas/InvoicesToCsv.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelBuildInvoicesZip"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                xmlns:ns4="http://soa.estrellaroja.com.mx/FinancialsTec"
+                xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/StructursInvoicesBiz">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz/StructursInvoicesBiz"
+                  schemaLocation="../Schemas/StructursInvoicesBiz.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="BuildInvoicesZipRq">
+    <wsdl:part name="BuildInvoicesZipRq" element="ns1:BuildInvoicesZipRq"/>
+  </wsdl:message>
+  <wsdl:message name="BuildInvoicesZipRs">
+    <wsdl:part name="BuildInvoicesZipRs" element="ns1:BuildInvoicesZipRs"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelBuildInvoicesZip">
+    <wsdl:operation name="BuildInvoicesZip">
+      <wsdl:input message="client:BuildInvoicesZipRq"/>
+      <wsdl:output message="client:BuildInvoicesZipRs"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

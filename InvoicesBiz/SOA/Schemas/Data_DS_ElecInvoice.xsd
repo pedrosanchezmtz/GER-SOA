@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz">
+   <xs:element name="DATA_DS">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name="invoice" maxOccurs="unbounded" minOccurs="0">
+               <xs:complexType>
+                  <xs:sequence>
+                     <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                     <xs:element type="xs:int" name="TRX_NUMBER"/>
+                     <xs:element type="xs:string" name="TRANSACTION_SOURCE"/>
+                     <xs:element type="xs:string" name="BUSINESS_UNIT"/>
+                     <xs:element type="xs:byte" name="retention_vat"/>
+                     <xs:element type="xs:byte" name="retention_rt"/>
+                     <xs:element type="xs:int" name="subtotal"/>
+                     <xs:element type="xs:int" name="total"/>
+                     <xs:element type="xs:string" name="id_rfc"/>
+                     <xs:element type="xs:string" name="certificate_number"/>
+                     <xs:element type="xs:string" name="issuer_rfc"/>
+                     <xs:element type="xs:string" name="issuer_name"/>
+                     <xs:element type="xs:string" name="issuer_street"/>
+                     <xs:element type="xs:string" name="issuer_ext_number"/>
+                     <xs:element type="xs:string" name="issuer_int_number"/>
+                     <xs:element type="xs:string" name="issuer_colony"/>
+                     <xs:element type="xs:int" name="issuer_zip_code"/>
+                     <xs:element type="xs:string" name="issuer_municipality"/>
+                     <xs:element type="xs:string" name="issuer_state"/>
+                     <xs:element type="xs:string" name="issuer_phone"/>
+                     <xs:element type="xs:string" name="issuer_country"/>
+                     <xs:element type="xs:string" name="invoice_date"/>
+                     <xs:element type="xs:string" name="document_type"/>
+                     <xs:element type="xs:string" name="additional_information"/>
+                     <xs:element type="xs:string" name="cancellation_date"/>
+                     <xs:element type="xs:string" name="total_words"/>
+                     <xs:element type="xs:byte" name="total_items"/>
+                     <xs:element type="xs:string" name="local_retention_name"/>
+                     <xs:element type="xs:string" name="local_retention_percentage"/>
+                     <xs:element type="xs:string" name="local_retention_amount"/>
+                     <xs:element type="xs:short" name="total_vat"/>
+                     <xs:element type="xs:string" name="total_stps"/>
+                     <xs:element type="xs:string" name="total_st"/>
+                     <xs:element type="xs:string" name="total_tips"/>
+                     <xs:element type="xs:string" name="serie"/>
+                     <xs:element type="xs:string" name="branch_id"/>
+                     <xs:element type="xs:string" name="branch_number"/>
+                     <xs:element type="xs:string" name="branch_name"/>
+                     <xs:element type="xs:string" name="branch_street"/>
+                     <xs:element type="xs:string" name="branch_ext_number"/>
+                     <xs:element type="xs:string" name="branch_int_number"/>
+                     <xs:element type="xs:string" name="branch_colony"/>
+                     <xs:element type="xs:int" name="branch_zip_code"/>
+                     <xs:element type="xs:string" name="branch_municipality"/>
+                     <xs:element type="xs:string" name="branch_state"/>
+                     <xs:element type="xs:string" name="branch_reference"/>
+                     <xs:element type="xs:string" name="discount"/>
+                     <xs:element type="xs:string" name="branch_phone"/>
+                     <xs:element type="xs:string" name="branch_country"/>
+                     <xs:element type="xs:string" name="receiver_name"/>
+                     <xs:element type="xs:string" name="receiver_email"/>
+                     <xs:element type="xs:string" name="receiver_rfc"/>
+                     <xs:element type="xs:string" name="receiver_phone"/>
+                     <xs:element type="xs:string" name="receiver_street"/>
+                     <xs:element type="xs:string" name="receiver_ext_number"/>
+                     <xs:element type="xs:string" name="receiver_int_number"/>
+                     <xs:element type="xs:string" name="receiver_colony"/>
+                     <xs:element type="xs:int" name="receiver_zip_code"/>
+                     <xs:element type="xs:string" name="receiver_municipality"/>
+                     <xs:element type="xs:string" name="receiver_state"/>
+                     <xs:element type="xs:string" name="receiver_country"/>
+                     <xs:element type="xs:string" name="receiver_passport"/>
+                     <xs:element type="xs:string" name="receiver_cfdi_use"/>
+                     <xs:element type="xs:string" name="payment_method"/>
+                     <xs:element type="xs:string" name="currency"/>
+                     <xs:element type="xs:short" name="issuer_tax_regime"/>
+                     <xs:element type="xs:string" name="currency_exchange_rate"/>
+                     <xs:element type="xs:byte" name="payment_method_select"/>
+                     <xs:element type="xs:string" name="added_payment_methods"/>
+                     <xs:element type="xs:byte" name="payment_form"/>
+                     <xs:element type="xs:string" name="payment_condition"/>
+                     <xs:element type="xs:string" name="payment_status"/>
+                     <xs:element type="xs:string" name="payment_account_number"/>
+                     <xs:element type="xs:string" name="comments"/>
+                     <xs:element type="xs:string" name="service"/>
+                     <xs:element type="xs:string" name="relationship_type"/>
+                     <xs:element type="xs:string" name="related_cfdi"/>
+                     <xs:element type="xs:string" name="exportacion"/>
+                     <xs:element type="xs:string" name="RECEIVER_TAX_REGIME"/>
+                     <xs:element name="item" maxOccurs="unbounded">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                              <xs:element type="xs:byte" name="discount"/>
+                              <xs:element type="xs:int" name="subtotal"/>
+                              <xs:element type="xs:byte" name="retention_vat"/>
+                              <xs:element type="xs:byte" name="retention_rt"/>
+                              <xs:element type="xs:int" name="total"/>
+                              <xs:element type="xs:string" name="description"/>
+                              <xs:element type="xs:string" name="prod_serv_key"/>
+                              <xs:element type="xs:byte" name="quantity"/>
+                              <xs:element type="xs:byte" name="vat_percentage"/>
+                              <xs:element type="xs:string" name="unit"/>
+                              <xs:element type="xs:string" name="unit_key"/>
+                              <xs:element type="xs:short" name="unit_price"/>
+                              <xs:element type="xs:int" name="tax_base"/>
+                              <xs:element type="xs:string" name="tax"/>
+                              <xs:element type="xs:string" name="factor_type"/>
+                              <xs:element type="xs:float" name="rate_fee"/>
+                              <xs:element type="xs:byte" name="stps_percentage"/>
+                              <xs:element type="xs:byte" name="imp_percentage"/>
+                              <xs:element type="xs:byte" name="retention_vat_percentage"/>
+                              <xs:element type="xs:byte" name="retention_rt_percentage"/>
+                              <xs:element type="xs:int" name="amount"/>
+                              <xs:element type="xs:short" name="vat"/>
+                              <xs:element type="xs:byte" name="stps"/>
+                              <xs:element type="xs:byte" name="imp"/>
+                              <xs:element type="xs:byte" name="st"/>
+                              <xs:element type="xs:string" name="addendum_interface_apply"/>
+                              <xs:element type="xs:string" name="addendum_interface_type"/>
+                              <xs:element type="xs:string" name="addendum_interface_concept"/>
+                              <xs:element type="xs:string" name="retention_rt_name"/>
+                              <xs:element type="xs:string" name="propertyAccount"/>
+                              <xs:element type="xs:string" name="taxObject"/>
+                              <xs:element type="xs:string" name="identificationNumber"/>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                     <xs:element name="psv_vw" maxOccurs="1" minOccurs="0">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                              <xs:element type="xs:float" name="version"/>
+                              <xs:element type="xs:string" name="tipoDocumentoFiscal"/>
+                              <xs:element type="xs:string" name="tipoDocumentoVWM"/>
+                              <xs:element type="xs:string" name="division"/>
+                              <xs:element type="xs:string" name="xmlns_PSV"/>
+                              <xs:element name="moneda">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element type="xs:string" name="tipoMoneda"/>
+                                       <xs:element type="xs:byte" name="tipoCambio"/>
+                                       <xs:element type="xs:string" name="codigoImpuesto"/>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                              <xs:element name="proveedor">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element type="xs:string" name="nombre"/>
+                                       <xs:element type="xs:string" name="codigo"/>
+                                       <xs:element type="xs:string" name="correoContacto"/>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                              <xs:element name="destino">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element type="xs:short" name="codigo"/>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                              <xs:element name="referencias">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element type="xs:string" name="referenciaProveedor"/>
+                                       <xs:element type="xs:string" name="numeroASN"/>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                              <xs:element name="solicitante">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element type="xs:string" name="nombre"/>
+                                       <xs:element type="xs:string" name="correo"/>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                              <xs:element name="partes">
+                                 <xs:complexType>
+                                    <xs:sequence>
+                                       <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                                       <xs:element name="referencia">
+                                          <xs:complexType>
+                                             <xs:sequence>
+                                                <xs:element type="xs:string" name="ordenCompra"/>
+                                                <xs:element name="parte">
+                                                   <xs:complexType>
+                                                      <xs:sequence>
+                                                         <xs:element type="xs:string" name="codigoImpuesto"/>
+                                                         <xs:element type="xs:string" name="posicion"/>
+                                                         <xs:element type="xs:string" name="numeroMaterial"/>
+                                                         <xs:element type="xs:string" name="descripcionMaterial"/>
+                                                         <xs:element type="xs:string" name="cantidadMaterial"/>
+                                                         <xs:element type="xs:string" name="unidadMedida"/>
+                                                         <xs:element type="xs:string" name="precioUnitario"/>
+                                                         <xs:element type="xs:string" name="montoLinea"/>
+                                                         <xs:element type="xs:string" name="pesoBruto"/>
+                                                         <xs:element type="xs:string" name="pesoNeto"/>
+                                                      </xs:sequence>
+                                                   </xs:complexType>
+                                                </xs:element>
+                                             </xs:sequence>
+                                          </xs:complexType>
+                                       </xs:element>
+                                    </xs:sequence>
+                                 </xs:complexType>
+                              </xs:element>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                     <xs:element name="grupo_ado" maxOccurs="1" minOccurs="0">
+                        <xs:complexType>
+                           <xs:sequence>
+                              <xs:element type="xs:long" name="CUSTOMER_TRX_ID"/>
+                              <xs:element type="xs:string" name="tipoAddenda"/>
+                              <xs:element type="xs:string" name="addendaValor"/>
+                           </xs:sequence>
+                        </xs:complexType>
+                     </xs:element>
+                  </xs:sequence>
+               </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>

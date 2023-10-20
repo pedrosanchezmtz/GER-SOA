@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SelectTratecsaOrders" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaOrders" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="SelectTratecsaOrders_plt">
+      <plt:role name="SelectTratecsaOrders_role">
+         <plt:portType name="tns:SelectTratecsaOrders_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaOrders" schemaLocation="../../Schemas/Orders/SelectTratecsaOrders.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SelectTratecsaOrdersInput_msg">
+      <wsdl:part name="SelectTratecsaOrdersInput_msg" element="db:SelectTratecsaOrdersInput"/>
+   </wsdl:message>
+   <wsdl:message name="SelectTratecsaOrdersOutputCollection_msg">
+      <wsdl:part name="SelectTratecsaOrdersOutputCollection" element="db:SelectTratecsaOrdersOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="SelectTratecsaOrders_ptt">
+      <wsdl:operation name="SelectTratecsaOrders">
+         <wsdl:input message="tns:SelectTratecsaOrdersInput_msg"/>
+         <wsdl:output message="tns:SelectTratecsaOrdersOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

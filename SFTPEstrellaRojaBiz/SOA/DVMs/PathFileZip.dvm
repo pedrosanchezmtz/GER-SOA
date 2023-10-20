@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="PathFileZip" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="code"/>
+      <column name="value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>pathFileZip</cell>
+         <cell>/u01/data/domains/ERSOAPRD_domain/integraciones/</cell>
+      </row>
+   </rows>
+</dvm>

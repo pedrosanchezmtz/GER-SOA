@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmPaymentComplement" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>DOCUMENT_TYPE</cell>
+         <cell>P</cell>
+      </row>
+      <row>
+         <cell>DESCRIPTION</cell>
+         <cell>Pago</cell>
+      </row>
+      <row>
+         <cell>UNIT_KEY</cell>
+         <cell>ACT</cell>
+      </row>
+      <row>
+         <cell>SERIE</cell>
+         <cell>PQ</cell>
+      </row>
+      <row>
+         <cell>BRANCH_NAME</cell>
+         <cell>MATRIZ</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ISSUER_TAX_REGIME</cell>
+         <cell>601</cell>
+      </row>
+      <row markdefault="false">
+         <cell>SERVICE</cell>
+         <cell>EXPRESSO NEGOCIOS</cell>
+      </row>
+      <row>
+         <cell>TARGET_INTERFACE</cell>
+         <cell>PaymentComplements</cell>
+      </row>
+      <row>
+         <cell>INTEGRATION_NAME</cell>
+         <cell>PaymentComplementEnt</cell>
+      </row>
+      <row>
+         <cell>PROCESS_NAME</cell>
+         <cell>PaymentComplement</cell>
+      </row>
+      <row>
+         <cell>REPORT_NAME</cell>
+         <cell>XXER_AR_PAYMENT_COMPLEMENTS.xdm</cell>
+      </row>
+   </rows>
+</dvm>

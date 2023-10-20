@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelEncodeFileBase64" targetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncodeFileBase64" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncodeFileBase64" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EncodeFileBase64Rq">
+      <wsdl:part name="EncodeFileBase64Rq" element="ns1:EncodeFileBase64Rq"/>
+   </wsdl:message>
+   <wsdl:message name="EncodeFileBase64Rs">
+      <wsdl:part name="EncodeFileBase64Rs" element="ns1:EncodeFileBase64Rs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelEncodeFileBase64">
+      <wsdl:operation name="EncodeFileBase64">
+         <wsdl:input message="client:EncodeFileBase64Rq"/>
+         <wsdl:output message="client:EncodeFileBase64Rs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelEncodeFileBase64">
+      <plnk:role name="bpelEncodeFileBase64Provider" portType="client:bpelEncodeFileBase64"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

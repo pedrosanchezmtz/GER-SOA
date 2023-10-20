@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMErrorRecord" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMErrorRecord" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="XxerEamErrorLogCollection" type="XxerEamErrorLogCollection"/>
+   <xs:complexType name="XxerEamErrorLogCollection">
+      <xs:sequence>
+         <xs:element name="XxerEamErrorLog" type="XxerEamErrorLog" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerEamErrorLog">
+      <xs:sequence>
+         <xs:element name="idError" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="assetNumber" type="string60" nillable="true"/>
+         <xs:element name="readingDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="readingValue" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="errorMessage" type="string2000" minOccurs="0" nillable="true"/>
+         <xs:element name="origin" type="string40" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string60">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="60"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string2000">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="2000"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string40">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="40"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ZAMUnblockAsset" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/ZAMUnblockAsset" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="ZAMUnblockAsset_plt">
+      <plt:role name="ZAMUnblockAsset_role">
+         <plt:portType name="tns:ZAMUnblockAsset_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/ZAMUnblockAsset" schemaLocation="../../Schemas/Orders/ZAMUnblockAsset_sp.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="args_in_msg">
+      <wsdl:part name="InputParameters" element="db:InputParameters"/>
+   </wsdl:message>
+   <wsdl:portType name="ZAMUnblockAsset_ptt">
+      <wsdl:operation name="ZAMUnblockAsset">
+         <wsdl:input message="tns:args_in_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

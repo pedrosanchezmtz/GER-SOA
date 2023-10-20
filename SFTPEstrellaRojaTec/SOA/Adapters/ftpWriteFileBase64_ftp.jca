@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="ftpWriteFileBase64" adapter="ftp" wsdlLocation="../WSDLs/ftpWriteFileBase64.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/Ftp/erSOA"/>
+   <endpoint-interaction portType="PutFile_ptt" operation="PutFile">
+      <interaction-spec className="oracle.tip.adapter.ftp.outbound.FTPInteractionSpec">
+         <property name="PhysicalDirectory" value="/SOA/er.soa/incoming/PROD"/>
+         <property name="NumberMessages" value="1"/>
+         <property name="Append" value="false"/>
+         <property name="FileType" value="ascii"/>
+         <property name="FileNamingConvention" value="*.txt"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

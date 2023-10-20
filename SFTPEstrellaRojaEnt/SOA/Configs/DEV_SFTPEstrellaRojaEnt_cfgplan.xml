@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="SFTPEstrellaRojaEnt">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+            <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</search>
+            <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageBiz/MessageBiz</search>
+            <replace>oramds:/apps/SOA/DEV_MessageBiz/MessageBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz</search>
+            <replace>oramds:/apps/SOA/DEV_SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz</replace>
+         </searchReplace>
+      </import>
+      <service name="ftpServiceReaderFileSantander">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="ftpReadFileStatementBankBanorte">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="ftpReadFileStatementsBankBBVA">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="ftpReadFileStatementBankBanamex">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="ftpReadFileStatementBankHSBC">
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>f7981ee8-95ab-4956-b9e9-1eed3bdb1f6a</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelManagementsStatementsBankSantander">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelManagementsStatementsBankBanorte">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelManagementsStatmentsBankBBVA">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelManagementsStatementsBankBanamex">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="bpelManagementsStatementsBankHSBC">
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="wsERPIntegrationBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSFTPEstrellaRojaBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.endpoint(SFTPEstrellaRojaBiz/SFTPEstrellaRojaBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSFTPEstrellaRojaBiz_2">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.endpoint(SFTPEstrellaRojaBiz/SFTPEstrellaRojaBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>WSDLs/SFTPEstrellaRojaBizWrapper2.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsMessageBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageBiz#wsdl.endpoint(MessageBiz/MessageBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageBiz/MessageBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPManagementOfLoadImportBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.endpoint(ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBizPortType)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Schemas/BankCodes.xsd|Schemas/Banks/StatementsBankBanamex.xsd|Schemas/Banks/StatementsBankBanorte.xsd|Schemas/Banks/StatementsBankBBVA.xsd|Schemas/Banks/StatementsBankHSBC.xsd|Schemas/ftpReadFileSantander.xsd|Schemas/SFTPEstrellaRojaEnt.xsd|Schemas/singleString.xsd|Schemas/StructureBankCode.xsd|Schemas/StructureBankDetails.xsd|WSDLs/bpelManagementsStatementsBankBanamex.wsdl|WSDLs/bpelManagementsStatementsBankBanorte.wsdl|WSDLs/bpelManagementsStatementsBankHSBC.wsdl|WSDLs/bpelManagementsStatementsBankSantander.wsdl|WSDLs/bpelManagementsStatmentsBankBBVA.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/ERPManagementOfLoadImportBizWrapper.wsdl|WSDLs/ftpReadFileStatementBankBanamex.wsdl|WSDLs/ftpReadFileStatementBankBanorte.wsdl|WSDLs/ftpReadFileStatementBankHSBC.wsdl|WSDLs/ftpReadFileStatementsBankBBVA.wsdl|WSDLs/ftpServiceReaderFileSantander.wsdl|WSDLs/MessageBizWrapper.wsdl|WSDLs/SFTPEstrellaRojaBizWrapper1.wsdl|WSDLs/SFTPEstrellaRojaBizWrapper2.wsdl|wsm-assembly.xml">
+      <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</search>
+         <replace>oramds:/apps/SOA/DEV_ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/MessageBiz/MessageBiz</search>
+         <replace>oramds:/apps/SOA/DEV_MessageBiz/MessageBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz</search>
+         <replace>oramds:/apps/SOA/DEV_SFTPEstrellaRojaBiz/SFTPEstrellaRojaBiz</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpReadFileStatementBankBanamex_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/BNMX</replace>
+      </jca:property>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpReadFileStatementBankBanorte_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/BANORTE</replace>
+      </jca:property>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpReadFileStatementsBankBBVA_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/BBVA</replace>
+      </jca:property>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpServiceReaderFileSantander_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/SANTANDER</replace>
+      </jca:property>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpReadFileStatementBankHSBC_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/HSBC</replace>
+      </jca:property>
+   </wsdlAndSchema>
+   <wsdlAndSchema name="Adapters/ftpReadFileStatementsBankBanregio_ftp.jca">
+      <jca:property name="PhysicalDirectory">
+         <replace>/SOA/er.soa/incoming/DEV/BANREGIO</replace>
+      </jca:property>
+   </wsdlAndSchema>
+</SOAConfigPlan>

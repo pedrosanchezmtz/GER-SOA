@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmInvoicesEnt" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>Generic</cell>
+         <cell>IntegrationName</cell>
+         <cell>InvoicesEnt</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>IntegrationName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>TargetInterface</cell>
+         <cell>OrgSetCodes</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>ProcessName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>ParamNameRFC</cell>
+         <cell>P_RFC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>ParamValueRFC</cell>
+         <cell>ParamValueRFC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInvoices</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_AR_TRX_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>TargetInterface</cell>
+         <cell>InvoiceValidation</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>ProcessName</cell>
+         <cell>ValidateInvoicesAP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateInvoicesAP</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_AP_INVOICE_VALIDATION.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>VALIDATE_PAYMENT_COMPLEMENTS</cell>
+         <cell>PROCESS_NAME</cell>
+         <cell>ValidatePaymentComplements</cell>
+      </row>
+      <row markdefault="false">
+         <cell>VALIDATE_PAYMENT_COMPLEMENTS</cell>
+         <cell>TARGET_INTERFACE</cell>
+         <cell>ValidatePaymentComplements</cell>
+      </row>
+      <row markdefault="false">
+         <cell>VALIDATE_PAYMENT_COMPLEMENTS</cell>
+         <cell>REPORT_NAME</cell>
+         <cell>XXER_AP_LOCATE_PAYMENT.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NotifyLoadinvoices</cell>
+         <cell>IntegrationName</cell>
+         <cell>InterfaceAutoInvoiceImport</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NotifyLoadInvoices</cell>
+         <cell>ProcessName</cell>
+         <cell>CreateInvoices</cell>
+      </row>
+   </rows>
+</dvm>

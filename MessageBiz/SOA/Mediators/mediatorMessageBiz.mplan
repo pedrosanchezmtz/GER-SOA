@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorMessageBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="SendEmail" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendEmail.bpelSendEmail.SendEmail_2">
+            <action>
+               <assign>
+                  <copy expression="$in.MessageRq/tns:MessageRq" target="$out.SendEmail/tns:MessageRq" xmlns:tns="http://soa.estrellaroja.com.mx/MessageBiz"/>
+                  <copy expression="$in.CustomHeader/tns:CustomHeader" target="$out.CustomHeader/tns:CustomHeader" xmlns:tns="http://soa.estrellaroja.com.mx/MessageBiz"/>
+               </assign>
+               <invoke reference="bpelSendEmail.bpelSendEmail" operation="SendEmail">
+                  <onCallback operation="SendEmailCallback">
+                     <assign>
+                        <copy expression="$in.SendEmailRs/ns1:MessageRs" target="$out.MessageRs/ns1:MessageRs" xmlns:ns1="http://soa.estrellaroja.com.mx/MessageBiz"/>
+                     </assign>
+                     <callback operation="SendEmailCallback"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

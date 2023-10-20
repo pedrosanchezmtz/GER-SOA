@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelSendEmail" targetNamespace="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/MessageBiz/MessageBiz/bpelSendEmail" xmlns:ns1="http://soa.estrellaroja.com.mx/MessageBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/MessageBiz" schemaLocation="oramds:/apps/SOA/MessageBiz/MessageBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SendEmailRq">
+      <wsdl:part name="SendEmail" element="ns1:MessageRq"/>
+      <wsdl:part name="CustomHeader" element="ns1:CustomHeader"/>
+   </wsdl:message>
+   <wsdl:message name="SendEmailRs">
+      <wsdl:part name="SendEmailRs" element="ns1:MessageRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelSendEmail">
+      <wsdl:operation name="SendEmail">
+         <wsdl:input message="client:SendEmailRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelSendEmailCallback">
+      <wsdl:operation name="SendEmailCallback">
+         <wsdl:input message="client:SendEmailRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelSendEmail">
+      <plnk:role name="bpelSendEmailProvider" portType="client:bpelSendEmail"/>
+      <plnk:role name="bpelSendEmailRequester" portType="client:bpelSendEmailCallback"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

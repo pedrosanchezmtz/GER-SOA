@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelLogPayment" targetNamespace="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelLogPayment" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelLogPayment" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/PaymentComplementBiz" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <partnerLinks>
+      <partnerLink name="wsCommonPaymentsTec" partnerLinkType="ns2:wsCommonPaymentsTec" partnerRole="CommonPaymentsTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="currentHeader" element="ns1:CurrentHeader"/>
+      <variable name="status" type="xsd:string"/>
+      <variable name="UUID" type="xsd:string"/>
+      <variable name="UUIDDate" type="xsd:string"/>
+   </variables>
+   <sequence name="sequenceMain">
+      <scope name="scopeGetPayment">
+         <variables>
+            <variable name="queryInput" messageType="ns2:GetPayementRq"/>
+            <variable name="queryOutput" messageType="ns2:GetPayementRs"/>
+            <variable name="mergeInput" messageType="ns2:MergePaymentRq"/>
+            <variable name="mergeOutput" messageType="ns2:MergePaymentRs"/>
+         </variables>
+         <sequence name="sequenceGetPayment">
+            <assign name="assignParams">
+               <copy>
+                  <from>number($currentHeader/ns1:CashReceiptId)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryInput.GetPayementRqPart/ns2:CashReceiptId</to>
+               </copy>
+               <copy>
+                  <from>
+                     <literal>COMPLEMENT</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryInput.GetPayementRqPart/ns2:PaymentType</to>
+               </copy>
+            </assign>
+            <invoke name="invokeGetPayment" partnerLink="wsCommonPaymentsTec" portType="ns2:CommonPaymentsTecPortType" operation="GetPayement" inputVariable="queryInput" outputVariable="queryOutput" bpelx:invokeAsDetail="no"/>
+            <if name="IfNotFound">
+               <documentation><![CDATA[Not Found Payment]]></documentation>
+               <condition>count($queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment) = 0</condition>
+               <assign name="trFixResult">
+                  <bpelx:annotation>
+                     <bpelx:pattern patternName="bpelx:transformation"/>
+                  </bpelx:annotation>
+                  <copy>
+                     <from>ora:doXSLTransformForDoc("../Transformations/CurrentHeader_To_GetPayementRs.xsl", $currentHeader)</from>
+                     <to variable="queryOutput" part="GetPayementRsPart"/>
+                  </copy>
+               </assign>
+               <else>
+                  <documentation><![CDATA[Found Payment]]></documentation>
+                  <empty name="empty"/>
+               </else>
+            </if>
+            <if name="IfStatus">
+               <documentation><![CDATA[STAMPED]]></documentation>
+               <condition>$status = 'STAMPED'</condition>
+               <assign name="assignStamped">
+                  <copy bpelx:insertMissingToData="yes">
+                     <from>$currentHeader/ns1:LastUpatedby</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:LastUpdatedBy</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                     <from>''</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:TextPlainContent</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                     <from>$status</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:Status</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                     <from>$UUID</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:Uuid</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes">
+                     <from>$UUIDDate</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:UuidDate</to>
+                  </copy>
+               </assign>
+               <elseif>
+                  <documentation><![CDATA[NOT_CONNECTED]]></documentation>
+                  <condition>$status = 'NOT_CONNECTED'</condition>
+                  <assign name="assignNotConnected">
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>$status</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:Status</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>$currentHeader/ns1:LastUpatedby</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:LastUpdatedBy</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>ora:toCDATA($currentHeader)</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:TextPlainContent</to>
+                     </copy>
+                  </assign>
+               </elseif>
+               <else>
+                  <documentation><![CDATA[ERRORED]]></documentation>
+                  <assign name="assignErrored">
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>$status</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:Status</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>''</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:TextPlainContent</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>$currentHeader/ns1:LastUpatedby</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$queryOutput.GetPayementRsPart/ns2:Return/ns2:Payment/ns2:LastUpdatedBy</to>
+                     </copy>
+                  </assign>
+               </else>
+            </if>
+            <assign name="trInput">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("../Transformations/GetPaymentRs_To_MergePaymentRq.xsl", $queryOutput.GetPayementRsPart)</from>
+                  <to variable="mergeInput" part="MergePaymentRq"/>
+               </copy>
+            </assign>
+            <assign name="assignPayload">
+               <copy bpelx:insertMissingToData="yes">
+                  <from>ora:toCDATA($currentHeader)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mergeInput.MergePaymentRq/ns2:Payment/ns2:TextPlainContent</to>
+               </copy>
+            </assign>
+            <invoke name="invokeMergePayment" bpelx:invokeAsDetail="no" partnerLink="wsCommonPaymentsTec" portType="ns2:CommonPaymentsTecPortType" operation="MergePayment" inputVariable="mergeInput" outputVariable="mergeOutput"/>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

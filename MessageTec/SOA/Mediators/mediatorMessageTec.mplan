@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorMessageTec" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/MessageTec">
+   <operation name="SendEmail" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendEmail.bpelSendemail.SendEmail">
+            <action>
+               <assign>
+                  <copy expression="$in.MessageRq/tns:MessageRq" target="$out.MessageRq/tns:MessageRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/MessageTec"
+                        xmlns:inp1="http://soa.estrellaroja.com.mx/MessageTec"/>
+                  <copy expression="$in.CustomHeader/tns:CustomHeader" target="$out.CustomHeader"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/MessageTec"
+                        xmlns:inp1="http://soa.estrellaroja.com.mx/MessageTec"/>
+               </assign>
+               <invoke reference="bpelSendEmail.bpelSendemail" operation="SendEmail">
+                  <onCallback operation="SendEmailCallback">
+                     <assign>
+                        <copy expression="$in.MessageRs/ns1:MessageRs" target="$out.MessageRs/ns1:MessageRs"
+                              xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"/>
+                     </assign>
+                     <callback operation="SendEmailCallback"/>
+                  </onCallback>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

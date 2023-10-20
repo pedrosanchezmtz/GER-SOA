@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="umsSendEmail" adapter="ums" wsdlLocation="../WSDLs/umsSendEmail.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/ums/PROD/UMSAdapterOutbound"/>
+   <endpoint-interaction portType="SendNotification_ptt" operation="SendNotification">
+      <interaction-spec className="oracle.tip.adapter.ums.outbound.UmsInteractionSpec">
+         <property name="From" value="dummy@design.time"/>
+         <property name="To" value="dummy@design.time"/>
+         <property name="Subject" value="dummy"/>
+         <property name="DeliveryType" value="Email"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

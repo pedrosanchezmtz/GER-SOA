@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="InvoicesEnt">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="522" width="137" height="132">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="515" width="156" height="146">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="InvoicesEnt" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.interface(InvoicesEntPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.interface(InvoicesEntCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetInvoices</dgm:item>
+            <dgm:item>ElecInvoices</dgm:item>
+            <dgm:item>ValidateInvoicesAP</dgm:item>
+            <dgm:item>ValidatePaymentComplements</dgm:item>
+            <dgm:item>ValidatePaymentComplements</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="wsERPIntegrationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1264" Y="640" width="136" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1254" Y="633" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ImportToERPCloud</dgm:item>
+            <dgm:item>GenerateReport</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>ImportToERPCloudCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsFinancialsBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1264" Y="26" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1254" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsFinancialsBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialBiz#wsdl.interface(FinancialBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetRfc</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsInvoicesBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1264" Y="422" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1254" Y="415" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsInvoicesBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>BuildInvoicesZip</dgm:item>
+            <dgm:item>ValidateInvoicesAP</dgm:item>
+            <dgm:item>DigitalStamp</dgm:item>
+            <dgm:item>ValidatePaymentComplements</dgm:item>
+            <dgm:item>UploadPaymentComplements</dgm:item>
+            <dgm:item>NotifyLoadInvoices</dgm:item>
+            <dgm:item>StatusLoadInvoices</dgm:item>
+            <dgm:item>UpdateUuid</dgm:item>
+            <dgm:item>GetComplementToUpdInvoices</dgm:item>
+            <dgm:item>UpdateStatusInvoices</dgm:item>
+            <dgm:item>ValidateInvoicesAP</dgm:item>
+            <dgm:item>ValidatePaymentComplements</dgm:item>
+            <dgm:item>UploadPaymentComplements</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsERPManagementOfLoadImportBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1264" Y="167" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1254" Y="160" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPManagementOfLoadImportBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.interface(ERPManagementOfLoadImportBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendReportInterface</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsLetterPorteBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1264" Y="283" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1254" Y="276" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsLetterPorteBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/LetterPorteBiz#wsdl.interface(LetterPorteBizPort)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GenerateRelationCFDIs</dgm:item>
+            <dgm:item>GenerateURLRelationCFDIs</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="mediatorInvoicesEnt">
+        <dgm:body borderWidth="2" arcRad="20" X="329" Y="507" width="130" height="136">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="319" Y="500" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorInvoicesEnt" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.interface(InvoicesEntPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt#wsdl.interface(InvoicesEntCallbackPortType)"/>
+        <dgm:outputPort name="bpelGetInvoices.bpelGetInvoices" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices#wsdl.interface(bpelGetInvoices)"/>
+        <dgm:outputPort name="bpelElecInvoice.ElecInvoice" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/InvoicesEnt/InvoicesEnt/bpelElecInvoice#wsdl.interface(bpelElecInvoice)"/>
+        <dgm:outputPort name="bpelValidateInvoicesAP.bpelValidateInvoicesAP" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidateInvoicesAP#wsdl.interface(bpelValidateInvoicesAP)"/>
+        <dgm:outputPort name="bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements#wsdl.interface(bpelValidatePaymentComplements)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements#wsdl.interface(bpelValidatePaymentComplementsCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetInvoices">
+        <dgm:body borderWidth="2" arcRad="20" X="630" Y="265" width="130" height="136">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="620" Y="258" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelGetInvoices" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices#wsdl.interface(bpelGetInvoices)"/>
+        <dgm:outputPort name="wsFinancialsBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialBiz#wsdl.interface(FinancialBizPortType)"/>
+        <dgm:outputPort name="bpelLoadInvoices.lLoadInvoices" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices#wsdl.interface(bpelLoadInvoices)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices#wsdl.interface(bpelLoadInvoicesCallback)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:outputPort name="wsInvoicesBiz" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelElecInvoice">
+        <dgm:body borderWidth="2" arcRad="20" X="931" Y="492" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="921" Y="485" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ElecInvoice" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/InvoicesEnt/InvoicesEnt/bpelElecInvoice#wsdl.interface(bpelElecInvoice)"/>
+        <dgm:outputPort name="wsInvoicesBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelValidateInvoicesAP">
+        <dgm:body borderWidth="2" arcRad="20" X="931" Y="612" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="921" Y="605" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelValidateInvoicesAP" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidateInvoicesAP#wsdl.interface(bpelValidateInvoicesAP)"/>
+        <dgm:outputPort name="wsInvoicesBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelValidatePaymentComplements">
+        <dgm:body borderWidth="2" arcRad="20" X="931" Y="732" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="921" Y="725" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelvalidatepaymentcomplements_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements#wsdl.interface(bpelValidatePaymentComplements)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelValidatePaymentComplements#wsdl.interface(bpelValidatePaymentComplementsCallback)"/>
+        <dgm:outputPort name="wsInvoicesBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelLoadInvoices">
+        <dgm:body borderWidth="2" arcRad="20" X="931" Y="283" width="130" height="136">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="921" Y="276" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="lLoadInvoices" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices#wsdl.interface(bpelLoadInvoices)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices#wsdl.interface(bpelLoadInvoicesCallback)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:outputPort name="wsInvoicesBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/InvoicesBiz#wsdl.interface(InvoicesBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPManagementOfLoadImportBiz" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.interface(ERPManagementOfLoadImportBizPortType)"/>
+        <dgm:outputPort name="wsLetterPorteBiz" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/LetterPorteBiz#wsdl.interface(LetterPorteBizPort)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="mediatorInvoicesEnt/bpelGetInvoices.bpelGetInvoices" target="bpelGetInvoices/bpelGetInvoices" width="2">
+        <dgm:gSegment X1="469" Y1="532" X2="493" Y2="532"/>
+        <dgm:gSegment X1="493" Y1="532" X2="493" Y2="290"/>
+        <dgm:gSegment X1="493" Y1="290" X2="620" Y2="290"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorInvoicesEnt/bpelElecInvoice.ElecInvoice" target="bpelElecInvoice/ElecInvoice" width="2">
+        <dgm:gSegment X1="469" Y1="557" X2="794" Y2="557"/>
+        <dgm:gSegment X1="794" Y1="557" X2="794" Y2="517"/>
+        <dgm:gSegment X1="794" Y1="517" X2="921" Y2="517"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorInvoicesEnt/bpelValidateInvoicesAP.bpelValidateInvoicesAP" target="bpelValidateInvoicesAP/bpelValidateInvoicesAP" width="2">
+        <dgm:gSegment X1="469" Y1="582" X2="809" Y2="582"/>
+        <dgm:gSegment X1="809" Y1="582" X2="809" Y2="637"/>
+        <dgm:gSegment X1="809" Y1="637" X2="921" Y2="637"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelValidateInvoicesAP/wsInvoicesBiz" target="wsInvoicesBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="637" X2="1125" Y2="637"/>
+        <dgm:gSegment X1="1125" Y1="637" X2="1125" Y2="432"/>
+        <dgm:gSegment X1="1125" Y1="432" X2="1254" Y2="432"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelElecInvoice/wsInvoicesBiz" target="wsInvoicesBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="517" X2="1110" Y2="517"/>
+        <dgm:gSegment X1="1110" Y1="517" X2="1110" Y2="432"/>
+        <dgm:gSegment X1="1110" Y1="432" X2="1254" Y2="432"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetInvoices/wsFinancialsBiz" target="wsFinancialsBiz" width="2">
+        <dgm:gSegment X1="770" Y1="290" X2="794" Y2="290"/>
+        <dgm:gSegment X1="794" Y1="290" X2="794" Y2="36"/>
+        <dgm:gSegment X1="794" Y1="36" X2="1254" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorInvoicesEnt/bpelValidatePaymentComplements.bpelvalidatepaymentcomplements_client" target="bpelValidatePaymentComplements/bpelvalidatepaymentcomplements_client" width="2">
+        <dgm:gSegment X1="469" Y1="607" X2="794" Y2="607"/>
+        <dgm:gSegment X1="794" Y1="607" X2="794" Y2="757"/>
+        <dgm:gSegment X1="794" Y1="757" X2="921" Y2="757"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelValidatePaymentComplements/wsInvoicesBiz" target="wsInvoicesBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="757" X2="1155" Y2="757"/>
+        <dgm:gSegment X1="1155" Y1="757" X2="1155" Y2="432"/>
+        <dgm:gSegment X1="1155" Y1="432" X2="1254" Y2="432"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="InvoicesEnt" target="mediatorInvoicesEnt/mediatorInvoicesEnt" width="2">
+        <dgm:gSegment X1="168" Y1="532" X2="319" Y2="532"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetInvoices/bpelLoadInvoices.lLoadInvoices" target="bpelLoadInvoices/lLoadInvoices" width="2">
+        <dgm:gSegment X1="770" Y1="315" X2="794" Y2="315"/>
+        <dgm:gSegment X1="794" Y1="315" X2="794" Y2="308"/>
+        <dgm:gSegment X1="794" Y1="308" X2="921" Y2="308"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLoadInvoices/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="308" X2="1230" Y2="308"/>
+        <dgm:gSegment X1="1230" Y1="308" X2="1230" Y2="650"/>
+        <dgm:gSegment X1="1230" Y1="650" X2="1254" Y2="650"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetInvoices/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="770" Y1="340" X2="809" Y2="340"/>
+        <dgm:gSegment X1="809" Y1="340" X2="809" Y2="447"/>
+        <dgm:gSegment X1="809" Y1="447" X2="1200" Y2="447"/>
+        <dgm:gSegment X1="1200" Y1="447" X2="1200" Y2="650"/>
+        <dgm:gSegment X1="1200" Y1="650" X2="1254" Y2="650"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelElecInvoice/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="542" X2="1185" Y2="542"/>
+        <dgm:gSegment X1="1185" Y1="542" X2="1185" Y2="650"/>
+        <dgm:gSegment X1="1185" Y1="650" X2="1254" Y2="650"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelValidateInvoicesAP/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="662" X2="1140" Y2="662"/>
+        <dgm:gSegment X1="1140" Y1="662" X2="1140" Y2="650"/>
+        <dgm:gSegment X1="1140" Y1="650" X2="1254" Y2="650"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelValidatePaymentComplements/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="782" X2="1170" Y2="782"/>
+        <dgm:gSegment X1="1170" Y1="782" X2="1170" Y2="650"/>
+        <dgm:gSegment X1="1170" Y1="650" X2="1254" Y2="650"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLoadInvoices/wsInvoicesBiz" target="wsInvoicesBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="333" X2="1215" Y2="333"/>
+        <dgm:gSegment X1="1215" Y1="333" X2="1215" Y2="432"/>
+        <dgm:gSegment X1="1215" Y1="432" X2="1254" Y2="432"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLoadInvoices/wsERPManagementOfLoadImportBiz" target="wsERPManagementOfLoadImportBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="358" X2="1095" Y2="358"/>
+        <dgm:gSegment X1="1095" Y1="358" X2="1095" Y2="177"/>
+        <dgm:gSegment X1="1095" Y1="177" X2="1254" Y2="177"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelLoadInvoices/wsLetterPorteBiz" target="wsLetterPorteBiz" width="2">
+        <dgm:gSegment X1="1071" Y1="383" X2="1110" Y2="383"/>
+        <dgm:gSegment X1="1110" Y1="383" X2="1110" Y2="293"/>
+        <dgm:gSegment X1="1110" Y1="293" X2="1254" Y2="293"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetInvoices/wsInvoicesBiz" target="wsInvoicesBiz" width="2">
+        <dgm:gSegment X1="770" Y1="365" X2="794" Y2="365"/>
+        <dgm:gSegment X1="794" Y1="365" X2="794" Y2="464"/>
+        <dgm:gSegment X1="794" Y1="464" X2="1095" Y2="464"/>
+        <dgm:gSegment X1="1095" Y1="464" X2="1095" Y2="432"/>
+        <dgm:gSegment X1="1095" Y1="432" X2="1254" Y2="432"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

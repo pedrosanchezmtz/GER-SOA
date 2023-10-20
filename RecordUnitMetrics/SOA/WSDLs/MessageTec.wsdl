@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="MessageTec" targetNamespace="http://soa.estrellaroja.com.mx/MessageTec" xmlns:tns="http://soa.estrellaroja.com.mx/MessageTec" xmlns:inp1="http://soa.estrellaroja.com.mx/MessageTec" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <wsdl:types>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/MessageTec" schemaLocation="../Schemas/MessageTec.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="MessageRq">
+      <wsdl:part name="MessageRq" element="inp1:MessageRq"/>
+      <wsdl:part name="CustomHeader" element="inp1:CustomHeader"/>
+   </wsdl:message>
+   <wsdl:message name="MessageRs">
+      <wsdl:part name="MessageRs" element="inp1:MessageRs"/>
+   </wsdl:message>
+   <wsdl:portType name="MessageTecPortType">
+      <wsdl:operation name="SendEmail">
+         <wsdl:input message="tns:MessageRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="MessageTecCallbackPortType">
+      <wsdl:operation name="SendEmailCallback">
+         <wsdl:input message="tns:MessageRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="MessageTecBinding" type="tns:MessageTecPortType">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="SendEmail">
+         <soap:operation style="document" soapAction="http://soa.estrellaroja.com.mx/MessageTec/SendEmail"/>
+         <wsdl:input>
+            <soap:body use="literal" parts="MessageRq"/>
+            <soap:header use="literal" part="CustomHeader" message="tns:MessageRq"/>
+         </wsdl:input>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="MessageTec">
+      <wsdl:port name="MessageTecPort" binding="tns:MessageTecBinding">
+         <soap:address location="http://ersoaprd-soa-0.snproduccin.vcner.oraclevcn.com:9073/soa-infra/services/Commons/MessageTec/MessageTec"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

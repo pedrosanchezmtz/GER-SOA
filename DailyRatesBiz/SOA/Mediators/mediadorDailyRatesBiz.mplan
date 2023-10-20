@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediadorDailyRatesBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/DailyRatesBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="DailyRates" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelCreateDailyRates.bpelCreateDailyRates.CreateDailyRates">
+            <action>
+               <assign>
+                  <copy expression="$in.DailyRatesRq/tns:DailyRatesRq" target="$out.CreateDailyRatesRq/tns:DailyRatesRq"
+                        xmlns:tns="http://soa.estrellaroja.com.mx/DailyRatesBiz"/>
+               </assign>
+               <invoke reference="bpelCreateDailyRates.bpelCreateDailyRates" operation="CreateDailyRates">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.CreateDailyRatesRs/ns1:DailyRatesRs"
+                              target="$out.DailyRatesRs/ns1:DailyRatesRs"
+                              xmlns:ns1="http://soa.estrellaroja.com.mx/DailyRatesBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

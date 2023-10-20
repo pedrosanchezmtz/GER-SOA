@@ -1,0 +1,735 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Oct 25 18:16:42 CDT 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelManagementsStatementsBankHSBC"
+               targetNamespace="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/BankCodes"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/StructureCodeBank"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/MessageBiz"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC">
+  <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StructureBankDetails"
+           location="../Schemas/StructureBankDetails.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+   <import namespace="http://soa.estrellaroja.com.mx/StructureCodeBank" location="../Schemas/StructureBankCode.xsd"
+           importType="http://www.w3.org/2001/XMLSchema"/>
+   <import namespace="http://soa.estrellaroja.com.mx/BankCodes" location="../Schemas/BankCodes.xsd"
+           importType="http://www.w3.org/2001/XMLSchema"/>
+
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC" location="../WSDLs/bpelManagementsStatementsBankHSBC.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelmanagementsstatementsbankhsbc_client" partnerLinkType="client:bpelManagementsStatementsBankHSBC" myRole="bpelManagementsStatementsBankHSBCProvider"/>
+      <partnerLink name="wsSFTPEstrellaRojaBiz" partnerLinkType="ns2:wsSFTPEstrellaRojaBiz"
+                   partnerRole="SFTPEstrellaRojaBizPortType"/>
+   </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelManagementsStatementsBankHSBCRequestMessage"/>
+    <variable name="varInstanceTitle" type="xsd:string"/>
+    <variable name="varFileName" type="xsd:string"/>
+    <variable name="v_saldoInicial" type="xsd:string"/>
+    <variable name="v_saldoFinal" type="xsd:string"/>
+    <variable name="v_credito" type="xsd:string"/>
+    <variable name="v_debito" type="xsd:string"/>
+    <variable name="v_inverso" type="xsd:boolean">
+      <from>false()</from>
+    </variable>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelManagementsStatementsBankHSBC.wsdl) --><receive name="receiveInput" partnerLink="bpelmanagementsstatementsbankhsbc_client" portType="client:bpelManagementsStatementsBankHSBC" operation="process" variable="inputVariable" createInstance="yes">
+      <bpelx:fromProperties>
+        <bpelx:fromProperty name="jca.ftp.FileName" variable="varFileName"/>
+      </bpelx:fromProperties>
+    </receive>
+    <scope name="scopeMain" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[Scope principal que contiene las asignaciones, invocaciones a servicioes de negocio, así mismo transformaciones para el gestionamiento de lo esados de cuentas del banco de banorte.]]>
+      </documentation>
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:general>
+            <bpelx:property name="userDescription"><![CDATA[
+               ]]><![CDATA[Scope principal que contiene las asignaciones, invocaciones a servicioes de negocio, así mismo transformaciones para el gestionamiento de lo esados de cuentas del banco de banorte.]]>
+            </bpelx:property>
+         </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+         <variable name="varInvokeWsSFTPEstrellaRojaGetBankStatementsRq" messageType="ns2:GetBankStatementsRq"/>
+         <variable name="varInvokeWsSFTPEstrellaRojaGetBankStatementsRs" messageType="ns2:GetBankStatementsRs"/>
+         <variable name="varCodes" element="ns4:CodigoList"/>
+         <variable name="varCodesList" type="xsd:string"/>
+         <variable name="varDataCode" element="ns5:DATA_DS"/>
+         <variable name="varDataCodeReport" element="ns5:DATA_DS"/>
+         <variable name="varFlagError" type="xsd:boolean"/>
+         <variable name="varStringError" type="xsd:string"/>
+         <variable name="varMessageRq" messageType="ns8:MessageRq"/>
+         <variable name="varMessageRs" type="ns6:BaseRsType"/>
+      </variables>
+      <sequence name="Sequence1">
+         <assign name="assignInitialize">
+            
+            
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>false()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+            </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <from>oraext:setFlowInstanceTitle("ImportHSBCBank")</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInstanceTitle</to>
+            </copy></assign>
+         <scope name="scopeGenerateReport">
+            <variables>
+               <variable name="varInvokeWSGenerateReportRq" messageType="ns10:GenerateReportRq"/>
+               <variable name="varInvokeWSGenerateReportRs" messageType="ns10:GenerateReportRs"/>
+               <variable name="varGetBankDetailsRq" element="ns7:GetBankDetailsRq"/>
+               <variable name="varGetBankDetailsRs" element="ns7:GetBankDetailsRs"/>
+               <variable name="varCountStatements" type="xsd:int">
+                  <from>
+                     <literal>0</literal>
+                  </from>
+               </variable>
+            </variables>
+            <faultHandlers>
+               <catchAll>
+                  <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>true()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+                </copy>
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getFaultAsString()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStringError</to>
+                </copy>
+              </assign>
+               </catchAll>
+            </faultHandlers>
+            <sequence name="Sequence2">
+               <assign name="trAccountStatementsTobpelRq.xsl">
+                  <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                     <from>ora:doXSLTransformForDoc("../Transformations/trAccountStatementsHSBC_To_bpelAccountStatementsHSBCRq.xsl", $inputVariable.payload)</from>
+                     <to variable="inputVariable" part="payload"/>
+                  </copy>
+               </assign>
+            <assign name="Assign1">
+              <copy>
+                <from>sum($inputVariable.payload/ns1:StatementsLine/ns1:ImporteCredito)</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_credito</to>
+              </copy>
+              <copy>
+                <from>sum($inputVariable.payload/ns1:StatementsLine/ns1:ImporteDebito)</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_debito</to>
+              </copy>
+            </assign>
+            <extensionActivity>
+              <bpelx:exec name="Java_Embedding1">
+                <![CDATA[addAuditTrailEntry("LimpiaCadena");                                                   
+try {                                                
+String v_credito = (String)getVariableData("v_credito");                                                   
+addAuditTrailEntry("total de credito="+ v_credito); 
+String v_debito = (String)getVariableData("v_debito");                                                   
+addAuditTrailEntry("total de debito="+ v_debito);     
+                                               
+} catch (Exception e) {                                                   
+  addAuditTrailEntry("Base64decode Exception: "+e.getMessage());                                                   
+}]]>
+              </bpelx:exec>
+            </extensionActivity>
+            <assign name="trGetBankCodeSubtrsToBpel"
+                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                     <from>ora:doXSLTransformForDoc("../Transformations/trGetBankCodeSubtrs_To_BpelHSBC.xsl", $inputVariable.payload)</from>
+                     <to variable="varCodes"/>
+                  </copy>
+               </assign>
+               <assign name="assignGenerateReportRq" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>oraext:create-delimited-string($varCodes/ns4:Codigo,',')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCodesList</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>$varCodesList</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:parameterNameValues/ns10:item[1]/ns10:values/ns10:item[1]</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue ('DVMs/dvmGetTrxType.dvm', 'Code', 'PTRXCODE', 'Value', '' )</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:parameterNameValues/ns10:item[1]/ns10:name</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue ('DVMs/dvmGetTrxType.dvm', 'Code', 'TargetInterface', 'Value',' ')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:TargetInterface</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue ('DVMs/dvmGetTrxType.dvm', 'Code', 'IntegrationName', 'Value','')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:IntegrationName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue ('DVMs/dvmGetTrxType.dvm', 'Code', 'ProcessName', 'Value' ,'')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:ProcessName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                <from>dvm:lookupValue ('DVMs/dvmGetTrxType.dvm', 'Code', 'ReportName', 'Value' ,'')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSGenerateReportRq.GenerateReportRq/ns10:ReportName</to>
+              </copy>
+            </assign>
+               <extensionActivity>
+                  <bpelx:call name="CallSubProcessGenerateReport"
+                              xmlns:sp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/sbpelGenerateReport"
+                              target="sp1:sbpelGenerateReport" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <bpelx:param name="varInvokeWSGenerateReportRq" copyByValue="yes"
+                                  variable="varInvokeWSGenerateReportRq"/>
+                     <bpelx:param name="varInvokeWSGenerateReportRs" copyByValue="no"
+                                  variable="varInvokeWSGenerateReportRs"/>
+                  </bpelx:call>
+               </extensionActivity>
+            <if name="IfValidateReportSuccess">
+                  <documentation>
+                     <![CDATA[Success]]>
+                  </documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varInvokeWSGenerateReportRs.GenerateReportRs/ns6:Success)&gt;0</condition>
+                  <sequence>
+                     <assign name="assignWsERPIntegrationBizGenerateReportRs"
+                             xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy>
+                           <from>oraext:parseXML($varInvokeWSGenerateReportRs.GenerateReportRs/ns10:Return/ns10:xmlOut)</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varDataCode</to>
+                        </copy>
+                     </assign>
+                <assign name="trVarDataCodeToVarDataCodeReport"
+                             xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                           <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                           <from>ora:doXSLTransformForDoc("../Transformations/trVarDataCode_To_VarDataCodeReport.xsl", $varDataCode)</from>
+                           <to variable="varDataCodeReport"/>
+                        </copy>
+                     </assign>
+                <if name="IfValidateData">
+                        <documentation>
+                           <![CDATA[Found Codes in ERP]]>
+                        </documentation>
+                        <condition>count($varDataCodeReport/ns5:XXER_CE_CODIGO_BANCARIO)&gt;0</condition>
+                        <sequence>
+                           <assign name="trbpelToSFTPEstrellaRojaBizGetBankStatementsRq">
+                              <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <bpelx:pattern patternName="bpelx:xquery"></bpelx:pattern>
+                              </bpelx:annotation>
+                              <copy>
+                                 <from>ora:processXQuery10('../Transformations/trbpel_To_SFTPEstrellaRojaBizGetBankStatementsHSBCRq.xqy', 'varDataCodeReport', $varDataCodeReport, 'inputVariable.payload', $inputVariable.payload)</from>
+                                 <to variable="varInvokeWsSFTPEstrellaRojaGetBankStatementsRq"
+                                     part="GetBankStatementsRq"/>
+                              </copy>
+                           </assign>
+                    <assign name="assingAccountNumber">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[1]/ns2:AccountNumber</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetBankDetailsRq/ns7:AccountNumber</to>
+                              </copy>
+                           </assign>
+                           <extensionActivity>
+                              <bpelx:call name="CallSubProcessGetBankDetails"
+                                          xmlns:sp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/sbpelGetBankDetails"
+                                          target="sp1:sbpelGetBankDetails"
+                                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <bpelx:param name="varGetBankDetailsRq" copyByValue="yes"
+                                              variable="varGetBankDetailsRq"/>
+                                 <bpelx:param name="varGetBankDetailsRs" copyByValue="no"
+                                              variable="varGetBankDetailsRs"/>
+                              </bpelx:call>
+                           </extensionActivity>
+                           <if name="ifValidateGetBankDetails">
+                              <documentation>
+                                 <![CDATA[Success and Fund Data]]>
+                              </documentation>
+                              <condition>$varGetBankDetailsRs/ns6:Success and ( string-length($varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:BankName)&gt;0 and string-length($varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:BranchName)&gt;0 )</condition>
+                              <sequence>
+                        <assign name="assingBankDetails">
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:BankName</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankName</to>
+                          </copy>
+                          <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from><literal>HSBC</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Sufix</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:BranchName</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankBranch</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>ora:getComponentInstanceId()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BanchId</to>
+                          </copy>
+                        </assign>
+                        <if name="If_Orden">
+                          <condition>(((number($inputVariable.payload/ns1:StatementsLine[1]/ns1:Saldo) - number($inputVariable.payload/ns1:StatementsLine[1]/ns1:ImporteCredito))+number($v_credito))-number($v_debito))=number($inputVariable.payload/ns1:StatementsLine[last()]/ns1:Saldo)</condition>
+                          <sequence>
+                            <assign name="assignBalanceStart"
+                                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>count($varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists)</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCountStatements</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[1]/ns2:AccountNumber</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:AccountNumber</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"OPBD"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:StatementCode</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:CurrencyCode</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:CurrencyCode</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"CRFT"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:Indicator</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                <from>number(translate($inputVariable.payload/ns1:StatementsLine[1]/ns1:Saldo,',',''))-number(translate($inputVariable.payload/ns1:StatementsLine[1]/ns1:ImporteCredito,',',''))+number(translate($inputVariable.payload/ns1:StatementsLine[1]/ns1:ImporteDebito,',',''))</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:Balance</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[last()]/ns2:StatementDate</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:BalanceDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"10"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:OrigBalanceCode</to>
+                              </copy>
+                            </assign>
+                            <assign name="assignBalanceFinish">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[1]/ns2:AccountNumber</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:AccountNumber</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"CLBD"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:StatementCode</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>number(translate($inputVariable.payload/ns1:StatementsLine[last()]/ns1:Saldo,',',''))</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:Balance</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:CurrencyCode</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:CurrencyCode</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"CRDT"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:Indicator</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>$inputVariable.payload/ns1:StatementsLine[1]/ns1:FechaValor</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:BalanceDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                <from>"10"</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:OrigBalanceCode</to>
+                              </copy>
+                            </assign>
+                          </sequence>
+                          <else><sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <assign name="assignBalanceStart" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>count($varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCountStatements</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[1]/ns2:AccountNumber</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:AccountNumber</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"OPBD"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:StatementCode</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:CurrencyCode</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:CurrencyCode</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"CRFT"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:Indicator</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>number(translate($inputVariable.payload/ns1:StatementsLine[last()]/ns1:Saldo,',',''))-number(translate($inputVariable.payload/ns1:StatementsLine[last()]/ns1:ImporteCredito,',',''))+number(translate($inputVariable.payload/ns1:StatementsLine[last()]/ns1:ImporteDebito,',',''))</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:Balance</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[last()]/ns2:StatementDate</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:BalanceDate</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"10"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[1]/ns2:OrigBalanceCode</to>
+                                </copy>
+                              </assign>
+      <assign name="assignBalanceFinish">
+         
+         
+         
+         
+         
+         
+         
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists[1]/ns2:AccountNumber</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:AccountNumber</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>"CLBD"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:StatementCode</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>number(translate($inputVariable.payload/ns1:StatementsLine[1]/ns1:Saldo,',',''))</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:Balance</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$varGetBankDetailsRs/ns7:Return/ns7:BankDetails/ns7:CurrencyCode</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:CurrencyCode</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>"CRDT"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:Indicator</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>$inputVariable.payload/ns1:StatementsLine[1]/ns1:FechaValor</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:BalanceDate</to>
+         </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>"10"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:Balances/ns2:Balance[2]/ns2:OrigBalanceCode</to>
+         </copy></assign>
+   </sequence></else>
+                        </if>
+                                 <assign name="trWSGetStatementsToWSGetStatementsBBVA">
+                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                       <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                       <from>ora:doXSLTransformForDoc("../Transformations/trWSGetStatements_To_WSGetStatementsBBVA.xsl", $varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq)</from>
+                                       <to variable="varInvokeWsSFTPEstrellaRojaGetBankStatementsRq"
+                                           part="GetBankStatementsRq"/>
+                                    </copy>
+                                 </assign>
+                                 <invoke name="InvokeWsSFTPEstrellaRojaGetBankStatements"
+                                         partnerLink="wsSFTPEstrellaRojaBiz" portType="ns2:SFTPEstrellaRojaBizPortType"
+                                         operation="GetBankStatements"
+                                         inputVariable="varInvokeWsSFTPEstrellaRojaGetBankStatementsRq"
+                                         outputVariable="varInvokeWsSFTPEstrellaRojaGetBankStatementsRs"
+                                         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                         bpelx:invokeAsDetail="no"/>
+                                 <if name="IfValidateSuccess">
+                                    <documentation>
+                                       <![CDATA[Success]]>
+                                    </documentation>
+                                    <condition>count($varInvokeWsSFTPEstrellaRojaGetBankStatementsRs.GetBankStatementsRs/ns6:Success)&gt;0</condition>
+                                    <scope name="scopeImportToERPCloud">
+                                       <variables>
+                                          <variable name="varInvokeWSImportToERPCloudRq"
+                                                    messageType="ns10:ImportToERPCloudRq"/>
+                                          <variable name="varInvokeWSImportToERPCloudRs"
+                                                    messageType="ns10:ImportToERPCloudRs"/>
+                                          <variable name="varSendReportInterfaceRq"
+                                                    element="ns9:SendReportInterfaceRq"/>
+                                          <variable name="varTranslateFileNativeHSBC" type="xsd:string"/>
+                                       </variables>
+                                       <sequence name="Sequence3">
+                                          <assign name="assignParameterToImportToERPCloud"
+                                                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"StatementBanksFs"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSImportToERPCloudRq.ImportToERPCloudRq/ns10:TargetInterface</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>
+            <literal>"zip"</literal>
+         </from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSImportToERPCloudRq.ImportToERPCloudRq/ns10:File/ns10:ContentType</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>concat("CeBankStatementsHSBC1_",  xp20:current-dateTime() ,".zip")</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSImportToERPCloudRq.ImportToERPCloudRq/ns10:File/ns10:FileName</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varInvokeWsSFTPEstrellaRojaGetBankStatementsRs.GetBankStatementsRs/ns2:Return/ns2:Files/ns2:FileCSV</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSImportToERPCloudRq.ImportToERPCloudRq/ns10:File/ns10:Content</to>
+                                </copy>
+                              </assign>
+                                          <assign name="translateNativeHSBC">
+                                             <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                                <bpelx:pattern>translate</bpelx:pattern>
+                                             </bpelx:annotation>
+                                <copy>
+                                  <from>ora:doTranslateToNative($inputVariable.payload, 'Schemas/Banks/StatementsBankHSBC.xsd', 'StatementsBankHSBC', 'STRING')</from>
+                                  <to>$varTranslateFileNativeHSBC</to>
+                                </copy>
+                              </assign>
+                                          <assign name="assignParameterToSendReportInterfaceRq">
+                                <copy bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"InterfaceBankStatements"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:IntegrationName</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>"InterfaceBankStatements$HSBC"</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:ProcessName</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>ora:getComponentInstanceId()</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:BatchId</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varTranslateFileNativeHSBC</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:Files/ns9:ContentProcessedFile</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>$varFileName</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:Files/ns9:FileName</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <from>count($varInvokeWsSFTPEstrellaRojaGetBankStatementsRq.GetBankStatementsRq/ns2:BankLinesDetails/ns2:AccountStatementsLists)</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSendReportInterfaceRq/ns9:Files/ns9:LinesNumber</to>
+                                </copy>
+                              </assign>
+                                          <extensionActivity>
+                                             <bpelx:call name="CallSubProcessImportErpCloud"
+                                                         xmlns:sp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/sbpelImportErpCloud"
+                                                         target="sp1:sbpelImportErpCloud"
+                                                         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                  <bpelx:param name="varInvokeWSImportToERPCloudRq" copyByValue="yes"
+                                               variable="varInvokeWSImportToERPCloudRq"/>
+                                  <bpelx:param name="varSendReportInterfaceRq" copyByValue="yes"
+                                               variable="varSendReportInterfaceRq"/>
+                                  <bpelx:param name="varInvokeWSImportToERPCloudRs" copyByValue="no"
+                                               variable="varInvokeWSImportToERPCloudRs"/>
+                                </bpelx:call>
+                                          </extensionActivity>
+                                       </sequence>
+                                    </scope>
+                                    <else>
+                                       <documentation>
+                                          <![CDATA[Error]]>
+                                       </documentation>
+                                       <assign name="assignErrors"
+                                               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                             <from>$varGetBankDetailsRs/ns6:Errors/ns6:Error/ns6:Description</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStringError</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                             <from>true()</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+                                          </copy>
+                                       </assign>
+                                    </else>
+                                 </if>
+                              </sequence>
+                              <else>
+                                 <documentation>
+                                    <![CDATA[Failed]]>
+                                 </documentation>
+                                 <sequence>
+                                    <assign name="assignErrors"
+                                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>concat("The account number ", $varGetBankDetailsRq/ns7:AccountNumber," no exist a ERP Cloud")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStringError</to>
+                            </copy>
+                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>true()</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+                            </copy>
+                          </assign>
+                                 </sequence>
+                              </else>
+                           </if>
+                        </sequence>
+                        <else>
+                           <documentation>
+                              <![CDATA[No DataFound Codes in ERP]]>
+                           </documentation>
+                           <assign name="assignErrors" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>concat("The codes HSBC ",$varCodesList," no exist a ERP Cloud")</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStringError</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>true()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+                      </copy>
+                    </assign>
+                        </else>
+                     </if>
+                  </sequence>
+                  <else>
+                     <documentation>
+                        <![CDATA[Error]]>
+                     </documentation>
+                     <assign name="assignErrors" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                           <from>$varInvokeWSGenerateReportRs.GenerateReportRs/ns6:Errors/ns6:Error/ns6:Description</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStringError</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                           <from>true()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlagError</to>
+                        </copy>
+                     </assign>
+                  </else>
+               </if>
+            </sequence>
+         </scope>
+         <if name="ifValidateErrorToSendEmail">
+            <documentation>
+               <![CDATA[Has Errors]]>
+            </documentation>
+            <condition>$varFlagError=true()</condition>
+            <sequence name="Sequence4">
+               <assign name="assignParametersSendEmail">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>$varStringError</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRq.MessageRq/ns8:Message/ns8:Message</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>"InterfaceBankStatements"</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varMessageRq.CustomHeader/ns8:IntegrationName</to>
+                  </copy>
+               </assign>
+               <extensionActivity>
+                  <bpelx:call name="CallSubProcessNotifications"
+                              xmlns:sp1="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/sbpelNotifications"
+                              target="sp1:sbpelNotifications" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <bpelx:param name="varMessageRq" copyByValue="yes" variable="varMessageRq"/>
+                     <bpelx:param name="varMessageRs" copyByValue="no" variable="varMessageRs"/>
+                  </bpelx:call>
+               </extensionActivity>
+            </sequence>
+            <else>
+               <documentation>
+                  <![CDATA[Not Found Errors]]>
+               </documentation>
+               <empty name="Continue" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </else>
+         </if>
+      </sequence>
+   </scope>
+  </sequence>
+</process>

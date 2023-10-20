@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmCreateInvoices" xmlns="http://xmlns.oracle.com/dvm">
+   <description>tarejet interface entry values</description>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>IntegrationName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ProcessName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TargetInterface</cell>
+         <cell>TrxInterface</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TargetInterfaceFiles</cell>
+         <cell>TrxInterfaceFs</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportName</cell>
+         <cell>XXER_AR_TRX_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PRfc</cell>
+         <cell>P_RFC</cell>
+      </row>
+      <row markdefault="false">
+         <cell>RfcVal</cell>
+         <cell>XXX171205Xf1</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PTrxNumber</cell>
+         <cell>P_TRX_NUMBER</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TipoDocumento</cell>
+         <cell>FACTURA</cell>
+      </row>
+   </rows>
+</dvm>

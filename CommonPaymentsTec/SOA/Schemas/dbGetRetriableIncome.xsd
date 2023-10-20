@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableIncome" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableIncome" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="dbGetRetriableIncomeInput" type="dbGetRetriableIncomeInput"/>
+   <xs:complexType name="dbGetRetriableIncomeInput">
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:element name="dbGetRetriableIncomeOutputCollection" type="dbGetRetriableIncomeOutputCollection"/>
+   <xs:complexType name="dbGetRetriableIncomeOutputCollection">
+      <xs:sequence>
+         <xs:element name="dbGetRetriableIncomeOutput" type="dbGetRetriableIncomeOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="dbGetRetriableIncomeOutput">
+      <xs:sequence>
+         <xs:element name="PAYMENT_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="CASH_RECEIPT_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="CONTENT" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

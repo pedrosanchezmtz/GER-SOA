@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="InventoryEntProperties" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="CODE"/>
+      <column name="VALUE"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>TMP_DIR</cell>
+         <cell>/u01/data/domains/ERSOACSP_domain/PROD/TMP_DIR/</cell>
+      </row>
+      <row markdefault="false">
+         <cell>INV_TRA</cell>
+         <cell>inventoryTransaction</cell>
+      </row>
+      <row markdefault="false">
+         <cell>INV_ZIP_DIR</cell>
+         <cell>inventoryTransaction.zip</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmConciliationEnt" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>GetInfoCash</cell>
+         <cell>TargetInterface</cell>
+         <cell>Conciliation</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetInfoCash</cell>
+         <cell>GetInfoCash</cell>
+         <cell>XXER_AR_TRX_INTERFACE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>BancoER</cell>
+         <cell>DirName</cell>
+         <cell>/SOA/er.soa/incoming/TRANSACCIONES BANCOS/ER</cell>
+      </row>
+      <row markdefault="false">
+         <cell>BancoAmex</cell>
+         <cell>DirName</cell>
+         <cell>/SOA/er.soa/incoming/TRANSACCIONES BANCOS/AMEX</cell>
+      </row>
+   </rows>
+</dvm>

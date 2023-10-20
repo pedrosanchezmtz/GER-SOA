@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMSelectWorkOrdersByUnit" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByUnit" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByUnit" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByUnit" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="EAMSelectWorkOrdersByUnit_plt">
+      <plt:role name="EAMSelectWorkOrdersByUnit_role">
+         <plt:portType name="tns:EAMSelectWorkOrdersByUnit_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByUnit" schemaLocation="../../Schemas/TransactionalWorkOrders/EAMSelectWorkOrdersByUnit.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByUnit" schemaLocation="../../Schemas/TransactionalWorkOrders/EAMSelectWorkOrdersByUnit.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMSelectWorkOrdersByUnitInput_msg">
+      <wsdl:part name="EAMSelectWorkOrdersByUnitInput_msg" element="db:EAMSelectWorkOrdersByUnitInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMSelectWorkOrdersByUnitOutputCollection_msg">
+      <wsdl:part name="EAMSelectWorkOrdersByUnitOutputCollection" element="db:EAMSelectWorkOrdersByUnitOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMSelectWorkOrdersByUnit_ptt">
+      <wsdl:operation name="EAMSelectWorkOrdersByUnit">
+         <wsdl:input message="tns:EAMSelectWorkOrdersByUnitInput_msg"/>
+         <wsdl:output message="tns:EAMSelectWorkOrdersByUnitOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

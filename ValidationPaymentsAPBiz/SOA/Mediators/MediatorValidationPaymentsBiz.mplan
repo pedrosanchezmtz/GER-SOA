@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="MediatorValidationPaymentsBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="SendNotifications" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelSendNotifications.bpelsendnotifications_client.SendNotifications">
+            <action>
+               <assign>
+                  <copy expression="$in.SendNotificationsRqPart/tns:SendNotificationsRq" target="$out.payload/tns:SendNotificationsRq" xmlns:tns="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"/>
+               </assign>
+               <invoke reference="BpelSendNotifications.bpelsendnotifications_client" operation="SendNotifications"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GenerateFolders" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelGenerateFolders.bpelgeneratefolders_client.GenerateFolders">
+            <action>
+               <assign>
+                  <copy expression="$in.GenerateFoldersRqPart/tns:GenerateFoldersRq" target="$out.payload/tns:GenerateFoldersRq" xmlns:tns="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"/>
+               </assign>
+               <invoke reference="BpelGenerateFolders.bpelgeneratefolders_client" operation="GenerateFolders">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GenerateFoldersRs" target="$out.GenerateFoldersRsPart/ns1:GenerateFoldersRs" xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="SendPaymentsAP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelSendPaymentsAP.bpelsendpaymentsap_client.SendPaymentsAP_2">
+            <action>
+               <assign>
+                  <copy expression="$in.SendPaymentsAPRqPart/tns:SendPaymentsAPRq" target="$out.payload/tns:SendPaymentsAPRq" xmlns:tns="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"/>
+               </assign>
+               <invoke reference="BpelSendPaymentsAP.bpelsendpaymentsap_client" operation="SendPaymentsAP"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="dbStatusLoadInvoices" adapter="db" wsdlLocation="../WSDLs/dbStatusLoadInvoices.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIConnectionName="ES_Conn" location="eis/DB/ERSEPDB1"/>
+   <endpoint-interaction portType="dbStatusLoadInvoices_ptt" operation="dbStatusLoadInvoices">
+      <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+         <property name="SchemaName" value="PXERINTUSER"/>
+         <property name="PackageName" value="XXER_UTILITIES_PKG"/>
+         <property name="ProcedureName" value="GET_RESULT_OF_LOAD_INVOICES"/>
+         <property name="GetActiveUnitOfWork" value="false"/>
+      </interaction-spec>
+   </endpoint-interaction>
+</adapter-config>

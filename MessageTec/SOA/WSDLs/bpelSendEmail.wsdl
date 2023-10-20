@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelSendEmail" targetNamespace="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/MessageTec/bpelSendEmail" xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/MessageTec" schemaLocation="oramds:/apps/SOA/MessageTec/MessageTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="MessageRq">
+      <wsdl:part name="MessageRq" element="ns1:MessageRq"/>
+      <wsdl:part name="CustomHeader" element="ns1:CustomHeader"/>
+   </wsdl:message>
+   <wsdl:message name="MessageRs">
+      <wsdl:part name="MessageRs" element="ns1:MessageRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelSendEmailPortType">
+      <wsdl:operation name="SendEmail">
+         <wsdl:input message="client:MessageRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelSendEmailCallbackPortType">
+      <wsdl:operation name="SendEmailCallback">
+         <wsdl:input message="client:MessageRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelSendEmail">
+      <plnk:role name="bpelSendEmailProvider" portType="client:bpelSendEmailPortType"/>
+      <plnk:role name="bpelSendEmailRequester" portType="client:bpelSendEmailCallbackPortType"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

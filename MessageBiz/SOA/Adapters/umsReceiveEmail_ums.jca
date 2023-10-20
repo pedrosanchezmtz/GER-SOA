@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="umsReceiveEmail" adapter="ums" wsdlLocation="../WSDLs/umsReceiveEmail.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory location="eis/ums/PROD/UMSAdapterInbound"/>
+   <endpoint-activation portType="ReceiveNotification_ptt" operation="ReceiveNotification">
+      <activation-spec className="oracle.tip.adapter.ums.inbound.UmsActivationSpec">
+         <property name="ConsumeMode" value="poller"/>
+         <property name="InboundThreadCount" value="1"/>
+         <property name="PollingInterval" value="6"/>
+         <property name="To" value="complemento_ap@estrellaroja.com.mx"/>
+         <property name="DeliveryType" value="Email"/>
+      </activation-spec>
+   </endpoint-activation>
+</adapter-config>

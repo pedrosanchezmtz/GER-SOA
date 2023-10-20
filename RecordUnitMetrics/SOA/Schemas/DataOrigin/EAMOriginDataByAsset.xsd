@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginDataByAsset" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginDataByAsset" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="EAMOriginDataByAssetInput" type="EAMOriginDataByAssetInput"/>
+   <xs:complexType name="EAMOriginDataByAssetInput">
+      <xs:sequence>
+         <xs:element name="assetNumber" type="xs:string" nillable="true"/>
+         <xs:element name="fechaInicio" type="xs:date" nillable="true"/>
+         <xs:element name="fechaFin" type="xs:date" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="EAMOriginDataByAssetOutputCollection" type="EAMOriginDataByAssetOutputCollection"/>
+   <xs:complexType name="EAMOriginDataByAssetOutputCollection">
+      <xs:sequence>
+         <xs:element name="EAMOriginDataByAssetOutput" type="EAMOriginDataByAssetOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="EAMOriginDataByAssetOutput">
+      <xs:sequence>
+         <xs:element name="ASSET_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ORIGIN" type="xs:string" nillable="true"/>
+         <xs:element name="READING_DATE" type="xs:date" nillable="true"/>
+         <xs:element name="READING_VALUE" type="xs:decimal" nillable="true"/>
+         <xs:element name="STATUS" type="xs:string" nillable="true"/>
+         <xs:element name="ERROR_MESSAGE" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

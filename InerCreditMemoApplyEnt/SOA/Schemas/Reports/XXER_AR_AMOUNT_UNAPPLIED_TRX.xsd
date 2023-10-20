@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX" targetNamespace="http://soa.estrellaroja.com.mx/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX" elementFormDefault="qualified">
+   <xsd:element name="DATA_DS">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="P_CASH_RECEIPT_ID" type="xsd:integer"/>
+            <xsd:element name="P_FAC_NUM" type="xsd:integer"/>
+            <xsd:element name="G_1" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="ID_COBRO" type="xsd:integer"/>
+                     <xsd:element name="FECHA_DE_COBRO" type="xsd:dateTime"/>
+                     <xsd:element name="NÚMERO_DE_COBRO" type="xsd:string"/>
+                     <xsd:element name="IMPORTE_INTRODUCIDO" type="xsd:integer"/>
+                     <xsd:element name="IMPORTE_APLICADO" type="xsd:integer"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="G_2" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="FECHA" type="xsd:dateTime"/>
+                     <xsd:element name="NÚMERO_DE_DOCUMENTO" type="xsd:integer"/>
+                     <xsd:element name="IMPORTE_INTRODUCIDO" type="xsd:integer"/>
+                     <xsd:element name="IMPORTE_APLICADO" type="xsd:integer"/>
+                     <xsd:element name="TRX_CLASS" type="xsd:string"/>
+                     <xsd:element name="ID_TRX" type="xsd:integer"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

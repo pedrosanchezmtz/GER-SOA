@@ -1,0 +1,269 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Thu Oct 13 17:17:00 CDT 2022
+  Author:  PedroS�nchezMart�nez
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="SbpelDownloadAttachment"
+               targetNamespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelDownloadAttachment"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/SbpelDownloadAttachment"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns7="http://soa.estrellaroja.com.mx/Reports/XXER_AP_INVOICE_VALIDATION_AUTOMATICA"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+                  xmlns:ns5="http://soa.estrellaroja.com.mx/ValidationInvoicesAPEnt"
+                  xmlns:ns6="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  xmlns:ns10="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" 
+                  xmlns:ns8="http://www.sat.gob.mx/cfd/3"
+                  xmlns:ns9="http://www.sat.gob.mx/cfd/4" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ns13="http://www.sat.gob.mx/ConsumoDeCombustibles11"
+                  xmlns:ns1="http://www.sat.gob.mx/TimbreFiscalDigital"
+                  xmlns:ns14="http://www.sat.gob.mx/EstadoDeCuentaCombustible12"
+                  xmlns:ns12="http://www.sat.gob.mx/CartaPorte20" xmlns:ns15="http://www.sat.gob.mx/nomina12"
+                  xmlns:ns11="http://www.sat.gob.mx/Pagos20" xmlns:ns16="http://www.sat.gob.mx/Pagos">
+
+   <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ValidationInvoicesAPBiz/BPELValidationInvoicesBiz" location="../WSDLs/BPELValidationInvoicesBiz.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <partnerLink name="WsERPIntegrationServiceTec" partnerLinkType="ns3:WsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="WsSOAUtilitiesTec" partnerLinkType="ns10:WsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="v_invoice" element="ns7:DATA_DS"/>
+    <variable name="v_input" messageType="ns2:BPELValidationInvoicesBizRequestMessage"/>
+    <variable name="DownloadAttachmentRq" messageType="ns3:DownloadAttachmentRq"/>
+    <variable name="DownloadAttachmentRs" messageType="ns3:DownloadAttachmentRs"/>
+    <variable name="v_invoiceXML" element="ns4:InvoiceXML"/>
+    <variable name="v_counterXML" type="xsd:int">
+      <from>0</from>
+    </variable>
+  </variables>
+  <sequence name="main"><assign name="assignDownloadAttachmentRq"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>$v_invoice/ns7:G_INVOICES[1]/ns7:BUSINESS_UNIT</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns3:Attachment/ns3:UserKeyA</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>$v_invoice/ns7:G_INVOICES[1]/ns7:INVOICE_NUMBER</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns3:Attachment/ns3:UserKeyB</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>$v_invoice/ns7:G_INVOICES[1]/ns7:SUPPLIER_NUMBER</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns3:Attachment/ns3:UserKeyC</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>$v_input.payload/ns4:Config/ns5:CatalogoConfiguraciones/ns5:Configuracion[ns5:Codigo='C_ENTITY_NAME']/ns5:Parametro1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns3:Attachment/ns3:EntityName</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+        <from>$v_input.payload/ns4:Config/ns5:CatalogoValidaciones/ns5:Validacion[ns5:Codigo='V_CATEGORIA_ADJ']/ns5:Parametro1</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DownloadAttachmentRq.DownloadAttachmentRq/ns3:Attachment/ns3:CategoryName</to>
+      </copy>
+      <copy>
+        <from>$v_counterXML</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns4:NoXML</to>
+      </copy>
+    </assign><invoke name="WsERPIntegrationServiceTec" partnerLink="WsERPIntegrationServiceTec"
+            portType="ns3:ERPIntegrationTecPortType" operation="DownloadAttachment"
+            inputVariable="DownloadAttachmentRq" outputVariable="DownloadAttachmentRs" bpelx:invokeAsDetail="no"/>
+    <if name="If_existAttaschments">
+      <documentation>
+        <![CDATA[Existen]]>
+      </documentation>
+      <condition>count($DownloadAttachmentRs.DownloadAttachmentRs/ns3:Return/ns3:AttachmentContent)&gt;0</condition>
+      <forEach parallel="no" counterName="counterAttachments" name="ForEachAttachments">
+        <startCounterValue>1</startCounterValue>
+        <finalCounterValue>count($DownloadAttachmentRs.DownloadAttachmentRs/ns3:Return)</finalCounterValue>
+        <scope name="Scope1">
+          <variables>
+            <variable name="WsSOAUtilitiesTecDecodeRq" messageType="ns10:DecodeRq"/>
+            <variable name="WsSOAUtilitiesTecDecodeRs" messageType="ns10:DecodeRs"/>
+          </variables>
+          <sequence name="Sequence1"><assign name="assignBase64"
+                                                                                                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>$DownloadAttachmentRs.DownloadAttachmentRs/ns3:Return[$counterAttachments]/ns3:AttachmentContent</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTecDecodeRq.DecodeRq/ns10:charChain</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>true()</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsSOAUtilitiesTecDecodeRq.DecodeRq/ns10:contentStripping</to>
+      </copy></assign>
+            <invoke name="WsSOAUtilitiesTec" partnerLink="WsSOAUtilitiesTec"
+                    portType="ns10:SOAUtilitiesTecPortType" operation="Decode"
+                    inputVariable="WsSOAUtilitiesTecDecodeRq" outputVariable="WsSOAUtilitiesTecDecodeRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+            <if name="If_DecodeSucces">
+              <documentation>
+                <![CDATA[DecodeSuccess]]>
+              </documentation>
+              <condition>string-length($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns10:Return/ns10:xmlOut)&gt;0</condition>
+              <scope name="ScopeParseXML">
+                <variables>
+                  <variable name="v_comprobante33" element="ns8:Comprobante"/>
+                  <variable name="v_comprobante40" element="ns9:Comprobante"/>
+                </variables>
+                <faultHandlers>
+                  <catchAll>
+                    <empty name="NotIsXML"/>
+                  </catchAll>
+                </faultHandlers>
+                <sequence name="Sequence2"><assign name="assignParseXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                    <copy>
+                      <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante40</to>
+                    </copy>
+                    <copy>
+                      <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante33</to>
+                    </copy>
+                    <extensionAssignOperation>
+                      <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante33</bpelx:target>
+                      </bpelx:remove>
+                    </extensionAssignOperation>
+                    <extensionAssignOperation>
+                      <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante40</bpelx:target>
+                      </bpelx:remove>
+                    </extensionAssignOperation>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                      <from>oraext:parseXML($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns10:Return/ns10:xmlOut)</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante40</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>oraext:parseXML($WsSOAUtilitiesTecDecodeRs.DecodeRs/ns10:Return/ns10:xmlOut)</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_comprobante33</to>
+                    </copy>
+                  </assign>
+                  <assign name="Trs_Comprobantes_to_InvoiceXML"
+                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+         <from>ora:doXSLTransformForDoc("../Transformations/Trs_Comprobantes_to_InvoiceXML.xsl", $v_invoiceXML, "v_comprobante40", $v_comprobante40, "v_comprobante33", $v_comprobante33)</from>
+         <to variable="v_invoiceXML"/>
+      </copy>
+   </assign>
+                  <if name="If_version">
+                    <bpelx:skipCondition>true()</bpelx:skipCondition>
+                    <documentation>
+                      <![CDATA[ExistVersion]]>
+                    </documentation>
+                    <condition>string-length($v_comprobante33/@Version)&gt;0 or string-length($v_comprobante40/@Version)&gt;0</condition>
+                    <if name="If_version">
+                      <documentation>
+                        <![CDATA[3.3]]>
+                      </documentation>
+                      <condition>$v_comprobante33/@Version='3.3'</condition>
+                      <assign name="Trs_Comprobante33_to_InvoiceXML">
+                        <bpelx:annotation>
+                          <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                          <from>ora:doXSLTransformForDoc("../Transformations/Trs_Comprobante33_to_InvoiceXML.xsl", $v_invoiceXML, "v_comprobante33", $v_comprobante33)</from>
+                          <to variable="v_invoiceXML"/>
+                        </copy>
+                      </assign>
+                      <elseif>
+                        <documentation>
+                          <![CDATA[4.0]]>
+                        </documentation>
+                        <condition>$v_comprobante40/@Version='4.0'</condition><assign name="Trs_Comprobante40_to_InvoiceXML"
+                                                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+         <from>ora:doXSLTransformForDoc("../Transformations/Trs_Comprobante40_to_InvoiceXML.xsl", $v_invoiceXML, "v_comprobante40", $v_comprobante40)</from>
+         <to variable="v_invoiceXML"/>
+      </copy>
+   </assign></elseif>
+                    </if>
+                    <else>
+                      <documentation>
+                        <![CDATA[VersionNotExists]]>
+                      </documentation>
+                      <assign name="Assign1">
+                        <copy>
+                          <from>'0'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns4:Version</to>
+                        </copy>
+                      </assign>
+                    </else>
+                  </if>
+                  <assign name="AssignCountXML">
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$v_counterXML+ count($v_invoiceXML/ns4:Version)</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_counterXML</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>$v_counterXML</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns4:NoXML</to>
+                    </copy>
+                  </assign>
+                </sequence>
+              </scope>
+              <else>
+                <documentation>
+                  <![CDATA[ErrrorDecode]]>
+                </documentation>
+                <empty name="EmptyFileNotValid"/>
+              </else>
+            </if>
+          </sequence></scope>
+      </forEach>
+      <else>
+        <documentation>
+          <![CDATA[NoExist]]>
+        </documentation>
+        <assign name="Assign0">
+          <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoiceXML/ns4:NoXML</to>
+          </copy>
+        </assign>
+      </else>
+    </if>
+  </sequence>
+</bpelx:subProcess>

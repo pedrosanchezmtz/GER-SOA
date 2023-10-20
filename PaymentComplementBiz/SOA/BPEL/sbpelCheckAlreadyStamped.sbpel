@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelCheckAlreadyStamped" targetNamespace="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelCheckAlreadyStamped" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelCheckAlreadyStamped" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://soa.estrellaroja.com.mx/CommonPaymentsTec" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <partnerLinks>
+      <partnerLink name="wsCommonPaymentsTec" partnerLinkType="ns1:wsCommonPaymentsTec" partnerRole="CommonPaymentsTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="cashReceiptId" type="xsd:long"/>
+      <variable name="alreadyStamped" type="xsd:boolean"/>
+      <variable name="paymentType" type="ns1:PaymentTypeEnumType"/>
+      <variable name="v_ErrorQuery" type="xsd:boolean">
+         <from>false()</from>
+      </variable>
+   </variables>
+   <sequence name="sequenceMain">
+      <scope name="scopeGetPayment">
+         <variables>
+            <variable name="paymentInput" messageType="ns1:GetPayementRq"/>
+            <variable name="paymentOutput" messageType="ns1:GetPayementRs"/>
+         </variables>
+         <sequence name="sequenceGetPayment">
+            <assign name="assignParams">
+               <copy>
+                  <from>$cashReceiptId</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$paymentInput.GetPayementRqPart/ns1:CashReceiptId</to>
+               </copy>
+               <copy>
+                  <from>$paymentType</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$paymentInput.GetPayementRqPart/ns1:PaymentType</to>
+               </copy>
+            </assign>
+            <invoke name="invokeGetPayment" partnerLink="wsCommonPaymentsTec" portType="ns1:CommonPaymentsTecPortType" operation="GetPayement" inputVariable="paymentInput" outputVariable="paymentOutput" bpelx:invokeAsDetail="no"/>
+            <if name="IfFoundPayment">
+               <documentation><![CDATA[Found Payment]]></documentation>
+               <condition>count($paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment) = 1</condition>
+               <if name="IfAlreadyStamped" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Already Stamped]]></documentation>
+                  <condition>$paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment/ns1:Status = 'STAMPED' and string-length($paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment/ns1:Uuid) > 0</condition>
+                  <sequence name="Sequence2">
+                     <assign name="assignFlag">
+                        <copy>
+                           <from>true()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$alreadyStamped</to>
+                        </copy>
+                     </assign>
+                     <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <bpelx:call name="CallUpdateFlex" xmlns:sp1="http://xmlns.oracle.com/GER_SOA_DEV_OLD/PaymentComplementBiz/sbpelUpdateFlex" target="sp1:sbpelUpdateFlex" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                           <bpelx:param name="v_ContextValue" copyByValue="yes">'JLxMXReceipts'</bpelx:param>
+                           <bpelx:param name="v_UserKeyA" copyByValue="yes">$paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment/ns1:ReceiptNumber</bpelx:param>
+                           <bpelx:param name="v_UserKeyB" copyByValue="yes">$paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment/ns1:CashReceiptId</bpelx:param>
+                           <bpelx:param name="v_DFFAttributes" copyByValue="yes">concat('{"GLOBAL_ATTRIBUTE1":"',$paymentOutput.GetPayementRsPart/ns1:Return/ns1:Payment/ns1:Uuid,'"}')</bpelx:param>
+                        </bpelx:call>
+                     </extensionActivity>
+                  </sequence>
+                  <else>
+                     <documentation><![CDATA[Not Yet Stamped]]></documentation>
+                     <assign name="assignDefault">
+                        <copy>
+                           <from>false()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$alreadyStamped</to>
+                        </copy>
+                     </assign>
+                  </else>
+               </if>
+               <else>
+                  <documentation><![CDATA[Not Found Payment]]></documentation>
+                  <if name="If_ErrorQuery" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                     <documentation><![CDATA[ErrorQuery si no se ecuantra]]></documentation>
+                     <condition>count($paymentOutput.GetPayementRsPart/ns2:Errors) > 0</condition>
+                     <assign name="assignErrorQuery" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy>
+                           <from>true()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$alreadyStamped</to>
+                        </copy>
+                        <copy>
+                           <from>true()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_ErrorQuery</to>
+                        </copy>
+                     </assign>
+                     <else>
+                        <documentation><![CDATA[NotStamp]]></documentation>
+                        <assign name="assignDefault">
+                           <copy>
+                              <from>false()</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$alreadyStamped</to>
+                           </copy>
+                        </assign>
+                     </else>
+                  </if>
+               </else>
+            </if>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="CommonPaymentsTec">
+      <!--Add search and replace rules for the import section of a composite
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>-->
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.wsdl</search>
+            <replace>oramds:/apps/SOA/DEV_CommonPaymentsTec/CommonPaymentsTec.wsdl</replace>
+         </searchReplace>
+      </import>
+      <service name="CommonPaymentsTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/CommonPaymentsTec#wsdl.endpoint(CommonPaymentsTec/CommonPaymentsTecPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>SUPPORTS</replace>
+            </property>
+            <property name="weblogic.wsee.wsat.transaction.version">
+               <replace>DEFAULT</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <!--Add search and replace rules for the component properties
+	For components and service/reference bindings, you can add policy references.
+	Example:
+	<component name="*">
+		<wsp:PolicyReference orawsp:category="management" orawsp:status="enabled" URI="oracle/log_policy"/>
+	</component>-->
+      <component name="bpelMergePayment">
+         <property name="bpel.config.transaction">
+            <replace>requiresNew</replace>
+         </property>
+      </component>
+      <component name="bpelHandleMergePayment">
+         <property name="bpel.config.transaction">
+            <replace>requiresNew</replace>
+         </property>
+      </component>
+      <component name="bpelGetPayement">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <component name="bpelGetRetriableComplements">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <component name="bpelGetRetriableIncome">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelGetRetriableOutcome">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <!--Add search and replace rules for the reference properties
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888
+		<replace>8889</replace>
+	<searchReplace>
+	or provide a new replace value like:
+	<replace>http://my-new-server:8889/myservice</replace>-->
+      <reference name="dbHierarchy">
+         <property name="jca.retry.count">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="dbRetriableComplements">
+         <property name="jca.retry.count">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="dbGetRetriableIncome">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="dbGetRetriableOutcome">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Adapters/dbGetRetriableIncome_db.jca|Adapters/dbGetRetriableOutcome_db.jca|Adapters/dbHierarchy_db.jca|Adapters/dbRetriableComplements_db.jca|Schemas/dbGetRetriableIncome.xsd|Schemas/dbGetRetriableOutcome.xsd|Schemas/dbHierarchy_table.xsd|Schemas/dbRetriableComplements.xsd|WSDLs/bpelGetPayement.wsdl|WSDLs/bpelGetRetriableComplements.wsdl|WSDLs/bpelGetRetriableIncome.wsdl|WSDLs/bpelGetRetriableOutcome.wsdl|WSDLs/bpelHandleMergePayment.wsdl|WSDLs/bpelMergePayment.wsdl|WSDLs/dbGetRetriableIncome.wsdl|WSDLs/dbGetRetriableOutcome.wsdl|WSDLs/dbHierarchy.wsdl|WSDLs/dbRetriableComplements.wsdl|wsm-assembly.xml">
+      <jca:property name="SchemaName"><replace>XERINTUSER</replace></jca:property>
+      <searchReplace>
+         <search>eis/DB/ERSEPDB1</search>
+         <replace>eis/DB/DEV/ERSEPDB1</replace>
+      </searchReplace>
+      <searchReplace>
+            <search>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.wsdl</search>
+            <replace>oramds:/apps/SOA/DEV_CommonPaymentsTec/CommonPaymentsTec.wsdl</replace>
+         </searchReplace>
+               <searchReplace>
+            <search>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.xsd</search>
+            <replace>oramds:/apps/SOA/DEV_CommonPaymentsTec/CommonPaymentsTec.xsd</replace>
+         </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

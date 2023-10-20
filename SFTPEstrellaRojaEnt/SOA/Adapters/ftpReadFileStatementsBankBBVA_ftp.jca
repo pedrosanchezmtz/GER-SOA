@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="ftpReadFileStatementsBankBBVA" adapter="ftp" wsdlLocation="../WSDLs/ftpReadFileStatementsBankBBVA.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIincludeWildcard="*.txt" location="eis/Ftp/erSOA"/>
+   <endpoint-activation portType="GetFilesStatementsBankBBVA_ptt" operation="GetFilesStatementsBankBBVA">
+      <activation-spec className="oracle.tip.adapter.ftp.inbound.FTPActivationSpec">
+         <property name="PhysicalDirectory" value="/SOA/er.soa/incoming/PROD/BBVA"/>
+         <property name="FileType" value="ascii"/>
+         <property name="UseHeaders" value="false"/>
+         <property name="MinimumAge" value="0"/>
+         <property name="Recursive" value="false"/>
+         <property name="PollingFrequency" value="60"/>
+         <property name="DeleteFile" value="true"/>
+         <property name="IncludeFiles" value=".*\.txt"/>
+      </activation-spec>
+   </endpoint-activation>
+</adapter-config>

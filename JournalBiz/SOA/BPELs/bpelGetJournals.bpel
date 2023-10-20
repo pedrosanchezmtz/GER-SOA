@@ -1,0 +1,539 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu May 05 10:53:19 CDT 2022
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelGetJournals"
+               targetNamespace="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/JournalBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/FinancialsTec"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns3="http://TargetNamespace.com/ServiceName"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/JournalBiz/dbCloud"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/dbCloud">
+  <import namespace="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates" location="../Schemas/groupsDates.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://soa.estrellaroja.com.mx/JournalBiz" location="oramds:/apps/SOA/JournalBiz/JournalBiz.xsd"
+           importType="http://www.w3.org/2001/XMLSchema"/>
+   <import namespace="http://soa.estrellaroja.com.mx/JournalBiz" location="oramds:/apps/SOA/JournalBiz/JournalBiz.wsdl"
+           importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <import namespace="http://TargetNamespace.com/ServiceName" location="../Schemas/nxsdFileJournal.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals" location="../WSDLs/bpelGetJournals.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelgetjournals_client" partnerLinkType="client:bpelGetJournals" myRole="bpelGetJournalsProvider"/>
+      <partnerLink name="wsFinancialsTec" partnerLinkType="ns1:wsFinancialsTec" partnerRole="FinancialsTecPortType"/>
+      <partnerLink name="wsERPIntegrationBiz" partnerLinkType="ns4:wsERPIntegrationBiz"
+                   partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+      <partnerLink name="dbCloud" partnerLinkType="ns6:dbCloud_plt" partnerRole="dbCloud_role"/>
+   </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:bpelGetJournalsRequestMessage"/>
+  </variables>
+   <faultHandlers>
+      <catchAll>
+         <empty name="Empty3"/>
+      </catchAll>
+   </faultHandlers>
+   <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelGetJournals.wsdl) --><receive name="receiveInput" partnerLink="bpelgetjournals_client" portType="client:bpelGetJournals" operation="GetJournals" variable="inputVariable" createInstance="yes"/>
+    <scope name="scopeGetJournal" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:general>
+            <bpelx:property name="userDescription"><![CDATA[
+               ]]><![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Negocio. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+            </bpelx:property>
+         </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+         <variable name="varBatchId" element="ns0:BatchId"/>
+         <variable name="varInvokeWsFinancialsTecGetJournalTMSRq" messageType="ns1:GetJournalTMSRq"/>
+         <variable name="varInvokeWsFinancialsTecGetJournalTMSRs" messageType="ns1:GetJournalTMSRs"/>
+         <variable name="varInvokeWsFinancialsTecGetJournalNERq" messageType="ns1:GetJournalNERq"/>
+         <variable name="varInvokeWsFinancialsTecGetJournalNERs" messageType="ns1:GetJournalNERs"/>
+         <variable name="varInvokeWsFinancialsTecUpdateJournalTMSRq" messageType="ns1:UpdateJournalTMSRq"/>
+         <variable name="varInvokeWsFinancialsTecUpdateJournalTMSRs" messageType="ns1:UpdateJournalTMSRs"/>
+            <variable name="dbCloud_InputVariable" messageType="ns6:dbCloudInput_msg"/>
+            <variable name="dbCloud_OutputVariable" messageType="ns6:dbCloudOutputCollection_msg"/>
+            <variable name="varGetJournalsG" element="ns1:GetJournalRs"/>
+        <variable name="varDelay" type="xsd:string">
+          <from>'0'</from>
+        </variable>
+      </variables>
+      <sequence name="sequenceGetJournal">
+         <documentation>
+            <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+         </documentation>
+         <if name="IfValidateSource">
+            <documentation>
+                  <![CDATA['TMS']]>
+               </documentation>
+            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">xp20:matches($inputVariable.payload/ns0:Source,'TMS')</condition>
+            <sequence name="SeqQueryTMS">
+               <assign name="assignWsFinancialsTecUpdateJournalTMSRq"
+                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>xp20:format-dateTime(xp20:current-dateTime(),'[Y0001][M01][D01][H01][m01]')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBatchId</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$inputVariable.payload/ns0:Status</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecUpdateJournalTMSRq.UpdateJournalTMSRq/ns1:Status</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$inputVariable.payload/ns0:Source</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecUpdateJournalTMSRq.UpdateJournalTMSRq/ns1:Source</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$varBatchId</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecUpdateJournalTMSRq.UpdateJournalTMSRq/ns1:BatchId</to>
+                     </copy>
+                  </assign>
+               <invoke name="invokeWsFinancialsTecUpdateJournalTMS" partnerLink="wsFinancialsTec"
+                       portType="ns1:FinancialsTecPortType" operation="UpdateJournalTMS"
+                       inputVariable="varInvokeWsFinancialsTecUpdateJournalTMSRq"
+                       outputVariable="varInvokeWsFinancialsTecUpdateJournalTMSRs"
+                       xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+               <assign name="assignWsFinancialsTecGetJournalTMSRq">
+                  <documentation>
+                     <![CDATA[Se asigna la entrada del servicio Técnico a partir de la entrada del BPEL.]]>
+                  </documentation>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>$inputVariable.payload/ns0:Status</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalTMSRq.GetJournalTMSRq/ns1:Status</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>$inputVariable.payload/ns0:Source</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalTMSRq.GetJournalTMSRq/ns1:Source</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>$varBatchId</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalTMSRq.GetJournalTMSRq/ns1:BatchId</to>
+                  </copy>
+               </assign>
+               <invoke name="invokeWsFinancialsTecGetJournalTMS" inputVariable="varInvokeWsFinancialsTecGetJournalTMSRq"
+                       outputVariable="varInvokeWsFinancialsTecGetJournalTMSRs" bpelx:invokeAsDetail="no"
+                       partnerLink="wsFinancialsTec" portType="ns1:FinancialsTecPortType" operation="GetJournalTMS"
+                       xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <documentation>
+                     <![CDATA[Se invoca a la operación GetJournal del servicio Técnico FinancialsTec.]]>
+                  </documentation>
+               </invoke>
+               <assign name="trWsFinancialsTecGetJournalTMSRsToVarGetJournals">
+                  <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy>
+                     <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecGetJournalTMSRs_To_VarGetJournals.xsl", $varInvokeWsFinancialsTecGetJournalTMSRs.GetJournalTMSRs)</from>
+                     <to variable="varGetJournalsG"/>
+                  </copy>
+               </assign>
+            </sequence>
+            <else>
+               <documentation>
+                  <![CDATA['NE']]>
+               </documentation>
+               <sequence name="SeqQueryNE">
+                  <assign name="assignWsFinancialsTecGetJournalNERq"
+                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                     <documentation>
+                        <![CDATA[Se asigna la entrada del servicio Técnico a partir de la entrada del BPEL.]]>
+                     </documentation>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>xp20:format-dateTime(xp20:current-dateTime(),'[Y0001][M01][D01][H01][m01]')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBatchId</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$inputVariable.payload/ns0:Status</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalNERq.GetJournalNERq/ns1:Status</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$inputVariable.payload/ns0:Source</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalNERq.GetJournalNERq/ns1:Source</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$varBatchId</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecGetJournalNERq.GetJournalNERq/ns1:BatchId</to>
+                     </copy>
+                  </assign>
+                  <invoke name="invokeWsFinancialsTecGetJournalNE" partnerLink="wsFinancialsTec"
+                          portType="ns1:FinancialsTecPortType" operation="GetJournalNE"
+                          inputVariable="varInvokeWsFinancialsTecGetJournalNERq"
+                          outputVariable="varInvokeWsFinancialsTecGetJournalNERs" bpelx:invokeAsDetail="no"
+                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                  <assign name="trWsFinancialsTecGetJournalNERsToVarGetJournals">
+                     <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                     </bpelx:annotation>
+                     <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecGetJournalNERs_To_VarGetJournals.xsl", $varInvokeWsFinancialsTecGetJournalNERs.GetJournalNERs)</from>
+                        <to variable="varGetJournalsG"/>
+                     </copy>
+                  </assign>
+               </sequence>
+            </else>
+         </if>
+            <assign name="AssignSelectGroupsDates">
+          <copy>
+            <from>$varBatchId</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$dbCloud_InputVariable.dbCloudInput_msg/ns7:je_batch_id</to>
+          </copy>
+          <copy>
+            <from>dvm:lookupValue("Dvms/Journals.dvm", "Code","DelayJournals", "Value", "0")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varDelay</to>
+          </copy>
+        </assign>
+        <if name="If_groupDate">
+          <documentation>
+            <![CDATA[GroupDate]]>
+          </documentation>
+          <condition>dvm:lookupValue('Dvms/Journals.dvm', 'Code','AgroupDateGroup', 'Value', 'false')='true'</condition>
+          <invoke name="dbCloud_GroupsDates" partnerLink="dbCloud" portType="ns6:dbCloud_ptt"
+                  operation="SelectGroupsDates" inputVariable="dbCloud_InputVariable"
+                  outputVariable="dbCloud_OutputVariable" bpelx:invokeAsDetail="no"/>
+          <else>
+            <documentation>
+              <![CDATA[Date]]>
+            </documentation>
+            <invoke name="dbCloud_GroupsDates" partnerLink="dbCloud" portType="ns6:dbCloud_ptt" operation="SelectDates"
+                    inputVariable="dbCloud_InputVariable" outputVariable="dbCloud_OutputVariable"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+          </else>
+        </if>
+            <forEach parallel="no" counterName="counterGrpDat" name="ForEach_GrpDat">
+               <startCounterValue>1</startCounterValue>
+               <finalCounterValue>count($dbCloud_OutputVariable.dbCloudOutputCollection/ns7:dbCloudOutput)</finalCounterValue>
+               <scope name="Scope1">
+                  <variables>
+                     <variable name="varGetJournals" element="ns1:GetJournalRs"/>
+              <variable name="v_groupDate" element="ns5:groupsDates"/>
+              <variable name="v_grupo" type="xsd:string"/>
+              <variable name="v_dia" type="xsd:string"/>
+              <variable name="varInvokeWsERPIntegrationBizImportToERPCloudL1Rq" messageType="ns4:ImportToERPCloudRq"/>
+              <variable name="varInvokeWsERPIntegrationBizImportToERPCloudL1Rs" messageType="ns4:ImportToERPCloudRs"/>
+              <variable name="varInvokeWsERPIntegrationBizImportToERPCloudL2Rq" messageType="ns4:ImportToERPCloudRq"/>
+              <variable name="varInvokeWsERPIntegrationBizImportToERPCloudL2Rs" messageType="ns4:ImportToERPCloudRs"/>
+              <variable name="varB64L1" type="xsd:string"/>
+              <variable name="varB64L2" type="xsd:string"/>
+              <variable name="varFileJournalL2" type="xsd:string"/>
+              <variable name="varJournalL2" element="ns3:FileJournal"/>
+              <variable name="varFileJornalsL1" type="xsd:string"/>
+              <variable name="varJournalsL1" element="ns3:FileJournal"/>
+              <variable name="varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs" messageType="ns2:EncodeFileBase64Rs"/>
+            </variables>
+                  <sequence name="Sequence4">
+              <assign name="AssignGroupDate">
+                <extensionAssignOperation>
+                  <bpelx:remove>
+                    <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_grupo</bpelx:target>
+                  </bpelx:remove>
+                </extensionAssignOperation>
+                <extensionAssignOperation>
+                  <bpelx:remove>
+                    <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dia</bpelx:target>
+                  </bpelx:remove>
+                </extensionAssignOperation>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$dbCloud_OutputVariable.dbCloudOutputCollection/ns7:dbCloudOutput[$counterGrpDat]/ns7:accounting_date</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_dia</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$dbCloud_OutputVariable.dbCloudOutputCollection/ns7:dbCloudOutput[$counterGrpDat]/ns7:group_id</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_grupo</to>
+                </copy>
+              </assign>
+              <assign name="Trs_groupDate">
+                        <bpelx:annotation>
+                           <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                <copy>
+                  <from>ora:doXSLTransformForDoc("../Transformations/Trs_PageGroupDate.xsl", $varGetJournalsG, "v_grupo", $v_grupo, "v_dia", $v_dia)</from>
+                  <to variable="varGetJournals"/>
+                </copy>
+              </assign>
+                     <if name="IfValidateSuccess">
+                        <documentation>
+                  <![CDATA[Sucess]]>
+                </documentation>
+                        <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varGetJournals/ns1:Return/ns1:Journals)&gt;0</condition>
+                        <sequence>
+                           <flow name="Flow1">
+                              <sequence name="Sequence">
+                                 <assign name="trWsFinancialsTecGetJournalRsToVarJournalsL1">
+                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                       <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                       <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecGetJournalRs_To_JournalsL1.xsl", $varGetJournals)</from>
+                                       <to variable="varJournalsL1"/>
+                                    </copy>
+                                 </assign>
+                                 <assign name="translateJornalsL1">
+                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                       <bpelx:pattern>translate</bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                       <from>ora:doTranslateToNative($varJournalsL1, 'Schemas/nxsdFileJournal.xsd', 'FileJournal', 'STRING')</from>
+                                       <to>$varFileJornalsL1</to>
+                                    </copy>
+                                 </assign>
+                              </sequence>
+                              <sequence name="Sequence1">
+                                 <assign name="trWsFinancialsTecGetJournalRsToVarJournalsL2"
+                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                       <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                       <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecGetJournalRs_To_JournalsL2.xsl", $varGetJournals)</from>
+                                       <to variable="varJournalL2"/>
+                                    </copy>
+                                 </assign>
+                                 <assign name="translateJornalsL2"
+                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                       <bpelx:pattern>translate</bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                       <from>ora:doTranslateToNative($varJournalL2, 'Schemas/nxsdFileJournal.xsd', 'FileJournal', 'STRING')</from>
+                                       <to>$varFileJournalL2</to>
+                                    </copy>
+                                 </assign>
+                              </sequence>
+                           </flow>
+                           <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <bpelx:exec name="Java_Embedding_encode"
+                                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension" language="java">
+                                 <![CDATA[addAuditTrailEntry("decoding started");  
+try         
+{    
+String StringFileJornalsL1 = (String)getVariableData("varFileJornalsL1");         
+oracle.soa.common.util.Base64Encoder encoder = new oracle.soa.common.util.Base64Encoder();     
+String encoded = null;   
+String StringFileJornalsL2 = (String)getVariableData("varFileJournalL2");     
+oracle.soa.common.util.Base64Encoder encoder2 = new oracle.soa.common.util.Base64Encoder();     
+String encoded2 = null;     
+addAuditTrailEntry("decodificando");    
+encoded = encoder.encode(StringFileJornalsL1);     
+addAuditTrailEntry("asignando decodificacion");    
+setVariableData("varB64L1",encoded);    
+addAuditTrailEntry("decodificando");    
+encoded2 = encoder2.encode(StringFileJornalsL2);     
+addAuditTrailEntry("asignando decodificacion");    
+setVariableData("varB64L2",encoded2);      
+ }         
+catch(Exception e)         
+{         
+  addAuditTrailEntry("Exception: "+e.getMessage());         
+}]]>
+                                 <![CDATA[addAuditTrailEntry("decoding started");          
+java.lang.String StringFileJornalsL1 = (java.lang.String)getVariableData("varFileJornalsL1");          
+oracle.soa.common.util.Base64Encoder encoder = new oracle.soa.common.util.Base64Encoder();      
+java.lang.String encoded = null;    
+java.lang.String StringFileJornalsL2 = (java.lang.String)getVariableData("varFileJournalL2");      
+oracle.soa.common.util.Base64Encoder encoder2 = new oracle.soa.common.util.Base64Encoder();      
+java.lang.String encoded2 = null;      
+try          
+{     
+addAuditTrailEntry("decodificando");     
+encoded = encoder.encode(StringFileJornalsL1);      
+addAuditTrailEntry("asignando decodificacion");     
+setVariableData("varB64L1",encoded);     
+addAuditTrailEntry("decodificando");     
+encoded2 = encoder2.encode(StringFileJornalsL2);      
+addAuditTrailEntry("asignando decodificacion");     
+setVariableData("varB64L2",encoded2);       
+ }          
+catch(Exception e)          
+{          
+  addAuditTrailEntry("Exception: "+e.getMessage());          
+}]]>
+                              </bpelx:exec>
+                           </extensionActivity>
+                           <assign name="AssignEncoded">
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>'LEDGER1.csv'</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[1]/ns2:FileName</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>$varB64L1</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[1]/ns2:ContentBase64</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>'LEDGER2.csv'</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[2]/ns2:FileName</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>$varB64L2</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[2]/ns2:ContentBase64</to>
+                              </copy>
+                              <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                 <from>'Procesado'</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/cmn:Success</to>
+                              </copy>
+                           </assign>
+                           <if name="IfValidate" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <documentation>
+                                 <![CDATA[Sucess]]>
+                              </documentation>
+                              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/cmn:Success)&gt;0</condition>
+                              <sequence name="sqeSuccess">
+                                 <flow name="Flow1">
+                                    <sequence name="Sequence">
+                                       <assign name="assignVarInterfaceL1">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                             <from>concat(dvm:lookupValue("Dvms/Journals.dvm", "Code", concat($inputVariable.payload/ns0:Source,"2"), "Value", ""),"L1")</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL1Rq.ImportToERPCloudRq/ns4:TargetInterface</to>
+                                          </copy>
+                                          <copy>
+                                             <from>$varB64L1</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL1Rq.ImportToERPCloudRq/ns4:File/ns4:Content</to>
+                                          </copy>
+                                          <copy>
+                                             <from>$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[1]/ns2:FileName</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL1Rq.ImportToERPCloudRq/ns4:File/ns4:FileName</to>
+                                          </copy>
+                                       </assign>
+                                       <invoke name="invokeWsERPIntegrationBizImportToERPCloud"
+                                               partnerLink="wsERPIntegrationBiz"
+                                               portType="ns4:ERPIntegrationBizPortType" operation="ImportToERPCloud"
+                                               inputVariable="varInvokeWsERPIntegrationBizImportToERPCloudL1Rq"
+                                               outputVariable="varInvokeWsERPIntegrationBizImportToERPCloudL1Rs"
+                                               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                               bpelx:invokeAsDetail="no"/>
+                                    </sequence>
+                                    <sequence name="Sequence2">
+                                       <assign name="assignVarInterfaceL2"
+                                               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                             <from>concat(dvm:lookupValue("Dvms/Journals.dvm", "Code",concat($inputVariable.payload/ns0:Source,"2"), "Value", ""),"L2")</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL2Rq.ImportToERPCloudRq/ns4:TargetInterface</to>
+                                          </copy>
+                                          <copy>
+                                             <from>$varB64L2</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL2Rq.ImportToERPCloudRq/ns4:File/ns4:Content</to>
+                                          </copy>
+                                          <copy>
+                                             <from>$varInvokeWsSOAUtilitiesTecEncodeFileBase64Rs.EncodeFileBase64Rs/ns2:Return/ns2:FileResult[2]/ns2:FileName</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationBizImportToERPCloudL2Rq.ImportToERPCloudRq/ns4:File/ns4:FileName</to>
+                                          </copy>
+                                       </assign>
+                                       <invoke name="invokeWsERPIntegrationBizImportToERPCloud"
+                                               partnerLink="wsERPIntegrationBiz"
+                                               portType="ns4:ERPIntegrationBizPortType" operation="ImportToERPCloud"
+                                               inputVariable="varInvokeWsERPIntegrationBizImportToERPCloudL2Rq"
+                                               outputVariable="varInvokeWsERPIntegrationBizImportToERPCloudL2Rs"
+                                               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                                               bpelx:invokeAsDetail="no"/>
+                                    </sequence>
+                                 </flow>
+                              </sequence>
+                              <else>
+                                 <documentation>
+                                    <![CDATA[Error]]>
+                                 </documentation>
+                                 <empty name="Empty2"/>
+                              </else>
+                           </if>
+                        </sequence>
+                        <else>
+                           <documentation>
+                              <![CDATA[Errors]]>
+                           </documentation>
+                           <empty name="Empty1"/>
+                        </else>
+                     </if>
+              <extensionActivity>
+                <bpelx:exec name="Java_Delay">
+                  <![CDATA[try {  
+int VarDelay = java.lang.Integer.parseInt((java.lang.String)getVariableData("varDelay"));   
+addAuditTrailEntry("iniciando delay"+ VarDelay +" milisegundos");    
+            java.lang.Thread.sleep(VarDelay);  
+ 
+addAuditTrailEntry("fin  delay"+ VarDelay +" milisegundos"); 
+        }  
+        catch (InterruptedException ex) {  
+            java.lang.Thread.currentThread().interrupt();  
+        }]]>
+                </bpelx:exec>
+              </extensionActivity>
+            </sequence>
+               </scope>
+            </forEach>
+      </sequence>
+   </scope>
+  </sequence>
+</process>

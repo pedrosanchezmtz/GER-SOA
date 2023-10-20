@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="InventoryBizProperties" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="CODE"/>
+      <column name="VALUE"/>
+   </columns>
+   <rows>
+      <row>
+         <cell>TMP_DIR</cell>
+         <cell>/u01/data/domains/ERSOACSP_domain/PROD/TMP_DIR/</cell>
+      </row>
+      <row markdefault="false">
+         <cell>INV_DIR</cell>
+         <cell>InventoryTransaction</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Y</cell>
+         <cell>Y</cell>
+      </row>
+      <row markdefault="false">
+         <cell>LITRO</cell>
+         <cell>LITRO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>INV_ZIP_DIR</cell>
+         <cell>InventoryTransactionFile.zip</cell>
+      </row>
+      <row markdefault="false">
+         <cell>INV_BIZ</cell>
+         <cell>InventoryBiz</cell>
+      </row>
+   </rows>
+</dvm>

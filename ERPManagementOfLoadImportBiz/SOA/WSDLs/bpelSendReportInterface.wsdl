@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelSendReportInterface"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                  xmlns:ns3="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+                  xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+  <plnk:partnerLinkType name="bpelSendReportInterface">
+    <plnk:role name="bpelSendReportInterfaceProvider" portType="client:bpelSendReportInterface"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+            xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+            xmlns:ns1="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+            xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+            xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+            xmlns:ns3="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+            xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+      <import namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+              schemaLocation="oramds:/apps/SOA/ERPManagementOfLoadImportBiz/ERPManagementOfLoadImportBiz.xsd"/>
+    </schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                xmlns:ns3="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+                xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+                  schemaLocation="../Schemas/FndInterfaceControl.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:ns2="http://schemas.oracle.com/bpel/extension"
+                xmlns:ns3="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+                xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SendReportInterfaceRq">
+    <wsdl:part name="SendReportInterfaceRq" element="ns1:SendReportInterfaceRq"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelSendReportInterface">
+    <wsdl:operation name="SendReportInterface">
+      <wsdl:input message="client:SendReportInterfaceRq"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

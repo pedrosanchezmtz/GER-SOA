@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="JournalEnt">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/SOA/JournalBiz/JournalBiz</search>
+            <replace>oramds:/apps/SOA/JournalBiz/JournalBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+            <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+         </searchReplace>
+      </import>
+      <service name="JournalEnt">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/JournalEnt#wsdl.endpoint(JournalEnt/JournalEntPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelSendFileJournal">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+            <component name="bpelSendFileJournals">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="wsJournalBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/JournalBiz#wsdl.endpoint(JournalBiz/JournalBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/JournalBiz/JournalBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPIntegrationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="WSDLs/bpelSendFileJournal.wsdl|WSDLs/bpelSendFileJournals.wsdl|WSDLs/ERPIntegrationBizWrapper.wsdl|WSDLs/JournalBizWrapper.wsdl|WSDLs/JournalBizWrapper1.wsdl">
+         <searchReplace>
+            <search>oramds:/apps/SOA/JournalBiz/JournalBiz</search>
+            <replace>oramds:/apps/SOA/JournalBiz/JournalBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+            <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+         </searchReplace>
+
+   </wsdlAndSchema>
+</SOAConfigPlan>

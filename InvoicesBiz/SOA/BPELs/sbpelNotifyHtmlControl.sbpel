@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelNotifyHtmlControl" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelNotifyHtmlControl" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelNotifyHtmlControl" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns1:wsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+      <partnerLink name="wsMessageTec" partnerLinkType="ns2:wsMessageTec" partnerRole="MessageTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="integrationName" type="xsd:string"/>
+      <variable name="htmlInput" messageType="ns1:GetHtmlControlRq"/>
+   </variables>
+   <sequence name="sequenceName">
+      <scope name="scopeHandleNotification">
+         <variables>
+            <variable name="htmlOutput" messageType="ns1:GetHtmlControlRs"/>
+            <variable name="mailInput" messageType="ns2:MessageRq"/>
+         </variables>
+         <sequence name="sequenceHandleNotification">
+            <invoke name="invokeHtmlControl" bpelx:invokeAsDetail="no" partnerLink="wsSOAUtilitiesTec" portType="ns1:SOAUtilitiesTecPortType" operation="GetHtmlControl" inputVariable="htmlInput" outputVariable="htmlOutput"/>
+            <if name="IfCorrectInvocation">
+               <documentation><![CDATA[Correct Invocation]]></documentation>
+               <condition>count($htmlOutput.GetHtmlControlRs/ns3:Errors/ns3:Error) = 0</condition>
+               <sequence name="sequenceCorrectInvocation">
+                  <assign name="assignParams">
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>$integrationName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.CustomHeader/ns2:IntegrationName</to>
+                     </copy>
+                     <copy>
+                        <from>$htmlOutput.GetHtmlControlRs/ns1:Return/ns1:HtmlControl</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.MessageRq/ns2:Message/ns2:Message</to>
+                     </copy>
+                  </assign>
+                  <invoke name="invokeSendMail" bpelx:invokeAsDetail="no" partnerLink="wsMessageTec" portType="ns2:MessageTecPortType" operation="SendEmail" inputVariable="mailInput"/>
+               </sequence>
+               <else>
+                  <documentation><![CDATA[Invalid Invocation]]></documentation>
+                  <empty name="empty"/>
+               </else>
+            </if>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

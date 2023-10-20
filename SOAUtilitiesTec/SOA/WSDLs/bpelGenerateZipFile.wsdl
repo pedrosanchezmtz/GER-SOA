@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelbpelGenerateZipFile" targetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelbpelGenerateZipFile" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelbpelGenerateZipFile" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelGenerateZipFileRq">
+      <wsdl:part name="bpelGenerateZipFileRq" element="ns1:GenerateZipFileRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelGenerateZipFileRs">
+      <wsdl:part name="bpelGenerateZipFileRs" element="ns1:GenerateZipFileRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelbpelGenerateZipFile">
+      <wsdl:operation name="bpelGenerateZipFile">
+         <wsdl:input message="client:bpelGenerateZipFileRq"/>
+         <wsdl:output message="client:bpelGenerateZipFileRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelbpelGenerateZipFile">
+      <plnk:role name="bpelbpelGenerateZipFileProvider" portType="client:bpelbpelGenerateZipFile"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

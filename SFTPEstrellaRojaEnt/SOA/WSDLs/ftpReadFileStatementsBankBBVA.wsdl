@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpReadFileStatementsBankBBVA" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBBVA" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBBVA" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:pc="http://xmlns.oracle.com/pcbpel/" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBBVA" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="GetFilesStatementsBankBBVA_plt">
+      <plt:role name="GetFilesStatementsBankBBVA_role">
+         <plt:portType name="tns:GetFilesStatementsBankBBVA_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBBVA" schemaLocation="../Schemas/Banks/StatementsBankBBVA.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetFilesStatementsBankBBVA_msg">
+      <wsdl:part name="body" element="imp1:AccountStatements"/>
+   </wsdl:message>
+   <wsdl:portType name="GetFilesStatementsBankBBVA_ptt">
+      <wsdl:operation name="GetFilesStatementsBankBBVA">
+         <wsdl:input message="tns:GetFilesStatementsBankBBVA_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

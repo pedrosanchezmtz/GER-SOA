@@ -1,0 +1,6 @@
+<view_states>
+   <function arity="1" name="funcXqtrs_pagesapply">
+      <source_tree_view last.visible.row="23" last.visible.path="/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]/Return[[2]]/GetHtmlControlRq[[1]]/ErrorsDetails[[2]]" first.visible.path="/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]" expanded.paths="/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]&#xA;/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]/Return[[2]]&#xA;/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]/Return[[2]]/Data[[0]]&#xA;/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]/Return[[2]]/Data[[0]]/ProcessedApplyReceipt[[0]]&#xA;/sourceRoot[[0]]/DigitalStampReceiptsRs[[0]]/Return[[2]]/GetHtmlControlRq[[1]]" first.visible.row="0" selected.paths=""/>
+      <target_tree_view last.visible.row="16" last.visible.path="/TargetRoot[[0]]/TrxsElement[[0]]/Element[[0]]/Trx[[0]]/RECEIPT_APPLY_ID[[13]]" first.visible.path="/TargetRoot[[0]]/TrxsElement[[0]]" expanded.paths="/TargetRoot[[0]]/TrxsElement[[0]]&#xA;/TargetRoot[[0]]/TrxsElement[[0]]/Element[[0]]&#xA;/TargetRoot[[0]]/TrxsElement[[0]]/Element[[0]]/Trx[[0]]" first.visible.row="0" selected.paths=""/>
+   </function>
+</view_states>

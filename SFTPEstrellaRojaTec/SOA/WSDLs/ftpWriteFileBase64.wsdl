@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="ftpWriteFileBase64" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec/ftpWriteFileBase64" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec/ftpWriteFileBase64" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:opaque="http://xmlns.oracle.com/pcbpel/adapter/opaque/">
+   <plt:partnerLinkType name="PutFile_plt">
+      <plt:role name="PutFile_role">
+         <plt:portType name="tns:PutFile_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/opaque/" xmlns="http://www.w3.org/2001/XMLSchema">
+         <element name="opaqueElement" type="base64Binary"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="PutFile_msg">
+      <wsdl:part name="opaque" element="opaque:opaqueElement"/>
+   </wsdl:message>
+   <wsdl:portType name="PutFile_ptt">
+      <wsdl:operation name="PutFile">
+         <wsdl:input message="tns:PutFile_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

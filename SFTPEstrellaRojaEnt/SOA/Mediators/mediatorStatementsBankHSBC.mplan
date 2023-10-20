@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorStatementsBankHSBC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementBankHSBC" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetFilesStatementsBankFromHSBC" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelManagementsStatementsBankHSBC.bpelmanagementsstatementsbankhsbc_client.process">
+            <action>
+               <assign>
+                  <copy expression="$in.body/imp1:StatementsBankHSBC" target="$out.payload/imp1:StatementsBankHSBC" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC"/>
+                  <copy value="$in.property.jca.ftp.FileName" target="$out.property.jca.ftp.FileName"/>
+               </assign>
+               <invoke reference="bpelManagementsStatementsBankHSBC.bpelmanagementsstatementsbankhsbc_client" operation="process"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

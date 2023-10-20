@@ -1,0 +1,703 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelInventoryBiz" targetNamespace="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/InventoryBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryTec"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/FinancialsTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/MessageTec">
+  <documentation>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación InventoryBiz del servicio InventoryBiz.]]>
+  </documentation>
+  <import namespace="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory"
+          location="../Schemas/nxsdTransactionInventory.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz"
+          location="../WSDLs/bpelInventoryBiz.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelInventoryBiz" partnerLinkType="client:bpelInventoryBiz"
+                 myRole="bpelInventoryBizProvider"/>
+    <partnerLink name="wsFinancialsTec" partnerLinkType="ns2:wsFinancialsTec" partnerRole="FinancialsTecPortType"/>
+    <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns3:wsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsMessageTec" partnerLinkType="ns5:wsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="ns0:InventoryBizRq"/>
+    <variable name="outputVariable" messageType="ns0:InventoryBizRs"/>
+    <variable name="varInventoryBizRs" messageType="ns0:InventoryBizRs"/>
+    <variable name="varReceiveInputInventoryBiz" messageType="client:InventoryBizRq"/>
+    <variable name="varOutputInventoryBizOutputVariable" messageType="client:InventoryBizRs"/>
+    <variable name="varInvokeGetHtmlControlOutput" messageType="ns3:GetHtmlControlRs"/>
+    <variable name="varInvokeGetHtmlControlInput" messageType="ns3:GetHtmlControlRq"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <faultHandlers>
+    <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation>
+        <assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[InventoryBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[InventoryBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <reply name="replyOutput" partnerLink="bpelInventoryBiz" variable="varOutputInventoryBizOutputVariable"
+               portType="client:bpelInventoryBiz" operation="InventoryBiz">
+          <documentation>
+            <![CDATA[Se indica la salida del proceso BPEL.]]>
+          </documentation>
+        </reply>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelInventoryBiz.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelInventoryBiz" portType="client:bpelInventoryBiz"
+             operation="InventoryBiz" variable="varReceiveInputInventoryBiz" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeInventoryBiz">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Negocio. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varInvokeFinancialsTecToWsFinancialsTec" messageType="ns2:GetInventoryTransactionsRq"/>
+        <variable name="varWsFinancialsTecToInvokeFinancialsTec" messageType="ns2:GetInventoryTransactionsRs"/>
+        <variable name="varEncodeFileBase64Rq" messageType="ns3:EncodeFileBase64Rq"/>
+        <variable name="varEncodeFileBase64Rs" messageType="ns3:EncodeFileBase64Rs"/>
+        <variable name="varEncodeTypeRq" messageType="ns3:EncodeRq"/>
+        <variable name="varEncodeTypeRs" messageType="ns3:EncodeRs"/>
+        <variable name="varNativeInventory" type="xsd:string"/>
+        <variable name="nxsdTransactionInventory" element="ns4:nxsdTransactionInventory"/>
+        <variable name="varGenerateZipFileRq" messageType="ns3:GenerateZipFileRq"/>
+        <variable name="varGenerateZipFileRs" messageType="ns3:GenerateZipFileRs"/>
+        <variable name="varInvokeUpdateInventoryTransactionsInputVariable"
+                  messageType="ns2:UpdateInventoryTransactionsRq"/>
+        <variable name="varInvokeUpdateInventoryTransactionsOutput" messageType="ns2:UpdateInventoryTransactionsRs"/>
+        <variable name="varInvokeSendEmailInput" messageType="ns5:MessageRq"/>
+        <variable name="varGenerateZipFileGenerateZipFileInputWxo" messageType="ns3:GenerateZipFileRq"/>
+        <variable name="varGenerateZipFileGenerateZipFileOutputWxo" messageType="ns3:GenerateZipFileRs"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[InventoryBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.InventoryBizRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceInventoryBiz">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <invoke name="InvokeWsFinancialsTec" bpelx:invokeAsDetail="no" partnerLink="wsFinancialsTec"
+                portType="ns2:FinancialsTecPortType" operation="GetInventoryTransactions"
+                inputVariable="varInvokeFinancialsTecToWsFinancialsTec"
+                outputVariable="varWsFinancialsTecToInvokeFinancialsTec"/>
+        <if name="If">
+          <documentation>
+            <![CDATA[CorrectInvokeWsFinancialsTec]]>
+          </documentation>
+          <condition>string-length($varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs/ns2:Return/ns2:InventoryTransaction)&gt;0</condition>
+          <sequence>
+            <assign name="TransformationWsFinancialsTecToNxsdInventory">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecToNxsdInventory.xsl", $varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs)</from>
+                <to variable="nxsdTransactionInventory"/>
+              </copy>
+            </assign>
+            <assign name="TranslateNxsdInventoryToEncode">
+              <bpelx:annotation>
+                <bpelx:pattern>translate</bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doTranslateToNative($nxsdTransactionInventory, 'Schemas/nxsdTransactionInventory.xsd', 'nxsdTransactionInventory', 'STRING')</from>
+                <to>$varNativeInventory</to>
+              </copy>
+            </assign>
+            <assign name="AssignEncode">
+              <copy>
+                <from>$varNativeInventory</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varEncodeTypeRq.EncodeRq/ns3:Coded/ns3:ContentData</to>
+              </copy>
+              <copy>
+                <from>dvm:lookupValue('Dvms/InventoryBizProperties.dvm','CODE','INV_DIR','VALUE','InventoryTransaction')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varEncodeTypeRq.EncodeRq/ns3:Coded/ns3:ContentDataName</to>
+              </copy>
+            </assign>
+            <invoke name="InvokeEncode" partnerLink="wsSOAUtilitiesTec"
+                    portType="ns3:SOAUtilitiesTecPortType" operation="Encode"
+                    inputVariable="varEncodeTypeRq" outputVariable="varEncodeTypeRs" bpelx:invokeAsDetail="no"/>
+            <if name="If">
+              <documentation>
+                <![CDATA[CorrectInvokeEncodeRq]]>
+              </documentation>
+              <condition>string-length($varEncodeTypeRs.EncodeRs/ns3:Return/ns3:CodedReturn/ns3:DataBase64)&gt;0</condition>
+              <sequence>
+                <assign name="AssignEncodeToCreateFileBase64">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>dvm:lookupValue('Dvms/InventoryBizProperties.dvm','CODE','CSV_DIR','VALUE','InvTransactionsInterface.csv')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varEncodeFileBase64Rq.EncodeFileBase64Rq/ns3:File/ns3:FileName</to>
+                  </copy>
+                  <copy>
+                    <from>$varEncodeTypeRs.EncodeRs/ns3:Return/ns3:CodedReturn/ns3:DataBase64</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varEncodeFileBase64Rq.EncodeFileBase64Rq/ns3:File/ns3:FileContent</to>
+                  </copy>
+                </assign>
+                <invoke name="InvokeCreateFileBase64" bpelx:invokeAsDetail="no" partnerLink="wsSOAUtilitiesTec"
+                        portType="ns3:SOAUtilitiesTecPortType" operation="EncodeFileBase64"
+                        inputVariable="varEncodeFileBase64Rq" outputVariable="varEncodeFileBase64Rs"/>
+                <if name="If">
+                  <documentation>
+                    <![CDATA[CorrectInvokeCreateFileBase64]]>
+                  </documentation>
+                  <condition>string-length($varEncodeFileBase64Rs.EncodeFileBase64Rs/ns3:Return/ns3:FileResult/ns3:ContentBase64)&gt;0</condition>
+                  <sequence>
+                    <assign name="AssignFileBase64">
+                      <copy>
+                        <from>$varEncodeFileBase64Rs.EncodeFileBase64Rs/ns3:Return/ns3:FileResult/ns3:ContentBase64</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGenerateZipFileRq.GenerateZipFileRq/ns3:FilesCompress/ns3:FileToCompress/ns3:ContentFile</to>
+                      </copy>
+                      <copy>
+                        <from>$varEncodeFileBase64Rs.EncodeFileBase64Rs/ns3:Return/ns3:FileResult/ns3:FileName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGenerateZipFileRq.GenerateZipFileRq/ns3:FilesCompress/ns3:FileToCompress/ns3:FileName</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>ora:getPreference("tmp_dir")</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGenerateZipFileRq.GenerateZipFileRq/ns3:PathFileToZip</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>dvm:lookupValue('Dvms/InventoryBizProperties.dvm','CODE','INV_ZIP_DIR','VALUE','InventoryTransactionFile.zip')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGenerateZipFileRq.GenerateZipFileRq/ns3:FileNameToZip</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>ora:getPreference("tmp_dir")</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGenerateZipFileRq.GenerateZipFileRq/ns3:FilesCompress/ns3:FileToCompress/ns3:PathFile</to>
+                      </copy>
+                    </assign>
+                    <invoke name="InvokeGenerateZipFile" bpelx:invokeAsDetail="no" partnerLink="wsSOAUtilitiesTec"
+                            portType="ns3:SOAUtilitiesTecPortType" operation="GenerateZipFile"
+                            inputVariable="varGenerateZipFileRq" outputVariable="varGenerateZipFileRs"/>
+                    <if name="If">
+                      <documentation>
+                        <![CDATA[CorrectInvokeGenerateZipFile]]>
+                      </documentation>
+                      <condition>string-length($varGenerateZipFileRs.GenerateZipFileRs/ns3:Return/ns3:ContentBase64)&gt;0</condition>
+                      <sequence name="Sequence1">
+                        <assign name="TransformationInvokeGenerateZipFileToOutput">
+                          <bpelx:annotation>
+                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                          </bpelx:annotation>
+                          <copy>
+                            <from>ora:doXSLTransformForDoc("../Transformations/trGeneratZipFileToOuput.xsl", $varGenerateZipFileRs.GenerateZipFileRs)</from>
+                            <to variable="varOutputInventoryBizOutputVariable" part="InventoryBizRs"/>
+                          </copy>
+                        </assign>
+                        <assign name="AssignWsFinancialsTecUpdateInventoryTransaction">
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>'2'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeUpdateInventoryTransactionsInputVariable.UpdateInventoryTransactionsRq/ns2:InventoryTransaction/ns2:ProcessFlag</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>count($varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs/ns2:Return/ns2:InventoryTransaction)</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:TotalSucceeded</to>
+                          </copy>
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>count($varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs/ns2:Return/ns2:InventoryTransaction)</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:TotalProcessed</to>
+                          </copy>
+                        </assign>
+                        <invoke name="InvokeWsFinancialsTecUpdateInventoryTransaction" bpelx:invokeAsDetail="no"
+                                partnerLink="wsFinancialsTec" portType="ns2:FinancialsTecPortType"
+                                operation="UpdateInventoryTransactions"
+                                inputVariable="varInvokeUpdateInventoryTransactionsInputVariable"
+                                outputVariable="varInvokeUpdateInventoryTransactionsOutput"/>
+                        <assign name="trInvokeWsFinancialsTecToRs">
+                          <bpelx:annotation>
+                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                          </bpelx:annotation>
+                          <copy>
+                            <from>ora:doXSLTransformForDoc("../Transformations/trWsFinancialsTecToInventoryBizRs1.xsl", $varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs, "varOutputInventoryBizOutputVariable.InventoryBizRs", $varOutputInventoryBizOutputVariable.InventoryBizRs)</from>
+                            <to variable="varOutputInventoryBizOutputVariable" part="InventoryBizRs"/>
+                          </copy>
+                        </assign>
+                      </sequence>
+                      <else>
+                        <documentation>
+                          <![CDATA[EmptyInvokeGenerateZipFile]]>
+                        </documentation>
+                        <assign name="EmptyResponse">
+                          <copy>
+                            <from><literal>SOA-00004</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                          </copy>
+                          <copy>
+                            <from>ora:getFaultName()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+                          </copy>
+                          <copy>
+                            <from>concat('Response of operation is empty createFileZip. ',ora:getFaultAsString())</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                          </copy>
+                          <copy>
+                            <from><literal>[ImportInventory]</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+                          </copy>
+                          <copy>
+                            <from><literal>[InventoryEnt]</literal></from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+                          </copy>
+                          <copy>
+                            <from>xp20:current-dateTime()</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[EmptyInvokeCreateFileBase64]]>
+                    </documentation>
+                    <assign name="EmptyResponse">
+                      <copy>
+                        <from><literal>SOA-00004</literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                      </copy>
+                      <copy>
+                        <from>ora:getFaultName()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+                      </copy>
+                      <copy>
+                        <from>concat('Response of operation is empty createFileBase64. ',ora:getFaultAsString())</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                      </copy>
+                      <copy>
+                        <from><literal>[ImportInventory]</literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+                      </copy>
+                      <copy>
+                        <from><literal>[InventoryEnt]</literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+                      </copy>
+                      <copy>
+                        <from>xp20:current-dateTime()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+                      </copy>
+                    </assign>
+                  </else>
+                </if>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[EmptyInvokeEncodeRq]]>
+                </documentation>
+                <assign name="EmptyResponse">
+                  <copy>
+                    <from><literal>SOA-00004</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                  </copy>
+                  <copy>
+                    <from>ora:getFaultName()</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+                  </copy>
+                  <copy>
+                    <from>concat('Response of operation is empty when encode. ',ora:getFaultAsString())</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                  </copy>
+                  <copy>
+                    <from><literal>[ImportInventory]</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+                  </copy>
+                  <copy>
+                    <from><literal>[InventoryEnt]</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+                  </copy>
+                  <copy>
+                    <from>xp20:current-dateTime()</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+                  </copy>
+                </assign>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[EmptyInvokeWsFinancialsTec]]>
+            </documentation>
+            <assign name="EmptyResponse">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from><literal>SOA-00004</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+              </copy>
+              <copy>
+                <from>'Empty table'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+              </copy>
+              <copy>
+                <from>'Response of operation is empty when get Inventory Transaction since FinancialsTec . '</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:Description</to>
+              </copy>
+              <copy>
+                <from><literal>[ImportInventory]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+              </copy>
+              <copy>
+                <from><literal>[InventoryEnt]</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+              </copy>
+              <copy>
+                <from>xp20:current-dateTime()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varOutputInventoryBizOutputVariable.InventoryBizRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+              </copy>
+              <copy>
+                <from>count($varWsFinancialsTecToInvokeFinancialsTec.GetInventoryTransactionsRs/ns2:Return/ns2:InventoryTransaction)</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:TotalErrors</to>
+              </copy>
+              <copy>
+                <from>'0'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:TotalProcessed</to>
+              </copy>
+              <copy>
+                <from>concat('Response of operation is empty. ',ora:getFaultAsString())</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:ErrorsDetails/ns3:ErrorDetail/ns3:ErrorMessage</to>
+              </copy>
+              <copy>
+                <from><literal>SOA-00004</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeGetHtmlControlInput.GetHtmlControlRq/ns3:ErrorsDetails/ns3:ErrorDetail/ns3:DataValue</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelInventoryBiz" portType="client:bpelInventoryBiz"
+           operation="InventoryBiz" variable="varOutputInventoryBizOutputVariable">
+      <documentation>
+        <![CDATA[Salida del proceso BPEL.]]>
+      </documentation>
+    </reply>
+  </sequence>
+</process>

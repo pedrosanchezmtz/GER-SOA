@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:GetListFilesERRs xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/SftpTec">
+   <ns0:filelist>
+      <ns0:file>
+         <ns0:filename>18626 _440800.99.pdf.</ns0:filename>
+      </ns0:file>
+   </ns0:filelist>
+</ns0:GetListFilesERRs>

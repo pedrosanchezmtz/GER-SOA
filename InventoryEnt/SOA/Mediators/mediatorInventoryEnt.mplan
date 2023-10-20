@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorInventoryEnt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/InventoryEnt" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="ImportInventory" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelImportInventoryTransactions.bpelImportInventoryTransactions.ImportInventory">
+            <action>
+               <assign>
+                  <copy expression="$in.ImportInventoryRq/tns:ImportInventoryRq" target="$out.ImportInventoryRq/tns:ImportInventoryRq" xmlns:tns="http://soa.estrellaroja.com.mx/InventoryEnt"/>
+               </assign>
+               <invoke reference="bpelImportInventoryTransactions.bpelImportInventoryTransactions" operation="ImportInventory">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.ImportInventoryRs/ns1:ImportInventoryRs" target="$out.ImportInventoryRs/ns1:ImportInventoryRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

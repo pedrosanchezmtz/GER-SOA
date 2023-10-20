@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="CFDITec">
+      <service name="CFDITec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITec/CFDITecPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITec/CFDITecPortTypeCallback_pt)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <property name="compositeID">
+         <replace>5c820ba1-e978-49be-9ed6-03178187b823</replace>
+      </property>
+      <component name="BpelGetCFDIFromFile">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+      </component>
+      <component name="BpelGetInvoiceCFDIFromERP">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="BpelSendCFDIToSFTP">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="WsSOAUtilitiesTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/TEST_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsErpIntegrationTec">
+         <binding type="direct">
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsAuditControlTec">
+         <binding type="direct">
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSftpTec">
+         <binding type="direct">
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsDigitalStampGerTec">
+         <binding type="direct">
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSftpTec">
+         <binding type="direct">
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsMessageTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Schemas/singleString.xsd|WSDLs/BpelGetCFDIFromFile.wsdl|WSDLs/BpelGetInvoiceCFDIFromERP.wsdl|WSDLs/External/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/External/SOAUtilitiesTecWrapper.wsdl">
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

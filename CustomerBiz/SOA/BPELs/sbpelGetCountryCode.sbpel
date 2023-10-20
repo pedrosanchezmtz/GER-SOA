@@ -1,0 +1,425 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelGetCountryCode" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/sbpelGetCountryCode" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/sbpelGetCountryCode" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns3="http://soa.estrellaroja.com.mx/CoherenceTec" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns6="http://soa.estrellaroja.com.mx/FinancialsTec" xmlns:ns7="http://soa.estrellaroja.com.mx/CatalogsTec">
+   <partnerLinks>
+      <partnerLink name="wsCatalogsTec" partnerLinkType="ns7:wsCatalogsTec" partnerRole="CatalogsTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varGetCountryCodeRq" type="ns1:GetCountryCodeRqType"/>
+      <variable name="varGetCountryCodeRs" type="ns1:GetCountryCodeRsType"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <assign name="assigCatchAll">
+            <copy ignoreMissingFromData="yes">
+               <from>
+                  <literal>
+                     <Element/>
+                  </literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+            </copy>
+            <extensionAssignOperation>
+               <bpelx:remove>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+               </bpelx:remove>
+            </extensionAssignOperation>
+            <copy ignoreMissingFromData="yes">
+               <from>
+                  <literal>SOA-0001</literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>
+                  <literal>Unknown error</literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>ora:getComponentName()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>ora:getCompositeName()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>xp20:current-dateTime()</from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+            </copy>
+            <copy ignoreMissingFromData="yes">
+               <from>
+                  <literal>
+                     <Element/>
+                  </literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+            </copy>
+            <extensionAssignOperation>
+               <bpelx:remove>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+               </bpelx:remove>
+            </extensionAssignOperation>
+            <copy ignoreMissingFromData="yes">
+               <from>
+                  <literal>Unknown error in service integration</literal>
+               </from>
+               <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+            </copy>
+         </assign>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="sequenceMain">
+      <scope name="scopeGetCountryCode">
+         <variables>
+            <variable name="varWsGetCountryCodeRq" messageType="ns7:GetCountryCodeRq"/>
+            <variable name="varWsGetCountryCodeRs" messageType="ns7:GetCountryCodeRs"/>
+         </variables>
+         <faultHandlers>
+            <catch faultName="bpelx:timeout">
+               <assign name="assignTimeout">
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>SOA-00002</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>Exception maxed timeout</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>Exception maxed timeout</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getComponentName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getCompositeName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+            <catch faultName="bpel:selectionFailure">
+               <assign name="assignSelectionFailure">
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>SOA-00004</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>There have been exceptions when trying to select and set variables</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>There have been exceptions when trying to select and set variables</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getComponentName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getCompositeName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+            <catch faultName="bpelx:remoteFault">
+               <assign name="assignRemoteFault">
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getCompositeName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>SOA-00005</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>Exception when trying to invoke a remote service</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>Exception when trying to invoke a remote service</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getComponentName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+               </assign>
+            </catch>
+            <catch faultName="bpel:invalidVariables">
+               <assign name="assignInvalidVariables">
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>SOA-00003</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>There have been exceptions when trying set values in variables</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>There have been exceptions when trying set values in variables</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getComponentName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>ora:getCompositeName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catch>
+         </faultHandlers>
+         <sequence name="sequenceGetCountryCode">
+            <assign name="assignRq">
+               <copy>
+                  <from>$varGetCountryCodeRq/ns1:CountryName</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varWsGetCountryCodeRq.GetCountryCodeRq/ns7:CountryName</to>
+               </copy>
+            </assign>
+            <invoke name="invokeWsCatalogsTecGetCountryCode" partnerLink="wsCatalogsTec" portType="ns7:CatalogsTecPortType" operation="GetCountryCode" inputVariable="varWsGetCountryCodeRq" outputVariable="varWsGetCountryCodeRs" bpelx:invokeAsDetail="no"/>
+            <if name="IfTerritoryExists">
+               <documentation><![CDATA[Territory Exists]]></documentation>
+               <condition>string-length($varWsGetCountryCodeRs.GetCountryCodeRs/ns7:Return/ns7:Country[1]/ns7:CountryCode) > 0</condition>
+               <assign name="assignRs">
+                  <copy ignoreMissingFromData="yes">
+                     <from>$varWsGetCountryCodeRs.GetCountryCodeRs/ns7:Return/ns7:Country[1]/ns7:CountryCode</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return/ns1:CountryCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>$varWsGetCountryCodeRs.GetCountryCodeRs/ns7:Return/ns7:Country[1]/ns7:IsoCountryCode</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return/ns1:CountryISOCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                     <from>
+                        <literal>
+                           <Element/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+               <else>
+                  <documentation><![CDATA[No record in table mappgin]]></documentation>
+                  <assign name="assignError">
+                     <copy ignoreMissingFromData="yes">
+                        <from>
+                           <literal>
+                              <Element/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Success</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                     <copy ignoreMissingFromData="yes">
+                        <from>
+                           <literal>
+                              <Element/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns1:Return</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                     <copy ignoreMissingFromData="yes">
+                        <from>
+                           <literal>SOA-00010</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes">
+                        <from>
+                           <literal>No Data Found</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes">
+                        <from>concat('Unable to obtain Country code for CountryName[',$varGetCountryCodeRq/ns1:CountryName ,']')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:Description</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes">
+                        <from>ora:getComponentName()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes">
+                        <from>ora:getCompositeName()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+                     </copy>
+                     <copy ignoreMissingFromData="yes">
+                        <from>xp20:current-dateTime()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varGetCountryCodeRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+                     </copy>
+                  </assign>
+               </else>
+            </if>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

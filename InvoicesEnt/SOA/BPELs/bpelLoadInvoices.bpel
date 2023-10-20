@@ -1,0 +1,553 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Jan 24 16:58:59 CST 2018
+  Author:  EdgarCP
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="scopeBpelLoadInvoices"
+         targetNamespace="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesEnt"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns6="http://soa.estrellaroja.com.mx/FinancialBiz"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/LetterPorteBiz"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/LetterPorteBiz">
+
+    <import namespace="http://soa.estrellaroja.com.mx/StructureTrxInterface"
+            location="../Schemas/StructureTrxInterface.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelLoadInvoices" location="../WSDLs/bpelLoadInvoices.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="lLoadInvoices" partnerLinkType="client:bpelLoadInvoices" myRole="bpelLoadInvoicesProvider" partnerRole="bpelLoadInvoicesRequester"/>
+        <partnerLink name="wsERPIntegrationBiz" partnerLinkType="ns2:wsERPIntegrationBiz"
+                     partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+        <partnerLink name="wsInvoicesBiz" partnerLinkType="ns5:wsInvoicesBiz" partnerRole="InvoicesBizPortType"
+                     myRole="InvoicesBizCallbackPortType"/>
+        <partnerLink name="wsERPManagementOfLoadImportBiz" partnerLinkType="ns7:wsERPManagementOfLoadImportBiz"
+                     partnerRole="ERPManagementOfLoadImportBizPortType"/>
+        <partnerLink name="wsLetterPorteBiz" partnerLinkType="ns8:wsLetterPorteBiz" partnerRole="LetterPorteBizPort"/>
+    </partnerLinks>
+    <variables>
+        <variable name="inputVariable" messageType="client:bpelLoadInvoicesRequestMessage"/>
+        <variable name="outputVariable" messageType="client:bpelLoadInvoicesResponseMessage"/>
+        <variable name="varInvokeWsErpIntegrationBizImportErpCloudRq" messageType="ns2:ImportToERPCloudRq"/>
+        <variable name="varInvokeWsErpIntegrationBizImportErpCloudRs" messageType="ns2:ImportToERPCloudRs"/>
+        <variable name="varListWsErpIntBizImportToErpCloudRq" element="ns1:ListImportToErpCloudRq"/>
+    </variables>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="sequenceBpelLoadInvoices">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in bpelLoadInvoices.wsdl) -->
+        <receive name="receiveInput" partnerLink="lLoadInvoices" portType="client:bpelLoadInvoices"
+                 operation="LoadInvoices" variable="inputVariable" createInstance="yes"/>
+        <if name="IfInvoicesToLoad">
+            <documentation>
+                <![CDATA[Results]]>
+            </documentation>
+            <condition>count($inputVariable.LoadInvoices) &gt; 0</condition>
+            <scope name="scopeIfInvoicesToLoad">
+                <variables>
+                    <variable name="OnMessageImportToERPCloudCallbackInputVariable"
+                              messageType="ns2:ImportToERPCloudCallbackRs"/>
+                    <variable name="varParamsInterfaceControl" element="ns3:ParamsInterfaceControl"/>
+                    <variable name="varStructureInterfaceCtrl" element="ns3:DATA_INTER_CTRL"/>
+                    <variable name="varStructureInterfaceCtrlResult" element="ns3:DATA_INTER_CTRL"/>
+                    <variable name="varParamsToGetOrgId" element="ns3:ParamsToGetOrgId">
+                        <from>''</from>
+                    </variable>
+                    <variable name="varParamsToUpdateInvoices" element="ns3:ParamsToUpdateStatusInvoicesToBD">
+                        <from>''</from>
+                    </variable>
+                </variables>
+                <sequence name="sequenceIfInvoicesToLoad">
+                    <assign name="trInputToVarListWsErpIntBizImportErpCld">
+                        <bpelx:annotation>
+                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trInputToVarListWsErpIntBizImportErpCld.xsl", $inputVariable.LoadInvoices)</from>
+                            <to variable="varListWsErpIntBizImportToErpCloudRq"/>
+                        </copy>
+                    </assign>
+                    <forEach parallel="no" counterName="ForECtrImp" name="ForEachImportErpCld">
+                        <startCounterValue>1</startCounterValue>
+                        <finalCounterValue>count($varListWsErpIntBizImportToErpCloudRq/ns1:ListFile)</finalCounterValue>
+                        <scope name="scopeForEachImportErpCld">
+                            <sequence name="sequenceForEachImportErpCld">
+                                <assign name="assignParamImportErpCloud">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:TargetInterface</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:TargetInterface</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:Content</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:Content</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:FileName</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:FileName</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:ContentType</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:ContentType</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:DocumentTitle</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:DocumentTitle</to>
+                                    </copy>
+                                    <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:DocumentName</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:DocumentName</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                        <from>$varListWsErpIntBizImportToErpCloudRq/ns1:ListFile[$ForECtrImp]/ns1:DocumentId</from>
+                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsErpIntegrationBizImportErpCloudRq.ImportToERPCloudRq/ns2:File/ns2:DocumentId</to>
+                                    </copy>
+                                </assign>
+                                <assign name="trInputBpelToErpIntegrationBizImportErpCloud">
+                                    <bpelx:skipCondition>true()</bpelx:skipCondition>
+                                    <bpelx:annotation>
+                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <copy>
+                                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trInputBpelToErpIntegrationBizImportErpCloud.xsl", $inputVariable.LoadInvoices)</from>
+                                        <to variable="varInvokeWsErpIntegrationBizImportErpCloudRq"
+                                            part="ImportToERPCloudRq"/>
+                                    </copy>
+                                </assign>
+                                <invoke name="invokeErpIntegrationBizImportToErpCloud"
+                                        inputVariable="varInvokeWsErpIntegrationBizImportErpCloudRq"
+                                        outputVariable="varInvokeWsErpIntegrationBizImportErpCloudRs"
+                                        bpelx:invokeAsDetail="no" partnerLink="wsERPIntegrationBiz"
+                                        portType="ns2:ERPIntegrationBizPortType" operation="ImportToERPCloud"/>
+                                <pick name="Pick1">
+                                    <onMessage bpelx:name="pickWaitForLoadInvoices" partnerLink="wsERPIntegrationBiz"
+                                               portType="ns2:ERPIntegrationBizCallbackPortType"
+                                               operation="ImportToERPCloudCallback"
+                                               variable="OnMessageImportToERPCloudCallbackInputVariable">
+                                        <empty name="Empty4"/>
+                                    </onMessage>
+                                </pick>
+                            </sequence>
+                        </scope>
+                    </forEach>
+                    <scope name="scopeNotifyLoadInvoices">
+                        <variables>
+                            <variable name="varInvokeWsSendReportInterfaceRq" messageType="ns7:SendReportInterfaceRq"/>
+                        </variables>
+                        <sequence name="sequenceNotifyLoadInvoices">
+                            <assign name="assignParamsNotifyLoad">
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>$inputVariable.LoadInvoices/ns1:NumLines</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSendReportInterfaceRq.SendReportInterfaceRq/ns7:Files/ns7:LinesNumber</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>"InterfacceAutoInvoiceImport"</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSendReportInterfaceRq.SendReportInterfaceRq/ns7:IntegrationName</to>
+                                </copy>
+                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>dvm:lookupValue("DVMs/dvmInvoicesEnt.dvm","Code","ProcessName","Value","","Component","NotifyLoadInvoices")</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSendReportInterfaceRq.SendReportInterfaceRq/ns7:ProcessName</to>
+                                </copy>
+                                <copy>
+                                    <from>string($inputVariable.LoadInvoices/ns1:BatchId)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSendReportInterfaceRq.SendReportInterfaceRq/ns7:BatchId</to>
+                                </copy>
+                            </assign>
+                            <invoke name="invokeWsERPManagementOfLoadImportBiz"
+                                    partnerLink="wsERPManagementOfLoadImportBiz"
+                                    portType="ns7:ERPManagementOfLoadImportBizPortType"
+                                    operation="SendReportInterface" inputVariable="varInvokeWsSendReportInterfaceRq"
+                                    bpelx:invokeAsDetail="no"/>
+                            <if name="IfActivateFlowUpdUuid">
+                                <documentation>
+                                    <![CDATA[yes]]>
+                                </documentation>
+                                <condition>1 = 1</condition>
+                                <scope name="scopePickWaitForLoadInvoices">
+                                    <variables>
+                                        <variable name="varInvokeWsErpIntegrationBizGenerateReportRq"
+                                                  messageType="ns2:GenerateReportRq"/>
+                                        <variable name="varInvokeWsErpIntegrationBizGenerateReportRs"
+                                                  messageType="ns2:GenerateReportRs"/>
+                                    </variables>
+                                    <sequence name="sequencePickWaitForLoadInvoices">
+                                        <assign name="assignVarParamsRepIntCtrl">
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>"P_TYPE_INTERFACES"</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsInterfaceControl/ns3:Params[1]/ns3:Params</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>"AutoInvoiceImportTemplate"</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsInterfaceControl/ns3:Params[1]/ns3:Values</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>"P_BATCH_ID"</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsInterfaceControl/ns3:Params[2]/ns3:Params</to>
+                                            </copy>
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>$inputVariable.LoadInvoices/ns1:BatchId</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsInterfaceControl/ns3:Params[2]/ns3:Values</to>
+                                            </copy>
+                                        </assign>
+                                        <assign name="trParamsToGenerateReport">
+                                            <bpelx:annotation>
+                                                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                            </bpelx:annotation>
+                                            <copy>
+                                                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trParamsToGenerateReport.xsl", $varParamsInterfaceControl)</from>
+                                                <to variable="varInvokeWsErpIntegrationBizGenerateReportRq"
+                                                    part="GenerateReportRq"/>
+                                            </copy>
+                                        </assign>
+                                        <invoke name="invokeWsErpIntegrationBizGenerateReport" bpelx:invokeAsDetail="no"
+                                                partnerLink="wsERPIntegrationBiz"
+                                                portType="ns2:ERPIntegrationBizPortType" operation="GenerateReport"
+                                                inputVariable="varInvokeWsErpIntegrationBizGenerateReportRq"
+                                                outputVariable="varInvokeWsErpIntegrationBizGenerateReportRs"/>
+                                        <assign name="trvarInvokeWsErpIntegrationBizGenerateReportRsTovarInvokeWsErpIntegrationBizGenerateReportRs">
+                                            <bpelx:annotation>
+                                                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                            </bpelx:annotation>
+                                            <copy>
+                                                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trvarInvokeWsErpIntegrationBizGenerateReportRsTovarInvokeWsErpIntegrationBizGenerateReportRs.xsl", $varInvokeWsErpIntegrationBizGenerateReportRs.GenerateReportRs)</from>
+                                                <to variable="varInvokeWsErpIntegrationBizGenerateReportRs"
+                                                    part="GenerateReportRs"/>
+                                            </copy>
+                                        </assign>
+                                        <assign name="assignDataInterfaceCtrl">
+                                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                <from>oraext:parseXML($varInvokeWsErpIntegrationBizGenerateReportRs.GenerateReportRs/ns2:Return/ns2:xmlOut)</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStructureInterfaceCtrl</to>
+                                            </copy>
+                                        </assign>
+                                        <assign name="trStructureInterfaceCtrlToStructureInterfaceCtrlResult">
+                                            <bpelx:annotation>
+                                                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                            </bpelx:annotation>
+                                            <copy>
+                                                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trStructureInterfaceCtrlToStructureInterfaceCtrlResult.xsl", $varStructureInterfaceCtrl)</from>
+                                                <to variable="varStructureInterfaceCtrlResult"/>
+                                            </copy>
+                                        </assign>
+                                        <if name="IfResultsDm">
+                                            <documentation>
+                                                <![CDATA[Results]]>
+                                            </documentation>
+                                            <condition>count($varStructureInterfaceCtrlResult/ns3:G_HEADER) &gt; 0</condition>
+                                            <scope name="scopeIfResultsDm">
+                                                <variables>
+                                                    <variable name="varInvokeWsInvoicesBizGetComplementToUpInvoicesRq"
+                                                              messageType="ns5:GetComplementToUpdInvoicesRq"/>
+                                                    <variable name="varInvokeWsInvoicesBizGetComplementToUpInvoicesRs"
+                                                              messageType="ns5:GetComplementToUpdInvoicesRs"/>
+                                                    <variable name="varInvokeWsInvoicesBizUpdateUuIdRq"
+                                                              messageType="ns5:UpdateUuidRq"/>
+                                                    <variable name="varInvokeWsInvoicesBizUpdateUuIdRs"
+                                                              messageType="ns5:UpdateUuidRs"/>
+                                                    <variable name="varTrxNumberOrgIdAndUuId"
+                                                              element="ns3:ParamsToUpdateUuid">
+                                                        <from>''</from>
+                                                    </variable>
+                                                    <variable name="varParamsToGenerateReportCustTrxId"
+                                                              element="ns3:ParamsToGenerateReport">
+                                                        <from>''</from>
+                                                    </variable>
+                                                    <variable name="varInvokeWsInvoicesBizUpdateStatusInvoicesRq"
+                                                              messageType="ns5:UpdateStatusInvoicesRq"/>
+                                                    <variable name="varInvokeWsInvoicesBizUpdateStatusInvoicesRs"
+                                                              messageType="ns5:UpdateStatusInvoicesRs"/>
+                                                    <variable name="wsLetterPorteBizGenerateURLRelationCFDIsRq"
+                                                              messageType="ns8:GenerateURLRelationCFDIsRqMessage"/>
+                                                </variables>
+                                                <sequence name="sequenceIfResultsDm">
+                                                    <assign name="trResultLoadInvoicesToparamsToUpdStatusInvoices">
+                                                        <bpelx:annotation>
+                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                        </bpelx:annotation>
+                                                        <copy>
+                                                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trResultLoadInvoicesToparamsToUpdStatusInvoices.xsl", $varStructureInterfaceCtrlResult)</from>
+                                                            <to variable="varParamsToUpdateInvoices"/>
+                                                        </copy>
+                                                    </assign>
+                                                    <assign name="trParamsToUpdStatusInvToWsInvoicesBizUpdStatusInvRq">
+                                                        <bpelx:annotation>
+                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                        </bpelx:annotation>
+                                                        <copy>
+                                                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trParamsToUpdStatusInvToWsInvoicesBizUpdStatusInvRq.xsl", $varParamsToUpdateInvoices)</from>
+                                                            <to variable="varInvokeWsInvoicesBizUpdateStatusInvoicesRq"
+                                                                part="UpdateStatusInvoicesRqPart"/>
+                                                        </copy>
+                                                    </assign>
+                                                    <assign name="trStructureInterCtrlToParamsToGetOrgId">
+                                                        <bpelx:annotation>
+                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                        </bpelx:annotation>
+                                                        <copy>
+                                                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trStructureInterCtrlToParamsToGetOrgId.xsl", $varStructureInterfaceCtrlResult)</from>
+                                                            <to variable="varParamsToGetOrgId"/>
+                                                        </copy>
+                                                    </assign>
+                                                    <assign name="trParamsForOrgIdToInvoicesBizGetComplementToUpdateInvoices">
+                                                        <bpelx:annotation>
+                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                        </bpelx:annotation>
+                                                        <copy>
+                                                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trParamsForOrgIdToInvoicesBizGetComplementToUpdateInvoices_2.xsl", $varParamsToGetOrgId)</from>
+                                                            <to variable="varInvokeWsInvoicesBizGetComplementToUpInvoicesRq"
+                                                                part="GetComplementToUpdInvoicesRqPart"/>
+                                                        </copy>
+                                                    </assign>
+                                                    <assign name="AssignLetterPorteBiz">
+                                                        <copy ignoreMissingFromData="yes"
+                                                              bpelx:insertMissingToData="yes">
+                                                            <from>oraext:create-delimited-string($varInvokeWsInvoicesBizGetComplementToUpInvoicesRq.GetComplementToUpdInvoicesRqPart/ns5:GetComplementInvoiceList/ns5:TRX_NUMBER,',')</from>
+                                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsLetterPorteBizGenerateURLRelationCFDIsRq.payload/ns8:Transactions/ns8:TransactionNumber</to>
+                                                        </copy>
+                                                    </assign>
+                                                    <invoke name="wsLetterPorteBiz"
+                                                            partnerLink="wsLetterPorteBiz"
+                                                            portType="ns8:LetterPorteBizPort"
+                                                            operation="GenerateURLRelationCFDIs"
+                                                            inputVariable="wsLetterPorteBizGenerateURLRelationCFDIsRq"
+                                                            bpelx:invokeAsDetail="no"/>
+                                                    <invoke name="invokeInvoicesBizGetComplementToUpdInvoices"
+                                                            partnerLink="wsInvoicesBiz"
+                                                            portType="ns5:InvoicesBizPortType"
+                                                            operation="GetComplementToUpdInvoices"
+                                                            inputVariable="varInvokeWsInvoicesBizGetComplementToUpInvoicesRq"
+                                                            outputVariable="varInvokeWsInvoicesBizGetComplementToUpInvoicesRs"
+                                                            bpelx:invokeAsDetail="no"/>
+                                                    <assign name="trGetComplementToUpdInvToParamsTrxNumAndOrgId">
+                                                        <bpelx:annotation>
+                                                            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                        </bpelx:annotation>
+                                                        <copy>
+                                                            <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trGetComplementToUpdInvToParamsTrxNumAndOrgId.xsl", $varInvokeWsInvoicesBizGetComplementToUpInvoicesRs.GetComplementToUpdInvoicesRsPart)</from>
+                                                            <to variable="varTrxNumberOrgIdAndUuId"/>
+                                                        </copy>
+                                                    </assign>
+                                                    <invoke name="invokeWsInvoicesBizUpdateStatusInvoices"
+                                                            partnerLink="wsInvoicesBiz"
+                                                            portType="ns5:InvoicesBizPortType"
+                                                            operation="UpdateStatusInvoices"
+                                                            inputVariable="varInvokeWsInvoicesBizUpdateStatusInvoicesRq"
+                                                            outputVariable="varInvokeWsInvoicesBizUpdateStatusInvoicesRs"
+                                                            bpelx:invokeAsDetail="no"/>
+                                                    <if name="IfInvoicesToUpdUuId">
+                                                        <documentation>
+                                                            <![CDATA[Results]]>
+                                                        </documentation>
+                                                        <condition>count($varTrxNumberOrgIdAndUuId/ns3:Params) &gt; 0</condition>
+                                                        <sequence name="Sequence2">
+                                                            <scope name="scopeIfInvoicesToUpdUuId">
+                                                                <variables>
+                                                                    <variable name="varInvokeWsInvoicesBizUpdateUuIdRq"
+                                                                              messageType="ns5:UpdateUuidRq"/>
+                                                                    <variable name="varInvokeWsInvoicesBizUpdateUuIdRs"
+                                                                              messageType="ns5:UpdateUuidRs"/>
+                                                                    <variable name="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRq"
+                                                                              messageType="ns2:GenerateReportRq"/>
+                                                                    <variable name="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRs"
+                                                                              messageType="ns2:GenerateReportRs"/>
+                                                                </variables>
+                                                                <sequence name="sequenceIfInvoicesToUpdUuId">
+                                                                    <forEach parallel="no" counterName="ForEachCounter"
+                                                                             name="ForEachGetTrxCustId">
+                                                                        <startCounterValue>1</startCounterValue>
+                                                                        <finalCounterValue>count($varTrxNumberOrgIdAndUuId/ns3:Params)</finalCounterValue>
+                                                                        <scope name="scopeForEachGetTrxCustId">
+                                                                            <variables>
+                                                                                <variable name="varStructureCusTrxId"
+                                                                                          element="ns3:DATA_CUSTTRXID_DS"/>
+                                                                                <variable name="varStructureCusTrxIdResult"
+                                                                                          element="ns3:DATA_CUSTTRXID_DS"/>
+                                                                            </variables>
+                                                                            <sequence name="sequenceForEachGetTrxCustId">
+                                                                                <assign name="assignParamsToGenerateReportCustTrxId">
+                                                                                    <copy ignoreMissingFromData="yes"
+                                                                                          bpelx:insertMissingToData="yes">
+                                                                                        <from>"P_ORG_ID"</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsToGenerateReportCustTrxId/ns3:Params[1]/ns3:Params</to>
+                                                                                    </copy>
+                                                                                    <copy bpelx:insertMissingToData="yes"
+                                                                                          ignoreMissingFromData="yes">
+                                                                                        <from>"P_TRX_NUMBER"</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsToGenerateReportCustTrxId/ns3:Params[2]/ns3:Params</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes"
+                                                                                          bpelx:insertMissingToData="yes">
+                                                                                        <from>$varTrxNumberOrgIdAndUuId/ns3:Params[$ForEachCounter]/ns3:OrgId</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsToGenerateReportCustTrxId/ns3:Params[1]/ns3:Values</to>
+                                                                                    </copy>
+                                                                                    <copy ignoreMissingFromData="yes"
+                                                                                          bpelx:insertMissingToData="yes">
+                                                                                        <from>$varTrxNumberOrgIdAndUuId/ns3:Params[$ForEachCounter]/ns3:TrxNumber</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varParamsToGenerateReportCustTrxId/ns3:Params[2]/ns3:Values</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <assign name="trParamsOrgIdAndTrxNumToGenerateReportCustTrxId">
+                                                                                    <bpelx:annotation>
+                                                                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                                    </bpelx:annotation>
+                                                                                    <copy>
+                                                                                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trParamsOrgIdAndTrxNumToGenerateReportCustTrxId.xsl", $varParamsToGenerateReportCustTrxId)</from>
+                                                                                        <to variable="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRq"
+                                                                                            part="GenerateReportRq"/>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <invoke name="invokeWsErpIntegrationBizGenerateReportCustTrxId"
+                                                                                        bpelx:invokeAsDetail="no"
+                                                                                        partnerLink="wsERPIntegrationBiz"
+                                                                                        portType="ns2:ERPIntegrationBizPortType"
+                                                                                        operation="GenerateReport"
+                                                                                        inputVariable="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRq"
+                                                                                        outputVariable="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRs"/>
+                                                                                <assign name="trErpIntegrationBizGenRepCustTrxIdRsToErpIntegrationBizGenRepCustTrxIdRs">
+                                                                                    <bpelx:annotation>
+                                                                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                                    </bpelx:annotation>
+                                                                                    <copy>
+                                                                                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trErpIntegrationBizGenRepCustTrxIdRsToErpIntegrationBizGenRepCustTrxIdRs.xsl", $varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRs.GenerateReportRs)</from>
+                                                                                        <to variable="varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRs"
+                                                                                            part="GenerateReportRs"/>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <assign name="assignStructureCustTrxId">
+                                                                                    <copy ignoreMissingFromData="yes"
+                                                                                          bpelx:insertMissingToData="yes">
+                                                                                        <from>oraext:parseXML($varInvokeWsErpIntegrationBizGenerateReportCustTrxIdRs.GenerateReportRs/ns2:Return/ns2:xmlOut)</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varStructureCusTrxId</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <assign name="trStructureCustTrxIdToStructureCustTrxIdResult">
+                                                                                    <bpelx:annotation>
+                                                                                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                                    </bpelx:annotation>
+                                                                                    <copy>
+                                                                                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trStructureCustTrxIdToStructureCustTrxIdResult.xsl", $varStructureCusTrxId)</from>
+                                                                                        <to variable="varStructureCusTrxIdResult"/>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                                <assign name="assignCustTrxIdToParmsUpdUuId">
+                                                                                    <copy ignoreMissingFromData="yes"
+                                                                                          bpelx:insertMissingToData="yes">
+                                                                                        <from>$varStructureCusTrxIdResult/ns3:G_CUST_TRX_ID/ns3:CUSTOMER_TRX_ID</from>
+                                                                                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varTrxNumberOrgIdAndUuId/ns3:Params[$ForEachCounter]/ns3:CUSTOMER_TRX_ID</to>
+                                                                                    </copy>
+                                                                                </assign>
+                                                                            </sequence>
+                                                                        </scope>
+                                                                    </forEach>
+                                                                    <empty name="Empty6"/>
+                                                                </sequence>
+                                                            </scope>
+                                                            <assign name="trParamsToUpdUuIdToInvoicesBizUpdateUuIdRq">
+                                                                <bpelx:annotation>
+                                                                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                                                </bpelx:annotation>
+                                                                <copy>
+                                                                    <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trParamsToUpdUuIdToInvoicesBizUpdateUuIdRq.xsl", $varTrxNumberOrgIdAndUuId)</from>
+                                                                    <to variable="varInvokeWsInvoicesBizUpdateUuIdRq"
+                                                                        part="UpdateUuidRqPart"/>
+                                                                </copy>
+                                                            </assign>
+                                                            <invoke name="invokeInvoicesBizUpdateUuid"
+                                                                    partnerLink="wsInvoicesBiz"
+                                                                    portType="ns5:InvoicesBizPortType"
+                                                                    operation="UpdateUuid"
+                                                                    inputVariable="varInvokeWsInvoicesBizUpdateUuIdRq"
+                                                                    outputVariable="varInvokeWsInvoicesBizUpdateUuIdRs"
+                                                                    bpelx:invokeAsDetail="no"/>
+                                                        </sequence>
+                                                        <else>
+                                                            <documentation>
+                                                                <![CDATA[No Results]]>
+                                                            </documentation>
+                                                            <empty name="Empty5"/>
+                                                        </else>
+                                                    </if>
+                                                </sequence>
+                                            </scope>
+                                            <else>
+                                                <documentation>
+                                                    <![CDATA[No Results]]>
+                                                </documentation>
+                                                <empty name="Empty2"/>
+                                            </else>
+                                        </if>
+                                    </sequence>
+                                </scope>
+                                <else>
+                                    <documentation>
+                                        <![CDATA[no]]>
+                                    </documentation>
+                                    <empty name="Empty7"/>
+                                </else>
+                            </if>
+                        </sequence>
+                    </scope>
+                </sequence>
+            </scope>
+            <else>
+                <documentation>
+                    <![CDATA[No Results]]>
+                </documentation>
+                <empty name="Empty1"/>
+            </else>
+        </if>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="lLoadInvoices" portType="client:bpelLoadInvoicesCallback"
+                operation="LoadInvoicesResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>

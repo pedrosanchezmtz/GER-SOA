@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="InvoicesBiz"
+     targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/InvoicesBiz"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsInvoicesBiz">
+        <plnk:role name="InvoicesBizPortType" portType="tns:InvoicesBizPortType"/>
+        <plnk:role name="InvoicesBizCallbackPortType" portType="tns:InvoicesBizCallbackPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" location="oramds:/apps/SOA/InvoicesBiz/InvoicesBiz.wsdl"/>
+</wsdl:definitions>

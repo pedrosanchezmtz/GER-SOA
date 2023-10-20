@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersTecBS" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersTecBS" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="XxerEamWorkOrdersFsTblCollection" type="XxerEamWorkOrdersFsTblCollection"/>
+   <xs:complexType name="XxerEamWorkOrdersFsTblCollection">
+      <xs:sequence>
+         <xs:element name="XxerEamWorkOrdersFsTbl" type="XxerEamWorkOrdersFsTbl" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="XxerEamWorkOrdersFsTbl">
+      <xs:sequence>
+         <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="rowId" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="objectVersionNumber" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="organizationId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="organizationName" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderNumber" type="string40" nillable="true"/>
+         <xs:element name="workOrderDescription" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="workMethodId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workMethodCode" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderType" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderSubType" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="inventoryItemId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="itemRevision" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="transformFromItemId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workDefinitionAsOfDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="workDefinitionId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workDefinitionVersionId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderPriority" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderStatusId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="userStatusCode" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="systemStatusCode" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="workCostClas" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderStatusName" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="workOrderStatusDesc" type="string200" minOccurs="0" nillable="true"/>
+         <xs:element name="itemNumber" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="assetNumber" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="serialNumber" type="string60" minOccurs="0" nillable="true"/>
+         <xs:element name="schedulingMethod" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="plannedStartQuantity" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="nettableSupplyQtyOverride" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="uomCode" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="firmPlannedFlag" type="string1" minOccurs="0" nillable="true"/>
+         <xs:element name="plannedStartDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="plannedCompletionDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="actualStartDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="actualCompletionDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="releasedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="closedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="canceledDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="canceledReason" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="statusChangeReason" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="createdBy" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="createdByUser" type="string80" minOccurs="0" nillable="true"/>
+         <xs:element name="creationDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="lastUpdatedBy" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="lastUpdateDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="lastUpdateLogin" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeCategory" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeChar1" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeChar2" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeChar3" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeChar4" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="attributeChar5" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="runId" type="xs:decimal" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="EAMWorkOrdersTecBSSelect_workOrderNumberInputParameters" type="EAMWorkOrdersTecBSSelect_workOrderNumber"/>
+   <xs:complexType name="EAMWorkOrdersTecBSSelect_workOrderNumber">
+      <xs:sequence>
+         <xs:element name="workOrderNumber" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string100">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="100"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string40">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="40"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string200">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="200"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string60">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="60"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string20">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="20"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string1">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="1"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string80">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="80"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

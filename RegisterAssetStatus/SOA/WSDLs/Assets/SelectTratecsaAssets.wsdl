@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SelectTratecsaAssets" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaAssets" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaAssets" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaAssets" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="SelectTratecsaAssets_plt">
+      <plt:role name="SelectTratecsaAssets_role">
+         <plt:portType name="tns:SelectTratecsaAssets_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaAssets" schemaLocation="../../Schemas/Assets/SelectTratecsaAssets.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SelectTratecsaAssetsInput_msg">
+      <wsdl:part name="SelectTratecsaAssetsInput_msg" element="db:SelectTratecsaAssetsInput"/>
+   </wsdl:message>
+   <wsdl:message name="SelectTratecsaAssetsOutputCollection_msg">
+      <wsdl:part name="SelectTratecsaAssetsOutputCollection" element="db:SelectTratecsaAssetsOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="SelectTratecsaAssets_ptt">
+      <wsdl:operation name="SelectTratecsaAssets">
+         <wsdl:input message="tns:SelectTratecsaAssetsInput_msg"/>
+         <wsdl:output message="tns:SelectTratecsaAssetsOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<adapter-config name="ftpServiceReaderFileSantander" adapter="ftp" wsdlLocation="../WSDLs/ftpServiceReaderFileSantander.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+   <connection-factory UIincludeWildcard="*.TXT" location="eis/Ftp/erSOA"/>
+   <endpoint-activation portType="Get_ptt" operation="Get">
+      <activation-spec className="oracle.tip.adapter.ftp.inbound.FTPActivationSpec">
+         <property name="PhysicalDirectory" value="/SOA/er.soa/incoming/PROD/SANTANDER"/>
+         <property name="FileType" value="ascii"/>
+         <property name="UseHeaders" value="false"/>
+         <property name="MinimumAge" value="0"/>
+         <property name="Recursive" value="false"/>
+         <property name="PollingFrequency" value="60"/>
+         <property name="DeleteFile" value="true"/>
+         <property name="IncludeFiles" value=".*\.TXT"/>
+      </activation-spec>
+   </endpoint-activation>
+</adapter-config>

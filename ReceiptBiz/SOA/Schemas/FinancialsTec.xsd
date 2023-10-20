@@ -1,0 +1,907 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://soa.estrellaroja.com.mx/FinancialsTec" targetNamespace="http://soa.estrellaroja.com.mx/FinancialsTec" elementFormDefault="qualified" xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <xsd:import schemaLocation="Commons/EstrellaRojaCommons.xsd" namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+   <xsd:element name="GetCustomersRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetCustomersRs" type="tns:GetCustomersRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetCustomerSitesRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="PSiteSrc" type="xsd:string"/>
+            <xsd:element name="PCustomerId" type="xsd:long"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetCustomerSitesRs" type="tns:GetCustomerSitesRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateCustomerSitesRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="CustomerSite" type="tns:CustomerSiteType" minOccurs="1" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="UpdateCustomerSitesRs" type="tns:UpdateCustomerSitesRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateCustomersRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Customer" type="tns:CustomerType" minOccurs="1" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="UpdateCustomersRs" type="tns:UpdateCustomersRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateInventoryTransactionsRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="InventoryTransaction" type="tns:InventoryTransactionType" minOccurs="1" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="UpdateInventoryTransactionsRs" type="tns:UpdateInventoryTransactionRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetInventoryTransactionsRq">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetInventoryTransactionsRs" type="tns:GetInventoryTransactionsRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetJournalTMSRq" type="tns:GetJournalRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetJournalTMSRs" type="tns:GetJournalRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetJournalNERq" type="tns:GetJournalRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetJournalNERs" type="tns:GetJournalRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateJournalTMSRq" type="tns:GetJournalRqType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Request GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="UpdateJournalTMSRs" type="tns:UpdateJournalTMSRsType">
+      <xsd:annotation>
+         <xsd:documentation>Element for Response GetJournal.</xsd:documentation>
+      </xsd:annotation>
+   </xsd:element>
+   <xsd:element name="GetCustomerRFCRq" type="tns:GetCustomerRFCRqType"/>
+   <xsd:element name="GetCustomerRFCRs" type="tns:GetCustomerRFCRsType"/>
+   <xsd:element name="GetJournalRs" type="tns:GetJournalRsType"/>
+   <xsd:element name="GetReceiptOrInvoicesRq" type="tns:GetReceiptOrInvoicesRqType"/>
+   <xsd:element name="GetReceiptOrInvoicesRs" type="tns:GetReceiptOrInvoicesRsType"/>
+   <xsd:element name="ProcessedReceiptRq" type="tns:ProcessedReceiptRqType"/>
+   <xsd:element name="ProcessedReceiptRs" type="tns:ProcessedReceiptRsType"/>
+   <xsd:element name="UpdateStatusInvoicesRq" type="tns:UpdateStatusInvoicesRqType"/>
+   <xsd:element name="UpdateStatusInvoicesRs" type="tns:UpdateStatusInvoicesRsType"/>
+   <xsd:element name="ProcessedApplyReceiptRq" type="tns:ProcessedApplyReceiptRqType"/>
+   <xsd:element name="ProcessedApplyReceiptRs" type="tns:ProcessedApplyReceiptRsType"/>
+   <xsd:complexType name="GetCustomerRFCRqType">
+      <xsd:sequence>
+         <xsd:element name="pTipoDocumento" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomerRFCRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GetCustomerRFCReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomerRFCReturnType">
+      <xsd:sequence>
+         <xsd:element name="RFC" maxOccurs="unbounded" minOccurs="0" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetReceiptOrInvoicesReturnType">
+      <xsd:sequence>
+         <xsd:element name="Receipt" type="tns:ARReceiptType" minOccurs="0" nillable="true"/>
+         <xsd:element name="Invoices" type="tns:InvoicesTBType" minOccurs="0" nillable="true"/>
+         <xsd:element name="Error" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="ErrorDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetReceiptOrInvoicesRqType">
+      <xsd:sequence>
+         <xsd:element name="Module" type="xsd:string"/>
+         <xsd:element name="Informations" type="tns:InformationsType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetReceiptOrInvoicesRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:GetReceiptOrInvoicesReturnType" minOccurs="0"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="InformationsType">
+      <xsd:sequence>
+         <xsd:element name="Information" minOccurs="1" maxOccurs="unbounded" type="tns:InformationType"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InformationType">
+      <xsd:sequence>
+         <xsd:element name="RFC" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="AccountNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CustAccount" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="CustAccountSiteId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartySiteNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="SiteUseId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="SiteUseCode" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PrimaryFlag" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="Location" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="LocationId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="PaymentTerms" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OrgId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="BuName" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomersRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetCustomersReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateCustomersRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateInventoryTransactionRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetInventoryTransactionsRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetInventoryTransactionsReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomersReturnType">
+      <xsd:sequence>
+         <xsd:element name="Customer" type="tns:CustomerType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerType">
+      <xsd:sequence>
+         <xsd:element name="CustomerId" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Name" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="LastName" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1"/>
+         <xsd:choice minOccurs="1" maxOccurs="1">
+            <xsd:element name="FiscalCode" type="xsd:string" nillable="true"/>
+            <xsd:element name="DunsNumber" type="xsd:string" nillable="true"/>
+         </xsd:choice>
+         <xsd:element name="AccountName" type="xsd:string" nillable="true"/>
+         <xsd:element name="CustomerType" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="AccountId" type="xsd:long" minOccurs="0" nillable="true"/>
+         <xsd:element name="replicationInd" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="replicationMsg" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetInventoryTransactionsReturnType">
+      <xsd:sequence>
+         <xsd:element name="InventoryTransaction" type="tns:InventoryTransactionType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InventoryTransactionType">
+      <xsd:sequence>
+         <xsd:element name="OrganizationName" type="xsd:string" nillable="true"/>
+         <xsd:element name="TransactionDate" type="xsd:dateTime" nillable="true"/>
+         <xsd:element name="TransactionTypeName" type="xsd:string" nillable="true"/>
+         <xsd:element name="SourceCode" type="xsd:string" nillable="true"/>
+         <xsd:element name="SourceHeaderId" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="SourceLineId" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="TransactionSourceName" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment1" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment2" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment3" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment4" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment5" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment6" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment7" type="xsd:string" nillable="true"/>
+         <xsd:element name="DspSegment8" type="xsd:string" nillable="true"/>
+         <xsd:element name="ProcessFlag" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="ItemNumber" type="xsd:string" nillable="true"/>
+         <xsd:element name="SubinvetoryCode" type="xsd:string" nillable="true"/>
+         <xsd:element name="LocatorName" type="xsd:string" nillable="true"/>
+         <xsd:element name="TransactionQuantity" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="TransactionUom" type="xsd:string" nillable="true"/>
+         <xsd:element name="TransactionUnitOfMeasure" type="xsd:string" nillable="true"/>
+         <xsd:element name="TransactionSourceTypeName" type="xsd:string" nillable="true"/>
+         <xsd:element name="TransactionMode" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="Attribute1" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute2" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute3" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute4" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute5" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute6" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute7" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute8" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute9" type="xsd:string" nillable="true"/>
+         <xsd:element name="Attribute10" type="xsd:string" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetJournalRqType">
+      <xsd:sequence>
+         <xsd:element name="Status" type="xsd:string"/>
+         <xsd:element name="Source" type="xsd:string"/>
+         <xsd:element name="BatchId" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetJournalRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetJournalReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateJournalTMSRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="GetJournalReturnType">
+      <xsd:sequence>
+         <xsd:element name="Journals" type="tns:JournalType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="JournalType">
+      <xsd:sequence>
+         <xsd:element name="StatusCode" type="xsd:string"/>
+         <xsd:element name="LedgerID" type="xsd:string"/>
+         <xsd:element name="EffectiveDateOfTransaction" type="xsd:string"/>
+         <xsd:element name="JournalSource" type="xsd:string"/>
+         <xsd:element name="JournalCategory" type="xsd:string"/>
+         <xsd:element name="CurrencyCode" type="xsd:string"/>
+         <xsd:element name="JournalEntryCreationDate" type="xsd:string"/>
+         <xsd:element name="ActualFlag" type="xsd:string"/>
+         <xsd:element name="Segment1" type="xsd:string"/>
+         <xsd:element name="Segment2" type="xsd:string"/>
+         <xsd:element name="Segment3" type="xsd:string"/>
+         <xsd:element name="Segment4" type="xsd:string"/>
+         <xsd:element name="Segment5" type="xsd:string"/>
+         <xsd:element name="Segment6" type="xsd:string"/>
+         <xsd:element name="Segment7" type="xsd:string"/>
+         <xsd:element name="Segment8" type="xsd:string"/>
+         <xsd:element name="Segment9" type="xsd:string"/>
+         <xsd:element name="Segment10" type="xsd:string"/>
+         <xsd:element name="Segment11" type="xsd:string"/>
+         <xsd:element name="Segment12" type="xsd:string"/>
+         <xsd:element name="Segment13" type="xsd:string"/>
+         <xsd:element name="Segment14" type="xsd:string"/>
+         <xsd:element name="Segment15" type="xsd:string"/>
+         <xsd:element name="Segment16" type="xsd:string"/>
+         <xsd:element name="Segment17" type="xsd:string"/>
+         <xsd:element name="Segment18" type="xsd:string"/>
+         <xsd:element name="Segment19" type="xsd:string"/>
+         <xsd:element name="Segment20" type="xsd:string"/>
+         <xsd:element name="Segment21" type="xsd:string"/>
+         <xsd:element name="Segment22" type="xsd:string"/>
+         <xsd:element name="Segment23" type="xsd:string"/>
+         <xsd:element name="Segment24" type="xsd:string"/>
+         <xsd:element name="Segment25" type="xsd:string"/>
+         <xsd:element name="Segment26" type="xsd:string"/>
+         <xsd:element name="Segment27" type="xsd:string"/>
+         <xsd:element name="Segment28" type="xsd:string"/>
+         <xsd:element name="Segment29" type="xsd:string"/>
+         <xsd:element name="Segment30" type="xsd:string"/>
+         <xsd:element name="EnteredDebitAmount" type="xsd:string"/>
+         <xsd:element name="EnteredCreditAmount" type="xsd:string"/>
+         <xsd:element name="ConvertedDebitAmount" type="xsd:string"/>
+         <xsd:element name="ConvertedCreditAmount" type="xsd:string"/>
+         <xsd:element name="REFERENCE1BatchName" type="xsd:string"/>
+         <xsd:element name="REFERENCE2BatchDescription" type="xsd:string"/>
+         <xsd:element name="REFERENCE3" type="xsd:string"/>
+         <xsd:element name="REFERENCE4JournalEntryName" type="xsd:string"/>
+         <xsd:element name="REFERENCE5JournalEntryDescription" type="xsd:string"/>
+         <xsd:element name="REFERENCE6JournalEntryReference" type="xsd:string"/>
+         <xsd:element name="REFERENCE7JournalEntryReversalflag" type="xsd:string"/>
+         <xsd:element name="REFERENCE8JournalEntryReversalPeriod" type="xsd:string"/>
+         <xsd:element name="REFERENCE9JournalReversalMethod" type="xsd:string"/>
+         <xsd:element name="REFERENCE10JournalEntryLineDescription" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn1" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn2" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn3" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn4" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn5" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn6" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn7" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn8" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn9" type="xsd:string"/>
+         <xsd:element name="ReferenceColumn10" type="xsd:string"/>
+         <xsd:element name="StatisticalAmount" type="xsd:string"/>
+         <xsd:element name="CurrencyConversionType" type="xsd:string"/>
+         <xsd:element name="CurrencyConversionDate" type="xsd:string"/>
+         <xsd:element name="CurrencyConversionRate" type="xsd:string"/>
+         <xsd:element name="InterfaceGroupIdentifier" type="xsd:string"/>
+         <xsd:element name="ContextFieldForJournalEntryLineDFF" type="xsd:string"/>
+         <xsd:element name="ATTRIBUTE1" type="xsd:string"/>
+         <xsd:element name="ATTRIBUTE2" type="xsd:string"/>
+         <xsd:element name="Attribute3" type="xsd:string"/>
+         <xsd:element name="Attribute4" type="xsd:string"/>
+         <xsd:element name="Attribute5" type="xsd:string"/>
+         <xsd:element name="Attribute6" type="xsd:string"/>
+         <xsd:element name="Attribute7" type="xsd:string"/>
+         <xsd:element name="Attribute8" type="xsd:string"/>
+         <xsd:element name="Attribute9" type="xsd:string"/>
+         <xsd:element name="Attribute10" type="xsd:string"/>
+         <xsd:element name="Attribute11" type="xsd:string"/>
+         <xsd:element name="Attribute12" type="xsd:string"/>
+         <xsd:element name="Attribute13" type="xsd:string"/>
+         <xsd:element name="Attribute14" type="xsd:string"/>
+         <xsd:element name="Attribute15" type="xsd:string"/>
+         <xsd:element name="Attribute16" type="xsd:string"/>
+         <xsd:element name="Attribute17" type="xsd:string"/>
+         <xsd:element name="Attribute18" type="xsd:string"/>
+         <xsd:element name="Attribute19" type="xsd:string"/>
+         <xsd:element name="Attribute20" type="xsd:string"/>
+         <xsd:element name="ContextFieldForCapturedInformationDFF" type="xsd:string"/>
+         <xsd:element name="AverageJournalFlag" type="xsd:string"/>
+         <xsd:element name="ClearingCompany" type="xsd:string"/>
+         <xsd:element name="LedgerName" type="xsd:string"/>
+         <xsd:element name="EncumbranceTypeID" type="xsd:string"/>
+         <xsd:element name="ReconciliationReference" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomerSitesRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="Return" minOccurs="0" type="tns:GetCustomerSitesReturnType" maxOccurs="1"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateCustomerSitesRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:annotation>
+               <xsd:documentation>Extends BaseRsType (Success and Errors nodes). Contains a node which should be used for the specific response of the corresponding service.</xsd:documentation>
+            </xsd:annotation>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="CustomerSiteType">
+      <xsd:sequence>
+         <xsd:element name="CustomerSiteId" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="CustomerId" type="xsd:decimal" nillable="true"/>
+         <xsd:element name="StreetName" type="xsd:string" nillable="true"/>
+         <xsd:element name="ExternalNumber" type="xsd:string" nillable="true"/>
+         <xsd:element name="InternalNumber" type="xsd:string" nillable="true"/>
+         <xsd:element name="PostalCode" type="xsd:string" nillable="true"/>
+         <xsd:element name="Province" type="xsd:string" nillable="true"/>
+         <xsd:element name="City" type="xsd:string" nillable="true"/>
+         <xsd:element name="State" type="xsd:string" nillable="true"/>
+         <xsd:element name="Country" type="xsd:string" nillable="true"/>
+         <xsd:element name="SiteName" type="xsd:string" nillable="true"/>
+         <xsd:element name="SiteDescription" type="xsd:string" nillable="true"/>
+         <xsd:element name="SiteUse" type="xsd:string" nillable="true"/>
+         <xsd:element name="CreatedDate" type="xsd:dateTime" nillable="true"/>
+         <xsd:element name="SourceTable" type="xsd:string" nillable="true"/>
+         <xsd:element name="siteId" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="replicationInd" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="replicationMsg" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="AccountAddressSet" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="GetCustomerSitesReturnType">
+      <xsd:sequence>
+         <xsd:element name="CustomerSite" type="tns:CustomerSiteType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ARReceiptType">
+      <xsd:sequence>
+         <xsd:element name="RFC" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="Amount" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="SiteUseId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="DepositDate" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+         <xsd:element name="CustAccountId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="ReceiptDate" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+         <xsd:element name="ReceiptMethodId" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="ReceiptNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CashReceiptId" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="OrganizationId" type="xsd:decimal"/>
+         <xsd:element name="TablaPuenteId" type="xsd:decimal"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ARReceiptsType">
+      <xsd:sequence>
+         <xsd:element name="ARReceipt" type="tns:ARReceiptType" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InvoicesTBType">
+      <xsd:sequence>
+         <xsd:element name="Invoice" type="tns:InvoiceType" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="InvoiceType">
+      <xsd:sequence>
+         <xsd:element name="RFC" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="BusinessUnitName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionBatchSourceName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionTypeName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PaymentTerms" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionDate" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+         <xsd:element name="AccountingDate" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemBillToCustomerRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemBillToCustomerAddressRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemBillToCustomerContactRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerAddressRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerContactRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerAccountRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerAccountAddressRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemShipToCustomerAccountContactRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemSoldToCustomerRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="OriginalSystemSoldToCustomerAccountRef" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="BillToCustomerAccountNumber" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="BillToCustomerSiteNumber" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="BillToContactPartyNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ShipToCustomerAccountNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ShipToCustomerSiteNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ShipToContactPartyNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SoldToCustomerAccountNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TransactionLineType" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TransactionLineDescription" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CurrencyCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="CurrencyConversionType" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CurrencyConversionDate" type="xsd:dateTime" minOccurs="0" nillable="true"/>
+         <xsd:element name="CurrencyConversionRate" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionLineAmount" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="TransactionLineQuantity" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="CustomerOrderedQuantity" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="UnitSellingPrice" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="UnitStandarPrice" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="LineTransactionsFlexfiledContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineTransactionsFlexfiledSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PrimarySalesPersonNumber" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="TaxCassificationCode" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="LegalEntityIdentifier" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="AccountedAmountInLedgerCurrency" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SalesOrderNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SalesOrderDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ActualShipDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="WarehouseCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="UnitOfMeasureCode" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="UnitOfMeasureName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="InvoicingRuleName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="RevenueSchedulingRuleName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="NumberOfRevenuePeriods" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="RevenueSchedulingRuleStartDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="RevenueSchedulingRuleEndDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReasonCodeMeaning" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LastPeriodToCredit" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TransactionBusinessCategoryCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ProductFiscalClassicationCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ProductCategoryCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ProductType" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineIntendedUseCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="AssessableValue" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="DocumentSubType" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="DefaultTaxationCountry" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="UserDefinedFiscalClassification" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxInvoiceNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxInvoiceDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxRegimeCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TAX" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxStatusCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxRateCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxJuridictionCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="FirstPartyRegistrationNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ThirdPartyRegistrationNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="FinalDischargeLocation" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxableAmount" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxableFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxExemptionFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxExemptionReasonCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxExemptionReasonCodeMeaning" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxExemptionCertificateNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineAmountIncludes_TaxFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxPrecedent" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="CreditMethodToBeUserForLinesWithRevenueSchedulingRules" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="CreditMethodToBeUserForTransactionsWithSpritPaymentTerms" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReasonCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TaxRate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="FobPoint" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="Carrier" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ShippingReference" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SalesOrderLineNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SalesOrderSource" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="SalesOrderRevisionNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PurchaseOrderNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PurchaseOrder_RevisionNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PurchaseOrderDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="AgreementName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="MemoLineName" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="DocumentNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="OriginalSystemBatchName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToTransactionsFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReferenceTransationsFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LinkToParentLineSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceiptMethodName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PrintingOption" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="RelatedBatchSourceName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="RelatedTransactionNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment16" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment17" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment18" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment19" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InventoryItemSegment20" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="BillToCustomerBankAccountName" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ResetTransactionDateFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PaymentServerOrderNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LastTransactionOnDebitAuthorization" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ApprovalCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="AddressVerificationCode" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="TransactionLineTranslatedDescription" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ConsolidatedBillingNumber" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PromisedCommitmentAmount" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PaymentSetIdentifier" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="OriginalAccountingDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoicedLineAccountingLivel" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="OverrideAutoAccountingFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="HistoricalFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="DeferralExclusionFlag" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="PaymentAttributes" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceBillingDate" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceLinesFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="InvoiceTransactionsFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldContext" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment16" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment17" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment18" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment19" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment20" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment21" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment22" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment23" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment24" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment25" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment26" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment27" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment28" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment29" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="ReceivablesTransactionRegionInformationFlexfieldSegment30" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldAttributeCategory" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment1" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment2" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment3" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment4" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment5" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment6" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment7" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment8" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment9" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment10" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment11" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment12" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment13" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment14" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment15" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment16" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment17" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment18" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment19" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="LineGlobalDescriptiveFlexfieldSegment20" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="Comments" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="NotesFromSource" minOccurs="0" nillable="true" type="xsd:string"/>
+         <xsd:element name="EnforceChronologicalDocSequencing" minOccurs="0" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedReceiptRqType">
+      <xsd:sequence>
+         <xsd:element name="ProcessedReceiptType" type="tns:RegReceiptsTypes"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RegReceiptsTypes">
+      <xsd:sequence>
+         <xsd:element name="RegReceipts" maxOccurs="unbounded" type="tns:RegReceipt"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RegReceipt">
+      <xsd:sequence>
+         <xsd:element name="TABLA_PUENTE_ID" type="xsd:decimal"/>
+         <xsd:element name="RECEIPT_ID" type="xsd:decimal"/>
+         <xsd:element name="ESTATUS" type="xsd:string"/>
+         <xsd:element name="ERRORDESCRIPCION" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedReceiptRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:ProcessedReceiptReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedReceiptReturnType">
+      <xsd:sequence>
+         <xsd:element name="ApplyReceipts" maxOccurs="unbounded" type="tns:ApplyReceipt"/>
+         <xsd:element name="Error" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="ErrorDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ApplyReceipt">
+      <xsd:sequence>
+         <xsd:element name="AMOUNT" type="xsd:decimal"/>
+         <xsd:element name="RECEIPT_ID" type="xsd:decimal"/>
+         <xsd:element name="RECEIPT_NUMBER" type="xsd:string"/>
+         <xsd:element name="TRANSACTION_NUMBER" type="xsd:string"/>
+         <xsd:element name="CUSTOMER_NAME" type="xsd:string"/>
+         <xsd:element name="APPLICATION_DATE" type="xsd:dateTime"/>
+         <xsd:element name="ACCOUNTING_DATE" type="xsd:dateTime"/>
+         <xsd:element name="CUST_ACCOUNT_ID" type="xsd:decimal"/>
+         <xsd:element name="ORGANIZATION_ID" type="xsd:decimal"/>
+         <xsd:element name="METODO_RECIBO" type="xsd:string"/>
+         <xsd:element name="RECEIPT_APPLY_ID" type="xsd:decimal"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateStatusInvoicesRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:UpdateStatusInvoicesRsReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateStatusInvoicesRsReturnType">
+      <xsd:sequence>
+         <xsd:element name="Error" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="ErrorDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="UpdateStatusInvoicesRqType">
+      <xsd:sequence>
+         <xsd:element name="UpdateStatusInvoices" maxOccurs="unbounded">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="BATCH_ID" type="xsd:string"/>
+                  <xsd:element name="TRANSACTION_NUMBER" type="xsd:string"/>
+                  <xsd:element name="STATUS" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedApplyReceiptRqType">
+      <xsd:sequence>
+         <xsd:element name="ProcessedApplyReceiptType" type="tns:RegApplyReceiptsTypes"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RegApplyReceiptsTypes">
+      <xsd:sequence>
+         <xsd:element name="RegApplyReceipts" maxOccurs="unbounded" type="tns:RegApplyReceipt"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RegApplyReceipt">
+      <xsd:sequence>
+         <xsd:element name="RECEIPT_APPLY_ID" type="xsd:decimal"/>
+         <xsd:element name="ESTATUS" type="xsd:string"/>
+         <xsd:element name="ERRORDESCRIPCION" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedApplyReceiptRsType">
+      <xsd:complexContent>
+         <xsd:extension base="cmn:BaseRsType">
+            <xsd:sequence>
+               <xsd:element name="Return" type="tns:ProcessedApplyReceiptReturnType"/>
+            </xsd:sequence>
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+   <xsd:complexType name="ProcessedApplyReceiptReturnType">
+      <xsd:sequence>
+         <xsd:element name="Error" type="xsd:decimal" minOccurs="0" nillable="true"/>
+         <xsd:element name="ErrorDesc" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

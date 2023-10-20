@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelDigitalStamp" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelDigitalStamp"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelDigitalStamp"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+  <plnk:partnerLinkType name="bpelDigitalStamp">
+    <plnk:role name="bpelDigitalStampProvider" portType="client:bpelDigitalStamp"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <xsd:schema xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelDigitalStamp"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                  schemaLocation="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelDigitalStamp"
+                xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz"
+                  schemaLocation="../Schemas/Data_DS_ElecInvoice.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+                  schemaLocation="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+    </xsd:schema>  
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import schemaLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.xsd"
+              namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"/>
+    </xsd:schema>  
+  </wsdl:types>
+  <wsdl:message name="bpelDigitalStampRequestMessage">
+    <wsdl:part name="DigitalStampRq" element="ns1:DigitalStampRq"/>
+  </wsdl:message>
+  <wsdl:message name="bpelDigitalStampResponseMessage">
+    <wsdl:part name="DigitalStampRs" element="ns1:DigitalStampRs"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelDigitalStamp">
+    <wsdl:operation name="DigitalStamp">
+      <wsdl:input message="client:bpelDigitalStampRequestMessage"/>
+      <wsdl:output message="client:bpelDigitalStampResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

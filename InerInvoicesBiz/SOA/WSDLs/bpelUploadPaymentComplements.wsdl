@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelUploadPaymentComplements" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados" xmlns:ns6="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+   <plnk:partnerLinkType name="bpelUploadPaymentComplements">
+      <plnk:role name="bpelUploadPaymentComplementsProvider" portType="client:bpelUploadPaymentComplements"/>
+      <plnk:role name="bpelUploadPaymentComplementsRequester" portType="client:bpelUploadPaymentComplementsCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" location="ERPIntegrationServiceTecWrapper.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="SOAUtilitiesTecWrapper.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" schemaLocation="oramds:/apps/Common/XSD/EstrellaRojaCommons.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" schemaLocation="../Schemas/ElectronicInvoiceAP.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelUploadPaymentComplements" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns3="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns4="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns5="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz/DoctosRelacionados" schemaLocation="../Schemas/DoctosRelacionados.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="bpelUploadPaymentComplementsRequestMessage">
+      <wsdl:part name="payload" element="ns1:UploadPaymentComplementsRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelUploadPaymentComplementsResponseMessage">
+      <wsdl:part name="payload" element="ns1:UploadPaymentComplementsRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelUploadPaymentComplements">
+      <wsdl:operation name="UploadPaymentComplements">
+         <wsdl:input message="client:bpelUploadPaymentComplementsRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelUploadPaymentComplementsCallback">
+      <wsdl:operation name="UploadPaymentComplementsResponse">
+         <wsdl:input message="client:bpelUploadPaymentComplementsResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,1636 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Sat Dec 14 17:59:30 CST 2019
+  Author:  ivanr
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RegisterAssetStatus"
+               targetNamespace="http://soa.estrellaroja.com.mx/RegisterAssetStatusBPEL"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/RegisterAssetStatusBPEL"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://xmlns.oracle.com/oxp/service/PublicReportService"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:ns5="http://soa.estrellaroja.com.mx/SCMWorkOrders"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_EAMWorkOrdersTec/EAMWorkOrdersTecBS"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersTecBS"
+         xmlns:ns8="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_UtilityTec/GetSysDate"
+         xmlns:ns9="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_EAMWorkOrdersTec/TransactionalWorkOrders"
+         xmlns:ns10="http://xmlns.oracle.com/pcbpel/adapter/db/top/TransactionalWorkOrders"
+         xmlns:ns11="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverAssets"
+         xmlns:ns12="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverAssets"
+         xmlns:ns13="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaAssets"
+         xmlns:ns14="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaAssets"
+         xmlns:ns15="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverTravelTraffic"
+         xmlns:ns16="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaTravleTraffic"
+         xmlns:ns17="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTravelTraffic"
+         xmlns:ns18="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaTravleTraffic"
+         xmlns:ns19="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/InsertDeliverOrders"
+         xmlns:ns20="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/InsertTratecsaOrders"
+         xmlns:ns21="http://xmlns.oracle.com/pcbpel/adapter/db/InsertDeliverOrders"
+         xmlns:ns22="http://xmlns.oracle.com/pcbpel/adapter/db/InsertTratecsaOrders"
+         xmlns:ns23="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverOrders"
+         xmlns:ns24="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectTratecsaOrders"
+         xmlns:ns25="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverOrders"
+         xmlns:ns26="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaOrders"
+         xmlns:ns27="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/UpdateDeliverOrders"
+         xmlns:ns28="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/UpdateTratecsaOrder"
+         xmlns:ns29="http://xmlns.oracle.com/pcbpel/adapter/db/UpdateDeliverOrders"
+         xmlns:ns30="http://xmlns.oracle.com/pcbpel/adapter/db/UpdateTratecsaOrder"
+         xmlns:ns31="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverTravelTraffic"
+         xmlns:ns32="http://xmlns.oracle.com/pcbpel/adapter/db/sp/GetSysDate"
+         xmlns:ns33="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMWorkOrdersExecutions"
+         xmlns:ns34="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMWorkOrdersExecutions"
+         xmlns:ns35="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns36="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrders"
+         xmlns:ns37="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMUpdateWorkOrders"
+         xmlns:ns38="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMInsertWorkOrders"
+         xmlns:ns39="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMSelectWorkOrders"
+         xmlns:ns40="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMInsertWorkOrders"
+         xmlns:ns41="http://xmlns.oracle.com/pcbpel/adapter/db/top/EAMUpdateWorkOrders"
+         xmlns:ns42="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/SelectTratecsaMaxNumOrder"
+         xmlns:ns43="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/SelectDeliverMaxNumOrder"
+         xmlns:ns44="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMUnblockAsset"
+         xmlns:ns45="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_ZAMMaintenanceTec/ZAMBlockAsset"
+         xmlns:ns46="http://xmlns.oracle.com/pcbpel/adapter/db/sp/ZAMBlockAsset"
+         xmlns:ns47="http://xmlns.oracle.com/pcbpel/adapter/db/sp/ZAMUnblockAsset"
+         xmlns:ns48="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByUnit"
+         xmlns:ns49="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectUnprocessedWorkOrders"
+         xmlns:ns50="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByUnit"
+         xmlns:ns51="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectUnprocessedWorkOrders"
+         xmlns:ns53="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMWorkOrdersTec/EAMSelectWorkOrdersByStatus"
+         xmlns:ns54="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectWorkOrdersByStatus"
+         xmlns:ns55="http://soa.estrellaroja.com.mx/RegisterAssetStatus/RegisterAssetStatus"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:ns52="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec">
+         
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_UtilityTec/GetSysDate"
+          location="../WSDLs/GetSysDate.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <import location="../Schemas/DATA_DS.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+          <import location="oracle.soa.common.util.Base64Decoder" importType="http://schemas.oracle.com/bpel/extension/java"/>
+        
+  <partnerLinks>
+    <partnerLink name="wsDateService" partnerLinkType="ns8:GetSysDate_plt" partnerRole="GetSysDate_role"/>
+    <partnerLink name="wsZAMSelectDeliverAssetService" partnerLinkType="ns11:SelectDeliverAssets_plt"
+                 partnerRole="SelectDeliverAssets_role"/>
+    <partnerLink name="wsZAMSelectTratecsaAssetsService" partnerLinkType="ns13:SelectTratecsaAssets_plt"
+                 partnerRole="SelectTratecsaAssets_role"/>
+    <partnerLink name="wsZAMSelectTratecsaTravel" partnerLinkType="ns16:SelectTratecsaTravleTraffic_plt"
+                 partnerRole="SelectTratecsaTravleTraffic_role"/>
+    <partnerLink name="wsZAMSelectDeliverOrder" partnerLinkType="ns23:SelectDeliverOrders_plt"
+                 partnerRole="SelectDeliverOrders_role"/>
+    <partnerLink name="wsZAMSelectTratecsaOrder" partnerLinkType="ns24:SelectTratecsaOrders_plt"
+                 partnerRole="SelectTratecsaOrders_role"/>
+    <partnerLink name="wsZAMSelectDeliverTravelTraffic" partnerLinkType="ns15:SelectDeliverTravelTraffic_plt"
+                 partnerRole="SelectDeliverTravelTraffic_role"/>
+    <partnerLink name="wsEAMWorkOrdersExecutionsService" partnerLinkType="ns33:EAMWorkOrdersExecutions_plt"
+                 partnerRole="EAMWorkOrdersExecutions_role"/>
+    <partnerLink name="wsSOAUtilitiesService" partnerLinkType="ns3:wsSOAUtilitiesService"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsSendMailService" partnerLinkType="ns35:wsSendMailService" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+    <partnerLink name="wsSelectWorkOrdersService" partnerLinkType="ns36:EAMSelectWorkOrders_plt"
+                 partnerRole="EAMSelectWorkOrders_role"/>
+    <partnerLink name="wsUpdateWorkOrdersService" partnerLinkType="ns37:EAMUpdateWorkOrders_plt"
+                 partnerRole="EAMUpdateWorkOrders_role"/>
+    <partnerLink name="wsInsertWorkOrdersService" partnerLinkType="ns38:EAMInsertWorkOrders_plt"
+                 partnerRole="EAMInsertWorkOrders_role"/>
+    <partnerLink name="ZAMUnblockAssetService" partnerLinkType="ns44:ZAMUnblockAsset_plt"
+                 partnerRole="ZAMUnblockAsset_role"/>
+    <partnerLink name="wsZAMBlockAssetService" partnerLinkType="ns45:ZAMBlockAsset_plt"
+                 partnerRole="ZAMBlockAsset_role"/>
+    <partnerLink name="wsEAMSelectWorkOrdersByUnit" partnerLinkType="ns48:EAMSelectWorkOrdersByUnit_plt"
+                 partnerRole="EAMSelectWorkOrdersByUnit_role"/>
+    <partnerLink name="wsEAMSelectUnprocessedWorkOrders" partnerLinkType="ns49:EAMSelectUnprocessedWorkOrders_plt"
+                 partnerRole="EAMSelectUnprocessedWorkOrders_role"/>
+    <partnerLink name="wsEAMSelectWorkOrdersByStatusService" partnerLinkType="ns53:EAMSelectWorkOrdersByStatus_plt"
+                 partnerRole="EAMSelectWorkOrdersByStatus_role"/>
+    <partnerLink name="RegisterAssetStatusService" partnerLinkType="ns55:RegisterAssetStatusService"
+                 myRole="RegisterAssetStatus_ptt"/>
+    <partnerLink name="wsERPIntegrationBiz" partnerLinkType="ns1:wsERPIntegrationBiz"
+                 partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+    <partnerLink name="wsERPIntegrationAPITec" partnerLinkType="ns52:wsERPIntegrationAPITec"
+                 partnerRole="postInvoicePortType"/>
+  </partnerLinks>
+  
+  <variables>
+    <variable name="DATA_DS_Var" element="DATA_DS"/>
+    <variable name="In_GetSysDate" messageType="ns8:args_in_msg"/>
+    <variable name="Out_GetSysDate" messageType="ns8:args_out_msg"/>
+    <variable name="RunIDVar" type="xsd:int"/>
+    <variable name="In_ZAMSelectDeliverAsset" messageType="ns11:SelectDeliverAssetsInput_msg"/>
+    <variable name="Out_ZAMSelectDeliverAsset" messageType="ns11:SelectDeliverAssetsOutputCollection_msg"/>
+    <variable name="In_ZAMSelectTratecsaAsset" messageType="ns13:SelectTratecsaAssetsInput_msg"/>
+    <variable name="Out_ZAMSelectTratecsaAsset" messageType="ns13:SelectTratecsaAssetsOutputCollection_msg"/>
+    <variable name="In_SelectTratecsaTravelTraffic" messageType="ns16:SelectTratecsaTravleTrafficInput_msg"/>
+    <variable name="Out_SelectTratecsaTravelTraffic"
+              messageType="ns16:SelectTratecsaTravleTrafficOutputCollection_msg"/>
+    <variable name="In_ZAMSelectDeliverOrder" messageType="ns23:SelectDeliverOrdersInput_msg"/>
+    <variable name="Out_ZAMSelectDeliverOrder" messageType="ns23:SelectDeliverOrdersOutputCollection_msg"/>
+    <variable name="In_ZAMSelectTratecsaOrder" messageType="ns24:SelectTratecsaOrdersInput_msg"/>
+    <variable name="Out_ZAMSelectTratecsaOrder" messageType="ns24:SelectTratecsaOrdersOutputCollection_msg"/>
+    <variable name="In_ZAMSelectDeliverTravelTraffic" messageType="ns15:SelectDeliverTravelTrafficInput_msg"/>
+    <variable name="Out_ZAMSelectDeliverTravelTraffic"
+              messageType="ns15:SelectDeliverTravelTrafficOutputCollection_msg"/>
+    <variable name="In_EAMWorkOrdersExecutions" messageType="ns33:XxerEamExecutionsTblCollection_msg"/>
+    <variable name="Out_EAMWorkOrdersExecutions" messageType="ns33:XxerEamExecutionsTblCollection_msg"/>
+    <variable name="In_GetHTML" messageType="ns3:GetHtmlControlRq"/>
+    <variable name="Out_GetHTML" messageType="ns3:GetHtmlControlRs"/>
+    <variable name="In_SenMail" messageType="ns35:MessageRq"/>
+    <variable name="In_SelectWorkOrder" messageType="ns36:EAMSelectWorkOrdersSelect_inputParameters"/>
+    <variable name="Out_SelectWorkOrder" messageType="ns36:XxerZamWoBlksTblCollection_msg"/>
+    <variable name="In_InsertWorkOrders" messageType="ns38:XxerZamWoBlksTblCollection_msg"/>
+    <variable name="Out_InsertWorkOrders" messageType="ns38:XxerZamWoBlksTblCollection_msg"/>
+    <variable name="In_UpdateWorkOrder" messageType="ns37:XxerZamWoBlksTblCollection_msg"/>
+    <variable name="In_ZAMBlockAsset" messageType="ns45:args_in_msg"/>
+    <variable name="Out_ZAMBlockAsset" messageType="ns45:args_out_msg"/>
+    <variable name="In_ZAMUnblockAsset" messageType="ns44:args_in_msg"/>
+    <variable name="In_EAMSelectWorkOrdersByUnit" messageType="ns48:EAMSelectWorkOrdersByUnitInput_msg"/>
+    <variable name="Out_EAMSelectWorkOrdersByUnit" messageType="ns48:EAMSelectWorkOrdersByUnitOutputCollection_msg"/>
+    <variable name="In_EAMSelectUnprocessedWorkOrders" messageType="ns49:EAMSelectUnprocessedWorkOrdersInput_msg"/>
+    <variable name="Out_EAMSelectUnprocessedWorkOrders"
+              messageType="ns49:EAMSelectUnprocessedWorkOrdersOutputCollection_msg"/>
+    <variable name="WorkOrderNumVar" element="ns50:EAMSelectWorkOrdersByUnitOutputCollection"/>
+    <variable name="In_EAMSelectWorkOrdersByStatus" messageType="ns53:EAMSelectWorkOrdersByStatusInput_msg"/>
+    <variable name="Out_EAMSelectWorkOrdersByStatus"
+              messageType="ns53:EAMSelectWorkOrdersByStatusOutputCollection_msg"/>
+    <variable name="inputVariable" messageType="ns55:requestMessage"/>
+    <variable name="ERPIntegrationBizGenerateReportRq" messageType="ns1:GenerateReportRq"/>
+    <variable name="ERPIntegrationBizGenerateReportRs" messageType="ns1:GenerateReportRs"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><sequence name="Sequence19"><sequence name="Sequence18"><assign name="AssignEndExecution"
+                                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+              <from>'ORACLE_FUSION'</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:dataSource</to>
+            </copy>
+            <copy>
+              <from>$RunIDVar</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:runId</to>
+            </copy>
+            <copy>
+              <from>'EAM_WORK_ORDERS'</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:dataName</to>
+            </copy>
+            <copy>
+              <from>1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:readStatus</to>
+            </copy>
+            <copy>
+              <from>xp20:format-dateTime(xp20:current-dateTime(),'[M01]-[D01]-[Y0001] [H01]:[m01]:[s01]')</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:runDateOff</to>
+            </copy>
+          </assign>
+          <invoke name="Invoke_EAMWorkOrdersExecutions" partnerLink="wsEAMWorkOrdersExecutionsService"
+                  portType="ns33:EAMWorkOrdersExecutions_ptt" operation="insert"
+                  inputVariable="In_EAMWorkOrdersExecutions" outputVariable="Out_EAMWorkOrdersExecutions"
+                  bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                  xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+          <exit name="Exit1"/>
+        </sequence></sequence></catchAll>
+  </faultHandlers>
+  <sequence name="main"><receive name="receiveInput" createInstance="yes" partnerLink="RegisterAssetStatusService"
+             portType="ns55:RegisterAssetStatus_ptt" operation="RegisterAssetStatus" variable="inputVariable"/>
+    <invoke name="Invoke_GetSysDate" partnerLink="wsDateService" portType="ns8:GetSysDate_ptt" operation="GetSysDate"
+            inputVariable="In_GetSysDate" outputVariable="Out_GetSysDate" bpelx:invokeAsDetail="no"/>
+    <assign name="AssignSeqRunID">
+      <copy>
+        <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_EXECUTIONS','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_EXECUTIONS','JNDIConnection')))</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$RunIDVar</to>
+      </copy>
+    </assign>
+    <assign name="AssignGenerateReport">
+      <copy ignoreMissingFromData="yes">
+        <from>dvm:lookupValue("DVM/dvmRegisterAssetStatus.dvm","Code","TargetInterface","Value","","Component","RegisterAssetStatus")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:TargetInterface</to>
+      </copy>
+      <copy ignoreMissingFromData="yes">
+        <from>dvm:lookupValue("DVM/dvmRegisterAssetStatus.dvm","Code","ReportName","Value","","Component","RegisterAssetStatus")</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:ReportName</to>
+      </copy>
+      <copy ignoreMissingFromData="yes">
+        <from>ora:getCompositeName()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:IntegrationName</to>
+      </copy>
+      <copy ignoreMissingFromData="yes">
+        <from>ora:getComponentName()</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:ProcessName</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+        <from>"p_creationdate"</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:parameterNameValues/ns1:item/ns1:name</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>xp20:format-dateTime($inputVariable.part1,'[M01]-[D01]-[Y001] [H01]:[m01]:[s01].[f001]')</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationBizGenerateReportRq.GenerateReportRq/ns1:parameterNameValues/ns1:item/ns1:values/ns1:item</to>
+      </copy>
+    </assign>
+    <invoke name="ERPIntegrationBiz" partnerLink="wsERPIntegrationBiz"
+            portType="ns1:ERPIntegrationBizPortType" operation="GenerateReport"
+            inputVariable="ERPIntegrationBizGenerateReportRq"
+            outputVariable="ERPIntegrationBizGenerateReportRs" bpelx:invokeAsDetail="no"/>
+    <assign name="AssignDecoded">
+      <copy>
+        <from>ora:parseEscapedXML($ERPIntegrationBizGenerateReportRs.GenerateReportRs/ns1:Return/ns1:xmlOut)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$DATA_DS_Var</to>
+      </copy>
+    </assign>
+    <sequence name="SeqPendientes">
+      <bpelx:skipCondition>true()</bpelx:skipCondition>
+      <assign name="AssignStatus">
+        <copy>
+          <from>'PENDING_BLOCK'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectUnprocessedWorkOrders.EAMSelectUnprocessedWorkOrdersInput_msg/ns51:status1</to>
+        </copy>
+        <copy>
+          <from>'PENDING_UNBLOCK'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectUnprocessedWorkOrders.EAMSelectUnprocessedWorkOrdersInput_msg/ns51:status2</to>
+        </copy>
+      </assign>
+      <invoke name="Invoke_EAMSelectUnprocessedWorkOrders" partnerLink="wsEAMSelectUnprocessedWorkOrders"
+              portType="ns49:EAMSelectUnprocessedWorkOrders_ptt" operation="EAMSelectUnprocessedWorkOrders"
+              inputVariable="In_EAMSelectUnprocessedWorkOrders" outputVariable="Out_EAMSelectUnprocessedWorkOrders"
+              bpelx:invokeAsDetail="no"/>
+    </sequence>
+    <assign name="Tr_WorkOrdersResponse">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Tr_WorkOrdersResponse.xsl", $DATA_DS_Var, "Out_EAMSelectUnprocessedWorkOrders.EAMSelectUnprocessedWorkOrdersOutputCollection", $Out_EAMSelectUnprocessedWorkOrders.EAMSelectUnprocessedWorkOrdersOutputCollection)</from>
+        <to variable="DATA_DS_Var"/>
+      </copy>
+    </assign>
+    <forEach parallel="no" counterName="ForEachAssetsCounter" name="ForEach">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>count($DATA_DS_Var/G_1)</finalCounterValue>
+      <scope name="Scope1">
+        <variables>
+          <variable name="ERPIntegrationApiTecUpdateFlexMaintenanceWORq"
+                    messageType="ns52:updateFlexMaintenanceWORqMessage"/>
+          <variable name="ERPIntegrationApiTecUpdateFlexMaintenanceWORs"
+                    messageType="ns52:updateFlexMaintenanceWORsMessage"/>
+        </variables>
+        <faultHandlers>
+          <catchAll>
+            <sequence name="Sequence17">
+              <assign name="AssignError">
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                </copy>
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                </copy>
+                <copy>
+                  <from>$RunIDVar</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                </copy>
+                <copy>
+                  <from>"Error al procesar activo"</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                </copy>
+              </assign>
+              <invoke name="Invoke_Error" bpelx:invokeAsDetail="no" partnerLink="wsUpdateWorkOrdersService"
+                      portType="ns37:EAMUpdateWorkOrders_ptt" operation="update" inputVariable="In_UpdateWorkOrder"/>
+              <compensate name="Compensate1"/>
+            </sequence>
+          </catchAll>
+        </faultHandlers>
+        <sequence name="Sequence1">
+          <assign name="AssignOrderID">
+            <copy>
+              <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_ID</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/workOrderId</to>
+            </copy>
+            <copy>
+              <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_ID</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/workOrderId2</to>
+            </copy>
+          </assign>
+          <if name="IfStatusOrder">
+            <documentation>
+              <![CDATA[Released]]>
+            </documentation>
+            <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED'</condition>
+            <empty name="Processed"/>
+            <else>
+              <sequence>
+                <assign name="AssignStatusWO">
+                  <copy>
+                    <from>'RELEASED'</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByStatus.EAMSelectWorkOrdersByStatusInput_msg/ns54:status</to>
+                  </copy>
+                  <copy>
+                    <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByStatus.EAMSelectWorkOrdersByStatusInput_msg/ns54:woNum</to>
+                  </copy>
+                </assign>
+                <invoke name="Invoke_EAMSelectWorkOrdersByStatus" partnerLink="wsEAMSelectWorkOrdersByStatusService"
+                        portType="ns53:EAMSelectWorkOrdersByStatus_ptt" operation="EAMSelectWorkOrdersByStatus"
+                        inputVariable="In_EAMSelectWorkOrdersByStatus" outputVariable="Out_EAMSelectWorkOrdersByStatus"
+                        bpelx:invokeAsDetail="no"/>
+              </sequence>
+            </else>
+          </if>
+          <if name="IfExistOrder">
+            <condition>($DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED') or  (count($Out_EAMSelectWorkOrdersByStatus.EAMSelectWorkOrdersByStatusOutputCollection/ns54:EAMSelectWorkOrdersByStatusOutput) &gt; 0)</condition>
+            <sequence>
+              <assign name="AssignSelectWO">
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SelectWorkOrder.EAMSelectWorkOrdersSelect_inputParameters/ns39:workOrder</to>
+                </copy>
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WorkOrderNumVar/ns50:EAMSelectWorkOrdersByUnitOutput/ns50:ORA_WO_NUMBER</to>
+                </copy>
+              </assign>
+              <invoke name="Invoke_SelectWorkOrder" partnerLink="wsSelectWorkOrdersService"
+                      portType="ns36:EAMSelectWorkOrders_ptt" operation="EAMSelectWorkOrdersSelect"
+                      inputVariable="In_SelectWorkOrder" outputVariable="Out_SelectWorkOrder"
+                      bpelx:invokeAsDetail="no"/>
+              <if name="If1ExistWorkOrder">
+                <condition>count($Out_SelectWorkOrder.XxerZamWoBlksTblCollection/ns39:XxerZamWoBlksTbl) &lt; 1</condition>
+                <sequence>
+                  <assign name="AssignInsertWO">
+                    <copy>
+                      <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_ZAM_WO','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_ZAM_WO','JNDIConnection')))</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:blkId</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoNumber</to>
+                    </copy>
+                    <copy>
+                      <from>$RunIDVar</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:runId</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoReleasedDate</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoCompletedDate</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoClosedDate</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoOrgName</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoCostClas</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:creationDate</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:createdByUser</to>
+                    </copy>
+                    <copy>
+                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoAssetNumber</to>
+                    </copy>
+                  </assign>
+                  <invoke name="Invoke_InsertWorkOrders" bpelx:invokeAsDetail="no"
+                          partnerLink="wsInsertWorkOrdersService" portType="ns38:EAMInsertWorkOrders_ptt"
+                          operation="insert" inputVariable="In_InsertWorkOrders" outputVariable="Out_InsertWorkOrders"/>
+                </sequence>
+                <else>
+                  <sequence>
+                    <assign name="AssignUpdateWO" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                      </copy>
+                      <copy>
+                        <from>$RunIDVar</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                      </copy>
+                      <copy>
+                        <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                      </copy>
+                    </assign>
+                    <invoke name="Invoke_UpdateWorkOrder" partnerLink="wsUpdateWorkOrdersService"
+                            portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                            inputVariable="In_UpdateWorkOrder" bpelx:invokeAsDetail="no"/>
+                  </sequence>
+                </else>
+              </if>
+              <assign name="AssignZAMAsset">
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMSelectDeliverAsset.SelectDeliverAssetsInput_msg/ns12:idUnidad</to>
+                </copy>
+                <copy>
+                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMSelectTratecsaAsset.SelectTratecsaAssetsInput_msg/ns14:idUnidad</to>
+                </copy>
+              </assign>
+              <invoke name="Invoke_ZAMSelectDeliverAsset" bpelx:invokeAsDetail="no"
+                      partnerLink="wsZAMSelectDeliverAssetService" portType="ns11:SelectDeliverAssets_ptt"
+                      operation="SelectDeliverAssets" inputVariable="In_ZAMSelectDeliverAsset"
+                      outputVariable="Out_ZAMSelectDeliverAsset"/>
+              <invoke name="Invoke_ZAMSelectTratecsaAsset" partnerLink="wsZAMSelectTratecsaAssetsService"
+                      portType="ns13:SelectTratecsaAssets_ptt" operation="SelectTratecsaAssets"
+                      inputVariable="In_ZAMSelectTratecsaAsset" outputVariable="Out_ZAMSelectTratecsaAsset"
+                      bpelx:invokeAsDetail="no"/>
+              <if name="IfExistsAsset">
+                <documentation>
+                  <![CDATA[EXIST]]>
+                </documentation>
+                <condition>((count($Out_ZAMSelectDeliverAsset.SelectDeliverAssetsOutputCollection/ns12:SelectDeliverAssetsOutput) = 1) and($Out_ZAMSelectDeliverAsset.SelectDeliverAssetsOutputCollection/ns12:SelectDeliverAssetsOutput/ns12:estatus = 'A')) or ((count($Out_ZAMSelectTratecsaAsset.SelectTratecsaAssetsOutputCollection/ns14:SelectTratecsaAssetsOutput) = 1) and ($Out_ZAMSelectTratecsaAsset.SelectTratecsaAssetsOutputCollection/ns14:SelectTratecsaAssetsOutput/ns14:estatus = 'A'))</condition>
+                <if name="IStatusOrder">
+                  <documentation>
+                    <![CDATA[Released]]>
+                  </documentation>
+                  <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED'</condition>
+                  <sequence name="Sequence2">
+                    <scope name="Scope3">
+                      <sequence name="Sequence6" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <assign name="AssignUnit" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                          <copy>
+                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitInput_msg/ns50:idUnit</to>
+                          </copy>
+                          <copy>
+                            <from>'BLOCKED'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitInput_msg/ns50:status</to>
+                          </copy>
+                        </assign>
+                        <invoke name="Invoke_EAMSelectWorkOrdersByUnit" bpelx:invokeAsDetail="no"
+                                partnerLink="wsEAMSelectWorkOrdersByUnit" portType="ns48:EAMSelectWorkOrdersByUnit_ptt"
+                                operation="EAMSelectWorkOrdersByUnit" inputVariable="In_EAMSelectWorkOrdersByUnit"
+                                outputVariable="Out_EAMSelectWorkOrdersByUnit"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        <if name="If3ExistsOrdersWithBlock">
+                          <condition>count($Out_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitOutputCollection/ns50:EAMSelectWorkOrdersByUnitOutput) &gt; 0</condition>
+                          <sequence name="Sequence20">
+                            <if name="IfMaintenanceCorrectivoAuxilio"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO = 'Correctivo auxilio'</condition>
+                              <sequence>
+                                <sequence name="Sequence9"
+                                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <assign name="AssignAssetError">
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$RunIDVar</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamUnblockDate</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'CORRECTIVE_AID'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'ERROR: Activo en Correctivo Auxilio'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                                    </copy>
+                                    <copy>
+                                      <from>''</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                                    </copy>
+                                  </assign>
+                                  <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                          partnerLink="wsUpdateWorkOrdersService"
+                                          portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                                          inputVariable="In_UpdateWorkOrder"
+                                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                </sequence>
+                              </sequence>
+                              <else>
+                                <documentation/>
+                                <sequence name="Sequence9"
+                                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                  <assign name="AssignAssetBlock">
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$RunIDVar</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$Out_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitOutputCollection/ns50:EAMSelectWorkOrdersByUnitOutput[1]/ns50:ZAM_WO_NUMBER</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'BLOCKED'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                                    </copy>
+                                    <copy>
+                                      <from>'Activo Bloqueado'</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                                    </copy>
+                                    <copy>
+                                      <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                                    </copy>
+                                  </assign>
+                                  <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                          partnerLink="wsUpdateWorkOrdersService"
+                                          portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                                          inputVariable="In_UpdateWorkOrder"
+                                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                </sequence>
+                              </else>
+                            </if>
+                          </sequence>
+                          <else>
+                            <documentation/>
+                            <sequence name="Sequence16">
+                              <assign name="AssignUnit">
+                                <copy>
+                                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SelectTratecsaTravelTraffic.SelectTratecsaTravleTrafficInput_msg/ns18:idUnidad</to>
+                                </copy>
+                                <copy>
+                                  <from>'S'</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SelectTratecsaTravelTraffic.SelectTratecsaTravleTrafficInput_msg/ns18:viajeActual</to>
+                                </copy>
+                                <copy>
+                                  <from>'S'</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMSelectDeliverTravelTraffic.SelectDeliverTravelTrafficInput_msg/ns31:viajeActual</to>
+                                </copy>
+                                <copy>
+                                  <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMSelectDeliverTravelTraffic.SelectDeliverTravelTrafficInput_msg/ns31:idUnidad</to>
+                                </copy>
+                              </assign>
+                              <invoke name="Invoke_SelectTratecsaTravelTraffic" partnerLink="wsZAMSelectTratecsaTravel"
+                                      portType="ns16:SelectTratecsaTravleTraffic_ptt"
+                                      operation="SelectTratecsaTravleTraffic"
+                                      inputVariable="In_SelectTratecsaTravelTraffic"
+                                      outputVariable="Out_SelectTratecsaTravelTraffic" bpelx:invokeAsDetail="no"/>
+                              <invoke name="Invoke_ZAMSelectDeliverTravelTraffic"
+                                      partnerLink="wsZAMSelectDeliverTravelTraffic"
+                                      portType="ns15:SelectDeliverTravelTraffic_ptt"
+                                      operation="SelectDeliverTravelTraffic"
+                                      inputVariable="In_ZAMSelectDeliverTravelTraffic"
+                                      outputVariable="Out_ZAMSelectDeliverTravelTraffic" bpelx:invokeAsDetail="no"/>
+                              <if name="IfNotInTravel">
+                                <condition>(count($Out_SelectTratecsaTravelTraffic.SelectTratecsaTravleTrafficOutputCollection/ns18:SelectTratecsaTravleTrafficOutput) &gt;= 1) or (count($Out_ZAMSelectDeliverTravelTraffic.SelectDeliverTravelTrafficOutputCollection/ns31:SelectDeliverTravelTrafficOutput) &gt;= 1)</condition>
+                                <sequence name="Sequence3">
+                                  <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <sequence name="Sequence9"
+                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                      <assign name="AssignAssetError">
+                                        <copy>
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                                        </copy>
+                                        <copy>
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                                        </copy>
+                                        <copy>
+                                          <from>$RunIDVar</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                                        </copy>
+                                        <copy>
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes">
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes">
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes">
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes">
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                                        </copy>
+                                        <copy ignoreMissingFromData="yes">
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                                        </copy>
+                                        <copy>
+                                          <from>'PENDING_BLOCK'</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                                        </copy>
+                                        <copy>
+                                          <from>'ERROR: Activo ZAM en viaje'</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                                        </copy>
+                                        <copy>
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                                        </copy>
+                                        <copy>
+                                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                                        </copy>
+                                        <copy>
+                                          <from>''</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                                        </copy>
+                                      </assign>
+                                      <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                              partnerLink="wsUpdateWorkOrdersService"
+                                              portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                                              inputVariable="In_UpdateWorkOrder"
+                                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                    </sequence>
+                                  </sequence>
+                                </sequence>
+                                <else>
+                                  <documentation/>
+                                  <if name="IfMaintenanceCorrectivoAuxilio">
+                                    <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO = 'Correctivo auxilio'</condition>
+                                    <sequence>
+                                      <sequence name="Sequence9"
+                                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                        <assign name="AssignAssetError">
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$RunIDVar</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamUnblockDate</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'CORRECTIVE_AID'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'ERROR: Activo en Correctivo Auxilio'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                                          </copy>
+                                          <copy>
+                                            <from>''</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                                          </copy>
+                                        </assign>
+                                        <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                                partnerLink="wsUpdateWorkOrdersService"
+                                                portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                                                inputVariable="In_UpdateWorkOrder"/>
+                                      </sequence>
+                                    </sequence>
+                                    <else>
+                                      <documentation/>
+                                      <sequence name="Sequence15">
+                                        <assign name="AssignBlock">
+                                          <copy>
+                                            <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMBlockAsset.InputParameters/ns46:P_TRX_DATE</to>
+                                          </copy>
+                                          <copy>
+                                            <from>concat('ORACLE_FS_WO:',$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER)</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMBlockAsset.InputParameters/ns46:P_COMMENTS</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMBlockAsset.InputParameters/ns46:P_ASSET_NUMBER</to>
+                                          </copy>
+                                        </assign>
+                                        <invoke name="Invoke_ZAMBlockAsset" partnerLink="wsZAMBlockAssetService"
+                                                portType="ns45:ZAMBlockAsset_ptt" operation="ZAMBlockAsset"
+                                                inputVariable="In_ZAMBlockAsset" outputVariable="Out_ZAMBlockAsset"
+                                                bpelx:invokeAsDetail="no"/>
+                                        <assign name="AssignAssetError">
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$RunIDVar</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamUnblockDate</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$Out_ZAMBlockAsset.OutputParameters/ns46:P_ZAM_WO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'BLOCKED'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                                          </copy>
+                                          <copy>
+                                            <from>'Activo Bloqueado'</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                                          </copy>
+                                          <copy>
+                                            <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                                          </copy>
+                                        </assign>
+                                        <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                                partnerLink="wsUpdateWorkOrdersService"
+                                                portType="ns37:EAMUpdateWorkOrders_ptt" operation="update"
+                                                inputVariable="In_UpdateWorkOrder"
+                                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                                      </sequence>
+                                    </else>
+                                  </if>
+                                </else>
+                              </if>
+                            </sequence>
+                          </else>
+                        </if>
+                      </sequence>
+                    </scope>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[Not Released]]>
+                    </documentation>
+                    <sequence name="Sequence6">
+                      <assign name="AssignUnit">
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitInput_msg/ns50:idUnit</to>
+                        </copy>
+                        <copy>
+                          <from>'BLOCKED'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitInput_msg/ns50:status</to>
+                        </copy>
+                      </assign>
+                      <invoke name="Invoke_EAMSelectWorkOrdersByUnit" bpelx:invokeAsDetail="no"
+                              partnerLink="wsEAMSelectWorkOrdersByUnit" portType="ns48:EAMSelectWorkOrdersByUnit_ptt"
+                              operation="EAMSelectWorkOrdersByUnit" inputVariable="In_EAMSelectWorkOrdersByUnit"
+                              outputVariable="Out_EAMSelectWorkOrdersByUnit"/>
+                      <assign name="Tr_WorkOrderByUnitResponse">
+                        <bpelx:annotation>
+                          <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <copy>
+                          <from>ora:doXSLTransformForDoc("../Transformations/Tr_WorkOrderByUnitResponse.xsl", $Out_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitOutputCollection, "WorkOrderNumVar", $WorkOrderNumVar)</from>
+                          <to variable="Out_EAMSelectWorkOrdersByUnit"
+                              part="EAMSelectWorkOrdersByUnitOutputCollection"/>
+                        </copy>
+                      </assign>
+                      <if name="If3ExistsOrdersWithBlock">
+                        <condition>count($Out_EAMSelectWorkOrdersByUnit.EAMSelectWorkOrdersByUnitOutputCollection/ns50:EAMSelectWorkOrdersByUnitOutput) &gt; 0</condition>
+                        <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                          <sequence name="Sequence9" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <assign name="AssignAssetError">
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                              </copy>
+                              <copy>
+                                <from>$RunIDVar</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamUnblockDate</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                              </copy>
+                              <copy>
+                                <from>'UNBLOCK'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                              </copy>
+                              <copy>
+                                <from>'ERROR: El activo tiene una orden con bloqueo'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                              </copy>
+                              <copy>
+                                <from>''</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                              </copy>
+                            </assign>
+                            <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                    partnerLink="wsUpdateWorkOrdersService" portType="ns37:EAMUpdateWorkOrders_ptt"
+                                    operation="update" inputVariable="In_UpdateWorkOrder"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                          </sequence>
+                        </sequence>
+                        <else>
+                          <documentation/>
+                          <sequence name="Sequence16">
+                            <assign name="AssignUnblock">
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMUnblockAsset.InputParameters/ns47:P_ASSET_NUMBER</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMUnblockAsset.InputParameters/ns47:P_TRX_DATE</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_SelectWorkOrder.XxerZamWoBlksTblCollection/ns39:XxerZamWoBlksTbl[1]/ns39:zamWoNumber</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_ZAMUnblockAsset.InputParameters/ns47:P_ZAM_WO_NUM</to>
+                              </copy>
+                            </assign>
+                            <invoke name="Invoke_ZAMUnblockAsset" bpelx:invokeAsDetail="no"
+                                    partnerLink="ZAMUnblockAssetService" portType="ns44:ZAMUnblockAsset_ptt"
+                                    operation="ZAMUnblockAsset" inputVariable="In_ZAMUnblockAsset"/>
+                            <assign name="AssignAssetUnblock">
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                              </copy>
+                              <copy>
+                                <from>$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                              </copy>
+                              <copy>
+                                <from>$RunIDVar</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamBlockDate</to>
+                              </copy>
+                              <copy>
+                                <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamUnblockDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$Out_ZAMSelectTratecsaOrder.SelectTratecsaOrdersOutputCollection/ns26:SelectTratecsaOrdersOutput/ns26:id_orden</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$Out_ZAMSelectDeliverOrder.SelectDeliverOrdersOutputCollection/ns25:SelectDeliverOrdersOutput/ns25:id_orden</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                              </copy>
+                              <copy ignoreMissingFromData="yes">
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                              </copy>
+                              <copy>
+                                <from>'UNBLOCKED'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                              </copy>
+                              <copy>
+                                <from>'Activo Desbloqueado'</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                              </copy>
+                              <copy>
+                                <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                              </copy>
+                            </assign>
+                            <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                                    partnerLink="wsUpdateWorkOrdersService" portType="ns37:EAMUpdateWorkOrders_ptt"
+                                    operation="update" inputVariable="In_UpdateWorkOrder"
+                                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                          </sequence>
+                        </else>
+                      </if>
+                    </sequence>
+                  </else>
+                </if>
+                <elseif>
+                  <documentation>
+                    <![CDATA[ASSET_DISABLED]]>
+                  </documentation>
+                  <condition>((count($Out_ZAMSelectDeliverAsset.SelectDeliverAssetsOutputCollection/ns12:SelectDeliverAssetsOutput) = 1) and($Out_ZAMSelectDeliverAsset.SelectDeliverAssetsOutputCollection/ns12:SelectDeliverAssetsOutput/ns12:estatus != 'A')) or ((count($Out_ZAMSelectTratecsaAsset.SelectTratecsaAssetsOutputCollection/ns14:SelectTratecsaAssetsOutput) = 1) and ($Out_ZAMSelectTratecsaAsset.SelectTratecsaAssetsOutputCollection/ns14:SelectTratecsaAssetsOutput/ns14:estatus != 'A'))</condition>
+                  <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                    <if name="IfReleased">
+                      <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED'</condition>
+                      <assign name="AssignStatusWO">
+                        <copy>
+                          <from>'PENDING_BLOCK'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                        </copy>
+                      </assign>
+                      <else>
+                        <assign name="AssignStatusWO">
+                          <copy>
+                            <from>'PENDING_UNBLOCK'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <sequence name="Sequence9" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <assign name="AssignAssetError">
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                        </copy>
+                        <copy>
+                          <from>$RunIDVar</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                        </copy>
+                        <copy>
+                          <from>'ERROR: Activo Deshabilitado'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                        </copy>
+                        <copy>
+                          <from>''</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                        </copy>
+                      </assign>
+                      <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                              partnerLink="wsUpdateWorkOrdersService" portType="ns37:EAMUpdateWorkOrders_ptt"
+                              operation="update" inputVariable="In_UpdateWorkOrder"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                    </sequence>
+                  </sequence>
+                </elseif>
+                <elseif>
+                  <documentation>
+                    <![CDATA[ASSET_DUPLICATED]]>
+                  </documentation>
+                  <condition>(count($Out_ZAMSelectDeliverAsset.SelectDeliverAssetsOutputCollection/ns12:SelectDeliverAssetsOutput) &gt; 1) or(count($Out_ZAMSelectTratecsaAsset.SelectTratecsaAssetsOutputCollection/ns14:SelectTratecsaAssetsOutput) &gt; 1)</condition>
+                  <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                    <if name="IfReleased">
+                      <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED'</condition>
+                      <assign name="AssignStatusWO">
+                        <copy>
+                          <from>'PENDING_BLOCK'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                        </copy>
+                      </assign>
+                      <else>
+                        <assign name="AssignStatusWO">
+                          <copy>
+                            <from>'PENDING_UNBLOCK'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <sequence name="Sequence9" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <assign name="AssignAssetError">
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                        </copy>
+                        <copy>
+                          <from>$RunIDVar</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                        </copy>
+                        <copy>
+                          <from>'PENDING_BLOCK'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                        </copy>
+                        <copy>
+                          <from>'ERROR: Activo Duplicado'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                        </copy>
+                        <copy>
+                          <from>''</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                        </copy>
+                      </assign>
+                      <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                              partnerLink="wsUpdateWorkOrdersService" portType="ns37:EAMUpdateWorkOrders_ptt"
+                              operation="update" inputVariable="In_UpdateWorkOrder"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                    </sequence>
+                  </sequence>
+                </elseif>
+                <else>
+                  <documentation>
+                    <![CDATA[NOT FOUND]]>
+                  </documentation>
+                  <sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                    <if name="IfReleased">
+                      <condition>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE = 'RELEASED'</condition>
+                      <assign name="AssignStatusWO">
+                        <copy>
+                          <from>'PENDING_BLOCK'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                        </copy>
+                      </assign>
+                      <else>
+                        <assign name="AssignStatusWO">
+                          <copy>
+                            <from>'PENDING_UNBLOCK'</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:processStatus</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <sequence name="Sequence9" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <assign name="AssignAssetError">
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoNumber</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdBy</to>
+                        </copy>
+                        <copy>
+                          <from>$RunIDVar</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:runId</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoAssetNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoReleasedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCompletedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoClosedDate</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoOrgName</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes">
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:oraWoCostClas</to>
+                        </copy>
+                        <copy>
+                          <from>'ERROR: Activo No Encontrado'</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:message</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:createdByUser</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:creationDate</to>
+                        </copy>
+                        <copy>
+                          <from>''</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_UpdateWorkOrder.XxerZamWoBlksTblCollection/ns41:XxerZamWoBlksTbl/ns41:zamWoNumber</to>
+                        </copy>
+                        <copy>
+                          <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                        </copy>
+                      </assign>
+                      <invoke name="Invoke_InsertMessageWO" bpelx:invokeAsDetail="no"
+                              partnerLink="wsUpdateWorkOrdersService" portType="ns37:EAMUpdateWorkOrders_ptt"
+                              operation="update" inputVariable="In_UpdateWorkOrder"
+                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+                    </sequence>
+                  </sequence>
+                </else>
+              </if>
+            </sequence>
+            <else><sequence name="Sequence21"><assign name="AssignInsertWO"
+                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+   <copy ignoreMissingFromData="yes">
+         <from>oraext:sequence-next-val(string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_ZAM_WO','SequenceValue')),string(dvm:lookupValue1M('DVM/connectionDBMiddlewareDVM.dvm','Enviroment','PROD_ZAM_WO','JNDIConnection')))</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:blkId</to>
+      </copy><copy ignoreMissingFromData="yes">
+                    <from>'UNBLOCKED'</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:processStatus</to>
+                  </copy><copy ignoreMissingFromData="yes">
+                    <from>'ERROR:La orden no fue bloqueda en ZAM '</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:message</to>
+                  </copy><copy ignoreMissingFromData="yes">
+                    <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:zamWoNumber</to>
+                  </copy><copy ignoreMissingFromData="yes">
+                    <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_SYSTEM_STATUS_CODE</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:createdBy</to>
+                  </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WORK_ORDER_NUMBER</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoNumber</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$RunIDVar</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:runId</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/RELEASED_DATE</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoReleasedDate</to>
+      </copy><copy ignoreMissingFromData="yes">
+                    <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:zamBlockDate</to>
+                  </copy><copy ignoreMissingFromData="yes">
+                    <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:zamUnblockDate</to>
+                  </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/ACTUAL_COMPLETION_DATE</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoCompletedDate</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CLOSED_DATE</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoClosedDate</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NOMBRE_ORGANIZACION</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoOrgName</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/TRABAJO</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoCostClas</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATION_DATE_WO</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:creationDate</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/CREATED_BY</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:createdByUser</to>
+      </copy><copy ignoreMissingFromData="yes">
+         <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/NUMERO_ACTIVO</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_InsertWorkOrders.XxerZamWoBlksTblCollection/ns40:XxerZamWoBlksTbl/ns40:oraWoAssetNumber</to>
+      </copy><copy>
+                    <from>$DATA_DS_Var/G_1[$ForEachAssetsCounter]/WO_STATUS_CODE</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam</to>
+                  </copy></assign><invoke name="Invoke_InsertWorkOrders"
+                                                                              bpelx:invokeAsDetail="no"
+                                                                              partnerLink="wsInsertWorkOrdersService"
+                                                                              portType="ns38:EAMInsertWorkOrders_ptt"
+                                                                              operation="insert"
+                                                                              inputVariable="In_InsertWorkOrders"
+                                                                              outputVariable="Out_InsertWorkOrders"
+                                                                              xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></sequence></else>
+          </if>
+          <if name="If_estatus">
+            <documentation>
+              <![CDATA[Estatus]]>
+            </documentation>
+            <condition>string-length($ERPIntegrationApiTecUpdateFlexMaintenanceWORq.request/estatusZam)&gt;0</condition>
+            <invoke name="ERPIntegrationApiTec" bpelx:invokeAsDetail="no" partnerLink="wsERPIntegrationAPITec"
+                    portType="ns52:postInvoicePortType" operation="updateFlexMaintenanceWO"
+                    inputVariable="ERPIntegrationApiTecUpdateFlexMaintenanceWORq"
+                    outputVariable="ERPIntegrationApiTecUpdateFlexMaintenanceWORs"/>
+          </if>
+        </sequence>
+      </scope>
+    </forEach>
+    <scope name="Scope2">
+      <sequence>
+        <bpelx:skipCondition>count($DATA_DS_Var/G_1) &lt; 1</bpelx:skipCondition>
+        <assign name="AssignRunID">
+          <copy>
+            <from>$RunIDVar</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SelectWorkOrder.EAMSelectWorkOrdersSelect_inputParameters/ns39:idRun</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_SelectRunID" bpelx:invokeAsDetail="no" partnerLink="wsSelectWorkOrdersService"
+                portType="ns36:EAMSelectWorkOrders_ptt" operation="EAMSelectWorkOrdersSelect"
+                inputVariable="In_SelectWorkOrder" outputVariable="Out_SelectWorkOrder"/>
+        <assign name="Tr_GetHTML">
+          <bpelx:annotation>
+            <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+          </bpelx:annotation>
+          <copy>
+            <from>ora:doXSLTransformForDoc("../Transformations/Tr_GetHTML.xsl", $Out_SelectWorkOrder.XxerZamWoBlksTblCollection)</from>
+            <to variable="In_GetHTML" part="GetHtmlControlRq"/>
+          </copy>
+        </assign>
+        <invoke name="Invoke_GetHTML" partnerLink="wsSOAUtilitiesService" portType="ns3:SOAUtilitiesTecPortType"
+                operation="GetHtmlControl" inputVariable="In_GetHTML" outputVariable="Out_GetHTML"
+                bpelx:invokeAsDetail="no"/>
+        <assign name="AssignMail">
+          <copy>
+            <from>$Out_GetHTML.GetHtmlControlRs/ns3:Return/ns3:HtmlControl</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SenMail.MessageRq/ns35:Message/ns35:Message</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>"RegisterAssetStatus"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_SenMail.CustomHeader/ns35:IntegrationName</to>
+          </copy>
+        </assign>
+        <invoke name="Invoke_SenMail" bpelx:invokeAsDetail="no" partnerLink="wsSendMailService"
+                portType="ns35:MessageTecPortType" operation="SendEmail" inputVariable="In_SenMail"/>
+      </sequence>
+    </scope>
+    <sequence name="SeqinsertTabla">
+      <bpelx:skipCondition>true()</bpelx:skipCondition>
+      <assign name="AssignEndExecution">
+        <copy>
+          <from>'ORACLE_FUSION'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:dataSource</to>
+        </copy>
+        <copy>
+          <from>$RunIDVar</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:runId</to>
+        </copy>
+        <copy>
+          <from>'EAM_WORK_ORDERS'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:dataName</to>
+        </copy>
+        <copy>
+          <from>$Out_GetSysDate.OutputParameters/ns32:GET_SYSDATE</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:runDateOff</to>
+        </copy>
+        <copy>
+          <from>1</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$In_EAMWorkOrdersExecutions.XxerEamExecutionsTblCollection/ns34:XxerEamExecutionsTbl/ns34:readStatus</to>
+        </copy>
+      </assign>
+      <invoke name="Invoke_EAMWorkOrdersExecutions" partnerLink="wsEAMWorkOrdersExecutionsService"
+              portType="ns33:EAMWorkOrdersExecutions_ptt" operation="insert" inputVariable="In_EAMWorkOrdersExecutions"
+              outputVariable="Out_EAMWorkOrdersExecutions" bpelx:invokeAsDetail="no"/>
+    </sequence>
+  </sequence>
+</process>

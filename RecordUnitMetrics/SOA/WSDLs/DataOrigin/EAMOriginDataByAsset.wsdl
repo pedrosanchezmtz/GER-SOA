@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="EAMOriginDataByAsset" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginDataByAsset" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginDataByAsset" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginDataByAsset" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+   <plt:partnerLinkType name="EAMOriginDataByAsset_plt">
+      <plt:role name="EAMOriginDataByAsset_role">
+         <plt:portType name="tns:EAMOriginDataByAsset_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMOriginDataByAsset" schemaLocation="../../Schemas/DataOrigin/EAMOriginDataByAsset.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EAMOriginDataByAssetInput_msg">
+      <wsdl:part name="EAMOriginDataByAssetInput_msg" element="db:EAMOriginDataByAssetInput"/>
+   </wsdl:message>
+   <wsdl:message name="EAMOriginDataByAssetOutputCollection_msg">
+      <wsdl:part name="EAMOriginDataByAssetOutputCollection" element="db:EAMOriginDataByAssetOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="EAMOriginDataByAsset_ptt">
+      <wsdl:operation name="EAMOriginDataByAsset">
+         <wsdl:input message="tns:EAMOriginDataByAssetInput_msg"/>
+         <wsdl:output message="tns:EAMOriginDataByAssetOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="EAMOriginDataByAsset_pttSOAP11Binding" type="tns:EAMOriginDataByAsset_ptt">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="EAMOriginDataByAsset">
+         <soap:operation style="document" soapAction="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_ESTRELLA_ROJA/DEV_EAMUnitMetricsTec/EAMOriginDataByAsset/EAMOriginDataByAsset"/>
+         <wsdl:input>
+            <soap:body use="literal" parts="EAMOriginDataByAssetInput_msg"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal" parts="EAMOriginDataByAssetOutputCollection"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

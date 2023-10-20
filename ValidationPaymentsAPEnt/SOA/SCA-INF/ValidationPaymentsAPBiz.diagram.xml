@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+   <dgm:gReference name="WsMessageTec">
+      <dgm:body borderWidth="2" arcRad="20" X="1034" Y="91" width="136" height="96">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="1024" Y="84" width="156" height="110">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="WsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>SendEmail</dgm:item>
+         <dgm:item>SendEmailCallback</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gComponent name="BpelSendPaymentsAP">
+      <dgm:body borderWidth="2" arcRad="20" X="517" Y="26" width="130" height="236">
+         <dgm:borderColor r="69" g="113" b="140"/>
+         <dgm:lightBgColor r="166" g="208" b="230"/>
+         <dgm:darkBgColor r="99" g="162" b="201"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="507" Y="19" width="150" height="252">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="bpelsendpaymentsap_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendPaymentsAP#wsdl.interface(BpelSendPaymentsAP)"/>
+      <dgm:outputPort name="BpelSendNotifications.bpelsendnotifications_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/BpelSendNotifications#wsdl.interface(BpelSendNotifications)"/>
+      <dgm:outputPort name="FTP_ER_SOA_GET" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/ValidationPaymentsAPBiz/FTP_ER_SOA_GET#wsdl.interface(SynchRead_ptt)"/>
+      <dgm:outputPort name="WsMessageTec" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+      <dgm:outputPort name="WsSOAUtilitiesTec" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+      <dgm:outputPort name="WsERPIntegrationServiceTec" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+      <dgm:outputPort name="wsAuditControlTec" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+      <dgm:outputPort name="WsValidacionAutomaticTec" X="120" Y="165" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec#wsdl.interface(ERPValidacionConsultBS_ptt)"/>
+      <dgm:outputPort name="SubSendInvoiceToReport" X="120" Y="190" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+   </dgm:gComponent>
+   <dgm:gWireLink source="BpelSendPaymentsAP/WsMessageTec" target="WsMessageTec" width="2">
+      <dgm:gSegment X1="657" Y1="101" X2="1024" Y2="101"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+</dgm:gDiagram>

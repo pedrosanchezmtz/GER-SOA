@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelDigitalStampReceipts" targetNamespace="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts" xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureReceipt" xmlns:ns4="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+   <plnk:partnerLinkType name="bpelDigitalStampReceipts">
+      <plnk:role name="bpelDigitalStampReceiptsProvider" portType="client:bpelDigitalStampReceipts"/>
+      <plnk:role name="bpelDigitalStampReceiptsRequester" portType="client:bpelDigitalStampReceiptsCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts" xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+         <import namespace="http://soa.estrellaroja.com.mx/ReceiptBiz" schemaLocation="oramds:/apps/SOA/INER_ReceiptBiz/ReceiptBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureReceipt" schemaLocation="../Schemas/StructureReceipt.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="DigitalStampReceiptsRq">
+      <wsdl:part name="DigitalStampReceiptsRq" element="ns1:DigitalStampReceiptsRq"/>
+   </wsdl:message>
+   <wsdl:message name="DigitalStampReceiptsRs">
+      <wsdl:part name="DigitalStampReceiptsRs" element="ns1:DigitalStampReceiptsRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelDigitalStampReceipts">
+      <wsdl:operation name="DigitalStampReceipts">
+         <wsdl:input message="client:DigitalStampReceiptsRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+    <wsdl:portType name="bpelDigitalStampReceiptsCallback">
+      <wsdl:operation name="DigitalStampReceiptsCallback">
+         <wsdl:input message="client:DigitalStampReceiptsRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

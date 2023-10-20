@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorStatementsBankSantander" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator" wsdlTargetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpServiceReaderFileSantander">
+   <operation name="Get" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelManagementsStatementsBankSantander.bpelManagementsStatementsBankSantander.ManagementsStatementsBankSantander">
+            <action>
+               <assign>
+                  <copy expression="$in.body/imp1:estadoCta" target="$out.payload/imp1:estadoCta" xmlns:imp1="http://soa.estrellaroja.com.mx/ftpServiceReaderFileSantander"/>
+                  <copy value="$in.property.jca.ftp.FileName" target="$out.property.jca.file.FileName"/>
+               </assign>
+               <invoke reference="bpelManagementsStatementsBankSantander.bpelManagementsStatementsBankSantander" operation="ManagementsStatementsBankSantander"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

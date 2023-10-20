@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetInvoices" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices" xmlns:ns0="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns2="http://soa.estrellaroja.com.mx/FinancialBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns5="http://soa.estrellaroja.com.mx/ERPIntegrationBiz">
+   <plnk:partnerLinkType name="bpelGetInvoices">
+      <plnk:role name="bpelGetInvoicesProvider" portType="client:bpelGetInvoices"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/FinancialBiz" location="FinancialBizWrapper.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" location="InvoicesBizWrapper.wsdl"/>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationBiz" location="ERPIntegrationBizWrapper.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices" xmlns:ns0="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns2="http://soa.estrellaroja.com.mx/FinancialBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns5="http://soa.estrellaroja.com.mx/ERPIntegrationBiz">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesEnt" schemaLocation="oramds:/apps/SOA/INER_InvoicesEnt/InvoicesEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices" xmlns:ns0="http://soa.estrellaroja.com.mx/InvoicesEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns2="http://soa.estrellaroja.com.mx/FinancialBiz" xmlns:ns3="http://soa.estrellaroja.com.mx/StructureTrxInterface" xmlns:ns4="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns5="http://soa.estrellaroja.com.mx/ERPIntegrationBiz">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureTrxInterface" schemaLocation="../Schemas/StructureTrxInterface.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="GetInvoicesRq">
+      <wsdl:part name="GetInvoicesRq" element="ns0:GetInvoicesRq"/>
+   </wsdl:message>
+   <wsdl:message name="GetInvoicesRs">
+      <wsdl:part name="GetInvoicesRs" element="ns0:GetInvoicesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetInvoices">
+      <wsdl:operation name="GetInvoices">
+         <wsdl:input message="client:GetInvoicesRq"/>
+         <wsdl:output message="client:GetInvoicesRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="bpelGetInvoicesSOAP12Binding" type="client:bpelGetInvoices">
+      <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetInvoices">
+         <soap12:operation style="document" soapAction="http://soa.estrellaroja.com.mx/InvoicesEnt/bpelGetInvoices/GetInvoices" soapActionRequired="false"/>
+         <wsdl:input>
+            <soap12:body use="literal" parts="GetInvoicesRq"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap12:body use="literal" parts="GetInvoicesRs"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+</wsdl:definitions>

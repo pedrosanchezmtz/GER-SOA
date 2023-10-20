@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelLogPaymentComplement" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelLogPaymentComplement" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelLogPaymentComplement" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:ns2="http://soa.estrellaroja.com.mx/InvoicesBiz">
+   <partnerLinks>
+      <partnerLink name="wsAuditControlTecPs" partnerLinkType="ns1:wsAuditControlTecPs" partnerRole="AuditControlTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="logInput" element="ns2:LogPaymentComplement"/>
+   </variables>
+   <sequence name="sequenceMain">
+      <scope name="scopeLogger">
+         <variables>
+            <variable name="logPaymentInput" messageType="ns1:MergeIncPaymentComplementRq"/>
+            <variable name="logPaymentOutput" messageType="ns1:MergeIncPaymentComplementRs"/>
+         </variables>
+         <sequence name="sequenceLogger">
+            <assign name="transformLog">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("../Transformations/XSLs/LogPaymentComplement_To_MergeIncPaymentComplementRq.xsl", $logInput)</from>
+                  <to variable="logPaymentInput" part="MergeIncPaymentComplementRqPart"/>
+               </copy>
+            </assign>
+            <invoke name="invokeLog" bpelx:invokeAsDetail="no" partnerLink="wsAuditControlTecPs" portType="ns1:AuditControlTecPortType" operation="MergeIncPaymentComplement" inputVariable="logPaymentInput" outputVariable="logPaymentOutput"/>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

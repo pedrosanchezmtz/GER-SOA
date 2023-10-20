@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rec:ReceiptApplyRq xmlns:rec="http://soa.estrellaroja.com.mx/ReceiptBiz">
+   <rec:ReceiptApply>
+      <rec:AMOUNT>1806.56</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-8041</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3150790</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>9EB2F1D8-7109-4D54-83EE-F377D473F570</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>117</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>1286</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9674</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172782</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>676E6A02-FDAB-4445-8F10-0622B6499119</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>118</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>3080</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9677</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172783</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>959A8CE2-17B9-4E54-A5F2-D1E79418BE8B</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>119</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>3080</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9680</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172784</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>51FE672C-BA39-4799-93FA-2D9E603E1F86</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>120</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>1299.2</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9687</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172786</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>E148227E-2DB8-4E6E-B8A3-DBDB00CC1981</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>121</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>1284.17</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9689</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172787</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>2B0647D8-2ADE-41FA-B3C0-12DBF7D7D60D</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>122</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:ReceiptApply>
+      <rec:AMOUNT>3079.8</rec:AMOUNT>
+      <rec:RECEIPT_ID>1047021</rec:RECEIPT_ID>
+      <rec:RECEIPT_NUMBER>PAGO ELECT</rec:RECEIPT_NUMBER>
+      <rec:TRANSACTION_NUMBER>VERP-9715</rec:TRANSACTION_NUMBER>
+      <rec:CUSTOMER_NAME>DHL METROPOLITAN LOGISTICS SC MEXICO SA DE CV</rec:CUSTOMER_NAME>
+      <rec:APPLICATION_DATE>2022-05-06T00:00:00.000+00:00</rec:APPLICATION_DATE>
+      <rec:ACCOUNTING_DATE>2022-05-06T00:00:00.000+00:00</rec:ACCOUNTING_DATE>
+      <rec:CUST_ACCOUNT_ID>100000001796642</rec:CUST_ACCOUNT_ID>
+      <rec:ORGANIZATION_ID>300000002753767</rec:ORGANIZATION_ID>
+      <rec:CUSTOMER_TRX_ID>3172794</rec:CUSTOMER_TRX_ID>
+      <rec:UUID>3DCE361D-C4A3-4621-A5B7-603222544687</rec:UUID>
+      <rec:BUSINESS_UNIT>VERSA_BU</rec:BUSINESS_UNIT>
+      <rec:METODO_RECIBO>SANTANDER_1186</rec:METODO_RECIBO>
+      <rec:RECEIPT_APPLY_ID>124</rec:RECEIPT_APPLY_ID>
+   </rec:ReceiptApply>
+   <rec:GetHtmlControlRq>
+      <rec:TotalSucceeded>1</rec:TotalSucceeded>
+      <rec:TotalErrors>0</rec:TotalErrors>
+      <rec:ErrorsDetails>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12943} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12944} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12945} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12946} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12947} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12948} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12949} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12950} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12951} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12952} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12953} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12954} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12955} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12956} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12957} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12958} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12960} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12963} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12965} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12966} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12968} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12970} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12971} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12972} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12973} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12974} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12975} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12977} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12978} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12980} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12981} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12982} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12983} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12986} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12987} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12988} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12989} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12991} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12992} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12994} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-12995} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>sadsfesgfesvf</rec:ErrorMessage>
+         </rec:ErrorDetail>
+         <rec:ErrorDetail>
+            <rec:DataValue>APP{VERP-9693} - REC{PAGO ELECT}</rec:DataValue>
+            <rec:ErrorMessage>La transacion no puede ser aplicada el monto libre a aplicar es meyor a la tolerancia de
+                          ajuste automatico</rec:ErrorMessage>
+         </rec:ErrorDetail>
+      </rec:ErrorsDetails>
+   </rec:GetHtmlControlRq>
+</rec:ReceiptApplyRq>

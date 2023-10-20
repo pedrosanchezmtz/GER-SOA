@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata"
+               xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+               xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
+               xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+  <composite name="RecordUnitMetrics">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+        <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+        <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+      </searchReplace>
+    </import>
+    <service name="recordunitmterics_client_ep">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/RecordUnitMterics#wsdl.endpoint(recordunitmterics_client_ep/RecordUnitMterics_pt)</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>NEVER</replace>
+        </property>
+      </binding>
+    </service>
+    <property name="compositeID">
+      <replace>6cb9e46c-c135-4e70-9b56-416c2d945112</replace>
+    </property>
+    <property name="oracle.composite.faultPolicyFile">
+      <replace>fault-policies.xml</replace>
+    </property>
+    <property name="oracle.composite.faultBindingFile">
+      <replace>fault-bindings.xml</replace>
+    </property>
+    <property name="productVersion">
+      <replace>12.2.1.4.0.190828</replace>
+    </property>
+    <component name="RecordUnitMterics">
+      <property name="bpel.config.oneWayDeliveryPolicy">
+        <replace>async.persist</replace>
+      </property>
+      <property name="bpel.config.transaction">
+        <replace>notSupported</replace>
+      </property>
+    </component>
+    <reference name="wsMileageControlnetService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetMileageControlnetPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsMileageOmnitracsService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetMileageOmnitracsPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsMileageSine">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetMileageSinePS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsMileageTomTomService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetMileageTomTomPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsDateService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetSysDatePS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsERPFusionReportService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_WorkOrdersPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsERPReadingMetricsService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_ERPMeterReadingsPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsGetMileageExcelService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_GetMileageExcelPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsTruncMileageExcelService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_TruncMileageExcelPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsEAMOriginPriorityService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_EAMOriginPriorityPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsEAMOriginDataByAssetService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_EAMOriginDataByAssetPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsEAMInsertErrorRecordService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_EAMInsertErrorRecordPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsEAMSelectErrorRecordService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="direct">
+        <attribute name="address">
+          <replace>sb://DEV_EAMSelectErrorRecordPS</replace>
+        </attribute>
+        <property name="java.naming.provider.url">
+          <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsSOAUtilitiesService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+    <reference name="wsSendEmailService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>WSDLDriven</replace>
+        </property>
+      </binding>
+    </reference>
+  </composite>
+  <wsdlAndSchema name="Schemas/AssetMetricReadings.xsd|Schemas/AssetMetricsReadingExcel.xsd|Schemas/Asset_Data.xsd|Schemas/Commons/EstrellaRojaCommons.xsd|Schemas/CONTROLNET/Mileage/MileageControlnetTecNXSD.xsd|Schemas/DataOrigin/EAMOriginData.xsd|Schemas/DataOrigin/EAMOriginDataByAsset.xsd|Schemas/DATA_DS_Asset.xsd|Schemas/DATA_DS_Readings.xsd|Schemas/Date/GetSysDate_sp.xsd|Schemas/DecodeBase64/DecodeBase64.xsd|Schemas/ErrorRecord/EAMErrorRecord_table.xsd|Schemas/ErrorRecord/EAMInsertErrorRecord_table.xsd|Schemas/ErrorRecord/EAMSelectErrorRecord.xsd|Schemas/EXCEL/Mileage/GetMileageExcel.xsd|Schemas/EXCEL/Mileage/TruncMileageExcel.xsd|Schemas/MessageTec.xsd|Schemas/MeterReadings/ERPMeterReadingsTecNXSD.xsd|Schemas/MetricsReadingCommon.xsd|Schemas/OMNITRACS/Mileage/MileageOmnitracsTecNXSD.xsd|Schemas/OriginPriority/EAMOriginPriority.xsd|Schemas/Readings_Data.xsd|Schemas/RecordUnitMterics.xsd|Schemas/SINE/Mileage/MileageSineTecNXSD.xsd|Schemas/SOAUtilitiesTec.xsd|Schemas/TOMTOM/Mileage/MileageTomTomTecNXSD.xsd|WSDLs/CONTROLNET/Mileage/GetMileageControlnet.wsdl|WSDLs/DataOrigin/EAMOriginData-concrete.wsdl|WSDLs/DataOrigin/EAMOriginData.wsdl|WSDLs/DataOrigin/EAMOriginDataByAsset.wsdl|WSDLs/Date/GetSysDate-concrete.wsdl|WSDLs/Date/GetSysDate.wsdl|WSDLs/ErrorRecord/EAMInsertErrorRecord.wsdl|WSDLs/ErrorRecord/EAMSelectErrorRecord-concrete.wsdl|WSDLs/ErrorRecord/EAMSelectErrorRecord.wsdl|WSDLs/EXCEL/Mileage/GetMileageExcel-concrete.wsdl|WSDLs/EXCEL/Mileage/GetMileageExcel.wsdl|WSDLs/EXCEL/Mileage/TruncMileageExcel-concrete.wsdl|WSDLs/EXCEL/Mileage/TruncMileageExcel.wsdl|WSDLs/MessageTec.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/MeterReadings/ERPMeterReadings.wsdl|WSDLs/OMNITRACS/Mileage/GetMileageOmnitracs.wsdl|WSDLs/OriginPriority/EAMOriginPriority.wsdl|WSDLs/RecordUnitMterics.wsdl|WSDLs/SINE/Mileage/GetMileageSine.wsdl|WSDLs/SOAUtilitiesTec.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl|WSDLs/TOMTOM/Mileage/GetMileageTomTom.wsdl|WSDLs/WorkOrdersService.wsdl|WSDLs/WorkOrdersServiceWrapper.wsdl">
+    <searchReplace>
+      <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+      <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+      <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+    </searchReplace>
+  </wsdlAndSchema>
+</SOAConfigPlan>

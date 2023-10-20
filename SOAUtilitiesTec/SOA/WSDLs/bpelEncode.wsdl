@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelEncode" targetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncode" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncode" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="EncodeRq">
+      <wsdl:part name="EncodeRq" element="ns1:EncodeRq"/>
+   </wsdl:message>
+   <wsdl:message name="EncodeRs">
+      <wsdl:part name="EncodeRs" element="ns1:EncodeRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelEncode">
+      <wsdl:operation name="Encode">
+         <wsdl:input message="client:EncodeRq"/>
+         <wsdl:output message="client:EncodeRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelEncode">
+      <plnk:role name="bpelEncodeProvider" portType="client:bpelEncode"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

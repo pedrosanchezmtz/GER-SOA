@@ -1,0 +1,504 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Jan 26 19:40:39 CST 2023
+  Author:  pedro
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelSendCFDIToSFTP"
+               targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+                  xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/DigitalStampGERTec"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/SftpTec"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/DB_SOA_CLOUD"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns8="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+  <import namespace="http://soa.estrellaroja.com.mx/CFDITec/GetCFDIFileURL" location="../Schemas/nxsd_URLCFDI.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP"
+          location="../WSDLs/BpelSendCFDIToSFTP.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelsendcfditosftp_client" partnerLinkType="client:BpelSendCFDIToSFTP" myRole="BpelSendCFDIToSFTPProvider"/>
+    <partnerLink name="wsDigitalStampGerTec" partnerLinkType="ns4:wsDigitalStampGerTec"
+                 partnerRole="DigitalStampGERTecPortType"/>
+    <partnerLink name="wsSftpTec" partnerLinkType="ns5:wsSftpTec" partnerRole="SftpTec_ptt"/>
+    <partnerLink name="DB_SOA_CLOUD" partnerLinkType="ns6:DB_SOA_CLOUD_plt" partnerRole="DB_SOA_CLOUD_role"/>
+    <partnerLink name="WsMessageTec" partnerLinkType="ns8:WsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+    <partnerLink name="WsSOAUtilitiesTec" partnerLinkType="ns9:WsSOAUtilitiesTec"
+                 partnerRole="SOAUtilitiesTecPortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelSendCFDIToSFTPRequestMessage"/>
+    <variable name="GetURLsCFDIsRs" element="ns1:ER_FACTURACION_GENERAL_TBL"/>
+    <variable name="SendEmailRq" messageType="ns8:MessageRq"/>
+    <variable name="GetHtmlControRq" messageType="ns9:GetHtmlControlRq"/>
+    <variable name="GetHtmlControRs" messageType="ns9:GetHtmlControlRs"/>
+    <variable name="v_success" type="xsd:integer">
+      <from>0</from>
+    </variable>
+    <variable name="v_errors" type="xsd:integer">
+      <from>0</from>
+    </variable>
+  </variables>
+  <faultHandlers>
+    <catchAll>
+      <sequence name="Sequence5"><assign name="assignCatchAll"
+                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>SOA-00001</literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[1]/ns9:ErrorMessage</to>
+          </copy>
+          <copy>
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalSucceeded</to>
+          </copy>
+          <copy>
+            <from>1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalErrors</to>
+          </copy>
+          <copy>
+            <from>1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalProcessed</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[2]/ns9:ErrorMessage</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[3]/ns9:ErrorMessage</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+            <literal>[SendPaymentAP]</literal>
+         </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[4]/ns9:ErrorMessage</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+            <literal>[ValidationPaymentAPBiz]</literal>
+         </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[5]/ns9:ErrorMessage</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[6]/ns9:ErrorMessage</to>
+          </copy>
+        </assign><invoke name="GetHtmlContro" bpelx:invokeAsDetail="no" partnerLink="WsSOAUtilitiesTec"
+                                         portType="ns9:SOAUtilitiesTecPortType" operation="GetHtmlControl"
+                                         inputVariable="GetHtmlControRq" outputVariable="GetHtmlControRs"
+                                         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                                         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/><assign name="AssignEmail">
+          <copy>
+            <from>'pedro.sanchez@forteinnovation.mx'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Addresses/ns8:AddressTo</to>
+          </copy>
+          <copy>
+            <from>concat('Error Ejecucion: ',ora:getCompositeName())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Subject</to>
+          </copy>
+          <copy>
+            <from>$GetHtmlControRs.GetHtmlControlRs/ns9:Return/ns9:HtmlControl</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Message</to>
+          </copy>
+        </assign>
+        <invoke name="SendEmail" bpelx:invokeAsDetail="no" partnerLink="WsMessageTec" portType="ns8:MessageTecPortType"
+                operation="SendEmail" inputVariable="SendEmailRq"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelSendCFDIToSFTP.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelsendcfditosftp_client" portType="client:BpelSendCFDIToSFTP" operation="SendCFDIToSFTP" variable="inputVariable" createInstance="yes"/>
+    <scope name="ScopeGetURLsCFDIs">
+      <variables>
+        <variable name="v_consultaString" type="xsd:string"/>
+        <variable name="v_queryConsulta" type="xsd:string"/>
+      </variables>
+      <faultHandlers>
+        <catchAll>
+          <assign name="AssignErrorQuery">
+            <copy>
+              <from>'Error GetURLsCFDIs'</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+            </copy>
+            <copy>
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+            </copy>
+            <copy>
+              <from>ora:getFaultAsString()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:Description</to>
+            </copy>
+            <copy>
+              <from>ora:getCompositeName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+            </copy>
+            <copy>
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+            </copy>
+            <copy>
+              <from>ora:getComponentName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs/ns2:Errors/ns2:Error/ns2:FailedService</to>
+            </copy>
+          </assign>
+        </catchAll>
+      </faultHandlers>
+      <sequence name="Sequence4">
+        <assign name="AssignQueryConsulta">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+            <from>dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","QueryConsulta","Value","","Component","SendCFDIToSFTP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes">
+            <from>strClass:replaceAll($v_queryConsulta,'@ESTATUS@','N')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes">
+            <from>strClass:replaceAll($v_queryConsulta,'@FECHA_INICIAL@',$inputVariable.payload/ns1:InitialDate)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes">
+            <from>strClass:replaceAll($v_queryConsulta,'@FECHA_FINAL@',$inputVariable.payload/ns1:EndDate)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes">
+            <from>strClass:replaceAll($v_queryConsulta,'@ID_TRANSACCION@',$inputVariable.payload/ns1:IdTransaccion)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+        </assign>
+        <assign name="AssignGetURLsCFDIs">
+          <copy>
+            <from>strClass:replaceAll(oraext:get-content-as-string(oraext:query-database(bpws:getVariableData('v_queryConsulta'),true(),true(),'jdbc/ERSEPDB1DS')),'&lt;ROWSET&gt;','&lt;ROWSET xmlns="http://soa.estrellaroja.com.mx/CFDITec"&gt;')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaString</to>
+          </copy>
+          <copy>
+            <from>oraext:parseXML($v_consultaString)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetURLsCFDIsRs</to>
+          </copy>
+        </assign>
+      </sequence>
+    </scope>
+    <if name="If1">
+      <documentation>
+        <![CDATA[array]]>
+      </documentation>
+      <condition>count($GetURLsCFDIsRs/ns1:ROW)&gt;0</condition>
+      <forEach parallel="no" counterName="counterCFDI" name="For_CFDIs">
+        <startCounterValue>1</startCounterValue>
+        <finalCounterValue>count($GetURLsCFDIsRs/ns1:ROW)</finalCounterValue>
+        <scope name="Scope1">
+          <variables>
+            <variable name="v_getCFDIFileURL" element="ns3:GetCFDIFileURL"/>
+            <variable name="v_URLString" type="xsd:string"/>
+            <variable name="GetCFDIFileRq" messageType="ns4:GetCFDIFileRq"/>
+            <variable name="GetCFDIFileRs" messageType="ns4:GetCFDIFileRs"/>
+            <variable name="PutFileERRq" messageType="ns5:PutFileERRqM"/>
+            <variable name="PutFileERRs" messageType="ns5:PutFileERRsM"/>
+            <variable name="UpdateStatusSFTPRq" messageType="ns6:UpdateStatusSFTPMsg"/>
+            <variable name="GetCFDIFileXMLRq" messageType="ns4:GetCFDIFileRq"/>
+            <variable name="GetCFDIFileXMLRs" messageType="ns4:GetCFDIFileRs"/>
+            <variable name="PutFileERXMLRq" messageType="ns5:PutFileERRqM"/>
+            <variable name="PutFileERXMLRs" messageType="ns5:PutFileERRsM"/>
+          </variables>
+          <sequence name="Sequence1"><assign name="AssignURL">
+              <copy>
+                <from>$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:URL_PDF</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_URLString</to>
+              </copy>
+            </assign>
+            <assign name="Trl_URL_to_getCFDIFileUrl">
+              <bpelx:annotation>
+                <bpelx:pattern>translate</bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doTranslateFromNative(string($v_URLString), 'Schemas/nxsd_URLCFDI.xsd', 'GetCFDIFileURL', 'DOM')</from>
+                <to>$v_getCFDIFileURL</to>
+              </copy>
+            </assign>
+            <assign name="AssignGetCFDIFileT">
+              <copy>
+                <from>$v_getCFDIFileURL/ns3:RFC</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileRq.GetCFDIFileRq/ns4:rfc</to>
+              </copy>
+              <copy>
+                <from>$v_getCFDIFileURL/ns3:RFC</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileXMLRq.GetCFDIFileRq/ns4:rfc</to>
+              </copy>
+              <copy>
+                <from>$v_getCFDIFileURL/ns3:UUID</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileXMLRq.GetCFDIFileRq/ns4:uuid</to>
+              </copy>
+              <copy>
+                <from>'xml'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileXMLRq.GetCFDIFileRq/ns4:tipoArchivo</to>
+              </copy>
+              <copy>
+                <from>'true'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileXMLRq.GetCFDIFileRq/ns4:base64</to>
+              </copy>
+              <copy>
+                <from>$v_getCFDIFileURL/ns3:UUID</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileRq.GetCFDIFileRq/ns4:uuid</to>
+              </copy>
+              <copy>
+                <from>'pdf'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileRq.GetCFDIFileRq/ns4:tipoArchivo</to>
+              </copy>
+              <copy>
+                <from>'true'</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetCFDIFileRq.GetCFDIFileRq/ns4:base64</to>
+              </copy>
+            </assign>
+            <invoke name="GetCFDIFile" bpelx:invokeAsDetail="no" partnerLink="wsDigitalStampGerTec"
+                    portType="ns4:DigitalStampGERTecPortType" operation="GetCFDIFile" inputVariable="GetCFDIFileRq"
+                    outputVariable="GetCFDIFileRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            <invoke name="GetCFDIFile" partnerLink="wsDigitalStampGerTec"
+                    portType="ns4:DigitalStampGERTecPortType" operation="GetCFDIFile" inputVariable="GetCFDIFileXMLRq"
+                    outputVariable="GetCFDIFileXMLRs" bpelx:invokeAsDetail="no"/>
+            <if name="If2">
+              <documentation>
+                <![CDATA[ExistFile]]>
+              </documentation>
+              <condition>string-length($GetCFDIFileRs.GetCFDIFileRs/ns4:Archivo)&gt;0</condition>
+              <sequence name="Sequence2">
+                <assign name="AssignPutFileGER">
+                  <copy>
+                    <from>concat($GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:SERIE,'-',$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:FOLIO,'.pdf')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns5:FileName</to>
+                  </copy>
+                  <copy>
+                    <from>$GetCFDIFileRs.GetCFDIFileRs/ns4:Archivo</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns5:FileB64</to>
+                  </copy>
+                  <copy>
+                    <from>concat($GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:SERIE,'-',$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:FOLIO,'.xml')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERXMLRq.payload/ns5:FileName</to>
+                  </copy>
+                  <copy>
+                    <from>$GetCFDIFileXMLRs.GetCFDIFileRs/ns4:Archivo</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERXMLRq.payload/ns5:FileB64</to>
+                  </copy>
+                  <copy>
+                    <from>concat(dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","DirSFTP","Value","","Component","SendCFDIToSFTP"),'/',$v_getCFDIFileURL/ns3:RFC,'/',$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:TIPO_FACTURA,'/',substring($GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:FECHA_CREACION,1,10))</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERRq.payload/ns5:DirName</to>
+                  </copy>
+                  <copy>
+                    <from>concat(dvm:lookupValue("DVMs/dvmCFDITec.dvm","Code","DirSFTP","Value","","Component","SendCFDIToSFTP"),'/',$v_getCFDIFileURL/ns3:RFC,'/',$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:TIPO_FACTURA,'/',substring($GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:FECHA_CREACION,1,10))</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$PutFileERXMLRq.payload/ns5:DirName</to>
+                  </copy>
+                </assign>
+                <invoke name="PutFileER" partnerLink="wsSftpTec" portType="ns5:SftpTec_ptt" operation="PutFileER"
+                        inputVariable="PutFileERRq" outputVariable="PutFileERRs" bpelx:invokeAsDetail="no"
+                        xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                <invoke name="PutFileER" partnerLink="wsSftpTec" portType="ns5:SftpTec_ptt"
+                        operation="PutFileER" inputVariable="PutFileERXMLRq" outputVariable="PutFileERXMLRs"
+                        bpelx:invokeAsDetail="no"/>
+                <assign name="AssignUpdateStatus">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>'S'</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UpdateStatusSFTPRq.UpdateStatusSFTPPart/ns7:ESTATUS_DESCARGA_SFTP</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>$GetURLsCFDIsRs/ns1:ROW[$counterCFDI]/ns1:ID</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UpdateStatusSFTPRq.UpdateStatusSFTPPart/ns7:ID</to>
+                  </copy>
+                </assign>
+                <invoke name="UpdateStatusSFTP" bpelx:invokeAsDetail="no" partnerLink="DB_SOA_CLOUD"
+                        portType="ns6:DB_SOA_CLOUD_ptt" operation="UpdateStatusSFTP"
+                        inputVariable="UpdateStatusSFTPRq"/>
+                <assign name="assignSuccess" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+      
+      
+      
+      
+      
+      
+   <copy>
+                    <from>$v_success +1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_success</to>
+                  </copy><copy xmlns:bpelx="http://schemas.oracle.com/bpel/extension" ignoreMissingFromData="yes"
+                               bpelx:insertMissingToData="yes">
+         <from><literal>Enviado a SFTP Correctamente </literal></from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[$counterCFDI]/ns9:ErrorMessage</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                   xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                    <from>$v_getCFDIFileURL/ns3:UUID</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[$counterCFDI]/ns9:DataValue</to>
+                  </copy></assign>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[NoExist]]>
+                </documentation><assign name="assignError"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         
+      <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+      
+      
+      
+      
+      
+      
+   <copy>
+                    <from>$v_errors +1</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_errors</to>
+                  </copy><copy xmlns:bpelx="http://schemas.oracle.com/bpel/extension" ignoreMissingFromData="yes"
+                               bpelx:insertMissingToData="yes">
+         <from><literal>Error consultando CFDIs</literal></from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[$counterCFDI]/ns9:ErrorMessage</to>
+      </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                    <from>$v_getCFDIFileURL/ns3:UUID</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[$counterCFDI]/ns9:DataValue</to>
+                  </copy></assign></else>
+            </if>
+          </sequence>
+        </scope>
+      </forEach>
+      <elseif>
+        <documentation>
+          <![CDATA[vacio]]>
+        </documentation>
+        <condition>count($GetURLsCFDIsRs/ns1:ROW)=0 and count($GetURLsCFDIsRs/ns2:Errors/ns2:Error)=0</condition>
+        <empty name="Empty1"/>
+      </elseif>
+      <else>
+        <documentation>
+          <![CDATA[error]]>
+        </documentation><assign name="assignError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy>
+            <from>1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalErrors</to>
+          </copy>
+          <copy>
+            <from>$v_errors + 1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_errors</to>
+          </copy>
+          <copy>
+            <from>1</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalProcessed</to>
+          </copy>
+          <copy>
+            <from>0</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalSucceeded</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>Error consultando CFDIs</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[1]/ns9:ErrorMessage</to>
+          </copy>
+          <copy>
+            <from>'Error'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:ErrorsDetails/ns9:ErrorDetail[1]/ns9:DataValue</to>
+          </copy>
+        </assign></else>
+    </if>
+    <assign name="Assign4">
+      <copy>
+        <from>$v_success</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalSucceeded</to>
+      </copy>
+      <copy>
+        <from>$v_errors</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalErrors</to>
+      </copy>
+      <copy>
+        <from>$v_success + $v_errors</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetHtmlControRq.GetHtmlControlRq/ns9:TotalProcessed</to>
+      </copy>
+    </assign>
+    <if name="If_Procesos">
+      <documentation>
+        <![CDATA[procesos]]>
+      </documentation>
+      <condition>$GetHtmlControRq.GetHtmlControlRq/ns9:TotalProcessed&gt;0</condition>
+      <sequence name="Sequence6"><invoke name="GetHtmlContro" bpelx:invokeAsDetail="no" partnerLink="WsSOAUtilitiesTec"
+                portType="ns9:SOAUtilitiesTecPortType" operation="GetHtmlControl" inputVariable="GetHtmlControRq"
+                outputVariable="GetHtmlControRs"/>
+        <assign name="AssignEmail" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+          <copy>
+            <from>'pedro.sanchez@forteinnovation.mx'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Addresses/ns8:AddressTo</to>
+          </copy>
+          <copy>
+            <from>concat('Ejecucion: ',ora:getCompositeName())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Subject</to>
+          </copy>
+          <copy>
+            <from>$GetHtmlControRs.GetHtmlControlRs/ns9:Return/ns9:HtmlControl</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$SendEmailRq.MessageRq/ns8:Message/ns8:Message</to>
+          </copy>
+        </assign>
+        <invoke name="SendEmail" bpelx:invokeAsDetail="no" partnerLink="WsMessageTec" portType="ns8:MessageTecPortType"
+                operation="SendEmail" inputVariable="SendEmailRq" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence>
+    </if>
+  </sequence>
+</process>

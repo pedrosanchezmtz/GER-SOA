@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanorte" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="UTF-8" nxsd:hasHeader="true" nxsd:headerLines="1" nxsd:headerLinesTerminatedBy="${eol}">
+   <xsd:element name="StatementsBankBanorte">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Statements" type="xsd:string" maxOccurs="unbounded" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=banorte.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

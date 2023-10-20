@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="ConciliationBiz">
+      <import>
+    <searchReplace>
+      <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+      <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+      <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/OSB/ConciliationTec/ConciliationTec</search>
+      <replace>oramds:/apps/OSB/DEV_ConciliationTec/ConciliationTec</replace>
+    </searchReplace>
+        <searchReplace>
+      <search>oramds:/apps/SOA/ConciliationBiz/ConciliationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ConciliationBiz/ConciliationBiz</replace>
+    </searchReplace>
+      </import>
+      <service name="ConciliationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ConciliationBiz#wsdl.endpoint(ConciliationBiz/ConciliationBizPortType)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>fa4844b4-955e-472b-84eb-baf778626a8b</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="BpelConciliationCashTp">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <component name="BpelGetPaymentsCash">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="BpelGetCreditMemo">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <reference name="ERPIntegrationBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="ConciliationTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+                 <attribute name="address">
+          <replace>sb://DEV_ConciliationTecPs</replace>
+        </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsMessageTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="WsSOAUtilitiesTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="SCA-INF/src/mx/com/estrellaroja/soa/conciliationspringbiz/types/soa.estrellaroja.com.mx_ConciliationSpringBiz_Types/GetPaymentsCashPageRqTypeSDO.xsd|SCA-INF/src/xsd/ConciliationSpringBiz.xsd|Schemas/ConciliationSpringBiz.xsd|WSDLs/BpelConciliationCashTp.wsdl|WSDLs/BpelGetCreditMemo.wsdl|WSDLs/BpelGetPaymentsCash.wsdl|WSDLs/External/ConciliationTecWrapper.wsdl|WSDLs/External/ERPIntegrationBizWrapper.wsdl|WSDLs/External/IConciliationSpringBiz.wsdl|WSDLs/External/IConciliationSpringBizWrapper.wsdl|WSDLs/External/MessageTecWrapper.wsdl|WSDLs/External/SOAUtilitiesTecWrapper.wsdl">
+    <searchReplace>
+      <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+      <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+      <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ERPIntegrationBiz/ERPIntegrationBiz</replace>
+    </searchReplace>
+    <searchReplace>
+      <search>oramds:/apps/OSB/ConciliationTec/ConciliationTec</search>
+      <replace>oramds:/apps/OSB/DEV_ConciliationTec/ConciliationTec</replace>
+    </searchReplace>
+        <searchReplace>
+      <search>oramds:/apps/SOA/ConciliationBiz/ConciliationBiz</search>
+      <replace>oramds:/apps/SOA/DEV_ConciliationBiz/ConciliationBiz</replace>
+    </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

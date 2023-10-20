@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="DB_SOA_CLOUD" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/DB_SOA_CLOUD" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="DB_SOA_CLOUD_plt">
+      <plt:role name="DB_SOA_CLOUD_role">
+         <plt:portType name="tns:DB_SOA_CLOUD_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DB_SOA_CLOUD" schemaLocation="../Schemas/DB_SOA_CLOUD.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="UpdateStatusSFTPMsg">
+      <wsdl:part name="UpdateStatusSFTPPart" element="db:UpdateStatusSFTPRq"/>
+   </wsdl:message>
+   <wsdl:portType name="DB_SOA_CLOUD_ptt">
+      <wsdl:operation name="UpdateStatusSFTP">
+         <wsdl:input message="tns:UpdateStatusSFTPMsg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="ftpServiceReaderFileSantander">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="1016" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="1009" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpServiceReaderFileSantander" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpServiceReaderFileSantander#wsdl.interface(Get_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Get</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="ftpReadFileStatementBankBanorte">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="431" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="424" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpReadFileStatementBankBanorte" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanorte#wsdl.interface(GetFilesStatementsBankFromBanorte_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetFilesStatementsBankFromBanorte</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="ftpReadFileStatementsBankBBVA">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="821" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="814" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpReadFileStatementsBankBBVA" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBBVA#wsdl.interface(GetFilesStatementsBankBBVA_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetFilesStatementsBankBBVA</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="ftpReadFileStatementBankBanamex">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="626" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="619" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpReadFileStatementBankBanamex" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanamex#wsdl.interface(GetFilesStatementsBankFromBanamex_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetFilesStatementsBankFromBanamex</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="ftpReadFileStatementBankHSBC">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="236" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="229" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpReadFileStatementBankHSBC" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementBankHSBC#wsdl.interface(GetFilesStatementsBankFromHSBC_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetFilesStatementsBankFromHSBC</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="ftpReadFileStatementsBankBanregio">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="66" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="59" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ftpReadFileStatementsBankBanregio" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBanregio#wsdl.interface(GetFileBanregio_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ftp_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetFileBanregio</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="wsERPIntegrationBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1574" Y="720" width="136" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1564" Y="713" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPIntegrationBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>ImportToERPCloud</dgm:item>
+            <dgm:item>GenerateReport</dgm:item>
+            <dgm:item>GetJobsStatus</dgm:item>
+            <dgm:item>ImportToERPCloudCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsSFTPEstrellaRojaBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1574" Y="602" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1564" Y="595" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsSFTPEstrellaRojaBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetBankStatements</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsMessageBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1574" Y="354" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1564" Y="347" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsMessageBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendEmail</dgm:item>
+            <dgm:item>SendEmailCallback</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="wsERPManagementOfLoadImportBiz">
+        <dgm:body borderWidth="2" arcRad="20" X="1574" Y="484" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1564" Y="477" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="wsERPManagementOfLoadImportBiz" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.interface(ERPManagementOfLoadImportBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendReportInterface</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="bpelManagementsStatementsBankSantander">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="1001" width="130" height="161">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="994" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelManagementsStatementsBankSantander" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander#wsdl.interface(bpelManagementsStatementsBankSantander)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:outputPort name="sbpelGetBankDetails" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelNotifications" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankSantander">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="1001" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="994" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankSantander" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpServiceReaderFileSantander#wsdl.interface(Get_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatementsBankSantander.bpelManagementsStatementsBankSantander" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankSantander#wsdl.interface(bpelManagementsStatementsBankSantander)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="sbpelGenerateReport">
+        <dgm:body borderWidth="2" arcRad="20" X="1211" Y="358" width="130" height="61">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1201" Y="351" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="sbpelGenerateReport" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="sbpelImportErpCloud">
+        <dgm:body borderWidth="2" arcRad="20" X="1211" Y="451" width="130" height="86">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1201" Y="444" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="sbpelImportErpCloud" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="wsERPIntegrationBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.interface(ERPIntegrationBizCallbackPortType)"/>
+        <dgm:outputPort name="wsERPManagementOfLoadImportBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz#wsdl.interface(ERPManagementOfLoadImportBizPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankBanorte">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="416" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="409" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankBanorte" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanorte#wsdl.interface(GetFilesStatementsBankFromBanorte_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatementsBankBanorte.ManagementsStatementsBankBanorte" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte#wsdl.interface(bpelManagementsStatementsBankBanorte)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelManagementsStatementsBankBanorte">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="416" width="130" height="161">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="409" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ManagementsStatementsBankBanorte" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanorte#wsdl.interface(bpelManagementsStatementsBankBanorte)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelGetBankDetails" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelNotifications" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankBBVA">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="806" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="799" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankBBVA" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBBVA#wsdl.interface(GetFilesStatementsBankBBVA_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatmentsBankBBVA.bpelmanagementsstatmentsbankbbva_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/bpelManagementsStatmentsBankBBVA#wsdl.interface(bpelManagementsStatmentsBankBBVA)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelManagementsStatmentsBankBBVA">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="806" width="130" height="161">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="799" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelmanagementsstatmentsbankbbva_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/bpelManagementsStatmentsBankBBVA#wsdl.interface(bpelManagementsStatmentsBankBBVA)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelGetBankDetails" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelNotifications" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="sbpelGetBankDetails">
+        <dgm:body borderWidth="2" arcRad="20" X="1211" Y="646" width="130" height="61">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1201" Y="639" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="sbpelGetBankDetails" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankBanamex">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="611" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="604" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankBanamex" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/ftpReadFileStatementBankBanamex#wsdl.interface(GetFilesStatementsBankFromBanamex_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatementsBankBanamex.ManagementsStatementsBankBanorte" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanamex#wsdl.interface(bpelManagementsStatementsBankBanamex)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelManagementsStatementsBankBanamex">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="611" width="130" height="161">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="604" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ManagementsStatementsBankBanamex" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SFTPEstrellaRojaEnt/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanamex#wsdl.interface(bpelManagementsStatementsBankBanamex)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelGetBankDetails" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelNotifications" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="sbpelNotifications">
+        <dgm:body borderWidth="2" arcRad="20" X="1211" Y="767" width="130" height="61">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1201" Y="760" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="sbpelNotifications" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="wsMessageBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizCallbackPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankHSBC">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="221" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="214" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankHSBC" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementBankHSBC#wsdl.interface(GetFilesStatementsBankFromHSBC_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatementsBankHSBC.bpelmanagementsstatementsbankhsbc_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC#wsdl.interface(bpelManagementsStatementsBankHSBC)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelManagementsStatementsBankHSBC">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="221" width="130" height="161">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="214" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelmanagementsstatementsbankhsbc_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC#wsdl.interface(bpelManagementsStatementsBankHSBC)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelGetBankDetails" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelNotifications" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorStatementsBankBanregio">
+        <dgm:body borderWidth="2" arcRad="20" X="348" Y="51" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="338" Y="44" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorStatementsBankBanregio" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/SFTPEstrellaRojaEnt/ftpReadFileStatementsBankBanregio#wsdl.interface(GetFileBanregio_ptt)"/>
+        <dgm:outputPort name="bpelManagementsStatementsBankBanregio.bpelmanagementsstatementsbankbanregio_client" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanregio#wsdl.interface(bpelManagementsStatementsBankBanregio)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelManagementsStatementsBankBanregio">
+        <dgm:body borderWidth="2" arcRad="20" X="668" Y="51" width="130" height="136">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="658" Y="44" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelmanagementsstatementsbankbanregio_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankBanregio#wsdl.interface(bpelManagementsStatementsBankBanregio)"/>
+        <dgm:outputPort name="wsSFTPEstrellaRojaBiz" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz#wsdl.interface(SFTPEstrellaRojaBizPortType)"/>
+        <dgm:outputPort name="wsMessageBiz" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageBiz#wsdl.interface(MessageBizCallbackPortType)"/>
+        <dgm:outputPort name="sbpelGenerateReport" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="sbpelImportErpCloud" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="ftpServiceReaderFileSantander" target="mediatorStatementsBankSantander/mediatorStatementsBankSantander" width="2">
+        <dgm:gSegment X1="168" Y1="1026" X2="338" Y2="1026"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankSantander/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="1026" X2="1435" Y2="1026"/>
+        <dgm:gSegment X1="1435" Y1="1026" X2="1435" Y2="612"/>
+        <dgm:gSegment X1="1435" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="sbpelGenerateReport/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1351" Y1="383" X2="1480" Y2="383"/>
+        <dgm:gSegment X1="1480" Y1="383" X2="1480" Y2="730"/>
+        <dgm:gSegment X1="1480" Y1="730" X2="1564" Y2="730"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="sbpelImportErpCloud/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="1351" Y1="476" X2="1465" Y2="476"/>
+        <dgm:gSegment X1="1465" Y1="476" X2="1465" Y2="730"/>
+        <dgm:gSegment X1="1465" Y1="730" X2="1564" Y2="730"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ftpReadFileStatementBankBanorte" target="mediatorStatementsBankBanorte/mediatorStatementsBankBanorte" width="2">
+        <dgm:gSegment X1="168" Y1="441" X2="338" Y2="441"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankBanorte/bpelManagementsStatementsBankBanorte.ManagementsStatementsBankBanorte" target="bpelManagementsStatementsBankBanorte/ManagementsStatementsBankBanorte" width="2">
+        <dgm:gSegment X1="488" Y1="441" X2="658" Y2="441"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ftpReadFileStatementsBankBBVA" target="mediatorStatementsBankBBVA/mediatorStatementsBankBBVA" width="2">
+        <dgm:gSegment X1="168" Y1="831" X2="338" Y2="831"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankBBVA/bpelManagementsStatmentsBankBBVA.bpelmanagementsstatmentsbankbbva_client" target="bpelManagementsStatmentsBankBBVA/bpelmanagementsstatmentsbankbbva_client" width="2">
+        <dgm:gSegment X1="488" Y1="831" X2="658" Y2="831"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatmentsBankBBVA/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="831" X2="1042" Y2="831"/>
+        <dgm:gSegment X1="1042" Y1="831" X2="1042" Y2="887"/>
+        <dgm:gSegment X1="1042" Y1="887" X2="1420" Y2="887"/>
+        <dgm:gSegment X1="1420" Y1="887" X2="1420" Y2="612"/>
+        <dgm:gSegment X1="1420" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanorte/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="441" X2="847" Y2="441"/>
+        <dgm:gSegment X1="847" Y1="441" X2="847" Y2="256"/>
+        <dgm:gSegment X1="847" Y1="256" X2="1495" Y2="256"/>
+        <dgm:gSegment X1="1495" Y1="256" X2="1495" Y2="612"/>
+        <dgm:gSegment X1="1495" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankSantander/bpelManagementsStatementsBankSantander.bpelManagementsStatementsBankSantander" target="bpelManagementsStatementsBankSantander/bpelManagementsStatementsBankSantander" width="2">
+        <dgm:gSegment X1="488" Y1="1026" X2="658" Y2="1026"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ftpReadFileStatementBankBanamex" target="mediatorStatementsBankBanamex/mediatorStatementsBankBanamex" width="2">
+        <dgm:gSegment X1="168" Y1="636" X2="338" Y2="636"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankBanamex/bpelManagementsStatementsBankBanamex.ManagementsStatementsBankBanorte" target="bpelManagementsStatementsBankBanamex/ManagementsStatementsBankBanamex" width="2">
+        <dgm:gSegment X1="488" Y1="636" X2="658" Y2="636"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="sbpelNotifications/wsMessageBiz" target="wsMessageBiz" width="2">
+        <dgm:gSegment X1="1351" Y1="792" X2="1405" Y2="792"/>
+        <dgm:gSegment X1="1405" Y1="792" X2="1405" Y2="364"/>
+        <dgm:gSegment X1="1405" Y1="364" X2="1564" Y2="364"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="sbpelImportErpCloud/wsERPManagementOfLoadImportBiz" target="wsERPManagementOfLoadImportBiz" width="2">
+        <dgm:gSegment X1="1351" Y1="501" X2="1390" Y2="501"/>
+        <dgm:gSegment X1="1390" Y1="501" X2="1390" Y2="494"/>
+        <dgm:gSegment X1="1390" Y1="494" X2="1564" Y2="494"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ftpReadFileStatementBankHSBC" target="mediatorStatementsBankHSBC/mediatorStatementsBankHSBC" width="2">
+        <dgm:gSegment X1="168" Y1="246" X2="338" Y2="246"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankHSBC/bpelManagementsStatementsBankHSBC.bpelmanagementsstatementsbankhsbc_client" target="bpelManagementsStatementsBankHSBC/bpelmanagementsstatementsbankhsbc_client" width="2">
+        <dgm:gSegment X1="488" Y1="246" X2="658" Y2="246"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ftpReadFileStatementsBankBanregio" target="mediatorStatementsBankBanregio/mediatorStatementsBankBanregio" width="2">
+        <dgm:gSegment X1="168" Y1="76" X2="338" Y2="76"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankHSBC/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="246" X2="832" Y2="246"/>
+        <dgm:gSegment X1="832" Y1="246" X2="832" Y2="241"/>
+        <dgm:gSegment X1="832" Y1="241" X2="1510" Y2="241"/>
+        <dgm:gSegment X1="1510" Y1="241" X2="1510" Y2="612"/>
+        <dgm:gSegment X1="1510" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanamex/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="636" X2="832" Y2="636"/>
+        <dgm:gSegment X1="832" Y1="636" X2="832" Y2="612"/>
+        <dgm:gSegment X1="832" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorStatementsBankBanregio/bpelManagementsStatementsBankBanregio.bpelmanagementsstatementsbankbanregio_client" target="bpelManagementsStatementsBankBanregio/bpelmanagementsstatementsbankbanregio_client" width="2">
+        <dgm:gSegment X1="488" Y1="76" X2="658" Y2="76"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanregio/wsSFTPEstrellaRojaBiz" target="wsSFTPEstrellaRojaBiz" width="2">
+        <dgm:gSegment X1="808" Y1="76" X2="1540" Y2="76"/>
+        <dgm:gSegment X1="1540" Y1="76" X2="1540" Y2="612"/>
+        <dgm:gSegment X1="1540" Y1="612" X2="1564" Y2="612"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankSantander/wsERPIntegrationBiz" target="wsERPIntegrationBiz" width="2">
+        <dgm:gSegment X1="808" Y1="1051" X2="1450" Y2="1051"/>
+        <dgm:gSegment X1="1450" Y1="1051" X2="1450" Y2="730"/>
+        <dgm:gSegment X1="1450" Y1="730" X2="1564" Y2="730"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanregio/wsMessageBiz" target="wsMessageBiz" width="2">
+        <dgm:gSegment X1="808" Y1="101" X2="1525" Y2="101"/>
+        <dgm:gSegment X1="1525" Y1="101" X2="1525" Y2="364"/>
+        <dgm:gSegment X1="1525" Y1="364" X2="1564" Y2="364"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatmentsBankBBVA/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="808" Y1="856" X2="937" Y2="856"/>
+        <dgm:gSegment X1="937" Y1="856" X2="937" Y2="383"/>
+        <dgm:gSegment X1="937" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="sbpelGetBankDetails/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="1351" Y1="671" X2="1375" Y2="671"/>
+        <dgm:gSegment X1="1375" Y1="671" X2="1375" Y2="20"/>
+        <dgm:gSegment X1="1375" Y1="20" X2="1177" Y2="20"/>
+        <dgm:gSegment X1="1177" Y1="20" X2="1177" Y2="383"/>
+        <dgm:gSegment X1="1177" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatmentsBankBBVA/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="881" X2="952" Y2="881"/>
+        <dgm:gSegment X1="952" Y1="881" X2="952" Y2="476"/>
+        <dgm:gSegment X1="952" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatmentsBankBBVA/sbpelGetBankDetails" target="sbpelGetBankDetails/sbpelGetBankDetails" width="2">
+        <dgm:gSegment X1="808" Y1="906" X2="967" Y2="906"/>
+        <dgm:gSegment X1="967" Y1="906" X2="967" Y2="671"/>
+        <dgm:gSegment X1="967" Y1="671" X2="1201" Y2="671"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanamex/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="808" Y1="661" X2="892" Y2="661"/>
+        <dgm:gSegment X1="892" Y1="661" X2="892" Y2="383"/>
+        <dgm:gSegment X1="892" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanamex/sbpelGetBankDetails" target="sbpelGetBankDetails/sbpelGetBankDetails" width="2">
+        <dgm:gSegment X1="808" Y1="686" X2="907" Y2="686"/>
+        <dgm:gSegment X1="907" Y1="686" X2="907" Y2="671"/>
+        <dgm:gSegment X1="907" Y1="671" X2="1201" Y2="671"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanamex/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="711" X2="922" Y2="711"/>
+        <dgm:gSegment X1="922" Y1="711" X2="922" Y2="476"/>
+        <dgm:gSegment X1="922" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanamex/sbpelNotifications" target="sbpelNotifications/sbpelNotifications" width="2">
+        <dgm:gSegment X1="808" Y1="736" X2="1042" Y2="736"/>
+        <dgm:gSegment X1="1042" Y1="736" X2="1042" Y2="792"/>
+        <dgm:gSegment X1="1042" Y1="792" X2="1201" Y2="792"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatmentsBankBBVA/sbpelNotifications" target="sbpelNotifications/sbpelNotifications" width="2">
+        <dgm:gSegment X1="808" Y1="931" X2="982" Y2="931"/>
+        <dgm:gSegment X1="982" Y1="931" X2="982" Y2="792"/>
+        <dgm:gSegment X1="982" Y1="792" X2="1201" Y2="792"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanorte/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="808" Y1="466" X2="862" Y2="466"/>
+        <dgm:gSegment X1="862" Y1="466" X2="862" Y2="383"/>
+        <dgm:gSegment X1="862" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanorte/sbpelGetBankDetails" target="sbpelGetBankDetails/sbpelGetBankDetails" width="2">
+        <dgm:gSegment X1="808" Y1="491" X2="1072" Y2="491"/>
+        <dgm:gSegment X1="1072" Y1="491" X2="1072" Y2="671"/>
+        <dgm:gSegment X1="1072" Y1="671" X2="1201" Y2="671"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanorte/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="516" X2="877" Y2="516"/>
+        <dgm:gSegment X1="877" Y1="516" X2="877" Y2="476"/>
+        <dgm:gSegment X1="877" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanorte/sbpelNotifications" target="sbpelNotifications/sbpelNotifications" width="2">
+        <dgm:gSegment X1="808" Y1="541" X2="1057" Y2="541"/>
+        <dgm:gSegment X1="1057" Y1="541" X2="1057" Y2="792"/>
+        <dgm:gSegment X1="1057" Y1="792" X2="1201" Y2="792"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankSantander/sbpelGetBankDetails" target="sbpelGetBankDetails/sbpelGetBankDetails" width="2">
+        <dgm:gSegment X1="808" Y1="1076" X2="997" Y2="1076"/>
+        <dgm:gSegment X1="997" Y1="1076" X2="997" Y2="671"/>
+        <dgm:gSegment X1="997" Y1="671" X2="1201" Y2="671"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankSantander/sbpelNotifications" target="sbpelNotifications/sbpelNotifications" width="2">
+        <dgm:gSegment X1="808" Y1="1101" X2="1012" Y2="1101"/>
+        <dgm:gSegment X1="1012" Y1="1101" X2="1012" Y2="792"/>
+        <dgm:gSegment X1="1012" Y1="792" X2="1201" Y2="792"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankSantander/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="1126" X2="1027" Y2="1126"/>
+        <dgm:gSegment X1="1027" Y1="1126" X2="1027" Y2="476"/>
+        <dgm:gSegment X1="1027" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankHSBC/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="808" Y1="271" X2="1132" Y2="271"/>
+        <dgm:gSegment X1="1132" Y1="271" X2="1132" Y2="383"/>
+        <dgm:gSegment X1="1132" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankHSBC/sbpelGetBankDetails" target="sbpelGetBankDetails/sbpelGetBankDetails" width="2">
+        <dgm:gSegment X1="808" Y1="296" X2="1117" Y2="296"/>
+        <dgm:gSegment X1="1117" Y1="296" X2="1117" Y2="671"/>
+        <dgm:gSegment X1="1117" Y1="671" X2="1201" Y2="671"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankHSBC/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="321" X2="1102" Y2="321"/>
+        <dgm:gSegment X1="1102" Y1="321" X2="1102" Y2="476"/>
+        <dgm:gSegment X1="1102" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankHSBC/sbpelNotifications" target="sbpelNotifications/sbpelNotifications" width="2">
+        <dgm:gSegment X1="808" Y1="346" X2="1087" Y2="346"/>
+        <dgm:gSegment X1="1087" Y1="346" X2="1087" Y2="792"/>
+        <dgm:gSegment X1="1087" Y1="792" X2="1201" Y2="792"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanregio/sbpelGenerateReport" target="sbpelGenerateReport/sbpelGenerateReport" width="2">
+        <dgm:gSegment X1="808" Y1="126" X2="1162" Y2="126"/>
+        <dgm:gSegment X1="1162" Y1="126" X2="1162" Y2="383"/>
+        <dgm:gSegment X1="1162" Y1="383" X2="1201" Y2="383"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelManagementsStatementsBankBanregio/sbpelImportErpCloud" target="sbpelImportErpCloud/sbpelImportErpCloud" width="2">
+        <dgm:gSegment X1="808" Y1="151" X2="1147" Y2="151"/>
+        <dgm:gSegment X1="1147" Y1="151" X2="1147" Y2="476"/>
+        <dgm:gSegment X1="1147" Y1="476" X2="1201" Y2="476"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

@@ -1,0 +1,43 @@
+<wsdl:definitions
+     name="dbCloud"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/JournalBiz/dbCloud"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/JournalBiz/dbCloud"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/dbCloud"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="dbCloud_plt" >
+    <plt:role name="dbCloud_role" >
+      <plt:portType name="tns:dbCloud_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+  
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbCloud" schemaLocation="../Schemas/dbCloud.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="dbCloudInput_msg">
+        <wsdl:part name="dbCloudInput_msg" element="db:dbCloudInput"/>
+    </wsdl:message>
+    <wsdl:message name="dbCloudOutputCollection_msg">
+        <wsdl:part name="dbCloudOutputCollection" element="db:dbCloudOutputCollection"/>
+    </wsdl:message>
+        <wsdl:message name="SelectDates_msg">
+        <wsdl:part name="dbCloudInput_msg" element="db:dbCloudInput"/>
+    </wsdl:message>
+    <wsdl:message name="SelectDatesCollection_msg">
+        <wsdl:part name="dbCloudOutputCollection" element="db:dbCloudOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="dbCloud_ptt">
+        <wsdl:operation name="SelectGroupsDates">
+            <wsdl:input message="tns:dbCloudInput_msg"/>
+            <wsdl:output message="tns:dbCloudOutputCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="SelectDates">
+            <wsdl:input message="tns:dbCloudInput_msg"/>
+            <wsdl:output message="tns:dbCloudOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

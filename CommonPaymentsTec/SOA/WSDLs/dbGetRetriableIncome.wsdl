@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="dbGetRetriableIncome" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableIncome" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableIncome" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableIncome" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="dbGetRetriableIncome_plt">
+      <plt:role name="dbGetRetriableIncome_role">
+         <plt:portType name="tns:dbGetRetriableIncome_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableIncome" schemaLocation="../Schemas/dbGetRetriableIncome.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="dbGetRetriableIncomeInput_msg">
+      <wsdl:part name="dbGetRetriableIncomeInput_msg" element="db:dbGetRetriableIncomeInput"/>
+   </wsdl:message>
+   <wsdl:message name="dbGetRetriableIncomeOutputCollection_msg">
+      <wsdl:part name="dbGetRetriableIncomeOutputCollection" element="db:dbGetRetriableIncomeOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="dbGetRetriableIncome_ptt">
+      <wsdl:operation name="dbGetRetriableIncome">
+         <wsdl:input message="tns:dbGetRetriableIncomeInput_msg"/>
+         <wsdl:output message="tns:dbGetRetriableIncomeOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

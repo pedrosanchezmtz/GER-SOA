@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/StructureReceipt" targetNamespace="http://soa.estrellaroja.com.mx/StructureReceipt" elementFormDefault="qualified">
+   <xsd:element name="ResultCreateReceipt">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element type="ResultCreateReceiptTypes" name="ResultCreateReceiptDataTypes"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="ResultCreateReceiptTypes">
+      <xsd:sequence>
+         <xsd:element name="ResultCreateReceiptType" maxOccurs="unbounded" minOccurs="0">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="TablaPuenteId" type="xsd:decimal"/>
+                  <xsd:element name="ReceiptId" type="xsd:string"/>
+                  <xsd:element name="Estatus" type="xsd:string"/>
+                  <xsd:element name="ErrorDescripcion" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

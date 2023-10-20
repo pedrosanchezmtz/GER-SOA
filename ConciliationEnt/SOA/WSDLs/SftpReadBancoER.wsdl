@@ -1,0 +1,30 @@
+<wsdl:definitions
+     name="SftpReadBancoER"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/ConciliationEnt/SftpReadBancoER"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ftp/GER_SOA_OCI/ConciliationEnt/SftpReadBancoER"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:opaque="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+    >
+  <plt:partnerLinkType name="SftpReadBancoER_plt" >
+    <plt:role name="SftpReadBancoER_role" >
+      <plt:portType name="tns:SftpReadBancoER_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+    <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/opaque/"
+            xmlns="http://www.w3.org/2001/XMLSchema" >
+      <element name="opaqueElement" type="base64Binary" />
+    </schema>
+    </wsdl:types>
+    <wsdl:message name="SftpReadBancoER_msg">
+        <wsdl:part name="opaque" element="opaque:opaqueElement"/>
+    </wsdl:message>
+    <wsdl:portType name="SftpReadBancoER_ptt">
+        <wsdl:operation name="SftpReadBancoER">
+            <wsdl:input message="tns:SftpReadBancoER_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

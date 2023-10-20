@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmGetTrxType" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>IntegrationName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ProcessName</cell>
+         <cell>TEST</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TargetInterface</cell>
+         <cell>TrxType</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportName</cell>
+         <cell>XXER_CE_TRX_CODE.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PTRXCODE</cell>
+         <cell>p_trx_code</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ReportName_BankDetails</cell>
+         <cell>XXER_CE_BANK_DETAILS.xdm</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AccountNumber</cell>
+         <cell>P_BANK_ACCOUNT_NUM</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixBNMXCode</cell>
+         <cell>B</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixBBVACode</cell>
+         <cell>V0</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixBNRTCode</cell>
+         <cell>N</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixSNTRCode</cell>
+         <cell>S</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixHSBCCode</cell>
+         <cell>H</cell>
+      </row>
+      <row markdefault="false">
+         <cell>PrefixBANREGIOCode</cell>
+         <cell>BR</cell>
+      </row>
+   </rows>
+</dvm>

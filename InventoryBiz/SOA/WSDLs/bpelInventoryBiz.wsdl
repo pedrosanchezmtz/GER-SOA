@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelInventoryBiz" targetNamespace="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory">
+   <plnk:partnerLinkType name="bpelInventoryBiz">
+      <plnk:role name="bpelInventoryBizProvider" portType="client:bpelInventoryBiz"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/InventoryBiz" location="oramds:/apps/SOA/InventoryBiz/InventoryBiz.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdInventoryTransaction" xmlns:ns4="http://soa.estrellaroja.com.mx/InventoryBiz/NxsdInventoryTransaction">
+         <import namespace="http://soa.estrellaroja.com.mx/InventoryBiz" schemaLocation="oramds:/apps/SOA/InventoryBiz/InventoryBiz.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdInventoryTransaction" xmlns:ns4="http://soa.estrellaroja.com.mx/InventoryBiz/NxsdInventoryTransaction"/>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdInventoryTransaction" xmlns:ns4="http://soa.estrellaroja.com.mx/InventoryBiz/NxsdInventoryTransaction"/>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory"/>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InventoryBiz/bpelInventoryBiz" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/InventoryBiz/nxsdTransactionInventory" schemaLocation="../Schemas/nxsdTransactionInventory.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="InventoryBizRq">
+      <wsdl:part name="InventoryBizRq" element="ns1:InventoryBizRq"/>
+   </wsdl:message>
+   <wsdl:message name="InventoryBizRs">
+      <wsdl:part name="InventoryBizRs" element="ns1:InventoryBizRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelInventoryBiz">
+      <wsdl:operation name="InventoryBiz">
+         <wsdl:input message="client:InventoryBizRq"/>
+         <wsdl:output message="client:InventoryBizRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

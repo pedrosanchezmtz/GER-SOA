@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/ReadingsCommon" targetNamespace="http://soa.estrellaroja.com.mx/ReadingsCommon" elementFormDefault="qualified">
+   <xsd:element name="MetricsReading">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Reading" type="ReadingList" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="ReadingList">
+      <xsd:sequence>
+         <xsd:element name="assetNumber" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="readingDate" type="xsd:date" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="readingValue" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="origin" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="assetProcessed" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

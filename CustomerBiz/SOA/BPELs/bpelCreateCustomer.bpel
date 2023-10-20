@@ -1,0 +1,934 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelCreateCustomer" targetNamespace="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateCustomer"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateCustomer"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/CustomerBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateSites"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://soa.estrellaroja.com.mx/FinancialsTec"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/AuditControlTec">
+  <documentation>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación CreateCustomer del servicio CustomerBiz.]]>
+  </documentation>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/CustomerBiz/bpelCreateCustomer"
+          location="../WSDLs/bpelCreateCustomer.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelCreateCustomer" partnerLinkType="client:bpelCreateCustomer"
+                 myRole="bpelCreateCustomerProvider"/>
+    <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns2:wsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="bpelCreateSites.bpelCreateSites" partnerLinkType="ns1:bpelCreateSites"
+                 partnerRole="bpelCreateSitesProvider"/>
+    <partnerLink name="wsFinancialsTec" partnerLinkType="ns3:wsFinancialsTec" partnerRole="FinancialsTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:CreateCustomerRq"/>
+    <variable name="outputVariable" messageType="client:CreateCustomerRs"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <faultHandlers>
+    <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation>
+        <assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[CreateCustomer]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[CustomerBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <scope name="scopeCreateLog">
+          <variables>
+            <variable name="varCreateLogRq" messageType="ns4:CreateLogRq"/>
+            <variable name="varCreateLogRs" messageType="ns4:CreateLogRs"/>
+          </variables>
+          <faultHandlers>
+            <catchAll>
+              <empty name="nothingToDo"/>
+            </catchAll>
+          </faultHandlers>
+          <sequence name="sequenceCreateLog">
+            <assign name="assignCreateLogRq">
+              <copy>
+                <from>ora:getFaultName()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:codeError</to>
+              </copy>
+              <copy>
+                <from>ora:getFaultAsString()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:error</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>ora:toCDATA( ora:getFaultAsXML())</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:payload</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>concat('[',ora:getCompositeName(),']')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:serviceName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>concat('[',ora:getComponentName(),']')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:operationName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>ora:getInstanceId()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateLogRq.CreateLogRq/ns4:CompositeError/ns4:instanceNumber</to>
+              </copy>
+            </assign>
+            <extensionActivity>
+                <bpelx:call xmlns:sp1="http://soa.estrellaroja.com.mx/CustomerBiz/sbelCreateLog"
+                            target="sp1:sbelCreateLog" name="callCreateLog">
+                <bpelx:param name="varCreateLogRq" copyByValue="yes" variable="varCreateLogRq"/>
+                <bpelx:param name="varCreateLogRs" copyByValue="no" variable="varCreateLogRs"/>
+              </bpelx:call>
+              </extensionActivity>
+            </sequence>
+          
+        </scope>
+        <reply name="replyOutput" partnerLink="bpelCreateCustomer" variable="outputVariable"
+               portType="client:bpelCreateCustomer" operation="CreateCustomer">
+          <documentation>
+            <![CDATA[Se indica la salida del proceso BPEL.]]>
+          </documentation>
+        </reply>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelCreateCustomer.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelCreateCustomer" portType="client:bpelCreateCustomer"
+             operation="CreateCustomer" variable="inputVariable" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeCreateCustomer">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varCreateCustomerAccountRq" messageType="ns2:CreateCustomerAccountRq"/>
+        <variable name="varCreateCustomerAccountRs" messageType="ns2:CreateCustomerAccountRs"/>
+        <variable name="varCreatePersonRq" messageType="ns2:CreatePersonRq"/>
+        <variable name="varCreatePersonRs" messageType="ns2:CreatePersonRs"/>
+        <variable name="varCreateOrganizationRq" messageType="ns2:CreateOrganizationRq"/>
+        <variable name="varCreateOrganizationRs" messageType="ns2:CreateOrganizationRs"/>
+        <variable name="varCreateSitesRq" messageType="ns1:CreateSitesRq"/>
+        <variable name="varCreateSitesRs" messageType="ns1:CreateSitesRs"/>
+        <variable name="varUpdateCustomersRq" messageType="ns3:UpdateCustomersRq"/>
+        <variable name="varUpdateCustomersRs" messageType="ns3:UpdateCustomersRs"/>
+        <variable name="varCreateCustomerProfileRq" messageType="ns2:CreateCustProfileRq"/>
+        <variable name="varCreateCustomerProfileRs" messageType="ns2:CreateCustProfileRs"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CreateCustomer]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CustomerBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CreateCustomer]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CustomerBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CreateCustomer]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CustomerBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CreateCustomer]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[CustomerBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceCreateCustomer">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <if name="IfCustomerIsPerson">
+          <documentation>
+            <![CDATA[Person]]>
+          </documentation>
+          <condition>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerType = 'PERSON'</condition>
+          <sequence>
+            <assign name="trCreatePersonRq">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy ignoreMissingFromData="yes"> 
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationServiceTecCreatePersonRq.xsl", $inputVariable.CreateCustomerRq)</from>
+                <to variable="varCreatePersonRq" part="CreatePersonRq"/>
+              </copy>
+            </assign>
+            <invoke name="invokeWsERPIntegrationServiceTecCreatePerson" bpelx:invokeAsDetail="no"
+                    partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType"
+                    operation="CreatePerson" inputVariable="varCreatePersonRq" outputVariable="varCreatePersonRs"/>
+            <if name="IfHasError">
+              <documentation>
+                <![CDATA[Error]]>
+              </documentation>
+              <condition>string-length($varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error/cmn:ErrorCode) &gt; 0</condition>
+              <sequence name="Sequence3">
+                <assign name="assignCreateCustomerError">
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal><Element/></literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                    <bpelx:remove>
+                      <?audit suppress oracle.ide.xml.validation-incomplete?>
+                      <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+                    </bpelx:remove>
+                  </extensionAssignOperation>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>SOA-00015</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>Unable to create/update customer</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>concat('Unable to create/update customer &lt;',$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:Description,'&gt;')</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>ora:getComponentName()</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>ora:getCompositeName()</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>xp20:current-dateTime()</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>CreateCustomer</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:OperationName</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>Failed</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Estaus</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>0</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:SuccessRecordCount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>1</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:ErrorRecordCount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from><literal>1</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:TotalRecordCount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ErrorCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ShortDescription</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:Description</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:BusinessProcess</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:BusinessProcess</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:FailedService</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:FailedService</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$varCreatePersonRs.CreatePersonRs/cmn:Errors/cmn:Error[1]/cmn:TimeStamp</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:TimeStamp</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes">
+                    <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerId</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/ns0:RecordKey</to>
+                  </copy>
+                </assign>
+                <!-- aqui -->
+                <reply name="replyWithError" partnerLink="bpelCreateCustomer" variable="outputVariable"
+                       portType="client:bpelCreateCustomer" operation="CreateCustomer"/>
+                <exit name="endProccess"/>
+              </sequence>
+              <else>
+                <documentation>
+                  <![CDATA[Success]]>
+                </documentation>
+                <assign name="trCreateCustomerAccountRq">
+                  <bpelx:annotation>
+                    <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                  </bpelx:annotation>
+                  <copy ignoreMissingFromData="yes"> 
+                    <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationServiceTecCreatePersonCustomerAccountRq.xsl", $inputVariable.CreateCustomerRq, "varCreatePersonRs.CreatePersonRs", $varCreatePersonRs.CreatePersonRs)</from>
+                    <to variable="varCreateCustomerAccountRq" part="CreateCustomerAccountRq"/>
+                  </copy>
+                </assign>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[Organization]]>
+            </documentation>
+            <sequence name="Sequence2">
+              <assign name="trCreateOrganizationRq">
+                <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                </bpelx:annotation>
+                <copy ignoreMissingFromData="yes"> 
+                  <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationServiceTecCreateOrganizationRq.xsl", $inputVariable.CreateCustomerRq)</from>
+                  <to variable="varCreateOrganizationRq" part="CreateOrganizationRq"/>
+                </copy>
+              </assign>
+              <invoke name="invokeWsERPIntegrationServiceTecCreateOrganization" bpelx:invokeAsDetail="no"
+                      partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType"
+                      operation="CreateOrganization" inputVariable="varCreateOrganizationRq"
+                      outputVariable="varCreateOrganizationRs"/>
+              <if name="IfHasError">
+                <documentation>
+                  <![CDATA[Error]]>
+                </documentation>
+                <condition>string-length($varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error/cmn:ErrorCode) &gt; 0</condition>
+                <sequence name="Sequence4">
+                  <assign name="assignCreateCustomerError">
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal><Element/></literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+                    </copy>
+                    <extensionAssignOperation>
+                      <bpelx:remove>
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+                      </bpelx:remove>
+                    </extensionAssignOperation>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>SOA-00015</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>Unable to create/update customer</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>concat('Unable to create/update customer &lt;',$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:Description,'&gt;')</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>ora:getComponentName()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>ora:getCompositeName()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>xp20:current-dateTime()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>CreateCustomer</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:OperationName</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>Failed</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Estaus</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>0</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:SuccessRecordCount</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>1</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:ErrorRecordCount</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from><literal>1</literal></from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:TotalRecordCount</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ErrorCode</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ShortDescription</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:Description</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:BusinessProcess</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:BusinessProcess</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:FailedService</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:FailedService</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$varCreateOrganizationRs.CreateOrganizationRs/cmn:Errors/cmn:Error[1]/cmn:TimeStamp</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:TimeStamp</to>
+                    </copy>
+                    <copy ignoreMissingFromData="yes">
+                      <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerId</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/ns0:RecordKey</to>
+                    </copy>
+                  </assign>
+                  <reply name="replyWithError" partnerLink="bpelCreateCustomer" variable="outputVariable"
+                         portType="client:bpelCreateCustomer" operation="CreateCustomer"/>
+                  <exit name="endProccess"/>
+                </sequence>
+                <else>
+                  <documentation>
+                    <![CDATA[Success]]>
+                  </documentation>
+                  <assign name="trCreatecustomerAccountRq">
+                    <bpelx:annotation>
+                      <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy ignoreMissingFromData="yes"> 
+                      <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRq_To_WsERPIntegrationServiceTecCreateOrganizationCustomerAccountRq.xsl", $inputVariable.CreateCustomerRq, "varCreateOrganizationRs.CreateOrganizationRs", $varCreateOrganizationRs.CreateOrganizationRs)</from>
+                      <to variable="varCreateCustomerAccountRq" part="CreateCustomerAccountRq"/>
+                    </copy>
+                  </assign>
+                </else>
+              </if>
+            </sequence>
+          </else>
+        </if>
+        <invoke name="invokeWsERPIntegrationServiceTecCreateCustomerAccount" bpelx:invokeAsDetail="no"
+                partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType"
+                operation="CreateCustomerAccount" inputVariable="varCreateCustomerAccountRq"
+                outputVariable="varCreateCustomerAccountRs"/>
+        <if name="IfCustomerAccountSuccess">
+          <documentation>
+            <![CDATA[Success]]>
+          </documentation>
+          <condition>string-length($varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountId) &gt;0</condition>
+          <sequence name="Sequence5">
+            <assign name="assignCreateCustProfileRq">
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:PartyId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateCustomerProfileRq.CreateCustProfileRq/ns2:PartyId</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateCustomerProfileRq.CreateCustProfileRq/ns2:CustomerAccountId</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountNumber</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateCustomerProfileRq.CreateCustProfileRq/ns2:AccountNumber</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from><literal>DEFAULT</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateCustomerProfileRq.CreateCustProfileRq/ns2:ProfileClassName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:PaymentTerms</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateCustomerProfileRq.CreateCustProfileRq/ns2:PaymentTermns</to>
+              </copy>
+            </assign>
+            <invoke name="invokeCreateCustomerProfile" bpelx:invokeAsDetail="no"
+                    partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType"
+                    operation="CreateCustProfile" inputVariable="varCreateCustomerProfileRq"
+                    outputVariable="varCreateCustomerProfileRs"/>
+            <assign name="assignRs">
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>CreateCustomer</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:OperationName</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>Success</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Estaus</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>1</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:SuccessRecordCount</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>0</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:ErrorRecordCount</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>1</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:TotalRecordCount</to>
+              </copy>
+              <copy bpelx:insertMissingToData="yes">
+                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <?audit suppress oracle.ide.xml.validation-incomplete?>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:ResultKeyId</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateSitesRq.CreateSitesRq/ns0:CustomerId</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateSitesRq.CreateSitesRq/ns0:CustomerAccountId</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerType</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateSitesRq.CreateSitesRq/ns0:CustomerType</to>
+              </copy>
+              <copy>
+                <from>$varCreateCustomerAccountRq.CreateCustomerAccountRq/ns2:PartyId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCreateSitesRq.CreateSitesRq/ns0:PartyId</to>
+              </copy>
+              <copy>
+                <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUpdateCustomersRq.UpdateCustomersRq/ns3:Customer/ns3:CustomerId</to>
+              </copy>
+              <copy>
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/ns2:Return/ns2:CustomerAccountId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUpdateCustomersRq.UpdateCustomersRq/ns3:Customer/ns3:AccountId</to>
+              </copy>
+              <copy>
+                <from><literal>S</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUpdateCustomersRq.UpdateCustomersRq/ns3:Customer/ns3:replicationInd</to>
+              </copy>
+              <copy>
+                <from><literal>Only Party and CustomerAccount was created, but sites not</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varUpdateCustomersRq.UpdateCustomersRq/ns3:Customer/ns3:replicationMsg</to>
+              </copy>
+            </assign>
+            <invoke name="invokeFinancialsTecUpdateCustomer" bpelx:invokeAsDetail="no" partnerLink="wsFinancialsTec"
+                    portType="ns3:FinancialsTecPortType" operation="UpdateCustomers"
+                    inputVariable="varUpdateCustomersRq" outputVariable="varUpdateCustomersRs"/>
+            <invoke name="invokeBpelCreateCustomerSites" bpelx:invokeAsDetail="no"
+                    partnerLink="bpelCreateSites.bpelCreateSites" portType="ns1:bpelCreateSites"
+                    operation="CreateSites" inputVariable="varCreateSitesRq" outputVariable="varCreateSitesRs"/>
+            <if name="IfCreateSitesSuccess">
+              <documentation>
+                <![CDATA[Success]]>
+              </documentation>
+              <condition>$varCreateSitesRs.CreateSitesRs/ns0:Return/ns0:Estaus ='Success'</condition>
+              <assign name="assignRs">
+                <copy ignoreMissingFromData="yes">
+                  <from>$varCreateSitesRs.CreateSitesRs/ns0:Return</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:NestedOperation</to>
+                </copy>
+              </assign>
+              <else>
+                <documentation>
+                  <![CDATA[Error]]>
+                </documentation>
+                <assign name="assignRs">
+                  <copy ignoreMissingFromData="yes"> 
+                    <from>$varCreateSitesRs.CreateSitesRs/ns0:Return</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:NestedOperation</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes"> 
+                    <from><literal>Failed</literal></from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Estaus</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes"> 
+                    <from>$varCreateSitesRs.CreateSitesRs/cmn:Errors/cmn:Error[1]</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error</to>
+                  </copy>
+                </assign>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[Error]]>
+            </documentation>
+            <assign name="assignRs">
+              <copy ignoreMissingFromData="yes">
+                <from><literal><Element/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</to>
+              </copy>
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <?audit suppress oracle.ide.xml.validation-incomplete?>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Success</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>Failed</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Estaus</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>SOA-00016</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from><literal>Unable to create/update Customer Account</literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>concat('Unable to create/update Customer Account &lt;',$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:Description,'&gt;')</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:Description</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>ora:getComponentName()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>ora:getCompositeName()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>xp20:current-dateTime()</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:ErrorCode</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ErrorCode</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:ShortDescription</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:ShortDescription</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:Description</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:Description</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:BusinessProcess</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:BusinessProcess</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:FailedService</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:FailedService</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$varCreateCustomerAccountRs.CreateCustomerAccountRs/cmn:Errors/cmn:Error[1]/cmn:TimeStamp</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/cmn:TimeStamp</to>
+              </copy>
+              <copy ignoreMissingFromData="yes">
+                <from>$inputVariable.CreateCustomerRq/ns0:CustomerData/ns0:CustomerId</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.CreateCustomerRs/ns0:Return/ns0:Errors/ns0:RecordError/ns0:RecordKey</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelCreateCustomer" portType="client:bpelCreateCustomer"
+           operation="CreateCustomer" variable="outputVariable">
+      <documentation>
+        <![CDATA[Salida del proceso BPEL.]]>
+      </documentation>
+    </reply>
+  </sequence>
+</process>

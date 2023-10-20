@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/MileageControlnet" targetNamespace="http://soa.estrellaroja.com.mx/MileageControlnet" elementFormDefault="qualified" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" nxsd:version="JSON" nxsd:jsonTopLevelArray="true" nxsd:encoding="US-ASCII">
+   <xsd:element name="GetMileageControlnetRequest">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="fechaInicio" type="xsd:date"/>
+            <xsd:element name="fechaFin" type="xsd:date"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:element name="GetMileageControlnetResponse">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="topLevelArray" maxOccurs="unbounded">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="unidad" type="xsd:integer"/>
+                     <xsd:element name="fecha" type="xsd:date"/>
+                     <xsd:element name="lecturaAcomulada" type="xsd:integer"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation xmlns="">
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

@@ -1,0 +1,145 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Jun 06 15:47:41 CDT 2019
+  Author:  IVAN
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="LiquidacionBPEL"
+               targetNamespace="http://xmlns.oracle.com/LiquidacionEnt/LiquidacionEnt/LiquidacionBPEL"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/LiquidacionEnt/LiquidacionEnt/LiquidacionBPEL"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/LiquidacionEnt/LiquidacionEnt/dbCargarLiquidacion"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/LiquidacionEnt/LiquidacionEnt/dbProcesarLiquidacion"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/LiquidacionEnt/LiquidacionEnt/dbImportarLiquidacion"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbCargarLiquidacion"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbProcesarLiquidacion"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbImportarLiquidacion"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/LiquidacionEnt/LiquidacionEnt/dbDliverCargarLiquidacion"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/LiquidacionEnt/LiquidacionEnt/LiquidacionBPEL" location="../WSDLs/LiquidacionBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="ejecutarLiquidacion" partnerLinkType="client:LiquidacionBPEL" myRole="LiquidacionBPELProvider"/>
+    <partnerLink name="dbProcesarLiquidacion" partnerLinkType="ns2:dbProcesarLiquidacion_plt"
+                 partnerRole="dbProcesarLiquidacion_role"/>
+    <partnerLink name="dbImportarLiquidacion" partnerLinkType="ns3:dbImportarLiquidacion_plt"
+                 partnerRole="dbImportarLiquidacion_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:LiquidacionBPELRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:LiquidacionBPELResponseMessage"/>
+    <variable name="dbProcesarLiquidacion_InputVariable" messageType="ns2:args_in_msg"/>
+    <variable name="dbProcesarLiquidacion_OutputVariable" messageType="ns2:args_out_msg"/>
+    <variable name="dbImportarLiquidacion_InputVariable" messageType="ns3:args_in_msg"/>
+    <variable name="dbImportarLiquidacion_OutputVariable" messageType="ns3:args_out_msg"/>
+    <variable name="varDelay" type="xsd:string">
+      <from>'7000'</from>
+    </variable>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in LiquidacionBPEL.wsdl) -->
+    <receive name="receiveInput" partnerLink="ejecutarLiquidacion" portType="client:LiquidacionBPEL"
+             operation="runLiquidacion" variable="inputVariable" createInstance="yes"/>
+    <assign name="procesarLiquidacionAssign">
+      <copy>
+        <from>xp20:upper-case($inputVariable.payload/client:input)</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$dbProcesarLiquidacion_InputVariable.InputParameters/ns5:P_SISTEMA_ORIGEN</to>
+      </copy>
+    </assign>
+    <invoke name="procesaLiquidacionInvoke" partnerLink="dbProcesarLiquidacion"
+            portType="ns2:dbProcesarLiquidacion_ptt" operation="dbProcesarLiquidacion"
+            inputVariable="dbProcesarLiquidacion_InputVariable" outputVariable="dbProcesarLiquidacion_OutputVariable"
+            bpelx:invokeAsDetail="no"/>
+    <extensionActivity>
+      <bpelx:exec name="Java_Delay">
+        <![CDATA[try {   
+int VarDelay = java.lang.Integer.parseInt((java.lang.String)getVariableData("varDelay"));    
+addAuditTrailEntry("iniciando delay"+ VarDelay +" milisegundos");     
+            java.lang.Thread.sleep(VarDelay);   
+  
+addAuditTrailEntry("fin  delay"+ VarDelay +" milisegundos");  
+        }   
+        catch (InterruptedException ex) {   
+            java.lang.Thread.currentThread().interrupt();   
+        }]]>
+      </bpelx:exec>
+    </extensionActivity>
+    <if name="ImportarLiquidacionIf">
+      <documentation>
+        <![CDATA[Processed Invoices]]>
+      </documentation>
+      <condition>count($dbProcesarLiquidacion_OutputVariable.OutputParameters/ns5:P_RESPUESTA/ns5:P_RESPUESTA_ITEM) &gt;0</condition>
+      <sequence>
+        <assign name="importarLiquidacionAssign">
+          <copy>
+            <from>xp20:upper-case($inputVariable.payload/client:input)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$dbImportarLiquidacion_InputVariable.InputParameters/ns6:P_SISTEMA_ORIGEN</to>
+          </copy>
+        </assign>
+        <invoke name="importarLiquidacionInvoke" bpelx:invokeAsDetail="no" partnerLink="dbImportarLiquidacion"
+                portType="ns3:dbImportarLiquidacion_ptt" operation="dbImportarLiquidacion"
+                inputVariable="dbImportarLiquidacion_InputVariable"
+                outputVariable="dbImportarLiquidacion_OutputVariable"/>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[None Invoices]]>
+        </documentation>
+        <empty name="Empty"/>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="ejecutarLiquidacion" portType="client:LiquidacionBPEL"
+           operation="runLiquidacion" variable="outputVariable"/>
+  </sequence>
+</process>

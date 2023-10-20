@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGetConciliation"
+                  targetNamespace="http://soa.estrellaroja.com.mx/ConciliationEnt/BpelGetConciliation"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/ConciliationEnt/BpelGetConciliation"
+                  xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationEnt"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+  <wsdl:import namespace="http://soa.estrellaroja.com.mx/ConciliationEnt" location="oramds:/apps/SOA/ConciliationEnt/ConciliationEnt.wsdl"/>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/ConciliationEnt"
+              schemaLocation="oramds:/apps/SOA/ConciliationEnt/ConciliationEnt.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="BpelGetConciliationRequestMessage">
+    <wsdl:part name="payload" element="ns1:ConciliationEntRq"/>
+  </wsdl:message>
+  <wsdl:message name="BpelGetConciliationResponseMessage">
+    <wsdl:part name="payload" element="ns1:ConciliationEntRs"/>
+  </wsdl:message>
+  <wsdl:portType name="BpelGetConciliation">
+    <wsdl:operation name="GetConciliation">
+      <wsdl:input message="client:BpelGetConciliationRequestMessage"/>
+      <wsdl:output message="client:BpelGetConciliationResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <plnk:partnerLinkType name="BpelGetConciliation">
+    <plnk:role name="BpelGetConciliationProvider" portType="client:BpelGetConciliation"/>
+  </plnk:partnerLinkType>
+</wsdl:definitions>

@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ERPIntegrationApiTec"
+     targetNamespace="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:WL5G3N1="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsERPIntegrationApiTec">
+        <plnk:role name="postInvoicePortType" portType="WL5G3N1:postInvoicePortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationApiTec" location="oramds:/apps/OSB/ERPIntegrationApiTec/ERPIntegrationApiTec.wsdl"/>
+</wsdl:definitions>

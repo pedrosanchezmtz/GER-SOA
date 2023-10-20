@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="CommonPaymentsTec">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="177" width="137" height="132">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="170" width="156" height="146">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="CommonPaymentsTec" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec#wsdl.interface(CommonPaymentsTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>MergePayment</dgm:item>
+            <dgm:item>GetPayement</dgm:item>
+            <dgm:item>GetRetriableComplements</dgm:item>
+            <dgm:item>GetRetriableIncomes</dgm:item>
+            <dgm:item>GetRetriableOutcomes</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="dbHierarchy">
+        <dgm:body borderWidth="2" arcRad="20" X="1212" Y="26" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1202" Y="19" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="dbHierarchy" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy#wsdl.interface(dbHierarchy_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>merge</dgm:item>
+            <dgm:item>dbHierarchySelect</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="dbRetriableComplements">
+        <dgm:body borderWidth="2" arcRad="20" X="1212" Y="183" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1202" Y="176" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="dbRetriableComplements" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbRetriableComplements#wsdl.interface(dbRetriableComplements_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>dbRetriableComplements</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="dbGetRetriableIncome">
+        <dgm:body borderWidth="2" arcRad="20" X="1212" Y="420" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1202" Y="413" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="dbGetRetriableIncome" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableIncome#wsdl.interface(dbGetRetriableIncome_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>dbGetRetriableIncome</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="dbGetRetriableOutcome">
+        <dgm:body borderWidth="2" arcRad="20" X="1212" Y="301" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1202" Y="294" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="dbGetRetriableOutcome" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableOutcome#wsdl.interface(dbGetRetriableOutcome_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/db_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>dbGetRetriableOutcome</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="bpelMergePayment">
+        <dgm:body borderWidth="2" arcRad="20" X="620" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="610" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelMergePayment" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelMergePayment#wsdl.interface(bpelMergePayment)"/>
+        <dgm:outputPort name="bpelHandleMergePayment" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment#wsdl.interface(bpelHandleMergePayment)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="mediatorCommonPaymentsTec">
+        <dgm:body borderWidth="2" arcRad="20" X="324" Y="162" width="130" height="161">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="314" Y="155" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorCommonPaymentsTec" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec#wsdl.interface(CommonPaymentsTecPortType)"/>
+        <dgm:outputPort name="bpelMergePayment.bpelMergePayment" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelMergePayment#wsdl.interface(bpelMergePayment)"/>
+        <dgm:outputPort name="bpelGetPayement.bpelgetpayement_client" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetPayement#wsdl.interface(bpelGetPayement)"/>
+        <dgm:outputPort name="bpelGetRetriableComplements.bpelgetretriablecomplements_client" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetRetriableComplements#wsdl.interface(bpelGetRetriableComplements)"/>
+        <dgm:outputPort name="bpelGetRetriableOutcome.GetRetriableOutcome" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com/CommonPaymentsTec/bpelGetRetriableOutcome#wsdl.interface(bpelGetRetriableOutcome)"/>
+        <dgm:outputPort name="bpelGetRetriableIncome.GetRetriableIncome" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com/CommonPaymentsTec/bpelGetRetriableIncome#wsdl.interface(bpelGetRetriableIncome)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelHandleMergePayment">
+        <dgm:body borderWidth="2" arcRad="20" X="916" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="906" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelhandlemergepayment_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelHandleMergePayment#wsdl.interface(bpelHandleMergePayment)"/>
+        <dgm:outputPort name="dbHierarchy" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy#wsdl.interface(dbHierarchy_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetPayement">
+        <dgm:body borderWidth="2" arcRad="20" X="916" Y="119" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="906" Y="112" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelgetpayement_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetPayement#wsdl.interface(bpelGetPayement)"/>
+        <dgm:outputPort name="dbHierarchy" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbHierarchy#wsdl.interface(dbHierarchy_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetRetriableComplements">
+        <dgm:body borderWidth="2" arcRad="20" X="916" Y="212" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="906" Y="205" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelgetretriablecomplements_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/CommonPaymentsTec/bpelGetRetriableComplements#wsdl.interface(bpelGetRetriableComplements)"/>
+        <dgm:outputPort name="dbRetriableComplements" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbRetriableComplements#wsdl.interface(dbRetriableComplements_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetRetriableIncome">
+        <dgm:body borderWidth="2" arcRad="20" X="916" Y="405" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="906" Y="398" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="GetRetriableIncome" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com/CommonPaymentsTec/bpelGetRetriableIncome#wsdl.interface(bpelGetRetriableIncome)"/>
+        <dgm:outputPort name="dbGetRetriableIncome" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableIncome#wsdl.interface(dbGetRetriableIncome_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetRetriableOutcome">
+        <dgm:body borderWidth="2" arcRad="20" X="916" Y="305" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="906" Y="298" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="GetRetriableOutcome" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com/CommonPaymentsTec/bpelGetRetriableOutcome#wsdl.interface(bpelGetRetriableOutcome)"/>
+        <dgm:outputPort name="dbGetRetriableOutcome" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/db/CommonPaymentsTec/CommonPaymentsTec/dbGetRetriableOutcome#wsdl.interface(dbGetRetriableOutcome_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="CommonPaymentsTec" target="mediatorCommonPaymentsTec/mediatorCommonPaymentsTec" width="2">
+        <dgm:gSegment X1="168" Y1="187" X2="314" Y2="187"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorCommonPaymentsTec/bpelMergePayment.bpelMergePayment" target="bpelMergePayment/bpelMergePayment" width="2">
+        <dgm:gSegment X1="464" Y1="187" X2="488" Y2="187"/>
+        <dgm:gSegment X1="488" Y1="187" X2="488" Y2="51"/>
+        <dgm:gSegment X1="488" Y1="51" X2="610" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelHandleMergePayment/dbHierarchy" target="dbHierarchy" width="2">
+        <dgm:gSegment X1="1056" Y1="51" X2="1080" Y2="51"/>
+        <dgm:gSegment X1="1080" Y1="51" X2="1080" Y2="36"/>
+        <dgm:gSegment X1="1080" Y1="36" X2="1202" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelMergePayment/bpelHandleMergePayment" target="bpelHandleMergePayment/bpelhandlemergepayment_client" width="2">
+        <dgm:gSegment X1="760" Y1="51" X2="906" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorCommonPaymentsTec/bpelGetPayement.bpelgetpayement_client" target="bpelGetPayement/bpelgetpayement_client" width="2">
+        <dgm:gSegment X1="464" Y1="212" X2="503" Y2="212"/>
+        <dgm:gSegment X1="503" Y1="212" X2="503" Y2="144"/>
+        <dgm:gSegment X1="503" Y1="144" X2="906" Y2="144"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetPayement/dbHierarchy" target="dbHierarchy" width="2">
+        <dgm:gSegment X1="1056" Y1="144" X2="1095" Y2="144"/>
+        <dgm:gSegment X1="1095" Y1="144" X2="1095" Y2="36"/>
+        <dgm:gSegment X1="1095" Y1="36" X2="1202" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorCommonPaymentsTec/bpelGetRetriableComplements.bpelgetretriablecomplements_client" target="bpelGetRetriableComplements/bpelgetretriablecomplements_client" width="2">
+        <dgm:gSegment X1="464" Y1="237" X2="906" Y2="237"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetRetriableComplements/dbRetriableComplements" target="dbRetriableComplements" width="2">
+        <dgm:gSegment X1="1056" Y1="237" X2="1080" Y2="237"/>
+        <dgm:gSegment X1="1080" Y1="237" X2="1080" Y2="193"/>
+        <dgm:gSegment X1="1080" Y1="193" X2="1202" Y2="193"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetRetriableIncome/dbGetRetriableIncome" target="dbGetRetriableIncome" width="2">
+        <dgm:gSegment X1="1056" Y1="430" X2="1202" Y2="430"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetRetriableOutcome/dbGetRetriableOutcome" target="dbGetRetriableOutcome" width="2">
+        <dgm:gSegment X1="1056" Y1="330" X2="1080" Y2="330"/>
+        <dgm:gSegment X1="1080" Y1="330" X2="1080" Y2="311"/>
+        <dgm:gSegment X1="1080" Y1="311" X2="1202" Y2="311"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorCommonPaymentsTec/bpelGetRetriableOutcome.GetRetriableOutcome" target="bpelGetRetriableOutcome/GetRetriableOutcome" width="2">
+        <dgm:gSegment X1="464" Y1="262" X2="503" Y2="262"/>
+        <dgm:gSegment X1="503" Y1="262" X2="503" Y2="330"/>
+        <dgm:gSegment X1="503" Y1="330" X2="906" Y2="330"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorCommonPaymentsTec/bpelGetRetriableIncome.GetRetriableIncome" target="bpelGetRetriableIncome/GetRetriableIncome" width="2">
+        <dgm:gSegment X1="464" Y1="287" X2="488" Y2="287"/>
+        <dgm:gSegment X1="488" Y1="287" X2="488" Y2="430"/>
+        <dgm:gSegment X1="488" Y1="430" X2="906" Y2="430"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

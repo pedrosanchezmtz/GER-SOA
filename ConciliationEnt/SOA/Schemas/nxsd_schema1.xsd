@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://TargetNamespace.com/ServiceName" targetNamespace="http://TargetNamespace.com/ServiceName" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+
+
+  <xsd:element name="Root-Element">
+    <xsd:complexType>
+       <xsd:sequence>
+        <xsd:element name="HEADER" type="tns:HEADER_t" nxsd:conditionValue="HEADER" nxsd:lookAhead="1" nxsd:lookFor=""/>
+        <xsd:element name="SUMMARY" type="tns:SUMMARY_t" nxsd:conditionValue="SUMMARY" nxsd:lookAhead="1" nxsd:lookFor=""/>
+        <xsd:element name="SUBMISSION" type="tns:SUBMISSION_t" nxsd:conditionValue="SUBMISSION" nxsd:lookAhead="1" nxsd:lookFor=""/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:complexType name="SUBMISSION_t" nxsd:style="list" nxsd:itemSeparatedBy="${eol}">
+    <xsd:sequence>
+      <xsd:element name="NUM_ESTABLECIMIENTO2" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_ESTABLECIMIENTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="CODIGO_TIPO_CUENTA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_PAGO_AMEX" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_PAGO" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONEDA_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_ESTABLECIMIENTO_PRESENTION" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_ENVIO_COMERCIAL" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_PROCESAMIENTO_AMEX" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_FACTURA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONEDA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="RELLENO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="TASA_CAMBIO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_BRUTO_MONEDA_PRESENTACION" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_BRUTO_MONEDA_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_DESCUENTO_RSENTCION" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_CARGO_SERVICIO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_IMPUESTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_NETO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="TASA_DESCUENTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="TASA_IMPUESTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="SUMA_TRANSACCIONES" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="IDENTIFICACION_SEGUIMIENTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_CUOTA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_ACELERACION" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_LIQUIDACION_ORIGINAL" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_ACELERACION" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="CANTIDAD_DIAS_ADELANTADOS" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_CARGO_ACELERACION" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_NETO_CARGO_ACELERACION" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_BRUTO_DEBITO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_BRUTO_CREDITO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="SUMMARY_t" nxsd:style="list" nxsd:itemSeparatedBy="${eol}">
+    <xsd:sequence>
+      <xsd:element name="IDENTIFICACION_ESTABLECIMIENTO2" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="IDENTIFICACION_ESTABLECIMIENTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="CODIGO_TIPO_CUENTA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_PAGO" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONEDA_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_UNICO_REFERENCIA_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_NETO_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_BRUTO_PAGO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_DESCUENTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_SERVICIO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_AJUSTE" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_IMPUESTOS" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="MONTO_SALDO_DEBITO_INICIAL" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_DEPOSITO_DIRECTO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_CUENTA_BANCARIA" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_CUENTA_BANCARIA_INTERNACIONAL" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="CODIGO_BANCO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="HEADER_t">
+    <xsd:sequence>
+      <xsd:element name="FECHA_CREACION_ARCHIVO2" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="FECHA_CREACION_ARCHIVO" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="HORA_CREACION_ARCHIVO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_SECUENCIAL" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="IDENTIDIACION_ARCHIVO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NOMBRE_ARCHIVO" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+      <xsd:element name="NUM_VERSION_ARCHIVO" type="xsd:decimal" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=P:\Desarrollo\JDeveloper\GER\Documentación SOA\Tecnico Forte\ER25_AR_Concilation_Cash_TP\ConciliacionBancos\amex\ESTRELLAROJAMEXA63813.GRRCN.210825033946.P80LHP33944IXH</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=P:\Desarrollo\JDeveloper\GER\Documentación SOA\Tecnico Forte\ER25_AR_Concilation_Cash_TP\ConciliacionBancos\amex\ESTRELLAROJAMEXA63813.GRRCN.210825033946.P80LHP33944IXH</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

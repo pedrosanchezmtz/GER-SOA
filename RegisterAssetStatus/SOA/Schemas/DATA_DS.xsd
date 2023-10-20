@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+   <xsd:element name="DATA_DS">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="P_ORGA" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="P_CREADO" type="xsd:integer" minOccurs="0" nillable="true"/>
+            <xsd:element name="P_FECHA_INI" type="xsd:date" minOccurs="0" nillable="true"/>
+            <xsd:element name="P_FECHA_FIN" type="xsd:date" minOccurs="0" nillable="true"/>
+            <xsd:element name="P_ITEM" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="G_1" type="WorkOrders" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="WorkOrders">
+      <xsd:sequence>
+      <xsd:element name="WORK_ORDER_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WORK_ORDER_NUMBER" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="INVENTORY_ITEM_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WORK_ORDER_STATUS_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="UOM_CODE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="CREATED_BY" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="CREATION_DATE_WO" type="xsd:date" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WO_STATUS_CODE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WO_STATUS_NAME" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WO_SYSTEM_STATUS_CODE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WO_STATUS_DESCRIPTION" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="NUMERO_ITEM" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="NUMERO_ACTIVO" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="SERIAL_NUMBER" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="WORK_ORDER_PRIORITY" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="COMPLETED_QUANTITY" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="NOMBRE_ORGANIZACION" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="TRABAJO" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="RELEASED_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="CLOSED_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="ACTUAL_COMPLETION_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="LAST_UPDATE_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

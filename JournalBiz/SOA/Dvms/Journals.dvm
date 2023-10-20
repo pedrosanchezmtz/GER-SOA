@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="Journals" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Code"/>
+      <column name="Value"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>Ledger1</cell>
+         <cell>300000002834552</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Ledger2</cell>
+         <cell>300000005837559</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Nómina de Empleados</cell>
+         <cell>Nomina</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TMS</cell>
+         <cell>Viajado</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Nómina de Empleados2</cell>
+         <cell>JournalNE</cell>
+      </row>
+      <row markdefault="false">
+         <cell>TMS2</cell>
+         <cell>JournalTMS</cell>
+      </row>
+       <row markdefault="false">
+         <cell>AgroupDateGroup</cell>
+         <cell>false</cell>
+      </row>
+      <row markdefault="false">
+         <cell>DelayJournals</cell>
+         <cell>10000</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaOrders" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaOrders" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="SelectTratecsaOrdersInput" type="SelectTratecsaOrdersInput"/>
+   <xs:complexType name="SelectTratecsaOrdersInput">
+      <xs:sequence>
+         <xs:element name="idOrden" type="xs:string" nillable="true"/>
+         <xs:element name="idUnidad" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="SelectTratecsaOrdersOutputCollection" type="SelectTratecsaOrdersOutputCollection"/>
+   <xs:complexType name="SelectTratecsaOrdersOutputCollection">
+      <xs:sequence>
+         <xs:element name="SelectTratecsaOrdersOutput" type="SelectTratecsaOrdersOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SelectTratecsaOrdersOutput">
+      <xs:sequence>
+         <xs:element name="id_area" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_orden" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_servicio" type="xs:string" nillable="true"/>
+         <xs:element name="id_entrada" type="xs:decimal" nillable="true"/>
+         <xs:element name="fecha_inicio" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_cierre" type="xs:dateTime" nillable="true"/>
+         <xs:element name="id_razon" type="xs:decimal" nillable="true"/>
+         <xs:element name="estado" type="xs:string" nillable="true"/>
+         <xs:element name="kms_inicio" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_fin" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_superviso_entrada" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_superviso_salida" type="xs:decimal" nillable="true"/>
+         <xs:element name="duracion_estimada" type="xs:decimal" nillable="true"/>
+         <xs:element name="duracion_real" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_conjunto" type="xs:string" nillable="true"/>
+         <xs:element name="id_unidad" type="xs:string" nillable="true"/>
+         <xs:element name="id_ingreso" type="xs:string" nillable="true"/>
+         <xs:element name="id_unidad_conta" type="xs:string" nillable="true"/>
+         <xs:element name="fecha_prometida" type="xs:dateTime" nillable="true"/>
+         <xs:element name="observaciones" type="xs:string" nillable="true"/>
+         <xs:element name="fecha_liberacion" type="xs:dateTime" nillable="true"/>
+         <xs:element name="costo_mano_obra" type="xs:decimal" nillable="true"/>
+         <xs:element name="costo_taller_externo" type="xs:decimal" nillable="true"/>
+         <xs:element name="hrs_apertura" type="xs:decimal" nillable="true"/>
+         <xs:element name="hrs_cierre" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_entrada" type="xs:decimal" nillable="true"/>
+         <xs:element name="hrs_entrada" type="xs:decimal" nillable="true"/>
+         <xs:element name="express" type="xs:string" nillable="true"/>
+         <xs:element name="id_operador" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_razon_cierre" type="xs:decimal" nillable="true"/>
+         <xs:element name="costo_refacciones" type="xs:decimal" nillable="true"/>
+         <xs:element name="secuencia" type="xs:decimal" nillable="true"/>
+         <xs:element name="reliberada" type="xs:string" nillable="true"/>
+         <xs:element name="factura_status" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_areaunidad" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_deptounidad" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_medidor" type="xs:decimal" nillable="true"/>
+         <xs:element name="fecha_edo_doc" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_servicio_sig" type="xs:dateTime" nillable="true"/>
+         <xs:element name="kms_servicio_sig" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_evaluacionorden" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_areaguia" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_guia" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_remolque" type="xs:string" nillable="true"/>
+         <xs:element name="id_linea" type="xs:string" nillable="true"/>
+         <xs:element name="id_sucursal" type="xs:decimal" nillable="true"/>
+         <xs:element name="horas_razon" type="xs:decimal" nillable="true"/>
+         <xs:element name="archivo" type="xs:string" nillable="true"/>
+         <xs:element name="id_recepcion" type="xs:decimal" nillable="true"/>
+         <xs:element name="unidad_reclamada" type="xs:string" nillable="true"/>
+         <xs:element name="advertencia_garantia_refacciones" type="xs:string" nillable="true"/>
+         <xs:element name="advertencia_garantia_componentes" type="xs:string" nillable="true"/>
+         <xs:element name="estado_facturacion" type="xs:string" nillable="true"/>
+         <xs:element name="precio_mo_factura" type="xs:decimal" nillable="true"/>
+         <xs:element name="precio_ref_factura" type="xs:decimal" nillable="true"/>
+         <xs:element name="precio_oste_factura" type="xs:decimal" nillable="true"/>
+         <xs:element name="precio_total_factura" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_modifico" type="xs:string" nillable="true"/>
+         <xs:element name="fecha_ingreso" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_modifico" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fact_id_cliente" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_area_factura" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_factura" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

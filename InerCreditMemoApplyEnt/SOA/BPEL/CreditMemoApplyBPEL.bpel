@@ -1,0 +1,213 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Jun 25 10:18:58 CDT 2019
+  Author:  IVAN
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CreditMemoApplyBPEL"
+               targetNamespace="http://xmlns.oracle.com/CreditMemoApplyEnt/CreditMemoApplyEnt/CreditMemoApplyBPEL"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/CreditMemoApplyEnt/CreditMemoApplyEnt/CreditMemoApplyBPEL"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/CreditMemoApplyEnt/CreditMemoApplyEnt/dbAplicarCM"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/CreditMemoApplyEnt/CreditMemoApplyEnt/dbObtenerCM"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbObtenerCM"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbAplicarCM"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX">
+
+  <import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX"
+          location="../Schemas/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/CreditMemoApplyEnt/CreditMemoApplyEnt/CreditMemoApplyBPEL" location="../WSDLs/CreditMemoApplyBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+      <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="creditmemoapplybpel_client" partnerLinkType="client:CreditMemoApplyBPEL" myRole="CreditMemoApplyBPELProvider"/>
+    <partnerLink name="dbObtenerCM" partnerLinkType="ns2:dbObtenerCM_plt" partnerRole="dbObtenerCM_role"/>
+    <partnerLink name="dbAplicarCM" partnerLinkType="ns1:dbAplicarCM_plt" partnerRole="dbAplicarCM_role"/>
+    <partnerLink name="WsERPIntegrationServiceTec" partnerLinkType="ns5:WsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:CreditMemoApplyBPELRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:CreditMemoApplyBPELResponseMessage"/>
+    <variable name="obtenerCMInvoke_dbObtenerCM_InputVariable" messageType="ns2:args_in_msg"/>
+    <variable name="obtenerCMInvoke_dbObtenerCM_OutputVariable" messageType="ns2:args_out_msg"/>
+    <variable name="aplicarCMInvoke_dbAplicarCM_InputVariable" messageType="ns1:args_in_msg"/>
+    <variable name="aplicarCMInvoke_dbAplicarCM_OutputVariable" messageType="ns1:args_out_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CreditMemoApplyBPEL.wsdl) -->
+    <receive name="receiveInput" partnerLink="creditmemoapplybpel_client" portType="client:CreditMemoApplyBPEL" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="obtenerCM_Assign">
+      <copy>
+        <from>$inputVariable.payload/client:input</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$obtenerCMInvoke_dbObtenerCM_InputVariable.InputParameters/ns3:P_SISTEMA_ORIGEN</to>
+      </copy>
+      <copy>
+        <from>'not data'</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/client:result</to>
+      </copy>
+    </assign>
+    <invoke name="obtenerCM_Invoke" partnerLink="dbObtenerCM" portType="ns2:dbObtenerCM_ptt"
+            operation="dbObtenerCM" inputVariable="obtenerCMInvoke_dbObtenerCM_InputVariable"
+            outputVariable="obtenerCMInvoke_dbObtenerCM_OutputVariable" bpelx:invokeAsDetail="no"/>
+    <forEach parallel="no" counterName="counterApply" name="For_Appliy">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>count($obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY/ns3:P_CREDIT_MEMO_ARRAY_ITEM)</finalCounterValue>
+      <scope name="ScopeApplied">
+        <variables>
+          <variable name="v_unAppliedAmount" element="ns6:DATA_DS"/>
+        </variables>
+        <sequence name="SeqApplied">
+          <scope name="ScopeUnAppliedAmount" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <variables>
+         <variable name="WsERPIntegrationServiceTecRunDataModelRq" messageType="ns5:RunDataModelRq"/>
+         <variable name="WsERPIntegrationServiceTecRunDataModelRs" messageType="ns5:RunDataModelRs"/>
+         <variable name="v_xmlString" type="xsd:string"/>
+      </variables>
+      <sequence name="SeqReportIn">
+         <assign name="AssignReportRq" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>'P_FAC_NUM'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:name</to>
+                </copy>
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>$obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY/ns3:P_CREDIT_MEMO_ARRAY_ITEM[$counterApply]/ns3:INVOICE_TRX_NUMBER</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:parameterNameValues/ns5:listOfParamNameValues/ns5:item[1]/ns5:values/ns5:item</to>
+                </copy>
+                <copy>
+                  <from>'/Custom/ER_INTEGRATION/Commons/Data Models/XXER_AR_AMOUNT_UNAPPLIED_TRX.xdm'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns5:reportRequest/ns5:reportAbsolutePath</to>
+                </copy>
+              </assign>
+         <invoke name="WsERPIntegrationServiceTec" partnerLink="WsERPIntegrationServiceTec"
+                 portType="ns5:ERPIntegrationTecPortType" inputVariable="WsERPIntegrationServiceTecRunDataModelRq"
+                 outputVariable="WsERPIntegrationServiceTecRunDataModelRs"
+                 xmlns:bpelx="http://schemas.oracle.com/bpel/extension" operation="RunDataModel"
+                 bpelx:invokeAsDetail="no"/>
+         <extensionActivity>
+            <bpelx:exec name="JavaDecoded" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <![CDATA[addAuditTrailEntry("Base64decode started");                                             
+try {                                          
+XMLElement input = (XMLElement) getVariableData("WsERPIntegrationServiceTecRunDataModelRs","RunDataModelRsPart","ns5:Return/ns5:reportBytes");                                             
+String input_str = input.getTextContent();                                             
+addAuditTrailEntry("Base64decode input_str="+input_str);                                             
+oracle.soa.common.util.Base64Decoder decoder = new oracle.soa.common.util.Base64Decoder();                                                 
+String decoded = null;                                                
+decoded = decoder.decode(input_str);                                     
+                                                                
+decoded = "<DATA_DS xmlns=\"http://soa.estrellaroja.com.mx/Reports/XXER_AR_AMOUNT_UNAPPLIED_TRX\">"+ decoded.substring(decoded.indexOf("<P_CASH_RECEIPT_ID>"), decoded.length());                                    
+                                     
+addAuditTrailEntry("Base64decode decoded="+decoded);                                             
+setVariableData("v_xmlString",decoded);                                             
+} catch (Exception e) {                                             
+  addAuditTrailEntry("Base64decode Exception: "+e.getMessage());                                             
+}                                             
+addAuditTrailEntry("Base64decode ended");]]></bpelx:exec>
+         </extensionActivity>
+         <assign name="AssignReporteApplied">
+                <copy>
+                  <from>oraext:parseXML($v_xmlString)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_unAppliedAmount</to>
+                </copy>
+              </assign>
+      </sequence>
+   </scope>
+          <if name="If_Unpplied" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <condition>($v_unAppliedAmount/ns6:G_2/ns6:IMPORTE_INTRODUCIDO - $v_unAppliedAmount/ns6:G_2/ns6:IMPORTE_APLICADO) &lt; $obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY/ns3:P_CREDIT_MEMO_ARRAY_ITEM[$counterApply]/ns3:AMOUNT_APPLIED</condition>
+      <assign name="AssignUnApplied">
+              <copy>
+                <from>(($v_unAppliedAmount/ns6:G_2/ns6:IMPORTE_INTRODUCIDO * 100) -( $v_unAppliedAmount/ns6:G_2/ns6:IMPORTE_APLICADO *100)) div 100</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0"> $obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY/ns3:P_CREDIT_MEMO_ARRAY_ITEM[$counterApply]/ns3:AMOUNT_APPLIED</to>
+              </copy>
+            </assign>
+      <else>
+         <empty name="MontoSuficiente"/>
+      </else>
+   </if>
+        </sequence>
+      </scope>
+    </forEach>
+    <if name="obtenerCMCount_If">
+      <documentation>
+        <![CDATA[Existen CM para Aplicar]]>
+      </documentation>
+      <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY/ns3:P_CREDIT_MEMO_ARRAY_ITEM) &gt; 0</condition>
+      <sequence>
+        <assign name="aplicarCM_Assign">
+          <copy>
+            <from>$obtenerCMInvoke_dbObtenerCM_OutputVariable.OutputParameters/ns3:P_CREDIT_MEMO_ARRAY</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$aplicarCMInvoke_dbAplicarCM_InputVariable.InputParameters/ns4:P_CREDIT_MEMO_ARRAY</to>
+          </copy>
+          <copy>
+            <from>'applied'</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/client:result</to>
+          </copy>
+        </assign>
+        <invoke name="aplicarCM_Invoke" partnerLink="dbAplicarCM" portType="ns1:dbAplicarCM_ptt" operation="dbAplicarCM"
+                inputVariable="aplicarCMInvoke_dbAplicarCM_InputVariable"
+                outputVariable="aplicarCMInvoke_dbAplicarCM_OutputVariable" bpelx:invokeAsDetail="no"/>
+      </sequence>
+      <else>
+        <documentation>
+          <![CDATA[No existen CM para Aplicar]]>
+        </documentation>
+        <empty name="Empty"/>
+      </else>
+    </if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="creditmemoapplybpel_client" portType="client:CreditMemoApplyBPEL" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

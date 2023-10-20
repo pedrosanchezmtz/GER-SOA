@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanregio" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanregio" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII">
+   <xsd:element name="Banregio">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Extracto">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="referencia" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:startsWith=":20:"/>
+                     <xsd:element name="numero_cuenta" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:startsWith=":25:"/>
+                     <xsd:element name="estado_cuenta" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:startsWith=":28:"/>
+                     <xsd:element name="apertura">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="decs_t" type="xsd:string" nxsd:style="fixedLength" nxsd:length="1" nxsd:padStyle="tail" nxsd:startsWith=":60F:"/>
+                              <xsd:element name="fecha_cierre_ant" type="xsd:string" nxsd:style="fixedLength" nxsd:length="6" nxsd:padStyle="tail"/>
+                              <xsd:element name="moneda" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                              <xsd:element name="saldo_cierre_ant" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="transacciones">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="transaccion" minOccurs="0" maxOccurs="unbounded" nxsd:style="array" nxsd:arrayTerminatedBy=":62F:">
+                                 <xsd:complexType>
+                                    <xsd:sequence>
+                                       <xsd:element name="informacion">
+                                          <xsd:complexType>
+                                             <xsd:sequence>
+                                                <xsd:element name="fecha_mov" type="xsd:string" nxsd:style="fixedLength" nxsd:length="6" nxsd:padStyle="tail" nxsd:startsWith=":61:"/>
+                                                <xsd:element name="desc_t_f" type="xsd:string" nxsd:startsWith="C" default="C"/>
+                                                <xsd:element name="desc_t_f" type="xsd:string" nxsd:startsWith="D" default="D"/>
+                                                <xsd:element name="desc_t_f" type="xsd:string" nxsd:startsWith="RC" default="RC"/>
+                                                <xsd:element name="desc_t_f" type="xsd:string" nxsd:startsWith="RD" default="RD"/>
+                                                <xsd:element name="c_moneda" minOccurs="0" type="xsd:int" nxsd:style="fixedLength" nxsd:length="1"/>
+                                                <xsd:element name="monto_entero" minOccurs="0" type="xsd:int" nxsd:style="terminated" nxsd:terminatedBy=","/>
+                                                <xsd:element name="monto_decimal" minOccurs="0" type="xsd:string" nxsd:style="fixedLength" nxsd:length="2"/>
+                                                <xsd:element name="clave_mov" minOccurs="0" type="xsd:string" nxsd:style="fixedLength" nxsd:length="4"/>
+                                                <xsd:element name="referencia" minOccurs="0" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="//"/>
+                                                <xsd:element name="numero_transaccion" minOccurs="0" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                                             </xsd:sequence>
+                                          </xsd:complexType>
+                                       </xsd:element>
+                                       <xsd:element name="referencia_operacion">
+                                          <xsd:complexType>
+                                             <xsd:sequence>
+                                                <xsd:element name="codigo_transaccion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3" nxsd:prefixWith="BR" nxsd:padStyle="tail" nxsd:startsWith=":86:"/>
+                                                <xsd:element name="descripcion" minOccurs="0" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="?" nxsd:startsWith="?00"/>
+                                                <xsd:element name="info_adicional" minOccurs="0" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                                             </xsd:sequence>
+                                          </xsd:complexType>
+                                       </xsd:element>
+                                    </xsd:sequence>
+                                 </xsd:complexType>
+                              </xsd:element>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="info_cierre">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="desc_t_f" type="xsd:string" nxsd:style="fixedLength" nxsd:length="1"/>
+                              <xsd:element name="fecha_cierre" type="xsd:string" nxsd:style="fixedLength" nxsd:length="6"/>
+                              <xsd:element name="moneda" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                              <xsd:element name="saldo_cierre" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="cierre">
+                        <xsd:complexType>
+                           <xsd:sequence>
+                              <xsd:element name="desc_t_f" type="xsd:string" nxsd:style="fixedLength" nxsd:length="1" nxsd:startsWith=":64:"/>
+                              <xsd:element name="fecha_cierre" type="xsd:string" nxsd:style="fixedLength" nxsd:length="6"/>
+                              <xsd:element name="moneda" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                              <xsd:element name="saldo_cierre" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+                           </xsd:sequence>
+                        </xsd:complexType>
+                     </xsd:element>
+                     <xsd:element name="fin" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:startsWith="-"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=P:\Desarrollo\JDeveloper\GER\Documentación SOA\Tecnico Forte\ER07_CE_Importación Estados de Cuenta\Mantenimientos\agregar Banco Banregio\TENEDORA_7371.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorInventoryBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/InventoryBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="InventoryBiz" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelInventoryBiz.bpelInventoryBiz.InventoryBiz">
+            <action>
+               <assign>
+                  <copy expression="$in.InventoryBizRq" target="$out.InventoryBizRq"/>
+               </assign>
+               <invoke reference="bpelInventoryBiz.bpelInventoryBiz" operation="InventoryBiz">
+                  <onReply>
+                     <transform>
+                        <part name="$out.InventoryBizRs" function="xslt(../Transformations/InventoryBizRs_To_InventoryBizRs5.xsl, $in.InventoryBizRs)"/>
+                     </transform>
+                     <assign/>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="InventoryTransactionResult" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelInventoryTransactionResult.bpelinventorytransactionresult_client.process">
+            <action>
+               <assign>
+                  <copy expression="$in.InventoryTransactionResultRq/tns:InventoryTransactionResultRq" target="$out.payload/tns:InventoryTransactionResultRq" xmlns:tns="http://soa.estrellaroja.com.mx/InventoryBiz"/>
+               </assign>
+               <invoke reference="bpelInventoryTransactionResult.bpelinventorytransactionresult_client" operation="process">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:InventoryTransactionResultRs" target="$out.InventoryTransactionResultRs/ns1:InventoryTransactionResultRs" xmlns:ns1="http://soa.estrellaroja.com.mx/InventoryBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/" sdoJava:package="oracle.apps.financials.commonModules.shared.model.erpIntegrationService" xmlns:sdoJava="commonj.sdo/java" xmlns="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:annotation>
+      <xsd:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+         <name>Process Details SDO</name>
+         <description>Ess Job information that contains information with respect to
+                Ess job like job definition name, job package name and paramter
+                list.</description>
+         <oer:attributes>
+            <oer:attribute description="The ESS job package and the ESS job name, delimited by a semicolon, for the ESS job that must be submitted." name="JobName"/>
+            <oer:attribute description="Comma separated list of parameters used to invoke the ESS job. The order of the parameters is maintained as per the list. The corresponding entry in the list should be blank when a given parameter is not passed." name="ParameterList"/>
+            <oer:attribute description="The request ID of the submitted ESS job." name="JobRequestId"/>
+         </oer:attributes>
+      </xsd:documentation>
+   </xsd:annotation>
+   <xsd:import namespace="commonj.sdo/java" schemaLocation="sdoJava.xsd"/>
+   <xsd:complexType name="EssJob">
+      <xsd:annotation>
+         <xsd:appinfo source="http://xmlns.oracle.com/adf/svc/metadata/">
+            <key xmlns="http://xmlns.oracle.com/adf/svc/metadata/">
+               <attribute>JobRequestId</attribute>
+            </key>
+         </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+         <xsd:element minOccurs="0" name="JobName" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="ParameterList" nillable="true" type="xsd:string"/>
+         <xsd:element minOccurs="0" name="JobRequestId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:element name="essJob" type="EssJob"/>
+</xsd:schema>

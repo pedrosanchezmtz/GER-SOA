@@ -1,0 +1,288 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Jun 01 22:07:42 CDT 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelGetCreditMemo"
+               targetNamespace="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ConciliationBiz"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/Reports/XXER_AR_NOTA_CREDITO"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_AR_NOTA_CREDITO"
+          location="oramds:/apps/Common/Report/XXER_AR_NOTA_CREDITO.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ConciliationBiz/BpelGetCreditMemo"
+          location="../WSDLs/BpelGetCreditMemo.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelgetcreditmemo_client" partnerLinkType="client:BpelGetCreditMemo" myRole="BpelGetCreditMemoProvider"/>
+    <partnerLink name="ERPIntegrationBiz" partnerLinkType="ns3:ERPIntegrationBiz"
+                 partnerRole="ERPIntegrationBizPortType" myRole="ERPIntegrationBizCallbackPortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelGetCreditMemoRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BpelGetCreditMemoResponseMessage"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><sequence name="sequenceCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+      </documentation>
+      <assign name="assignCatchAll">
+         <documentation>
+            
+         <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+      <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>SOA-00001</literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ErrorCode</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:ShortDescription</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:Description</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>[GetCreditMemo]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:BusinessProcess</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>[ConciliationBiz]</literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:FailedService</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Errors/ns2:Error/ns2:TimeStamp</to>
+         </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>
+                  <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+               </literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</to>
+         </copy><extensionAssignOperation>
+            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <?audit suppress oracle.ide.xml.validation-incomplete?>
+               <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns2:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation><copy bpelx:insertMissingToData="yes"
+                                           xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>
+                  <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+               </literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults</to>
+         </copy><extensionAssignOperation>
+            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <?audit suppress oracle.ide.xml.validation-incomplete?>
+               <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation></assign>
+      <reply name="replyOutput" partnerLink="bpelgetcreditmemo_client" variable="outputVariable"
+             portType="client:BpelGetCreditMemo" operation="GetCreditMemo">
+         <documentation>
+            
+         <![CDATA[Se indica la salida del proceso BPEL.]]></documentation>
+      </reply>
+   </sequence></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelGetCreditMemo.wsdl) --><receive name="receiveInput" partnerLink="bpelgetcreditmemo_client" portType="client:BpelGetCreditMemo" operation="GetCreditMemo" variable="inputVariable" createInstance="yes"/>
+    <forEach parallel="no" counterName="counterPaymentTpNCL" name="For_PaymentsTpNCL"
+             xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>count($inputVariable.payload/ns1:CreditMemos)</finalCounterValue>
+      <scope name="ScopeGetInfoCreditMemo">
+         
+         <variables>
+          <variable name="WsErpIntegrationBizGenerateReportRq" messageType="ns3:GenerateReportRq"/>
+          <variable name="WsErpIntegrationBizGenerateReportRs" messageType="ns3:GenerateReportRs"/>
+          <variable name="v_stringXML" type="xsd:string"/>
+          <variable name="v_creditMemo" element="ns4:DATA_DS"/>
+        </variables><sequence name="SeqGetInfoCreditMemo">
+            <assign name="assignParams" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               
+               
+               
+               
+               
+               
+               
+               
+            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>dvm:lookupValue("DVMs/dvmConciliationBiz.dvm","Code","TargetInterface","Value","","Component","GetInfoCash")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:TargetInterface</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getCompositeName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:IntegrationName</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getComponentName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:ProcessName</to>
+               </copy><copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>dvm:lookupValue("DVMs/dvmConciliationBiz.dvm","Code","ReportName","Value","","Component","GetInfoCreditMemo")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:ReportName</to>
+               </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>'P_REF_PAY'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:parameterNameValues/ns3:item[1]/ns3:name</to>
+               </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>$inputVariable.payload/ns1:CreditMemos[$counterPaymentTpNCL]/ns1:PaymentReference</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:parameterNameValues/ns3:item[1]/ns3:values/ns3:item</to>
+               </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>'P_MET_REC'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:parameterNameValues/ns3:item[2]/ns3:name</to>
+               </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>$inputVariable.payload/ns1:CreditMemos[$counterPaymentTpNCL]/ns1:ReceiptMethod</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationBizGenerateReportRq.GenerateReportRq/ns3:parameterNameValues/ns3:item[2]/ns3:values/ns3:item</to>
+               </copy></assign>
+            <invoke name="WsErpIntegrationBiz" bpelx:invokeAsDetail="no" partnerLink="ERPIntegrationBiz"
+                    portType="ns3:ERPIntegrationBizPortType" operation="GenerateReport"
+                    inputVariable="WsErpIntegrationBizGenerateReportRq"
+                    outputVariable="WsErpIntegrationBizGenerateReportRs"
+                    xmlns:bpelx="http://schemas.oracle.com/bpel/extension"/>
+            <assign name="AssignParseStringXML">
+               
+               
+            <copy>
+                  <from>concat('&lt;DATA_DS xmlns="http://soa.estrellaroja.com.mx/Reports/XXER_AR_NOTA_CREDITO"&gt;',substring-after($WsErpIntegrationBizGenerateReportRs.GenerateReportRs/ns3:Return/ns3:xmlOut,'&lt;DATA_DS&gt;'))</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_stringXML</to>
+               </copy><copy>
+                  <from>oraext:parseXML($v_stringXML)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_creditMemo</to>
+               </copy></assign>
+            <if name="If_ExistCreditMemosAR">
+               <documentation>
+                  
+               <![CDATA[PaymentsCash]]></documentation>
+               <condition>count($v_creditMemo/ns4:G_2)&gt;0</condition>
+               <sequence name="SeqPaymentsCash">
+                  <assign name="AssignHeader">
+                     
+                     
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$v_creditMemo/ns4:G_2[1]/ns4:METODO_RECIBO</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:ReceiptMethod</to>
+                     </copy><copy bpelx:insertMissingToData="yes"
+                                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$v_creditMemo/ns4:G_2[1]/ns4:REFERENCE_PAYMENT</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:PaymentReference</to>
+                     </copy></assign>
+                  <forEach parallel="no" counterName="counterCreditMemo" name="For_CreditMemos">
+                     <startCounterValue>1</startCounterValue>
+                     <finalCounterValue>count($v_creditMemo/ns4:G_2)</finalCounterValue>
+                     <scope name="Scope1">
+                        <assign name="AssignCreditMemoData">
+                              <copy bpelx:insertMissingToData="yes">
+                                 <from>$v_creditMemo/ns4:G_2[$counterCreditMemo]/ns4:CUSTOMER_TRX_ID</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:CreditMemoResult[$counterCreditMemo]/ns1:CustomerTrxId</to>
+                              </copy>
+                              <copy bpelx:insertMissingToData="yes">
+                                 <from>$v_creditMemo/ns4:G_2[$counterCreditMemo]/ns4:TRX_DATE</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:CreditMemoResult[$counterCreditMemo]/ns1:TrxDate</to>
+                              </copy>
+                              <copy bpelx:insertMissingToData="yes">
+                                 <from>$v_creditMemo/ns4:G_2[$counterCreditMemo]/ns4:NUMERO_DOCUMENTO</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:CreditMemoResult[$counterCreditMemo]/ns1:NUMERO_DOCUMENTO</to>
+                              </copy>
+                              <copy bpelx:insertMissingToData="yes">
+                                 <from>$v_creditMemo/ns4:G_2[$counterCreditMemo]/ns4:TOTAL</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:CreditMemoResult[$counterCreditMemo]/ns1:CreditMemoTotal</to>
+                              </copy>
+                           </assign>
+                     </scope>
+                  </forEach>
+               </sequence>
+               <else>
+                  <documentation>
+                     <![CDATA[NotPaymentCash]]>
+                  </documentation>
+                     <sequence name="Sequence1">
+                        <assign name="AssignPaymentPC">
+                           <bpelx:skipCondition>true()</bpelx:skipCondition>
+                           <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>$inputVariable.payload/ns1:CreditMemos[$counterPaymentTpNCL]/ns1:ReceiptMethod</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:ReceiptMethod</to>
+                           </copy>
+                           <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>$inputVariable.payload/ns1:CreditMemos[$counterPaymentTpNCL]/ns1:PaymentReference</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns1:CreditMemosResults[$counterPaymentTpNCL]/ns1:PaymentReference</to>
+                           </copy>
+                        </assign>
+                     </sequence>
+                  </else>
+            </if>
+         </sequence>
+      </scope>
+   </forEach>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelgetcreditmemo_client" portType="client:BpelGetCreditMemo" operation="GetCreditMemo" variable="outputVariable"/>
+  </sequence>
+</process>

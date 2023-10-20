@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelStatusLoadInvoices" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelStatusLoadInvoices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelStatusLoadInvoices" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="oramds:/apps/SOA/InvoicesBiz/InvoicesBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="StatusLoadInvoicesRq">
+      <wsdl:part name="StatusLoadInvoicesRq" element="ns1:StatusLoadInvoicesRq"/>
+   </wsdl:message>
+   <wsdl:message name="StatusLoadInvoicesRs">
+      <wsdl:part name="StatusLoadInvoicesRs" element="ns1:StatusLoadInvoicesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelStatusLoadInvoices">
+      <wsdl:operation name="StatusLoadInvoices">
+         <wsdl:input message="client:StatusLoadInvoicesRq"/>
+         <wsdl:output message="client:StatusLoadInvoicesRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelStatusLoadInvoices">
+      <plnk:role name="bpelStatusLoadInvoicesProvider" portType="client:bpelStatusLoadInvoices"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

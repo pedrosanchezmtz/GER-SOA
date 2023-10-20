@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ValidationOracleXmlResponse xmlns="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec">
+   <success>success1078</success>
+   <message>message1079</message>
+   <log>
+      <any_0 xmlns="##any">
+         <any_01>any content</any_01>
+      </any_0>
+      <any_1 xmlns="##any">
+         <any_11>any content</any_11>
+      </any_1>
+      <any_2 xmlns="##any">
+         <any_21>any content</any_21>
+      </any_2>
+   </log>
+   <mustCancel>mustCancel1080</mustCancel>
+   <mustModify>mustModify1081</mustModify>
+   <emailSendedToSupplier>emailSendedToSupplier1082</emailSendedToSupplier>
+   <invoiceId>1083</invoiceId>
+   <supplierEmail>supplierEmail1084</supplierEmail>
+   <oracleLookupCode>oracleLookupCode1085</oracleLookupCode>
+   <Return>
+      <Success xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/>
+      <Errors xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+         <Error>
+            <ErrorCode>ErrorCode1086</ErrorCode>
+            <ShortDescription>ShortDescription1087</ShortDescription>
+            <Description>Description1088</Description>
+            <BusinessProcess>BusinessProcess1089</BusinessProcess>
+            <FailedService>FailedService1090</FailedService>
+            <TimeStamp>TimeStamp1091</TimeStamp>
+         </Error>
+         <Error>
+            <ErrorCode>ErrorCode1092</ErrorCode>
+            <ShortDescription>ShortDescription1093</ShortDescription>
+            <Description>Description1094</Description>
+            <BusinessProcess>BusinessProcess1095</BusinessProcess>
+            <FailedService>FailedService1096</FailedService>
+            <TimeStamp>TimeStamp1097</TimeStamp>
+         </Error>
+         <Error>
+            <ErrorCode>ErrorCode1098</ErrorCode>
+            <ShortDescription>ShortDescription1099</ShortDescription>
+            <Description>Description1100</Description>
+            <BusinessProcess>BusinessProcess1101</BusinessProcess>
+            <FailedService>FailedService1102</FailedService>
+            <TimeStamp>TimeStamp1103</TimeStamp>
+         </Error>
+      </Errors>
+   </Return>
+</ValidationOracleXmlResponse>

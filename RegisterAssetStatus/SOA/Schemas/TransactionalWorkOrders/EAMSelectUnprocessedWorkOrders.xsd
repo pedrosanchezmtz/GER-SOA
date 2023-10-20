@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectUnprocessedWorkOrders" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/EAMSelectUnprocessedWorkOrders" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="EAMSelectUnprocessedWorkOrdersInput" type="EAMSelectUnprocessedWorkOrdersInput"/>
+   <xs:complexType name="EAMSelectUnprocessedWorkOrdersInput">
+      <xs:sequence>
+         <xs:element name="status1" type="xs:string" nillable="true"/>
+         <xs:element name="status2" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="EAMSelectUnprocessedWorkOrdersOutputCollection" type="EAMSelectUnprocessedWorkOrdersOutputCollection"/>
+   <xs:complexType name="EAMSelectUnprocessedWorkOrdersOutputCollection">
+      <xs:sequence>
+         <xs:element name="EAMSelectUnprocessedWorkOrdersOutput" type="EAMSelectUnprocessedWorkOrdersOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="EAMSelectUnprocessedWorkOrdersOutput">
+      <xs:sequence>
+         <xs:element name="BLK_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="ORA_WO_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ORA_WO_ASSET_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ORA_WO_RELEASED_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="ORA_WO_COMPLETED_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="ORA_WO_CLOSED_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="ORA_WO_ORG_NAME" type="xs:string" nillable="true"/>
+         <xs:element name="ORA_WO_COST_CLAS" type="xs:string" nillable="true"/>
+         <xs:element name="ZAM_WO_NUMBER" type="xs:string" nillable="true"/>
+         <xs:element name="ZAM_BLOCK_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="ZAM_UNBLOCK_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="PROCESS_STATUS" type="xs:string" nillable="true"/>
+         <xs:element name="MESSAGE" type="xs:string" nillable="true"/>
+         <xs:element name="CREATION_DATE" type="xs:dateTime" nillable="true"/>
+         <xs:element name="CREATED_BY" type="xs:decimal" nillable="true"/>
+         <xs:element name="CREATED_BY_USER" type="xs:string" nillable="true"/>
+         <xs:element name="RUN_ID" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

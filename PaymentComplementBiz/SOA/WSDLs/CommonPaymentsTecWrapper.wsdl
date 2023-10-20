@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CommonPaymentsTec"
+     targetNamespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/CommonPaymentsTec"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsCommonPaymentsTec">
+        <plnk:role name="CommonPaymentsTecPortType" portType="tns:CommonPaymentsTecPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/CommonPaymentsTec" location="oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.wsdl"/>
+</wsdl:definitions>

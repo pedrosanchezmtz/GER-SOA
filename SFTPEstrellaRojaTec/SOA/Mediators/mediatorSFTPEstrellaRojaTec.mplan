@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorSFTPEstrellaRojaTec" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec" xmlns="http://xmlns.oracle.com/sca/1.0/mediator" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec">
+   <operation name="SendFile" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelSendFile.bpelSendFile.SendFile">
+            <action>
+               <assign>
+                  <copy expression="$in.SendFileRq/tns:SendFileRq" target="$out.SendFileRq/tns:SendFileRq" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec"/>
+               </assign>
+               <invoke reference="bpelSendFile.bpelSendFile" operation="SendFile">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.SendFileRs/ns1:SendFileRs" target="$out.SendFileRs/ns1:SendFileRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

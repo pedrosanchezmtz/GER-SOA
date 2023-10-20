@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorPaymentComplementBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/PaymentComplementBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="StampPaymentComplement" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelStampPaymentComplement.bpelStampPaymentComplement.StampPaymentComplement">
+            <action>
+               <assign>
+                  <copy expression="$in.StampPaymentComplementRq/tns:StampPaymentComplementRq" target="$out.StampPaymentComplementRq/tns:StampPaymentComplementRq" xmlns:tns="http://soa.estrellaroja.com.mx/PaymentComplementBiz"/>
+               </assign>
+               <invoke reference="bpelStampPaymentComplement.bpelStampPaymentComplement" operation="StampPaymentComplement">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.StampPaymentComplementRs/ns1:StampPaymentComplementRs" target="$out.StampPaymentComplementRs/ns1:StampPaymentComplementRs" xmlns:ns1="http://soa.estrellaroja.com.mx/PaymentComplementBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

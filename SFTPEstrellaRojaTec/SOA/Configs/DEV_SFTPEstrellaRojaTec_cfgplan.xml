@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="SFTPEstrellaRojaTec">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec</search>
+        <replace>oramds:/apps/SOA/DEV_SFTPEstrellaRojaTec/SFTPEstrellaRojaTec</replace>
+      </searchReplace>
+    </import>
+      <service name="SFTPEstrellaRojaTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec#wsdl.endpoint(SFTPEstrellaRojaTec/SFTPEstrellaRojaTecPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelSendFile">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <reference name="ftpWriteFileBase64">
+         <binding type="jca"/>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="WSDLs/bpelSendFile.wsdl|WSDLs/ftpWriteFileBase64.wsdl|wsm-assembly.xml">
+      <searchReplace>
+        <search>oramds:/apps/SOA/SFTPEstrellaRojaTec/SFTPEstrellaRojaTec</search>
+        <replace>oramds:/apps/SOA/DEV_SFTPEstrellaRojaTec/SFTPEstrellaRojaTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+      <wsdlAndSchema name="Adapters/ftpWriteFileBase64_ftp.jca">
+      <searchReplace>
+        <search>/SOA/er.soa/incoming/PROD</search>
+        <replace>/SOA/er.soa/incoming/DEV</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

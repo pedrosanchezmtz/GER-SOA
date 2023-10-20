@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelNotifyLoadInvoices" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelNotifyLoadInvoices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/bpelNotifyLoadInvoices" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+   <plnk:partnerLinkType name="bpelNotifyLoadInvoices">
+      <plnk:role name="bpelNotifyLoadInvoicesProvider" portType="client:bpelNotifyLoadInvoices"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="SOAUtilitiesTecWrapper.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/InvoicesBiz" schemaLocation="oramds:/apps/SOA/INER_InvoicesBiz/InvoicesBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="NotifyLoadInvoicesRq">
+      <wsdl:part name="NotifyLoadInvoicesRq" element="ns1:NotifyLoadInvoicesRq"/>
+   </wsdl:message>
+   <wsdl:message name="NotifyLoadInvoicesRs">
+      <wsdl:part name="NotifyLoadInvoicesRs" element="ns1:NotifyLoadInvoicesRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelNotifyLoadInvoices">
+      <wsdl:operation name="NotifyLoadInvoices">
+         <wsdl:input message="client:NotifyLoadInvoicesRq"/>
+         <wsdl:output message="client:NotifyLoadInvoicesRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

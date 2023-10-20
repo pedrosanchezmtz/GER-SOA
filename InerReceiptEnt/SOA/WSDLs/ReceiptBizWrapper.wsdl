@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ReceiptBiz"
+     targetNamespace="http://soa.estrellaroja.com.mx/ReceiptBiz"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://soa.estrellaroja.com.mx/ReceiptBiz"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="wsReceiptBiz">
+        <plnk:role name="ReceiptBizCallbackPortType" portType="tns:ReceiptBizCallbackPortType"/>
+        <plnk:role name="ReceiptBizPortType" portType="tns:ReceiptBizPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/ReceiptBiz" location="oramds:/apps/SOA/INER_ReceiptBiz/ReceiptBiz.wsdl"/>
+</wsdl:definitions>

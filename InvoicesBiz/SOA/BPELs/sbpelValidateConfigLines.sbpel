@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelValidateConfigLines" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelValidateConfigLines" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelValidateConfigLines" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec" xmlns:ns2="http://soa.estrellaroja.com.mx/FinancialsTec" xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsMessageTec" partnerLinkType="ns1:wsMessageTec" partnerRole="MessageTecPortType"/>
+      <partnerLink name="wsFinancialsTec" partnerLinkType="ns2:wsFinancialsTec" partnerRole="FinancialsTecPortType"/>
+      <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns3:wsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="WsFinancialsTecValidationLinesInvoiceConfigRq" messageType="ns2:ValidationLinesInvoiceConfigRq"/>
+      <variable name="WsFinancialsTecValidationLinesInvoiceConfigRs" messageType="ns2:ValidationLinesInvoiceConfigRs"/>
+      <variable name="WsMessageTecSendEmailRq" messageType="ns1:MessageRq"/>
+      <variable name="WsSOAUtilitiesTecGetHtmlControlRq" messageType="ns3:GetHtmlControlRq"/>
+      <variable name="WsSOAUtilitiesTecGetHtmlControlRs" messageType="ns3:GetHtmlControlRs"/>
+   </variables>
+   <sequence name="main">
+      <invoke name="WsFinancialsTec" partnerLink="wsFinancialsTec" portType="ns2:FinancialsTecPortType" operation="ValidationLinesInvoiceConfig" inputVariable="WsFinancialsTecValidationLinesInvoiceConfigRq" outputVariable="WsFinancialsTecValidationLinesInvoiceConfigRs" bpelx:invokeAsDetail="no"/>
+      <if name="If_Errorslines">
+         <documentation><![CDATA[SendErrors]]></documentation>
+         <condition>count($WsFinancialsTecValidationLinesInvoiceConfigRs.ValidationLinesInvoiceConfigRs/ns2:Return/ns2:ValidationLinesInvoiceConfig)>0</condition>
+         <sequence name="SeqSendErrors">
+            <assign name="TrsGenerateHTML">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("../Transformations/trsNotificationsValidateConfigLines.xsl", $WsFinancialsTecValidationLinesInvoiceConfigRs.ValidationLinesInvoiceConfigRs)</from>
+                  <to variable="WsSOAUtilitiesTecGetHtmlControlRq" part="GetHtmlControlRq"/>
+               </copy>
+            </assign>
+            <invoke name="WsSOAUtilitiesTec" partnerLink="wsSOAUtilitiesTec" portType="ns3:SOAUtilitiesTecPortType" operation="GetHtmlControl" inputVariable="WsSOAUtilitiesTecGetHtmlControlRq" outputVariable="WsSOAUtilitiesTecGetHtmlControlRs" bpelx:invokeAsDetail="no"/>
+            <assign name="AssignSendEmail">
+               <copy>
+                  <from>$WsSOAUtilitiesTecGetHtmlControlRs.GetHtmlControlRs/ns3:Return/ns3:HtmlControl</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Message</to>
+               </copy>
+               <copy>
+                  <from>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","Emails","Value","","Component","BuildInvoices")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressTo</to>
+               </copy>
+               <copy>
+                  <from>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","Emails","Value","","Component","BuildInvoices")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Addresses/ns1:AddressCC</to>
+               </copy>
+               <copy>
+                  <from>'Error Lineas de Facturas sin configuracion'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsMessageTecSendEmailRq.MessageRq/ns1:Message/ns1:Subject</to>
+               </copy>
+            </assign>
+            <invoke name="WsMessageTec" partnerLink="wsMessageTec" portType="ns1:MessageTecPortType" operation="SendEmail" inputVariable="WsMessageTecSendEmailRq" bpelx:invokeAsDetail="no"/>
+         </sequence>
+         <else>
+            <documentation><![CDATA[notErrors]]></documentation>
+            <empty name="NoErrors"/>
+         </else>
+      </if>
+   </sequence>
+</bpelx:subProcess>

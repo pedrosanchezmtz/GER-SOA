@@ -1,0 +1,486 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelSendReportInterface" targetNamespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://xmlns.oracle.com/bruleSendReportInterface/bruleSendReportInterfaceDS"
+         xmlns:ns5="http://xmlns.oracle.com/bruleSendReportInterface/bruleSendReportInterface_S"
+         xmlns:ns6="http://xmlns.oracle.com/bpel"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbXXMC_Transactions"
+         xmlns:ns8="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns9="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl">
+  <bpelx:inlineSubProcess name="sbpelSendEmail">
+    <variables>
+      <variable name="varInvokeWSMessageTecSendEmailRq" messageType="ns8:MessageRq"/>
+    </variables>
+    <sequence>
+      <invoke name="invokeWSMessageTecSendEmail" bpelx:invokeAsDetail="no" partnerLink="wsMessageTec"
+              portType="ns8:MessageTecPortType" operation="SendEmail" inputVariable="varInvokeWSMessageTecSendEmailRq"/>
+    </sequence>
+  </bpelx:inlineSubProcess>
+  <documentation>
+    <?audit suppress oracle.ide.xml.validation-error?>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación SendReportInterface del servicio ERPManagementOfLoadImportBiz.]]>
+  </documentation>
+  <import namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/FndInterfaceControl"
+          location="../Schemas/FndInterfaceControl.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/bpelSendReportInterface"
+          location="../WSDLs/bpelSendReportInterface.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelSendReportInterface" partnerLinkType="client:bpelSendReportInterface"
+                 myRole="bpelSendReportInterfaceProvider"/>
+    <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns2:wsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+    <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns1:wsERPIntegrationServiceTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="wsMessageTec" partnerLinkType="ns8:wsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+    <partnerLink name="wsAuditControlTec" partnerLinkType="ns3:wsAuditControlTec"
+                 partnerRole="AuditControlTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:SendReportInterfaceRq"/>    
+    <variable name="varHTMLRq" type="xsd:string"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelSendReportInterface.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelSendReportInterface" portType="client:bpelSendReportInterface"
+             operation="SendReportInterface" variable="inputVariable" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeSendReportInterface">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Negocio. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varInvokeWsERPIntegrationServiceTecRunDataModelRq" messageType="ns1:RunDataModelRq"/>
+        <variable name="varInvokeWsERPIntegrationServiceTecRunDataModelRs" messageType="ns1:RunDataModelRs"/>
+        <variable name="varInvokeBase64_DecodeRq" messageType="ns2:DecodeRq"/>
+        <variable name="varInvokeBase64_DecodeRs" messageType="ns2:DecodeRs"/>
+        <variable name="varInstanceId" element="ns0:varInstanceId"/>
+        <variable name="varFlag" type="xsd:boolean">
+          <from>true()</from>
+        </variable>
+        <variable name="varInvokeWsSOAUtilitiesTecGetHtmlControlRq" messageType="ns2:GetHtmlControlRq"/>
+        <variable name="varInvokeWsSOAUtilitiesTecGetHtmlControlRs" messageType="ns2:GetHtmlControlRs"/>
+        <variable name="varIntegrationTemplateErrors" type="xsd:string"/>
+        <variable name="varInvokeWSMessageTecSendEmailRq" messageType="ns8:MessageRq"/>
+        <variable name="varUniqueErrorsByTrxNumerLineId" element="ns0:ListErrorLineId"/>
+      </variables>
+      <faultHandlers>
+        <catchAll>
+          <assign name="assignCatchAll">
+            <documentation>
+              <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('[ERPManagementOfLoadImportBiz]','Unknown error in service integration: ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+            </copy>
+          </assign>
+        </catchAll>
+      </faultHandlers>
+      <sequence name="sequenceSendReportInterface">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <assign name="assignGetIntegrationName">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+            <from>dvm:lookupValue ('Dvms/ERPManagementOfLoadImportBiz.dvm', 'Code', $inputVariable.SendReportInterfaceRq/ns0:IntegrationName, 'Attribute1', '' )</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varIntegrationTemplateErrors</to>
+          </copy>
+        </assign>
+        <if name="ifExistConfigurationIntegrationName">
+          <documentation>
+            <![CDATA[Found Template Errors]]>
+          </documentation>
+          <condition>string-length($varIntegrationTemplateErrors)&gt;0</condition>
+          <scope name="scopeFlowGenerateReport">
+            <variables>
+              <variable name="varFndInterfaceControl" element="ns10:DATA_DS"/>
+              <variable name="varInvokeAuditControlTecCreateLog_CreateLogRq" messageType="ns3:CreateLogRq"/>
+              <variable name="varInvokeAuditControlTecCreateLog_CreateLogRs" messageType="ns3:CreateLogRs"/>
+            </variables>
+            <faultHandlers>
+              <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+                <documentation>
+                  <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+                </documentation>
+                <assign name="assignTimeout">
+                  <documentation>
+                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>concat('[ERPManagementOfLoadImportBiz]','Exception maxed timeout. ',ora:getFaultAsString())</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                  </copy>
+                </assign>
+              </catch>
+              <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+                <documentation>
+                  <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+                </documentation>
+                <assign name="assignRemoteFault">
+                  <documentation>
+                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>concat('[ERPManagementOfLoadImportBiz]','Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                  </copy>
+                </assign>
+              </catch>
+              <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+                <documentation>
+                  <![CDATA[Control para excepción por Falla en Selección.]]>
+                </documentation>
+                <assign name="assignSelectionFailure">
+                  <documentation>
+                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>concat('[ERPManagementOfLoadImportBiz]','There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                  </copy>
+                </assign>
+              </catch>
+              <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+                <documentation>
+                  <![CDATA[Control para excepción por Variables No Válidas.]]>
+                </documentation>
+                <assign name="assignInvalidVariables">
+                  <documentation>
+                    <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes">
+                    <from>concat('[ERPManagementOfLoadImportBiz]','There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                  </copy>
+                </assign>
+              </catch>
+            </faultHandlers>
+            <sequence>
+              <assign name="assignWsERPIntegrationServiceTecRunDataModelRq">
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>concat("/Custom/ER_INTEGRATION/Commons/Data Models/","XXER_FND_INTERFACE_CONTROL.xdm")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:reportAbsolutePath</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from><literal>P_TYPE_INTERFACES</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[1]/ns1:name</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from><literal>P_BATCH_ID</literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[2]/ns1:name</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varIntegrationTemplateErrors</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[1]/ns1:values/ns1:item[1]</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$inputVariable.SendReportInterfaceRq/ns0:BatchId</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[2]/ns1:values/ns1:item[1]</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>"p_estatus"</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[3]/ns1:name</to>
+                </copy>
+                <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                  <from>"E"</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsERPIntegrationServiceTecRunDataModelRq.RunDataModelRqPart/ns1:reportRequest/ns1:parameterNameValues/ns1:listOfParamNameValues/ns1:item[3]/ns1:values/ns1:item[1]</to>
+                </copy>
+              </assign>
+              <invoke name="invokeWsERPIntegrationServiceTecRunDataModel"
+                      inputVariable="varInvokeWsERPIntegrationServiceTecRunDataModelRq"
+                      outputVariable="varInvokeWsERPIntegrationServiceTecRunDataModelRs" bpelx:invokeAsDetail="no"
+                      partnerLink="wsERPIntegrationServiceTec" portType="ns1:ERPIntegrationTecPortType"
+                      operation="RunDataModel">
+                <documentation>
+                  <![CDATA[Se invoca a la operación RunDataModel del servicio Técnico ERPIntegrationServiceTec.]]>
+                </documentation>
+              </invoke>
+              <if name="IfValidateRunDataModel">
+                <documentation>
+                  <![CDATA[Continue]]>
+                </documentation>
+                <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart/ns1:Return/ns1:reportBytes)&gt;0</condition>
+                <sequence name="sequenceBase64">
+                  <assign name="assignBase64">
+                    <copy bpelx:insertMissingToData="yes">
+                      <from>$varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart/ns1:Return/ns1:reportBytes</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeBase64_DecodeRq.DecodeRq/ns2:charChain</to>
+                    </copy>
+                  </assign>
+                  <invoke name="InvokeBase64" partnerLink="wsSOAUtilitiesTec" portType="ns2:SOAUtilitiesTecPortType"
+                          operation="Decode" inputVariable="varInvokeBase64_DecodeRq"
+                          outputVariable="varInvokeBase64_DecodeRs" bpelx:invokeAsDetail="no"/>
+                </sequence>
+                <else>
+                  <documentation>
+                    <![CDATA[Error]]>
+                  </documentation>
+                  <sequence name="SequenceErroorBase64">
+                    <assign name="assignFlag">
+                      <copy>
+                        <from>false()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag</to>
+                      </copy>
+                    </assign>
+                  </sequence>
+                </else>
+              </if>
+              <if name="ifExistsErrors" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <documentation>
+                  <![CDATA[SaveErrors]]>
+                </documentation>
+                <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFlag = false()</condition>
+                <sequence name="sequenceSaveErros">
+                  <assign name="assignInstanceId">
+                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                      <from>ora:getInstanceId()</from>
+                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInstanceId</to>
+                    </copy>
+                  </assign>
+                  <assign name="trBpelRs_To_WsAuditControlTecCreateLogRq">
+                    <bpelx:annotation>
+                      <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                    </bpelx:annotation>
+                    <copy>
+                      <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelReportRs_To_WsAuditControlTecCreateLogRq.xsl", $varInvokeWsERPIntegrationServiceTecRunDataModelRs.RunDataModelRsPart, "varInstanceId", $varInstanceId)</from>
+                      <to variable="varInvokeAuditControlTecCreateLog_CreateLogRq" part="CreateLogRq"/>
+                    </copy>
+                  </assign>
+                  <invoke name="invokeAuditControlTecCreateLog"
+                          inputVariable="varInvokeAuditControlTecCreateLog_CreateLogRq"
+                          outputVariable="varInvokeAuditControlTecCreateLog_CreateLogRs"
+                          xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"
+                          partnerLink="wsAuditControlTec" portType="ns3:AuditControlTecPortType" operation="CreateLog"/>
+                </sequence>
+                <else>
+                  <documentation>
+                    <![CDATA[Success]]>
+                  </documentation>
+                  <sequence name="Sequence1">
+                    <assign name="assignParseXML">
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>oraext:parseXML($varInvokeBase64_DecodeRs.DecodeRs/ns2:Return/ns2:xmlOut)</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varFndInterfaceControl</to>
+                      </copy>
+                    </assign>
+                    <assign name="trXmlOutputToXmlOutput">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trXmlOutput_To_XmlOutput.xsl", $varFndInterfaceControl)</from>
+                        <to variable="varFndInterfaceControl"/>
+                      </copy>
+                    </assign>
+                    <assign name="trErrorsLineIdTovarLisErrorsLineId">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trErrorsLineIdTovarLisErrorsLineId.xsl", $varFndInterfaceControl)</from>
+                        <to variable="varUniqueErrorsByTrxNumerLineId"/>
+                      </copy>
+                    </assign>
+                    <assign name="trXmlOutputToWSGetHtmlControlRq">
+                      <bpelx:skipCondition>true()</bpelx:skipCondition>
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trXmlOutput_To_WSGetHtmlControlRq.xsl", $varFndInterfaceControl, "inputVariable.SendReportInterfaceRq", $inputVariable.SendReportInterfaceRq)</from>
+                        <to variable="varInvokeWsSOAUtilitiesTecGetHtmlControlRq" part="GetHtmlControlRq"/>
+                      </copy>
+                    </assign>
+                    <assign name="trXmlOutputToWSGetHtmlControlRqModified">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trXmlOutputToWSGetHtmlControlRqModified.xsl", $inputVariable.SendReportInterfaceRq, "varFndInterfaceControl", $varFndInterfaceControl, "varUniqueErrorsByTrxNumerLineId", $varUniqueErrorsByTrxNumerLineId)</from>
+                        <to variable="varInvokeWsSOAUtilitiesTecGetHtmlControlRq" part="GetHtmlControlRq"/>
+                      </copy>
+                    </assign>
+                    <invoke name="invokeWsSOAUtilitiesTecGetHtmlControl" bpelx:invokeAsDetail="no"
+                            partnerLink="wsSOAUtilitiesTec" portType="ns2:SOAUtilitiesTecPortType"
+                            operation="GetHtmlControl" inputVariable="varInvokeWsSOAUtilitiesTecGetHtmlControlRq"
+                            outputVariable="varInvokeWsSOAUtilitiesTecGetHtmlControlRs"/>
+                    <if name="ifExistsErrorsGenerateHTML">
+                      <documentation>
+                        <![CDATA[Success]]>
+                      </documentation>
+                      <condition>$varInvokeWsSOAUtilitiesTecGetHtmlControlRs.GetHtmlControlRs/cmn:Success</condition>
+                      <sequence name="Sequence2">
+                        <assign name="assignHMTLSuccess">
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                            <from>$varInvokeWsSOAUtilitiesTecGetHtmlControlRs.GetHtmlControlRs/ns2:Return/ns2:HtmlControl</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                          </copy>
+                        </assign>
+                        <scope name="scopeSubProcessProcessedWriteFiles">
+                          <variables>
+                            <variable name="UploadFileRq" element="ns0:UploadFileRq"/>
+                            <variable name="UploadFileRs" type="cmn:BaseRsType"/>
+                          </variables>
+                          <if name="ifIntegrationNameActiveToWriteFTP">
+                            <documentation>
+                              <![CDATA[Active]]>
+                            </documentation>
+                            <condition>dvm:lookupValue ('Dvms/ERPManagementOfLoadImportBiz.dvm', 'Code', $inputVariable.SendReportInterfaceRq/ns0:IntegrationName, 'Value', '' )="Y"</condition>
+                            <sequence name="Sequence3">
+                              <assign name="trWSGetHtmlControlRqToSubProccessWriteFilesRq">
+                                <bpelx:annotation>
+                                  <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                                </bpelx:annotation>
+                                <copy>
+                                  <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trWSGetHtmlControlRq_To_SubProccessWriteFilesRq.xsl", $varInvokeWsSOAUtilitiesTecGetHtmlControlRq.GetHtmlControlRq, "inputVariable.SendReportInterfaceRq", $inputVariable.SendReportInterfaceRq)</from>
+                                  <to variable="UploadFileRq"/>
+                                </copy>
+                              </assign>
+                              <extensionActivity>
+                                <bpelx:call name="CallsbpelProcessedWriteFiles"
+                                            xmlns:sp1="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/sbpelProcessedWriteFiles"
+                                            target="sp1:sbpelProcessedWriteFiles">
+                                  <bpelx:param name="UploadFileRq" copyByValue="yes" variable="UploadFileRq"/>
+                                  <bpelx:param name="UploadFileRs" copyByValue="no" variable="UploadFileRs"/>
+                                </bpelx:call>
+                              </extensionActivity>
+                            </sequence>
+                            <else>
+                              <documentation>
+                                <![CDATA[Inactive]]>
+                              </documentation>
+                              <sequence name="Sequence4">
+                                <empty name="Continue"/>
+                              </sequence>
+                            </else>
+                          </if>
+                        </scope>
+                      </sequence>
+                      <else>
+                        <documentation>
+                          <![CDATA[Failed]]>
+                        </documentation>
+                        <assign name="assignHMTLErrors"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                            <from>$varInvokeWsSOAUtilitiesTecGetHtmlControlRs.GetHtmlControlRs/cmn:Errors/cmn:Error/cmn:Description</from>
+                            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHTMLRq</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                    <assign name="assignParametersSendEmailRq"
+                            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                            xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <from>$varHTMLRq</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageTecSendEmailRq.MessageRq/ns8:Message/ns8:Message</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$inputVariable.SendReportInterfaceRq/ns0:IntegrationName</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageTecSendEmailRq.CustomHeader/ns8:IntegrationName</to>
+                      </copy>
+                    </assign>
+                    <extensionActivity>
+                      <bpelx:call name="CallSendEmail" target="sbpelSendEmail">
+                        <bpelx:param name="varInvokeWSMessageTecSendEmailRq" copyByValue="no"
+                                     variable="varInvokeWSMessageTecSendEmailRq"/>
+                      </bpelx:call>
+                    </extensionActivity>
+                  </sequence>
+                </else>
+              </if>
+            </sequence>
+          </scope>
+          <else>
+            <documentation>
+              <![CDATA[Not Found Template Errors]]>
+            </documentation><sequence name="Sequence5">
+              <assign name="assignParametersSendEmailRq"
+                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                      xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat("The Integration Name ",$inputVariable.SendReportInterfaceRq/ns0:IntegrationName," is not configurated into file DVM")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageTecSendEmailRq.MessageRq/ns8:Message/ns8:Message</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$inputVariable.SendReportInterfaceRq/ns0:IntegrationName</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWSMessageTecSendEmailRq.CustomHeader/ns8:IntegrationName</to>
+                </copy>
+              </assign>
+              <extensionActivity><bpelx:call name="CallSendEmail"
+                                                                                      target="sbpelSendEmail">
+                  <bpelx:param name="varInvokeWSMessageTecSendEmailRq" copyByValue="no"
+                               variable="varInvokeWSMessageTecSendEmailRq"/>
+                </bpelx:call></extensionActivity></sequence></else>
+        </if>
+      </sequence>
+    </scope>
+  </sequence>
+</process>

@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelProcessedWriteFiles" targetNamespace="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/sbpelProcessedWriteFiles" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz/sbpelProcessedWriteFiles" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaTec" xmlns:ns2="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns3="http://soa.estrellaroja.com.mx/ERPManagementOfLoadImportBiz" xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <partnerLinks>
+      <partnerLink name="wsSFTPEstrellaRojaTec" partnerLinkType="ns1:wsSFTPEstrellaRojaTec" partnerRole="SFTPEstrellaRojaTecPort"/>
+      <partnerLink name="wsSOAUtilitiesTec" partnerLinkType="ns2:wsSOAUtilitiesTec" partnerRole="SOAUtilitiesTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="UploadFileRq" element="ns3:UploadFileRq"/>
+      <variable name="UploadFileRs" type="ns4:BaseRsType"/>
+   </variables>
+   <sequence name="main">
+      <scope name="scopeMain">
+         <variables>
+            <variable name="varInvokeWsSOAUtilitiesEncodeRq" messageType="ns2:EncodeRq"/>
+            <variable name="varInvokeWsSOAUtilitiesEncodeRs" messageType="ns2:EncodeRs"/>
+            <variable name="varInvokeWsSFTPEstrellaRojaTecSendFileRq" messageType="ns1:SendFileRq"/>
+            <variable name="varInvokeWsSFTPEstrellaRojaTecSendFileRs" messageType="ns1:SendFileRs"/>
+            <variable name="varBankFtpPAth" type="xsd:string"/>
+         </variables>
+         <faultHandlers>
+            <catchAll>
+               <assign name="assignCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                  <documentation><![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]></documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>SOA-00001</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[ManagementOfLoadImport]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>[ERPManagementOfLoadImportBiz]</literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                        <literal>
+                           <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                        </literal>
+                     </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+            </catchAll>
+         </faultHandlers>
+         <sequence name="Sequence1">
+            <assign name="assignParametersEncodeRq">
+               <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                  <from>$UploadFileRq/ns3:ContentFileProcessed</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesEncodeRq.EncodeRq/ns2:Coded[1]/ns2:ContentData</to>
+               </copy>
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$UploadFileRq/ns3:FileName</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSOAUtilitiesEncodeRq.EncodeRq/ns2:Coded[1]/ns2:ContentDataName</to>
+               </copy>
+            </assign>
+            <invoke name="invokeWsSOAUtilitiesEncode" bpelx:invokeAsDetail="no" partnerLink="wsSOAUtilitiesTec" portType="ns2:SOAUtilitiesTecPortType" operation="Encode" inputVariable="varInvokeWsSOAUtilitiesEncodeRq" outputVariable="varInvokeWsSOAUtilitiesEncodeRs"/>
+            <if name="ifValidateResponseEncode">
+               <documentation><![CDATA[Success]]></documentation>
+               <condition>$varInvokeWsSOAUtilitiesEncodeRs.EncodeRs/ns4:Success</condition>
+               <sequence name="Sequence2">
+                  <if name="SelectBankSftpPath">
+                     <documentation><![CDATA[BBVA]]></documentation>
+                     <condition>$UploadFileRq/ns3:ProcessName = "InterfaceBankStatements$BBVA"</condition>
+                     <assign name="assignBankPath">
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>ora:getPreference("FTP_BBVA")</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBankFtpPAth</to>
+                        </copy>
+                     </assign>
+                     <elseif>
+                        <documentation><![CDATA[BNMX]]></documentation>
+                        <condition>$UploadFileRq/ns3:ProcessName = "InterfaceBankStatements$BNMX"</condition>
+                        <assign name="assignBankPath">
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                              <from>ora:getPreference("FTP_BNMX")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBankFtpPAth</to>
+                           </copy>
+                        </assign>
+                     </elseif>
+                     <elseif>
+                        <documentation>
+                           <![CDATA[Santander]]>
+                        </documentation>
+                        <condition>$UploadFileRq/ns3:ProcessName = "InterfaceBankStatements$SANTANDER"</condition>
+                        <assign name="assignBankPath">
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                              <from>ora:getPreference("FTP_Santander")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBankFtpPAth</to>
+                           </copy>
+                        </assign>
+                     </elseif>
+                     <elseif>
+                        <documentation>
+                           <![CDATA[HSBC]]>
+                        </documentation>
+                        <condition>$UploadFileRq/ns3:ProcessName = "InterfaceBankStatements$HSBC"</condition><assign name="assignBankPath"
+                                                                                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>ora:getPreference("FTP_HSBC")</from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBankFtpPAth</to>
+      </copy></assign></elseif>
+                     <else>
+                        <documentation><![CDATA[Banorte]]></documentation>
+                        <assign name="assignBankPath">
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                              <from>ora:getPreference("FTP_Banorte")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varBankFtpPAth</to>
+                           </copy>
+                        </assign>
+                     </else>
+                  </if>
+                  <assign name="assignParametersSendFile">
+                     <copy>
+                        <from>substring-before($UploadFileRq/ns3:FileName,'.')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaTecSendFileRq.SendFileRq/FileName</to>
+                     </copy>
+                     <copy>
+                        <from>substring-after($UploadFileRq/ns3:FileName,'.')</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaTecSendFileRq.SendFileRq/FileExtension</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                        <from>$varInvokeWsSOAUtilitiesEncodeRs.EncodeRs/ns2:Return/ns2:CodedReturn[1]/ns2:DataBase64</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaTecSendFileRq.SendFileRq/File</to>
+                     </copy>
+                  </assign>
+                  <if name="ifValidateProcessType">
+                     <documentation><![CDATA[ERROR]]></documentation>
+                     <condition>$UploadFileRq/ns3:TypeProcessed='ERROR'</condition>
+                     <assign name="assignPathError" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>concat($varBankFtpPAth,dvm:lookupValue ('Dvms/ERPManagementOfLoadImportBiz.dvm', 'Code', $UploadFileRq/ns3:ProcessName, 'Attribute2', '' ))</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaTecSendFileRq.SendFileRq/Path</to>
+                        </copy>
+                     </assign>
+                     <else>
+                        <documentation><![CDATA[SUCCESS]]></documentation>
+                        <assign name="assignPathSuccess" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>concat($varBankFtpPAth,dvm:lookupValue ('Dvms/ERPManagementOfLoadImportBiz.dvm', 'Code', $UploadFileRq/ns3:ProcessName, 'Attribute1', '' ))</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsSFTPEstrellaRojaTecSendFileRq.SendFileRq/Path</to>
+                           </copy>
+                        </assign>
+                     </else>
+                  </if>
+                  <invoke name="invokeWsSFTPEstrellaRojaTecSendFile" bpelx:invokeAsDetail="no" partnerLink="wsSFTPEstrellaRojaTec" portType="ns1:SFTPEstrellaRojaTecPort" operation="SendFile" inputVariable="varInvokeWsSFTPEstrellaRojaTecSendFileRq" outputVariable="varInvokeWsSFTPEstrellaRojaTecSendFileRs"/>
+               </sequence>
+               <else>
+                  <documentation><![CDATA[Failed]]></documentation>
+                  <assign name="assignErrors">
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>
+                              <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                           </literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Success</to>
+                     </copy>
+                     <extensionAssignOperation>
+                        <bpelx:remove>
+                           <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Success</bpelx:target>
+                        </bpelx:remove>
+                     </extensionAssignOperation>
+                     <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$varInvokeWsSOAUtilitiesEncodeRs.EncodeRs/ns4:Errors</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors</to>
+                     </copy>
+                  </assign>
+               </else>
+            </if>
+            <assign name="assignSuccess" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy bpelx:insertMissingToData="yes">
+                  <from>
+                     <literal>
+                        <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                     </literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes">
+                  <from>
+                     <literal>
+                        <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                     </literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Success</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$UploadFileRs/ns4:Errors</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelReleaseInvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelReleaseInvoicesAP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelReleaseInvoicesAP" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/InvoicesBiz" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <partnerLinks>
+      <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns2:wsERPIntegrationServiceTec" partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varReleaseInvoicesAP" element="ns1:ValidateInvoicesAPRq"/>
+   </variables>
+   <faultHandlers>
+      <catchAll>
+         <empty name="empty"/>
+      </catchAll>
+   </faultHandlers>
+   <sequence name="mainSBpelReleaseInvoicesAP">
+      <forEach parallel="no" counterName="InvoicesCounter" name="forEachInvoices">
+         <startCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">1</startCounterValue>
+         <finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varReleaseInvoicesAP/ns1:InvoicesAP/ns1:InvoiceAP)</finalCounterValue>
+         <scope name="scopeForEachInvoices">
+            <variables>
+               <variable name="invokeWsERPIntegrationServiceTecReleaseSingleHoldRq" messageType="ns2:ReleaseSingleHoldRq"/>
+               <variable name="invokeWsERPIntegrationServiceTecReleaseSingleHoldRs" messageType="ns2:ReleaseSingleHoldRs"/>
+            </variables>
+            <sequence name="sequenceInvoices">
+               <assign name="assignCurrentInvoice">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varReleaseInvoicesAP/ns1:InvoicesAP/ns1:InvoiceAP[$InvoicesCounter]/ns1:BusinessUnit</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:BusinessUnitName</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varReleaseInvoicesAP/ns1:InvoicesAP/ns1:InvoiceAP[$InvoicesCounter]/ns1:SupplierName</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:SupplierName</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varReleaseInvoicesAP/ns1:InvoicesAP/ns1:InvoiceAP[$InvoicesCounter]/ns1:SupplierNumber</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:SupplierNumber</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varReleaseInvoicesAP/ns1:InvoicesAP/ns1:InvoiceAP[$InvoicesCounter]/ns1:InvoiceNumber</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:InvoiceNumber</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","paramHoldLookupCode","Value","","Component","ValidateInvoicesAP")</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:HoldLookupCode</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>dvm:lookupValue("DVMs/dvmInvoicesBiz.dvm","Code","paramReleaseLookupCode","Value","","Component","ValidateInvoicesAP")</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecReleaseSingleHoldRq.ReleaseSingleHoldRq/ns2:Invoice/ns2:releaseLookupCode</to>
+                  </copy>
+               </assign>
+               <invoke name="invokeWsERPIntegrationServiceTecReleaseSingleHold" bpelx:invokeAsDetail="no" partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType" operation="ReleaseSingleHold" inputVariable="invokeWsERPIntegrationServiceTecReleaseSingleHoldRq" outputVariable="invokeWsERPIntegrationServiceTecReleaseSingleHoldRs"/>
+            </sequence>
+         </scope>
+      </forEach>
+   </sequence>
+</bpelx:subProcess>

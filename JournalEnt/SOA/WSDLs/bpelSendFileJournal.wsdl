@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelSendFileJournal"
+                  targetNamespace="http://soa.estrellaroja.com.mx/JournalEnt/bpelSendFileJournal"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:client="http://soa.estrellaroja.com.mx/JournalEnt/bpelSendFileJournal"
+                  xmlns:ns0="http://soa.estrellaroja.com.mx/JournalEnt"
+                  xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:ns1="http://schemas.oracle.com/bpel/extension">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://soa.estrellaroja.com.mx/JournalEnt"
+              schemaLocation="oramds:/apps/SOA/JournalEnt/JournalEnt.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="SendFileJournalRq">
+    <wsdl:part name="SendFileJournalRq" element="ns0:SendFileJournalRq"/>
+  </wsdl:message>
+  <wsdl:message name="SendFileJournalRs">
+    <wsdl:part name="SendFileJournalRs" element="ns0:SendFileJournalRs"/>
+  </wsdl:message>
+  <wsdl:portType name="bpelSendFileJournal">
+    <wsdl:operation name="SendFileJournal">
+      <wsdl:input message="client:SendFileJournalRq"/>
+      <wsdl:output message="client:SendFileJournalRs"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <plnk:partnerLinkType name="bpelSendFileJournal">
+    <plnk:role name="bpelSendFileJournalProvider" portType="client:bpelSendFileJournal"/>
+  </plnk:partnerLinkType>
+</wsdl:definitions>

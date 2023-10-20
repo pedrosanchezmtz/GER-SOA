@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="BpelGetCFDIFromFile" targetNamespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:ns3="http://www.sat.gob.mx/cfd/4">
+   <plnk:partnerLinkType name="BpelGetCFDIFromFile">
+      <plnk:role name="BpelGetCFDIFromFileProvider" portType="client:BpelGetCFDIFromFile"/>
+   </plnk:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDI" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:ns3="http://www.sat.gob.mx/cfd/4">
+         <import namespace="http://soa.estrellaroja.com.mx/CFDI" schemaLocation="oramds:/apps/Common/XSD/CFDI.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:ns3="http://www.sat.gob.mx/cfd/4">
+         <import namespace="http://soa.estrellaroja.com.mx/CFDITec" schemaLocation="oramds:/apps/SOA/CFDITec/CFDITec.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:ns3="http://www.sat.gob.mx/cfd/4">
+         <xsd:import namespace="http://www.sat.gob.mx/cfd/3" schemaLocation="oramds:/apps/Common/XSD/CFDI/cfdv33.xsd"/>
+      </xsd:schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" xmlns:ns1="http://soa.estrellaroja.com.mx/CFDITec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://www.sat.gob.mx/cfd/3" xmlns:ns3="http://www.sat.gob.mx/cfd/4">
+         <xsd:import namespace="http://www.sat.gob.mx/cfd/4" schemaLocation="oramds:/apps/Common/XSD/CFDI40/cfdv40.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="BpelGetCFDIFromFileRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetCFDIFromFileRq"/>
+   </wsdl:message>
+   <wsdl:message name="BpelGetCFDIFromFileResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetCFDIFromFileRs"/>
+   </wsdl:message>
+   <wsdl:portType name="BpelGetCFDIFromFile">
+      <wsdl:operation name="GetCFDIFromFile">
+         <wsdl:input message="client:BpelGetCFDIFromFileRequestMessage"/>
+         <wsdl:output message="client:BpelGetCFDIFromFileResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

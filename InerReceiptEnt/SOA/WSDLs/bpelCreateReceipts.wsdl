@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelCreateReceipts" targetNamespace="http://soa.estrellaroja.com.mx/ReceiptEnt/bpelCreateReceipts" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptEnt/bpelCreateReceipts" xmlns:ns0="http://soa.estrellaroja.com.mx/ReceiptEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureTrxCust">
+   <plnk:partnerLinkType name="bpelCreateReceipts">
+      <plnk:role name="bpelCreateReceiptsProvider" portType="client:bpelCreateReceipts"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/ReceiptEnt" location="oramds:/apps/SOA/INER_ReceiptEnt/ReceiptEnt.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptEnt/bpelCreateReceipts" xmlns:ns0="http://soa.estrellaroja.com.mx/ReceiptEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureTrxCust">
+         <import namespace="http://soa.estrellaroja.com.mx/ReceiptEnt" schemaLocation="oramds:/apps/SOA/INER_ReceiptEnt/ReceiptEnt.xsd"/>
+      </schema>
+      <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptEnt/bpelCreateReceipts" xmlns:ns0="http://soa.estrellaroja.com.mx/ReceiptEnt" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="http://schemas.oracle.com/bpel/extension" xmlns:ns2="http://soa.estrellaroja.com.mx/StructureTrxCust">
+         <xsd:import namespace="http://soa.estrellaroja.com.mx/StructureTrxCust" schemaLocation="../Schemas/StructureTrxCust.xsd"/>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="CreateReceiptsRq">
+      <wsdl:part name="CreateReceiptsRq" element="ns0:CreateReceiptsRq"/>
+   </wsdl:message>
+   <wsdl:message name="CreateReceiptsRs">
+      <wsdl:part name="CreateReceiptsRs" element="ns0:CreateReceiptsRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelCreateReceipts">
+      <wsdl:operation name="CreateReceipts">
+         <wsdl:input message="client:CreateReceiptsRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

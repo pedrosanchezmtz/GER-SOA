@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+   <xsd:element name="G_1">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="ASSET_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ASSET_NUMBER" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="ITEM_ORGANIZATION_ID" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="UOM_CODE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="CREATED_BY" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="CREATION_DATE" type="xsd:date" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="LAST_UPDATED_BY" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="LAST_UPDATE_DATE" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+            <xsd:element name="DESCRIPTION" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

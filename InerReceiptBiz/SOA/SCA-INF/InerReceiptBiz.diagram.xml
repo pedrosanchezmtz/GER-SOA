@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+   <dgm:gService name="ReceiptBiz">
+      <dgm:body borderWidth="2" arcRad="20" X="21" Y="216" width="137" height="108">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="11" Y="209" width="156" height="122">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:outputPort name="ReceiptBiz" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz#wsdl.interface(ReceiptBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ReceiptBiz#wsdl.interface(ReceiptBizCallbackPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>DigitalStampReceipts</dgm:item>
+         <dgm:item>ReceiptApply</dgm:item>
+         <dgm:item>ReceiptApplyCallback</dgm:item>
+      </dgm:operations>
+   </dgm:gService>
+   <dgm:gReference name="wsErpIntegrationTec">
+      <dgm:body borderWidth="2" arcRad="20" X="1136" Y="26" width="136" height="168">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="1126" Y="19" width="156" height="182">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="wsErpIntegrationTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>FindOrganization</dgm:item>
+         <dgm:item>FindCustomerAccount</dgm:item>
+         <dgm:item>FindPerson</dgm:item>
+         <dgm:item>MergeOrganization</dgm:item>
+         <dgm:item>MergePerson</dgm:item>
+         <dgm:item>MergeLocation</dgm:item>
+         <dgm:item>LoadInterface</dgm:item>
+         <dgm:item>UploadFile</dgm:item>
+         <dgm:item>JournalImport</dgm:item>
+         <dgm:item>UpdateObject</dgm:item>
+         <dgm:item>CreateOrderTransactions</dgm:item>
+         <dgm:item>RunDataModel</dgm:item>
+         <dgm:item>GetEssJobStatus</dgm:item>
+         <dgm:item>DownloadESSJobExecutionDetails</dgm:item>
+         <dgm:item>CreateReceipt</dgm:item>
+         <dgm:item>CreateOrganization</dgm:item>
+         <dgm:item>CreatePerson</dgm:item>
+         <dgm:item>CreatePersonSite</dgm:item>
+         <dgm:item>CreateOrganizationSite</dgm:item>
+         <dgm:item>CreateCustomerAccount</dgm:item>
+         <dgm:item>CreateLocation</dgm:item>
+         <dgm:item>AssignSiteToAccount</dgm:item>
+         <dgm:item>CancelInvoice</dgm:item>
+         <dgm:item>InsertSingleHold</dgm:item>
+         <dgm:item>ReleaseSingleHold</dgm:item>
+         <dgm:item>UploadAttachment</dgm:item>
+         <dgm:item>DownloadAttachment</dgm:item>
+         <dgm:item>CreateApplyReceipt</dgm:item>
+         <dgm:item>CreateCustProfile</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gReference name="wsFinancialsTec">
+      <dgm:body borderWidth="2" arcRad="20" X="1136" Y="228" width="136" height="168">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="1126" Y="221" width="156" height="182">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="wsFinancialsTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialsTec#wsdl.interface(FinancialsTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/direct_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>ValidationLinesInvoiceConfig</dgm:item>
+         <dgm:item>GetTransactionsReconcile</dgm:item>
+         <dgm:item>GetCustomers</dgm:item>
+         <dgm:item>GetCustomerSites</dgm:item>
+         <dgm:item>UpdateCustomerSites</dgm:item>
+         <dgm:item>UpdateCustomers</dgm:item>
+         <dgm:item>UpdateConciliations</dgm:item>
+         <dgm:item>UpdateInventoryTransactions</dgm:item>
+         <dgm:item>GetInventoryTransactions</dgm:item>
+         <dgm:item>GetJournalTMS</dgm:item>
+         <dgm:item>UpdateJournalTMS</dgm:item>
+         <dgm:item>GetJournalNE</dgm:item>
+         <dgm:item>GetCustomerRFC</dgm:item>
+         <dgm:item>GetReceiptOrInvoices</dgm:item>
+         <dgm:item>ProcessedReceipt</dgm:item>
+         <dgm:item>ProcessedApplyReceipt</dgm:item>
+         <dgm:item>GetComplementInvoice</dgm:item>
+         <dgm:item>UpdateStatusInvoice</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gReference name="WsSOAUtilitiesTec">
+      <dgm:body borderWidth="2" arcRad="20" X="1136" Y="430" width="136" height="156">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="1126" Y="423" width="156" height="170">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="WsSOAUtilitiesTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>GetDateByTimeZone</dgm:item>
+         <dgm:item>GenerateZipFile</dgm:item>
+         <dgm:item>transformNumberToLetter</dgm:item>
+         <dgm:item>Decode</dgm:item>
+         <dgm:item>Encode</dgm:item>
+         <dgm:item>EncodeFileBase64</dgm:item>
+         <dgm:item>GetHtmlControl</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gReference name="WsMessageTec">
+      <dgm:body borderWidth="2" arcRad="20" X="1136" Y="620" width="136" height="84">
+         <dgm:borderColor r="153" g="153" b="153"/>
+         <dgm:bgColor r="255" g="255" b="255"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="1126" Y="613" width="156" height="98">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="WsMessageTec" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+      <dgm:operations>
+         <dgm:item>SendEmail</dgm:item>
+      </dgm:operations>
+   </dgm:gReference>
+   <dgm:gComponent name="bpelDigitalStampReceipts">
+      <dgm:body borderWidth="2" arcRad="20" X="859" Y="82" width="130" height="86">
+         <dgm:borderColor r="69" g="113" b="140"/>
+         <dgm:lightBgColor r="166" g="208" b="230"/>
+         <dgm:darkBgColor r="99" g="162" b="201"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="849" Y="75" width="150" height="102">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="bpelDigitalStampReceipts" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts#wsdl.interface(bpelDigitalStampReceipts)"/>
+      <dgm:outputPort name="wsErpIntegrationTec" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+      <dgm:outputPort name="wsFinancialsTec" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialsTec#wsdl.interface(FinancialsTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+   </dgm:gComponent>
+   <dgm:gComponent name="mediatorReceiptBiz">
+      <dgm:body borderWidth="2" arcRad="20" X="305" Y="201" width="130" height="86">
+         <dgm:borderColor r="128" g="92" b="148"/>
+         <dgm:lightBgColor r="208" g="169" b="227"/>
+         <dgm:darkBgColor r="183" g="132" b="212"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="295" Y="194" width="150" height="102">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="mediatorReceiptBiz" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz#wsdl.interface(ReceiptBizPortType)" callbackInterface="http://soa.estrellaroja.com.mx/ReceiptBiz#wsdl.interface(ReceiptBizCallbackPortType)"/>
+      <dgm:outputPort name="bpelDigitalStampReceipts.bpelDigitalStampReceipts" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts#wsdl.interface(bpelDigitalStampReceipts)"/>
+      <dgm:outputPort name="bpelReceiptApply.bpelReceiptApply" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply#wsdl.interface(bpelReceiptApply)" callbackInterface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply#wsdl.interface(bpelReceiptApplyCallback)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+   </dgm:gComponent>
+   <dgm:gComponent name="bpelReceiptApply">
+      <dgm:body borderWidth="2" arcRad="20" X="582" Y="308" width="130" height="111">
+         <dgm:borderColor r="69" g="113" b="140"/>
+         <dgm:lightBgColor r="166" g="208" b="230"/>
+         <dgm:darkBgColor r="99" g="162" b="201"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="572" Y="301" width="150" height="127">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="bpelReceiptApply" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply#wsdl.interface(bpelReceiptApply)" callbackInterface="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply#wsdl.interface(bpelReceiptApplyCallback)"/>
+      <dgm:outputPort name="wsErpIntegrationTec" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+      <dgm:outputPort name="wsFinancialsTec" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/FinancialsTec#wsdl.interface(FinancialsTecPortType)"/>
+      <dgm:outputPort name="sbpelNotifyHtmlControl" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+   </dgm:gComponent>
+   <dgm:gComponent name="sbpelNotifyHtmlControl">
+      <dgm:body borderWidth="2" arcRad="20" X="859" Y="542" width="130" height="86">
+         <dgm:borderColor r="141" g="141" b="141"/>
+         <dgm:lightBgColor r="255" g="255" b="255"/>
+         <dgm:darkBgColor r="202" g="202" b="202"/>
+      </dgm:body>
+      <dgm:shadow arcRad="20" X="849" Y="535" width="150" height="102">
+         <dgm:bgColor r="196" g="228" b="240"/>
+      </dgm:shadow>
+      <dgm:inputPort name="sbpelNotifyHtmlControl" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+      <dgm:outputPort name="WsSOAUtilitiesTec" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+      <dgm:outputPort name="WsMessageTec" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)"/>
+      <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+   </dgm:gComponent>
+   <dgm:gWireLink source="mediatorReceiptBiz/bpelDigitalStampReceipts.bpelDigitalStampReceipts" target="bpelDigitalStampReceipts/bpelDigitalStampReceipts" width="2">
+      <dgm:gSegment X1="445" Y1="226" X2="746" Y2="226"/>
+      <dgm:gSegment X1="746" Y1="226" X2="746" Y2="107"/>
+      <dgm:gSegment X1="746" Y1="107" X2="849" Y2="107"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="bpelDigitalStampReceipts/wsErpIntegrationTec" target="wsErpIntegrationTec" width="2">
+      <dgm:gSegment X1="999" Y1="107" X2="1023" Y2="107"/>
+      <dgm:gSegment X1="1023" Y1="107" X2="1023" Y2="36"/>
+      <dgm:gSegment X1="1023" Y1="36" X2="1126" Y2="36"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="bpelDigitalStampReceipts/wsFinancialsTec" target="wsFinancialsTec" width="2">
+      <dgm:gSegment X1="999" Y1="132" X2="1068" Y2="132"/>
+      <dgm:gSegment X1="1068" Y1="132" X2="1068" Y2="238"/>
+      <dgm:gSegment X1="1068" Y1="238" X2="1126" Y2="238"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="bpelReceiptApply/wsErpIntegrationTec" target="wsErpIntegrationTec" width="2">
+      <dgm:gSegment X1="722" Y1="333" X2="1038" Y2="333"/>
+      <dgm:gSegment X1="1038" Y1="333" X2="1038" Y2="36"/>
+      <dgm:gSegment X1="1038" Y1="36" X2="1126" Y2="36"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="sbpelNotifyHtmlControl/WsSOAUtilitiesTec" target="WsSOAUtilitiesTec" width="2">
+      <dgm:gSegment X1="999" Y1="567" X2="1023" Y2="567"/>
+      <dgm:gSegment X1="1023" Y1="567" X2="1023" Y2="440"/>
+      <dgm:gSegment X1="1023" Y1="440" X2="1126" Y2="440"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="sbpelNotifyHtmlControl/WsMessageTec" target="WsMessageTec" width="2">
+      <dgm:gSegment X1="999" Y1="592" X2="1023" Y2="592"/>
+      <dgm:gSegment X1="1023" Y1="592" X2="1023" Y2="630"/>
+      <dgm:gSegment X1="1023" Y1="630" X2="1126" Y2="630"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="bpelReceiptApply/wsFinancialsTec" target="wsFinancialsTec" width="2">
+      <dgm:gSegment X1="722" Y1="358" X2="1053" Y2="358"/>
+      <dgm:gSegment X1="1053" Y1="358" X2="1053" Y2="238"/>
+      <dgm:gSegment X1="1053" Y1="238" X2="1126" Y2="238"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="mediatorReceiptBiz/bpelReceiptApply.bpelReceiptApply" target="bpelReceiptApply/bpelReceiptApply" width="2">
+      <dgm:gSegment X1="445" Y1="251" X2="469" Y2="251"/>
+      <dgm:gSegment X1="469" Y1="251" X2="469" Y2="333"/>
+      <dgm:gSegment X1="469" Y1="333" X2="572" Y2="333"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="ReceiptBiz" target="mediatorReceiptBiz/mediatorReceiptBiz" width="2">
+      <dgm:gSegment X1="168" Y1="226" X2="295" Y2="226"/>
+      <dgm:baseColor r="153" g="153" b="153"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+   <dgm:gWireLink source="bpelReceiptApply/sbpelNotifyHtmlControl" target="sbpelNotifyHtmlControl/sbpelNotifyHtmlControl" width="2">
+      <dgm:gSegment X1="722" Y1="383" X2="746" Y2="383"/>
+      <dgm:gSegment X1="746" Y1="383" X2="746" Y2="567"/>
+      <dgm:gSegment X1="746" Y1="567" X2="849" Y2="567"/>
+      <dgm:baseColor r="183" g="183" b="183"/>
+      <dgm:selectedColor r="49" g="106" b="196"/>
+   </dgm:gWireLink>
+</dgm:gDiagram>

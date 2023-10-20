@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelAddAttachment" targetNamespace="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelAddAttachment" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelAddAttachment" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/PaymentComplementBiz" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:sp1="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelHandleError">
+   <partnerLinks>
+      <partnerLink name="wsIntegrationServiceTec" partnerLinkType="ns2:wsIntegrationServiceTec" partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="currentHeader" element="ns1:CurrentHeader"/>
+      <variable name="varDataUUID" element="ns1:StampData"/>
+      <variable name="varContextAttachment" element="ns1:ContextInfo"/>
+      <variable name="varSuccessful" type="xsd:unsignedInt"/>
+   </variables>
+   <sequence name="sequenceMain">
+      <scope name="scopeGetAttachment">
+         <variables>
+            <variable name="attachmentInput" messageType="ns2:UploadAttachmentRq"/>
+            <variable name="attachmentOutput" messageType="ns2:UploadAttachmentRs"/>
+            <variable name="varUrlAttactment" element="ns1:UrlAttachments"/>
+            <variable name="varCreateLogAtt" element="ns4:CreateLogRq"/>
+         </variables>
+         <sequence name="sequenceGetAttachment">
+            <assign name="trAttactmentRequest">
+               <bpelx:annotation>
+                  <bpelx:pattern patternName="bpelx:transformation"/>
+               </bpelx:annotation>
+               <copy>
+                  <from>ora:doXSLTransformForDoc("../Transformations/CurrentHeader_To_UploadAttachmentRq.xsl", $currentHeader, "varDataUUID", $varDataUUID)</from>
+                  <to variable="attachmentInput" part="UploadAttachmentRq"/>
+               </copy>
+            </assign>
+            <invoke name="invokeUploadAttachment" partnerLink="wsIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType" operation="UploadAttachment" inputVariable="attachmentInput" outputVariable="attachmentOutput" bpelx:invokeAsDetail="no"/>
+            <if name="IfExistErrorAttachment">
+               <documentation><![CDATA[Found Errors]]></documentation>
+               <condition>contains($attachmentOutput.UploadAttachmentRs/ns2:Return/ns2:Result,'FAILED')</condition>
+               <sequence name="sequenceHandleErrros">
+                  <assign name="assignContextParams">
+                     <copy>
+                        <from>concat("Unable to upload attachments ",$attachmentOutput.UploadAttachmentRs/ns2:Return/ns2:Result)</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:Description</to>
+                     </copy>
+                     <copy>
+                        <from>
+                           <literal>0</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSuccessful</to>
+                     </copy>
+                     <copy>
+                        <from>
+                           <literal>[PaymentComplementBiz]</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:BusinessProcess</to>
+                     </copy>
+                     <copy>
+                        <from>
+                           <literal>[sbpelAddAttachment]</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:FailedService</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>xp20:current-dateTime()</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:TimeStamp</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>SOA-00021</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:ErrorCode</to>
+                     </copy>
+                     <copy bpelx:insertMissingToData="yes">
+                        <from>
+                           <literal>Unable to upload attachments. Manual loading required.</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varContextAttachment/ns1:LastError/ns3:ShortDescription</to>
+                     </copy>
+                  </assign>
+               </sequence>
+               <else>
+                  <documentation><![CDATA[Not Found Errors]]></documentation>
+                  <assign name="assignControl">
+                     <copy>
+                        <from>
+                           <literal>1</literal>
+                        </from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varSuccessful</to>
+                     </copy>
+                  </assign>
+               </else>
+            </if>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

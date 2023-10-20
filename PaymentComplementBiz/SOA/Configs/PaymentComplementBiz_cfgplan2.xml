@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="PaymentComplementBiz">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</search>
+        <replace>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+        <replace>oramds:/apps/SOA/MessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec</search>
+        <replace>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+        <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+        <replace>oramds:/apps/OSB/AuditControlTec/AuditControlTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</search>
+        <replace>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+        <replace>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+    </import>
+      <service name="PaymentComplementBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/PaymentComplementBiz#wsdl.endpoint(PaymentComplementBiz/PaymentComplementBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="originalProductVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelStampPaymentComplement">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelHandleMergeStamping">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <reference name="wsCommonPaymentsTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/CommonPaymentsTec#wsdl.endpoint(CommonPaymentsTec/CommonPaymentsTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsAuditControlTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+     <attribute name="address">
+        <replace>sb://AuditControlTecPs</replace>
+      </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsMessageTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsIntegrationServiceTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+     <attribute name="address">
+        <replace>sb://ERPIntegrationServiceTecPs</replace>
+      </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSOAUtillities">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsDigitalStampGERTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+         <attribute name="address">
+        <replace>sb://DigitalStampGERTecPS</replace>
+      </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="WSDLs/AuditControlTecWrapper.wsdl|WSDLs/bpelHandleMergedStamping.wsdl|WSDLs/bpelStampPaymentComplement.wsdl|WSDLs/CommonPaymentsTecWrapper.wsdl|WSDLs/DigitalStampGERTecWrapper.wsdl|WSDLs/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/ERPIntegrationServiceTecWrapper2.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl">
+     <searchReplace>
+        <search>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</search>
+        <replace>oramds:/apps/SOA/PaymentComplementBiz/PaymentComplementBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+        <replace>oramds:/apps/SOA/MessageTec/MessageTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec</search>
+        <replace>oramds:/apps/SOA/CommonPaymentsTec/CommonPaymentsTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+        <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+        <replace>oramds:/apps/OSB/AuditControlTec/AuditControlTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</search>
+        <replace>oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+        <replace>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

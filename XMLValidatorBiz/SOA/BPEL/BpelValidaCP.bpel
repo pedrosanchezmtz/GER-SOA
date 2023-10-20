@@ -1,0 +1,295 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Apr 18 15:20:52 CDT 2023
+  Author:  pedro
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelValidaCP"
+               targetNamespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz/BpelValidaCP"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://soa.estrellaroja.com.mx/XMLValidatorBiz/BpelValidaCP"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                        xmlns:strClass="http://www.oracle.com/XSL/Transform/java/java.lang.String"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/CartaPorte" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+         xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/XMLValidatorBiz/XXER_ERRORES_TEMP_TBL"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/SftpTec"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/XXER_ERRORES_TEMP_TBL">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz"
+          location="oramds:/apps/SOA/XMLValidatorBiz/XMLValidatorBiz.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://soa.estrellaroja.com.mx/Tables/XXER_CONF_VALIDADOR_XML_TBL"
+          location="oramds:/apps/Common/Tables/XXER_CONF_VALIDADOR_XML_TBL.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://soa.estrellaroja.com.mx/XMLValidatorBiz" location="../WSDLs/XMLValidatorBizWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelvalidacp_client" partnerLinkType="ns1:BpelValidaCP" myRole="XMLValidatorBizPortType"/>
+    <partnerLink name="XXER_ERRORES_TEMP_TBL" partnerLinkType="ns5:XXER_ERRORES_TEMP_TBL_plt"
+                 partnerRole="XXER_ERRORES_TEMP_TBL_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:ValidaCartaPorteRq"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:ValidaCartaPorteRs"/>
+    <variable name="v_consultaZAM" element="ns2:ConsultaZAM"/>
+    <variable name="v_string" type="xsd:string"/>
+    <variable name="v_string2" type="xsd:string"/>
+    <variable name="v_consulta" element="ns1:QueryProductosPeligrosos"/>
+    <variable name="db_insertErrors" messageType="ns5:XxerErroresTempTblCollection_msg"/>
+    <variable name="Db_delete_errorsRq" messageType="ns5:XxerErroresTempTblCollection_msg"/>
+    <variable name="v_consultaP" element="ns1:QueryProductosPeligrosos"/>
+    <variable name="v_consultaCP" element="ns1:QueryCP"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelValidaCP.wsdl) --><receive name="receiveInput" partnerLink="bpelvalidacp_client" portType="ns1:XMLValidatorBizPortType" operation="ValidaCartaPorte" variable="inputVariable" createInstance="yes"/>
+    <assign name="assignRs" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+   <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Success</to>
+      </copy><copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors</to>
+      </copy><extensionAssignOperation>
+        <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <?audit suppress oracle.ide.xml.validation-incomplete?>
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors</bpelx:target>
+         </bpelx:remove>
+      </extensionAssignOperation></assign>
+    <assign name="Trs_limpiarRegistros">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Trs_limpiarRegistros.xsl", $inputVariable.ValidaCartaPorteRqPart)</from>
+        <to variable="Db_delete_errorsRq" part="XxerErroresTempTblCollection"/>
+      </copy>
+    </assign>
+    <invoke name="Db_delete_errors" bpelx:invokeAsDetail="no" partnerLink="XXER_ERRORES_TEMP_TBL"
+            portType="ns5:XXER_ERRORES_TEMP_TBL_ptt" operation="delete" inputVariable="Db_delete_errorsRq"/>
+    <assign name="xquery_zipCodes_product_Group.xqy">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:xquery"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:processXQuery10('../Transformations/xquery_zipCodes_product_Group.xqy', 'input', $inputVariable.ValidaCartaPorteRqPart)</from>
+        <to variable="v_consultaZAM"/>
+      </copy>
+    </assign>
+    <scope name="ScopeQuerys" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <variables>
+        <variable name="v_consultaString" type="xsd:string"/>
+        <variable name="v_queryConsulta" type="xsd:string"/>
+        <variable name="v_consultaStringP" type="xsd:string"/>
+        <variable name="v_queryConsultaP" type="xsd:string"/>
+        <variable name="v_consultaStringCP" type="xsd:string"/>
+        <variable name="v_queryConsultaCP" type="xsd:string"/>
+      </variables>
+      <faultHandlers>
+         <catchAll>
+            <empty name="Empty1" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+         </catchAll>
+      </faultHandlers>
+      <sequence name="Sequence4">
+         <assign name="AssignQueryConsulta">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmXMLValidatorBiz.dvm","Code","QueryConsulta","Value","","Component","BpelValidaCP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmXMLValidatorBiz.dvm","Code","QueryConsultaP","Value","","Component","BpelValidaCP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsultaP</to>
+          </copy>
+          <copy>
+            <from>strClass:replaceAll($v_queryConsultaP,'@CLAVES@',oraext:create-delimited-string($v_consultaZAM/ns2:Products/ns2:Product/ns2:Product,','))</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsultaP</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>dvm:lookupValue("DVMs/dvmXMLValidatorBiz.dvm","Code","QueryConsultaCP","Value","","Component","BpelValidaCP")</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsultaCP</to>
+          </copy>
+          <copy>
+            <from>strClass:replaceAll($v_queryConsultaCP,'@ZIP_CODES@',oraext:create-delimited-string($v_consultaZAM/ns2:ZipCodes/ns2:ZipCode/ns2:ZipCode,','))</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_queryConsultaCP</to>
+          </copy>
+        </assign>
+            
+            
+         <assign name="AssignExeQuery">
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>strClass:replaceAll(oraext:get-content-as-string(oraext:query-database(bpws:getVariableData('v_queryConsulta'),true(),true(),'jdbc/ERSEPDB1DS')),'&lt;ROWSET&gt;','&lt;ROWSET xmlns="http://soa.estrellaroja.com.mx/XMLValidatorBiz"&gt;')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaString</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>oraext:parseXML($v_consultaString)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consulta</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>strClass:replaceAll(oraext:get-content-as-string(oraext:query-database(bpws:getVariableData('v_queryConsultaP'),true(),true(),'jdbc/ERSEPDB1DS')),'&lt;ROWSET&gt;','&lt;ROWSET xmlns="http://soa.estrellaroja.com.mx/XMLValidatorBiz"&gt;')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaStringP</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>oraext:parseXML($v_consultaStringP)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaP</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>strClass:replaceAll(oraext:get-content-as-string(oraext:query-database(bpws:getVariableData('v_queryConsultaCP'),true(),true(),'jdbc/ERSEPDB1DS')),'&lt;ROWSET&gt;','&lt;ROWSET xmlns="http://soa.estrellaroja.com.mx/XMLValidatorBiz"&gt;')</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaStringCP</to>
+          </copy>
+          <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>oraext:parseXML($v_consultaStringCP)</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_consultaCP</to>
+          </copy>
+        </assign>
+      </sequence>
+   </scope>
+    <assign name="Assign1">
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">oraext:create-delimited-string($v_consultaCP/ns1:ROW/ns1:cp_colonia,',')</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_string</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>$v_consultaP/ns1:ROW[1]/ns1:clave</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_string2</to>
+      </copy>
+    </assign>
+    <extensionActivity>
+      <bpelx:exec name="Java_Embedding1">
+        <![CDATA[try{ 
+java.lang.String string1 = (java.lang.String)getVariableData("v_string");  
+java.lang.String string2 = (java.lang.String)getVariableData("v_string2");       
+ 
+addAuditTrailEntry("valor: "+ string1);    
+ 
+addAuditTrailEntry("valo2r: "+ string2);    
+ 
+  
+ } catch (Exception e) {                                                   
+  addAuditTrailEntry("Exception: "+e.getMessage());                                                   
+}                                                   
+addAuditTrailEntry("ended");]]>
+      </bpelx:exec>
+    </extensionActivity>
+
+    <assign name="Trs_ValidadorXMLZAM">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Trs_ValidadorXMLZAM.xsl", $inputVariable.ValidaCartaPorteRqPart, "v_consulta", $v_consulta, "v_consultaP", $v_consultaP, "v_consultaCP", $v_consultaCP)</from>
+        <to variable="db_insertErrors" part="XxerErroresTempTblCollection"/>
+      </copy>
+    </assign>
+    <invoke name="Db_Insert_errors" partnerLink="XXER_ERRORES_TEMP_TBL"
+            portType="ns5:XXER_ERRORES_TEMP_TBL_ptt" operation="merge" inputVariable="db_insertErrors"
+            bpelx:invokeAsDetail="no"/>
+    <if name="If_Errors">
+      <documentation>
+        <![CDATA[Errors]]>
+      </documentation>
+      <condition>count($db_insertErrors.XxerErroresTempTblCollection/ns7:XxerErroresTempTbl)&gt;0</condition><assign name="assignRsErrors"
+                                                                                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+        <extensionAssignOperation>
+          <bpelx:remove>
+            <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Success</bpelx:target>
+          </bpelx:remove>
+        </extensionAssignOperation>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>'SOA-ORA00001'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>'Errores en archivo XML'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>'Errores en archivo XML'</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:Description</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>xp20:current-dateTime()</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>ora:getComponentName()</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:FailedService</to>
+        </copy>
+        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+          <from>ora:getCompositeName()</from>
+          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.ValidaCartaPorteRsPart/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+        </copy>
+      </assign></if>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelvalidacp_client" portType="ns1:XMLValidatorBizPortType" operation="ValidaCartaPorte" variable="outputVariable"/>
+  </sequence>
+</process>

@@ -1,0 +1,468 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Thu Jul 01 21:16:50 CDT 2021
+  Author:  PedroSánchezMartínez
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BpelSendPaymentsAP"
+               targetNamespace="http://xmlns.oracle.com/GER_SOA_DEV_OCI/ValidationPaymentsAPEnt/BpelSendPaymentsAP"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/GER_SOA_DEV_OCI/ValidationPaymentsAPEnt/BpelSendPaymentsAP"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/MessageTec"
+         xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"
+         xmlns:ns3="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement"
+         xmlns:ns5="http://soa.estrellaroja.com.mx/ValidationPaymentsAPEnt"
+         xmlns:ns6="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz"
+         xmlns:ns7="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+   <import namespace="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement"
+           location="oramds:/apps/Common/Report/XXER_ValidationComplement.xsd"
+           importType="http://www.w3.org/2001/XMLSchema"/>
+                 <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+   <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/GER_SOA_DEV_OCI/ValidationPaymentsAPEnt/BpelSendPaymentsAP" location="../WSDLs/External/BpelSendPaymentsAP.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelSendPaymentsAP_client" partnerLinkType="client:BpelSendPaymentsAP" myRole="BpelSendPaymentsAPProvider"/>
+    <partnerLink name="WsMessageTec" partnerLinkType="ns1:WsMessageTec" partnerRole="MessageTecPortType"
+                 myRole="MessageTecCallbackPortType"/>
+      <partnerLink name="wsErpIntegrationTec" partnerLinkType="ns7:wsErpIntegrationTec"
+                   partnerRole="ERPIntegrationTecPortType"/>
+      <partnerLink name="WsValidationPaymentsAPBiz" partnerLinkType="ns6:WsValidationPaymentsAPBiz"
+                   partnerRole="ValidationPaymentsAPBizPortType"/>
+   </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BpelSendPaymentsAPRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:BpelSendPaymentsAPResponseMessage"/>
+  </variables>
+  <faultHandlers>
+    <catchAll><sequence name="sequenceCatchAll" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <documentation>
+         <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+      </documentation>
+      <assign name="assignCatchAll">
+         <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+         </documentation>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>SOA-00001</literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:Description</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>[SendPaymentsAP]</literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from><literal>[ValidationPaymentAPEnt]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:FailedService</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+         </copy>
+         <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <from>
+               <literal>
+                  <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+               </literal>
+            </from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+         </copy>
+         <extensionAssignOperation>
+            <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+               <?audit suppress oracle.ide.xml.validation-incomplete?>
+               <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</bpelx:target>
+            </bpelx:remove>
+         </extensionAssignOperation>
+      </assign>
+      <reply name="replyOutput" partnerLink="bpelSendPaymentsAP_client" variable="outputVariable"
+             portType="client:BpelSendPaymentsAP" operation="SendPaymentsAP">
+         <documentation>
+            
+         <![CDATA[Se indica la salida del proceso BPEL.]]></documentation>
+      </reply>
+   </sequence></catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BpelSendPaymentsAP.wsdl) --><receive name="receiveInput" partnerLink="bpelSendPaymentsAP_client" portType="client:BpelSendPaymentsAP" operation="SendPaymentsAP" variable="inputVariable" createInstance="yes"/>
+    <scope name="ScopeValidationPaymentAP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <variables>
+            <variable name="v_stringXML" type="xsd:string"/>
+            <variable name="v_payments" element="ns3:DATA_DS"/>
+            <variable name="WsValidationPaymentsAPBizSendPaymentsAPRq" messageType="ns6:SendPaymentsAPRq"/>
+            <variable name="WsErpIntegrationTec_RunDataModelRq" messageType="ns7:RunDataModelRq"/>
+            <variable name="WsErpIntegrationTec_RunDataModelRs" messageType="ns7:RunDataModelRs"/>
+            <variable name="v_xmlString" type="xsd:string"/>
+         </variables>
+         <faultHandlers>
+         <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <assign name="assignInvalidVariables" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation>
+                     <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+                  </documentation>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>SOA-00003</literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>ora:getFaultName()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:Description</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                     <literal>[SendPaymentsAP]</literal>
+                  </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+                     <literal>[ValidationPaymentAPEnt]</literal>
+                  </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:FailedService</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>xp20:current-dateTime()</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+                  </copy>
+                  <extensionAssignOperation>
+                     <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                        <?audit suppress oracle.ide.xml.validation-incomplete?>
+                        <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</bpelx:target>
+                     </bpelx:remove>
+                  </extensionAssignOperation>
+               </assign>
+         </catch>
+         <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <assign name="assignSelectionFailure" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation>
+                  <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+               </documentation>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>SOA-00004</literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getFaultName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:Description</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[SendPaymentsAP]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[ValidationPaymentAPEnt]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:FailedService</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>xp20:current-dateTime()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <?audit suppress oracle.ide.xml.validation-incomplete?>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign>
+         </catch>
+         <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <assign name="assignRemoteFault" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation>
+                  <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+               </documentation>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>SOA-00005</literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getFaultName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:Description</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[SendPaymentsAP]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[ValidationPaymentAPEnt]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:FailedService</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>xp20:current-dateTime()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <?audit suppress oracle.ide.xml.validation-incomplete?>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign>
+         </catch>
+         <catch bpelx:name="TimeOut" faultName="bpelx:timeout" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+            <assign name="assignTimeout" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <documentation>
+                  <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+               </documentation>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>SOA-00002</literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ErrorCode</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>ora:getFaultName()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:ShortDescription</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:Description</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[SendPaymentsAP]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:BusinessProcess</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+                     <literal>[ValidationPaymentAPEnt]</literal>
+                  </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:FailedService</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>xp20:current-dateTime()</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors/ns4:Error/ns4:TimeStamp</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <?audit suppress oracle.ide.xml.validation-incomplete?>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign>
+         </catch>
+      </faultHandlers>
+      <sequence name="SeqValidationPaymentAP"><assign name="assignRs"
+                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Success</to>
+               </copy>
+               <copy bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>
+            <literal>
+               <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+            </literal>
+         </from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors</to>
+               </copy>
+               <extensionAssignOperation>
+                  <bpelx:remove xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                     <?audit suppress oracle.ide.xml.validation-incomplete?>
+                     <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.payload/ns4:Errors</bpelx:target>
+                  </bpelx:remove>
+               </extensionAssignOperation>
+            </assign><assign name="assignParams"
+                                                      xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes"
+                     xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <from>dvm:lookupValue("DVMs/dvmValidationPaymentsAPEnt.dvm","Code","Path","Value","","Component","ValidationPaymentsAP")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationTec_RunDataModelRq.RunDataModelRqPart/ns7:reportRequest/ns7:reportAbsolutePath</to>
+               </copy>
+               <copy>
+                  <from>'p_fechainicial'</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationTec_RunDataModelRq.RunDataModelRqPart/ns7:reportRequest/ns7:parameterNameValues/ns7:listOfParamNameValues/ns7:item[1]/ns7:name</to>
+               </copy>
+               <copy>
+                  <from>$inputVariable.payload/ns5:DateInitial</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsErpIntegrationTec_RunDataModelRq.RunDataModelRqPart/ns7:reportRequest/ns7:parameterNameValues/ns7:listOfParamNameValues/ns7:item[1]/ns7:values/ns7:item</to>
+               </copy>
+            </assign>
+            <invoke name="WsErpIntegrationTec" partnerLink="wsErpIntegrationTec"
+                    portType="ns7:ERPIntegrationTecPortType"
+                    inputVariable="WsErpIntegrationTec_RunDataModelRq"
+                    outputVariable="WsErpIntegrationTec_RunDataModelRs" bpelx:invokeAsDetail="no"
+                    operation="RunDataModel"/>
+            <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:exec name="JavaDecoded" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                  <![CDATA[addAuditTrailEntry("Base64decode started");                                               
+try{  
+XMLElement input = (XMLElement) getVariableData("WsErpIntegrationTec_RunDataModelRs","RunDataModelRsPart","ns7:Return/ns7:reportBytes");                                               
+String input_str = input.getTextContent();                                               
+addAuditTrailEntry("Base64decode input_str="+input_str);                                               
+oracle.soa.common.util.Base64Decoder decoder = new oracle.soa.common.util.Base64Decoder();                                                   
+String decoded = null;                                                  
+decoded = decoder.decode(input_str);                                       
+                                                                  
+decoded = "<DATA_DS xmlns=\"http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement\">"+ decoded.substring(decoded.indexOf("<P_FECHAINICIAL>"), decoded.length());                                      
+                                       
+addAuditTrailEntry("Base64decode decoded="+decoded);                                               
+setVariableData("v_xmlString",decoded);                                               
+} catch (Exception e) {                                               
+  addAuditTrailEntry("Base64decode Exception: "+e.getMessage());                                               
+}                                               
+addAuditTrailEntry("Base64decode ended");]]>
+               </bpelx:exec>
+   </extensionActivity>
+            <assign name="AssignParseStringXML" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+               <copy>
+                  <from>oraext:parseXML($v_xmlString)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_payments</to>
+               </copy>
+            </assign>
+            <if name="IfExistPagos">
+               <documentation>
+                  <![CDATA[Pagos]]>
+               </documentation>
+               <condition>count($v_payments/ns3:G_1)&gt;0</condition>
+               <sequence name="seqPagos">
+                  <assign name="Transformation1">
+                     <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                     </bpelx:annotation>
+                     <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/TrsPayments_to_ValidationPaymentsAPBizRq.xsl", $v_payments)</from>
+                        <to variable="WsValidationPaymentsAPBizSendPaymentsAPRq" part="SendPaymentsAPRqPart"/>
+                     </copy>
+                  </assign>
+                  <invoke name="WsValidationPaymentsAPBiz" bpelx:invokeAsDetail="no"
+                          partnerLink="WsValidationPaymentsAPBiz" portType="ns6:ValidationPaymentsAPBizPortType"
+                          operation="SendPaymentsAP" inputVariable="WsValidationPaymentsAPBizSendPaymentsAPRq"/>
+               </sequence>
+               <else>
+                  <documentation>
+                     <![CDATA[sinPagos]]>
+                  </documentation>
+                  <empty name="Empty1"/>
+               </else>
+            </if>
+         </sequence>
+   </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="bpelSendPaymentsAP_client" portType="client:BpelSendPaymentsAP" operation="SendPaymentsAP" variable="outputVariable"/>
+  </sequence>
+</process>

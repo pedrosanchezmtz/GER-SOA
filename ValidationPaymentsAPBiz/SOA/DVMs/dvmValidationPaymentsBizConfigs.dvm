@@ -1,0 +1,325 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dvm name="dvmValidationPaymentsBizConfigs" xmlns="http://xmlns.oracle.com/dvm">
+   <description/>
+   <columns>
+      <column name="Component" order="1" qualifier="true"/>
+      <column name="Code" order="2"/>
+      <column name="Value" order="1"/>
+      <column name="Description" order="1"/>
+   </columns>
+   <rows>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>objetoImp</cell>
+         <cell>01</cell>
+         <cell>Valor que debe tener el objeto imp del complemento de pago</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>ClaveUnidad</cell>
+         <cell>ACT</cell>
+         <cell>Valor que debe tener clave unidad en XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>ClaveProdServ</cell>
+         <cell>84111506</cell>
+         <cell>Valor que debe tener clave producto servicio en XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>UsoCFDI</cell>
+         <cell>CP01</cell>
+         <cell>Valor que debe tener el uso de CFDI en XML</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>paramEntity</cell>
+         <cell>AP_INVOICES_ALL</cell>
+         <cell>Valor paramEntity de consulta de reporte</cell>
+      </row>
+      <row markdefault="false">
+         <cell>AttachmentsAP</cell>
+         <cell>paramCategoryName</cell>
+         <cell>AP_SUPPORTING_DOC</cell>
+         <cell>Valor paramCategoryName de consulta de reporte</cell>
+      </row>
+      <row>
+         <cell>ValidateAttachmentsAP</cell>
+         <cell>NameAttachmentXML</cell>
+         <cell>XML_COMP_VALIDADO</cell>
+         <cell>Nombre que se coloca a adjunto XML validado como se carga en ERP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateAttachmentsAP</cell>
+         <cell>ValidarSuspendidos</cell>
+         <cell>true</cell>
+         <cell>Bandera true o false que permite que el desarrollo valide Pagos que ya esten en estatus suspedidos</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidateAttachmentsAP</cell>
+         <cell>RevalidarValidar</cell>
+         <cell>false</cell>
+         <cell>Bandera true o false que permite que el desarrollo valide Pagos que ya esten en estatus validado</cell>
+      </row>
+      <row>
+         <cell>ValidateAttachmentsAP</cell>
+         <cell>NameHard</cell>
+         <cell>true</cell>
+         <cell>Bandera para habilitar el nombrado del adjunto en duro para disminuair errores</cell>
+      </row>
+      <row>
+         <cell>ValidateAttachmentsAP</cell>
+         <cell>NameAttachmentPDF</cell>
+         <cell>PDF_COMP_VALIDADO</cell>
+         <cell>Nombre que se coloca a adjunto PDF validado como se carga en ERP</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Vars</cell>
+         <cell>tolerancia</cell>
+         <cell>5</cell>
+         <cell>Valor de diferencia de tolerancia en validaciones de montos</cell>
+      </row>
+      <row markdefault="false">
+         <cell>Vars</cell>
+         <cell>generateDirDays</cell>
+         <cell>-P1D</cell>
+         <cell>cantidad de dias antes o despues que en que el desarrollo genera las carpetas en el SFTP de forma automatica</cell>
+      </row>
+      <row>
+         <cell>sftp</cell>
+         <cell>dir</cell>
+         <cell>/SOA/er.soa/incoming/COMPROBANTE</cell>
+         <cell>Ruta de repositorio SFTP donde la integracion busca los comprobantes colocados por el area de impuestos</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UploadAttachment</cell>
+         <cell>entityName</cell>
+         <cell>AP_CHECKS_ALL</cell>
+         <cell>Valor entityName para la carga de los adjuntos en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UploadAttachment</cell>
+         <cell>AttachmentType</cell>
+         <cell>FILE</cell>
+         <cell>Valor AttachmentType para la carga de los adjuntos en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UploadAttachment</cell>
+         <cell>categoryName</cell>
+         <cell>PAYMENT_SUPPORTING_DOC</cell>
+         <cell>Valor categoryName para la carga de los adjuntos en APOLO</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UploadAttachment</cell>
+         <cell>categoryNameVoucher</cell>
+         <cell>PAYMENT_SUPPORTING_DOC</cell>
+         <cell>Valor paramCategoryName de consulta de Voucher</cell>
+      </row>
+      <row markdefault="false">
+         <cell>UploadAttachment</cell>
+         <cell>allowDuplicate</cell>
+         <cell>N</cell>
+         <cell>Valor allowDuplicate para la carga de los adjuntos en APOLO este valor lo podemos cambiar a N para que no subir archivos duplicados</cell>
+      </row>
+      <row markdefault="false">
+         <cell>ValidationPaymentsBiz</cell>
+         <cell>TargetInterface</cell>
+         <cell>ComplementValidation</cell>
+         <cell>Valor TargetInterface para consulta de reporte</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetBanksFolder</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_Bank_Accounts.xdm</cell>
+         <cell>nombre de reporte donde se consultan las carpetas a generar diariamente</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetPayment</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_ValidationComplement_Inputs.xdm</cell>
+         <cell>reporte de consulta de valores de pago a Validar</cell>
+      </row>
+      <row markdefault="false">
+         <cell>GetNotificationsPayments</cell>
+         <cell>ReportName</cell>
+         <cell>XXER_ValidationComplement.xdm</cell>
+         <cell>reporte de consulta de pagos para enviar notifiacion</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>Pruebas</cell>
+         <cell>true</cell>
+         <cell>false</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>CleanData</cell>
+         <cell>false</cell>
+         <cell>Se marca esta bandera para que el desarrollo no manda notifiaciones no toma los adjuntos y limpia los FLEX</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>ValidateData</cell>
+         <cell>false</cell>
+         <cell>Se marca esta bandera para que el desarrollo no manda notifiaciones no toma los adjuntos y limpia los FLEX</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>EmailPruebas</cell>
+         <cell>pedro.sanchez@forteinnovation.mx</cell>
+         <cell>Email remitente para pruebas</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>EmailEmisorPruebas</cell>
+         <cell>ger.notificaciones@forteinnovation.mx</cell>
+         <cell>Email Emisor de correos para pruebas</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>EmailEmisor</cell>
+         <cell>complementosap@estrellaroja.com.mx</cell>
+         <cell>Email Emisor de los correos</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>logoURL</cell>
+         <cell>https://www.estrellaroja.com.mx/general/img/logo.png</cell>
+         <cell>url de imagen que se envia por correo</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NotificacionAP</cell>
+         <cell>v_logoAncho</cell>
+         <cell>498</cell>
+         <cell>valor de ancho de logo del correo</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NotificacionAP</cell>
+         <cell>v_logoLargo</cell>
+         <cell>168</cell>
+         <cell>valor de largo de logo de correo </cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>Emails</cell>
+         <cell>pedro.sanchez@forteinnovation.mx,daniel.hernandez@estrellaroja.com.mx,elena.castro@estrellaroja.com.mx,mlavin@estrellaroja.com.mx,fresvinda.tirzo@estrellaroja.com.mx,ivan.munoz@estrellaroja.com.mx,teresita.blanco@estrellaroja.com.mx,edmundo.rodriguez@estrellaroja.com.mx,fernanda.sanchez@estrellaroja.com.mx</cell>
+         <cell>Lista de correos separa por comas a donde llega las notifiaciones de validacion y notifiaciones que envia el desarrollo</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>ImptoEmails</cell>
+         <cell>pedro.sanchez@forteinnovation.mx,daniel.hernandez@estrellaroja.com.mx,elena.castro@estrellaroja.com.mx,mlavin@estrellaroja.com.mx,fresvinda.tirzo@estrellaroja.com.mx,ivan.munoz@estrellaroja.com.mx,teresita.blanco@estrellaroja.com.mx,edmundo.rodriguez@estrellaroja.com.mx</cell>
+         <cell>Lista de correos para correo de notifiacion de error de comprobante no encontrado en SFTP</cell>
+      </row>
+      <row>
+         <cell>NotificacionAP</cell>
+         <cell>EmailsDudas</cell>
+         <cell>elena.castro@estrellaroja.com.mx&lt;br/>fresvinda.tirzo@estrellaroja.com.mx&lt;br/>fernanda.sanchez@estrellaroja.com.mx&lt;br/>daniel.hernandez@estrellaroja.com.mx</cell>
+         <cell>Correo que sale en el pie del cuerpo del correo para dudas</cell>
+      </row>
+      <row markdefault="false">
+         <cell>NotificacionAP</cell>
+         <cell>TemplateEmail</cell>
+         <cell>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+&lt;html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	&lt;head>
+		&lt;meta charset="UTF-8">
+			&lt;meta name="viewport" content="width=device-width,initial-scale=1">
+				&lt;meta name="x-apple-disable-message-reformatting">
+					&lt;title>Notificacion Complemento&lt;/title>
+					&lt;style>    table, td, div, h1, p {font-family: Arial, sans-serif;} #customers {  font-family: Arial, Helvetica, sans-serif;  border-collapse: collapse;  width: 100%;}#customers td, #customers th {  border: 1px solid #ddd;  padding: 8px;}#customers tr:nth-child(even){background-color: #f2f2f2;}#customers tr:hover {background-color: #ddd;}#customers th {  padding-top: 12px;  padding-bottom: 12px;  text-align: left;  opacity: .9;  background-color: #24272a;  color: white;}&lt;/style>
+				&lt;/head>
+				&lt;body style="margin:0;padding:0;">
+					&lt;table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+						&lt;tr>
+							&lt;td align="center" style="padding:0;">
+								&lt;table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #004185;border-spacing:0;text-align:left;background:#004185;">
+									&lt;tr>
+										&lt;td align="center" style="padding:10 10 10 10;background:#ffffff;">
+											&lt;img src="@URL_LOGO@" width="@LOGO_ANCHO@" height="@LOGO_LARGO@"/>
+										&lt;/td>
+									&lt;/tr>
+									&lt;tr>
+										&lt;td style="padding:30px 30px 30px 30px;">
+											&lt;table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+												&lt;tr>
+													&lt;td style="padding:0 0 0 0;color:#ffffff;">
+														&lt;h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;text-align:center;">@ESTATUS@&lt;/h1>
+														&lt;p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">@ESTATUS_MSJ@&lt;/p>
+													&lt;/td>
+												&lt;/tr>
+											&lt;/table>
+										&lt;/td>
+									&lt;/tr>
+									&lt;tr>
+										&lt;td style="padding:30px;background:#ffffff;">
+											&lt;table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+												&lt;tr>
+													&lt;td style="width:260px;padding:0;vertical-align:top;color:#153643;">
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">NOMBRE PROVEEDOR:&lt;strong style="color:#005cb9">@NOMBRE_PROVEEDOR@&lt;/strong>
+														&lt;/h4>
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">NUMERO ID PAGO ORACLE:&lt;strong style="color:#005cb9">@ID_PAGO@&lt;/strong>
+														&lt;/h4>
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">NUMERO DE PAGO:&lt;strong style="color:#005cb9">@NUMERO_PAGO@&lt;/strong>
+														&lt;/h4>
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">MONTO PAGO:&lt;strong style="color:#005cb9">@MONTO_PAGO@&lt;/strong>
+														&lt;/h4>
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">FECHA PAGO:&lt;strong style="color:#005cb9">@FECHA_PAGO@&lt;/strong>
+														&lt;/h4>
+                                                                                                                &lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">INSTANCIA:&lt;strong style="color:#005cb9">@INSTANCE@&lt;/strong>
+														&lt;/h4>
+														&lt;h4 style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">NOTIFICACION:&lt;strong style="color:#005cb9">@NUMERO_NOTIFICACION@&lt;/strong>
+														&lt;/h4>
+													&lt;/td>
+												&lt;/tr>
+												&lt;tr>
+													&lt;td>
+														&lt;h3 style="font-size:18px;margin:0 0 20px 0;font-family:Arial,sans-serif;text-align:center;">DOCUMENTOS RELACIONADOS&lt;/h3>
+													&lt;/td>
+												&lt;/tr>
+												&lt;tr>
+													&lt;td>
+														&lt;table id="customers">
+															&lt;tr>
+																&lt;th>NO.FACTURA&lt;/th>
+																&lt;th>UUID FACTURA&lt;/th>
+																&lt;th>MONTO&lt;/th>
+															&lt;/tr>@DETAIL_LINES@&lt;/table>
+													&lt;/td>
+												&lt;/tr>
+											&lt;/table>
+										&lt;/td>
+									&lt;/tr>
+									&lt;tr>
+										&lt;td style="padding:0 0 0 0;color:#ffffff;">
+											&lt;h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;text-align:center;">CONTACTO DUDAS&lt;/h1>
+											&lt;p style="font-size:18px;margin:0 0 20px 0;font-family:Arial,sans-serif;text-align:center;">
+												&lt;a>@CORREO_DUDAS@&lt;/a>
+											&lt;/p>
+										&lt;/td>
+									&lt;/tr>
+									&lt;tr>
+										&lt;td style="padding:30px;background:#fa3e55;">
+											&lt;table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
+												&lt;tr>
+													&lt;td style="padding:0;width:50%;" align="left">
+														&lt;p style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">&amp;reg; Estrella Roja 2021&lt;br/>
+															&lt;a href="www.estrellaroja.com.mx" style="color:#ffffff;text-decoration:underline;">www.estrellaroja.com.mx&lt;/a>
+														&lt;/p>
+													&lt;/td>
+												&lt;/tr>
+											&lt;/table>
+										&lt;/td>
+									&lt;/tr>
+								&lt;/table>
+							&lt;/td>
+						&lt;/tr>
+					&lt;/table>
+				&lt;/body>
+			&lt;/html>
+         </cell>
+         <cell>Cuerpo del correo de notificacion</cell>
+      </row>
+   </rows>
+</dvm>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableOutcome" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/dbGetRetriableOutcome" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="dbGetRetriableOutcomeInput" type="dbGetRetriableOutcomeInput"/>
+   <xs:complexType name="dbGetRetriableOutcomeInput">
+      <xs:sequence/>
+   </xs:complexType>
+   <xs:element name="dbGetRetriableOutcomeOutputCollection" type="dbGetRetriableOutcomeOutputCollection"/>
+   <xs:complexType name="dbGetRetriableOutcomeOutputCollection">
+      <xs:sequence>
+         <xs:element name="dbGetRetriableOutcomeOutput" type="dbGetRetriableOutcomeOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="dbGetRetriableOutcomeOutput">
+      <xs:sequence>
+         <xs:element name="PAYMENT_ID" type="xs:decimal" nillable="true"/>
+         <xs:element name="receivable_application_id" type="xs:decimal" nillable="true"/>
+         <xs:element name="CONTENT" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

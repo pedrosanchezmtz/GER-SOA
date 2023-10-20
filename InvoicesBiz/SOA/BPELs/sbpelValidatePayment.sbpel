@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelValidateInvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelValidateInvoicesAP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelValidateInvoicesAP" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:ns2="http://soa.estrellaroja.com.mx/DigitalStampTec" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns3="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <partnerLinks>
+      <partnerLink name="wsDigitalStampTec" partnerLinkType="ns2:wsDigitalStampTec" partnerRole="DigitalStampTePortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varValidatePaymentRq" element="ns1:ValidatePaymentRq"/>
+      <variable name="varValidatePaymentsRs" element="ns1:ValidatePaymenyRs"/>
+   </variables>
+   <sequence name="mainSBpelValidateInvoicesAP">
+      <forEach parallel="no" counterName="counterPayments" name="forEachPayments" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+         <startCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">1</startCounterValue>
+         <finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varValidatePaymentRq/ns1:Payment)</finalCounterValue>
+         <scope name="scopeForEachInvoices">
+            <variables>
+               <variable name="invokeDigitalStampTecValidatePaymentRq" messageType="ns2:ValidatePaymentRq"/>
+               <variable name="invokeDigitalStampTecValidatePaymentRs" messageType="ns2:ValidatePaymentRs"/>
+            </variables>
+            <sequence name="sequenceInvoice">
+               <assign name="assignCurrentPayment">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:RfcIssuer</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeDigitalStampTecValidatePaymentRq.ValidatePaymentRqPart/ns2:RfcIssuer</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:RfcReceiver</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeDigitalStampTecValidatePaymentRq.ValidatePaymentRqPart/ns2:RfcReceiver</to>
+                  </copy>
+                  <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                     <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:TotalAmount</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeDigitalStampTecValidatePaymentRq.ValidatePaymentRqPart/ns2:TotalAmount</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:Uuid</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeDigitalStampTecValidatePaymentRq.ValidatePaymentRqPart/ns2:Uuid</to>
+                  </copy>
+               </assign>
+               <invoke name="invokeDigitalStampTecValidatePayment" partnerLink="wsDigitalStampTec" portType="ns2:DigitalStampTePortType" operation="ValidatePayment" inputVariable="invokeDigitalStampTecValidatePaymentRq" outputVariable="invokeDigitalStampTecValidatePaymentRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" bpelx:invokeAsDetail="no"/>
+               <if name="ifStatusOk">
+                  <documentation><![CDATA[Success]]></documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart/ns2:Return/ns2:Valid</condition>
+                  <sequence name="sequenceValidStatus">
+                     <assign name="removeNodeError">
+                        <copy bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Errors</to>
+                        </copy>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Errors</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                        <copy bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Success</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:InvoiceNumber</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:InvoiceNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart/ns2:Return/ns2:Valid</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Valid</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                           <from>$invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart/ns2:Return/ns2:StatusDesc</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:StatusDesc</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                           <from>ora:toCDATA($invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart)</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:XmlContent</to>
+                        </copy>
+                     </assign>
+                  </sequence>
+                  <else>
+                     <documentation><![CDATA[Error]]></documentation>
+                     <assign name="assignError">
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="no">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Success</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes">
+                           <from>
+                              <literal>
+                                 <Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </literal>
+                           </from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Valid</to>
+                        </copy>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Success</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                        <extensionAssignOperation>
+                           <bpelx:remove>
+                              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Valid</bpelx:target>
+                           </bpelx:remove>
+                        </extensionAssignOperation>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>ora:toCDATA($invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart)</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:XmlContent</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$varValidatePaymentRq/ns1:Payment[$counterPayments]/ns1:InvoiceNumber</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:InvoiceNumber</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>$invokeDigitalStampTecValidatePaymentRs.ValidatePaymentRsPart/ns3:Errors/ns3:Error</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varValidatePaymentsRs/ns1:Return/ns1:Payment[$counterPayments]/ns1:Result/ns3:Errors/ns3:Error</to>
+                        </copy>
+                     </assign>
+                  </else>
+               </if>
+            </sequence>
+         </scope>
+      </forEach>
+   </sequence>
+</bpelx:subProcess>

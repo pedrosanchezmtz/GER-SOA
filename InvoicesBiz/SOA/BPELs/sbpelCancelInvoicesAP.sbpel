@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelCancelInvoicesAP" targetNamespace="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelCancelInvoicesAP" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/InvoicesBiz/sbpelCancelInvoicesAP" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/ElectronicInvoiceAP" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns2="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec">
+   <partnerLinks>
+      <partnerLink name="wsERPIntegrationServiceTec" partnerLinkType="ns2:wsERPIntegrationServiceTec" partnerRole="ERPIntegrationTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varCancelInvoicesAPRq" element="ns1:CancelInvoicesAPRq"/>
+   </variables>
+   <sequence name="mainSBpelCancelInvoices">
+      <forEach parallel="no" counterName="counterInvoices" name="forEachInvoices">
+         <startCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">1</startCounterValue>
+         <finalCounterValue expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">count($varCancelInvoicesAPRq/ns1:Invoices/ns1:Invoice)</finalCounterValue>
+         <scope name="scopeInvoices">
+            <variables>
+               <variable name="invokeWsERPIntegrationServiceTecCancelInvoiceRq" messageType="ns2:CancelInvoiceRq"/>
+               <variable name="invokeWsERPIntegrationServiceTecCancelInvoiceRs" messageType="ns2:CancelInvoiceRs"/>
+            </variables>
+            <sequence name="sequenceInvoices">
+               <assign name="assignCurrentInvoice">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varCancelInvoicesAPRq/ns1:Invoices/ns1:Invoice/ns2:BusinessUnitName</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecCancelInvoiceRq.CancelInvoiceRq/ns2:Invoice/ns2:BusinessUnitName</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varCancelInvoicesAPRq/ns1:Invoices/ns1:Invoice/ns2:SupplierName</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecCancelInvoiceRq.CancelInvoiceRq/ns2:Invoice/ns2:SupplierName</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varCancelInvoicesAPRq/ns1:Invoices/ns1:Invoice/ns2:SupplierNumber</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecCancelInvoiceRq.CancelInvoiceRq/ns2:Invoice/ns2:SupplierNumber</to>
+                  </copy>
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$varCancelInvoicesAPRq/ns1:Invoices/ns1:Invoice/ns2:InvoiceNumber</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$invokeWsERPIntegrationServiceTecCancelInvoiceRq.CancelInvoiceRq/ns2:Invoice/ns2:InvoiceNumber</to>
+                  </copy>
+               </assign>
+               <invoke name="invokeWsERPIntegrationServiceTecCancelInvoice" partnerLink="wsERPIntegrationServiceTec" portType="ns2:ERPIntegrationTecPortType" operation="CancelInvoice" inputVariable="invokeWsERPIntegrationServiceTecCancelInvoiceRq" outputVariable="invokeWsERPIntegrationServiceTecCancelInvoiceRs" bpelx:invokeAsDetail="no"/>
+            </sequence>
+         </scope>
+      </forEach>
+   </sequence>
+</bpelx:subProcess>

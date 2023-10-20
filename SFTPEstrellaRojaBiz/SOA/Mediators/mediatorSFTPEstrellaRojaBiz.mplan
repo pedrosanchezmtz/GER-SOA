@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorSFTPEstrellaRojaBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetBankStatements" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetBankStatements.bpelGetBankStatements.GetBankStatements">
+            <action>
+               <assign>
+                  <copy expression="$in.GetBankStatementsRq/tns:GetBankStatementsRq" target="$out.GetBankStatementsRq/tns:GetBankStatementsRq" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"/>
+               </assign>
+               <invoke reference="bpelGetBankStatements.bpelGetBankStatements" operation="GetBankStatements">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetBankStatementsRs/ns1:GetBankStatementsRs" target="$out.GetBankStatementsRs/ns1:GetBankStatementsRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaBiz"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/dbCloud" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/dbCloud" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="dbCloudInput" type="dbCloudInput"/>
+   <xs:complexType name="dbCloudInput">
+      <xs:sequence>
+         <xs:element name="je_batch_id" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="dbCloudOutputCollection" type="dbCloudOutputCollection"/>
+   <xs:complexType name="dbCloudOutputCollection">
+      <xs:sequence>
+         <xs:element name="dbCloudOutput" type="dbCloudOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="dbCloudOutput">
+      <xs:sequence>
+         <xs:element name="accounting_date" type="xs:string" nillable="true"/>
+         <xs:element name="je_batch_id" type="xs:decimal" nillable="true"/>
+         <xs:element name="group_id" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="FinancialsBiz">
+    <import>
+      <searchReplace>
+        <search>oramds:/apps/SOA/FinancialBiz/FinancialBiz</search>
+        <replace>oramds:/apps/SOA/DEV_FinancialBiz/FinancialBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/FinancialsTec/FinancialsTec</search>
+        <replace>oramds:/apps/OSB/DEV_FinancialsTec/FinancialsTec</replace>
+      </searchReplace>
+    </import>
+      <service name="FinancialBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/FinancialBiz#wsdl.endpoint(FinancialBiz/FinancialBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelGetRfc">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <reference name="wsFinancialsTec">
+         <binding type="direct">
+                  <attribute name="address">
+               <replace>sb://DEV_FinancialsTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="WSDLs/bpelGetRfc.wsdl|WSDLs/FinancialsTecWrapper.wsdl">
+      <searchReplace>
+        <search>oramds:/apps/SOA/FinancialBiz/FinancialBiz</search>
+        <replace>oramds:/apps/SOA/DEV_FinancialBiz/FinancialBiz</replace>
+      </searchReplace>
+      <searchReplace>
+        <search>oramds:/apps/OSB/FinancialsTec/FinancialsTec</search>
+        <replace>oramds:/apps/OSB/DEV_FinancialsTec/FinancialsTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

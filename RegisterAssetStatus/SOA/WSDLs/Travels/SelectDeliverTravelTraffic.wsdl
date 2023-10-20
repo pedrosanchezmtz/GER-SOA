@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="SelectDeliverTravelTraffic" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverTravelTraffic" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/OSB_EstrellaRoja/DEV_ZAMMaintenanceTec/SelectDeliverTravelTraffic" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverTravelTraffic" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <plt:partnerLinkType name="SelectDeliverTravelTraffic_plt">
+      <plt:role name="SelectDeliverTravelTraffic_role">
+         <plt:portType name="tns:SelectDeliverTravelTraffic_ptt"/>
+      </plt:role>
+   </plt:partnerLinkType>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectDeliverTravelTraffic" schemaLocation="../../Schemas/Travels/SelectDeliverTravelTraffic.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="SelectDeliverTravelTrafficInput_msg">
+      <wsdl:part name="SelectDeliverTravelTrafficInput_msg" element="db:SelectDeliverTravelTrafficInput"/>
+   </wsdl:message>
+   <wsdl:message name="SelectDeliverTravelTrafficOutputCollection_msg">
+      <wsdl:part name="SelectDeliverTravelTrafficOutputCollection" element="db:SelectDeliverTravelTrafficOutputCollection"/>
+   </wsdl:message>
+   <wsdl:portType name="SelectDeliverTravelTraffic_ptt">
+      <wsdl:operation name="SelectDeliverTravelTraffic">
+         <wsdl:input message="tns:SelectDeliverTravelTrafficInput_msg"/>
+         <wsdl:output message="tns:SelectDeliverTravelTrafficOutputCollection_msg"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,32 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<graphics>
+   <diagram optimizeLayout="false" fixedWidthSwimlanes="true" roundedPartnerlinks="true" centerZoom="true" validateOnLoad="true" confirmBeforeDelete="true" selectedPartnerLinkColor="49,105,198" swimlaneBackground="240,240,240" swimlaneDividerBackground="218,218,218" graphBackground="255,255,255" selectedBorderBackground="49,105,198" connectedPartnerLinkColor="204,204,255" connectablePartnerLinkColor="0,0,255" unconnectedPartnerLinkColor="192,192,192"/>
+   <annotationfile/>
+   <iconize/>
+   <partnerlink_locations>
+      <partnerlink name="bpelSendemail" x="13" y="1801" side="left"/>
+      <partnerlink name="fileWrite" x="13" y="2384" side="left"/>
+      <partnerlink name="umsSendEmail" x="1699" y="2877" side="right"/>
+   </partnerlink_locations>
+   <graph_layout viewport="0,0,1415,749" show_swimlanes="true">
+      <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/faultHandlers/catchAll" type="catchall"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/faultHandlers/catch[1]" type="catch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/faultHandlers/catch[2]" type="catch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/faultHandlers/catch[3]" type="catch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/faultHandlers/catch[4]" type="catch"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[4]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[5]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[6]/forEach" type="foreach"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[6]/forEach/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[6]/forEach/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[7]/else/forEach" type="foreach"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence/scope/sequence/if[7]/else/forEach/scope" type="scope" showhandlers="true"/>
+   </graph_layout>
+   <bookmarks/>
+</graphics>

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetHtmlControl" targetNamespace="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelGetHtmlControlRequestMessage">
+      <wsdl:part name="payload" element="ns1:GetHtmlControlRq"/>
+   </wsdl:message>
+   <wsdl:message name="bpelGetHtmlControlResponseMessage">
+      <wsdl:part name="payload" element="ns1:GetHtmlControlRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetHtmlControl">
+      <wsdl:operation name="GetHtmlControl">
+         <wsdl:input message="client:bpelGetHtmlControlRequestMessage"/>
+         <wsdl:output message="client:bpelGetHtmlControlResponseMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetHtmlControl">
+      <plnk:role name="bpelGetHtmlControlProvider" portType="client:bpelGetHtmlControl"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

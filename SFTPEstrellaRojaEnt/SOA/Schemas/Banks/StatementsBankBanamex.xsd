@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanamex" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanamex" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="UTF-8">
+   <xsd:element name="StatementsBankBanamex">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="StatementLine" type="xsd:string" maxOccurs="unbounded" nxsd:style="terminated" nxsd:terminatedBy="${eol}"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=/Users/francisco/Downloads/Estrella/EstadosDeCuenta/Banamex241117.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+   <xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=/Users/francisco/Downloads/Estrella/EstadosDeCuenta/Banamex241117.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

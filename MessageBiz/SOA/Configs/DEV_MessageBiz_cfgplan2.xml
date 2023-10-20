@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="MessageBiz">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+            <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageBiz/MessageBiz</search>
+            <replace>oramds:/apps/SOA/DEV_MessageBiz/MessageBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+            <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+         </searchReplace>
+      </import>
+      <service name="umsReceiveEmail">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="jca">
+            <property name="useRejectedMessageRecovery">
+               <replace>true</replace>
+            </property>
+         </binding>
+      </service>
+      <service name="MessageBiz">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageBiz#wsdl.endpoint(MessageBiz/MessageBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/MessageBiz#wsdl.endpoint(MessageBiz/MessageBizCallbackPort)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="compositeID">
+         <replace>6a20ff74-97e8-4785-87f5-7136b1ffe585</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelLogAttatchment">
+         <property name="bpel.config.transaction">
+            <replace>requiresNew</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>sync</replace>
+         </property>
+      </component>
+      <component name="bpelSendEmail">
+         <property name="bpel.config.transaction">
+            <replace>notSupported</replace>
+         </property>
+         <property name="bpel.config.oneWayDeliveryPolicy">
+            <replace>async.persist</replace>
+         </property>
+      </component>
+      <reference name="wsAuditControlTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="direct">
+                 <attribute name="address">
+          <replace>sb://DEV_AuditControlTecPs</replace>
+        </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSOAUtilitiesTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsMessageTec">
+         <!--Add search and replace rules for the binding properties-->
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Adapters/umsReceiveEmail_ums.jca|Schemas/SAT/cfdv33.xsd|Schemas/SAT/pagos10.xsd|Schemas/SAT/tdCFDI.xsd|Schemas/SAT/TimbreFiscalDigitalv11.xsd|Schemas/umsReceiveEmail.xsd|WSDLs/AuditControlTecWrapper.wsdl|WSDLs/bpelSendEmail.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/RuntimeFault.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl|WSDLs/umsReceiveEmail.wsdl">
+         <searchReplace>
+            <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+            <replace>oramds:/apps/OSB/DEV_AuditControlTec/AuditControlTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageBiz/MessageBiz</search>
+            <replace>oramds:/apps/SOA/DEV_MessageBiz/MessageBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+            <replace>oramds:/apps/SOA/DEV_MessageTec/MessageTec</replace>
+         </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

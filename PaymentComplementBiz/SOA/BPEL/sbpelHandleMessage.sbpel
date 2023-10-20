@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="sbpelHandleMessage" targetNamespace="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelHandleMessage" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://xmlns.oracle.com/PaymentComplementBiz/PaymentComplementBiz/sbpelHandleMessage" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:ns2="http://soa.estrellaroja.com.mx/MessageTec" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns3="http://soa.estrellaroja.com.mx/PaymentComplementBiz" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="http://soa.estrellaroja.com.mx/EstrellaRojaCommons">
+   <partnerLinks>
+      <partnerLink name="wsSOAUtillities" partnerLinkType="ns1:wsSOAUtillities" partnerRole="SOAUtilitiesTecPortType"/>
+      <partnerLink name="wsMessageTec" partnerLinkType="ns2:wsMessageTec" partnerRole="MessageTecPortType"/>
+   </partnerLinks>
+   <variables>
+      <variable name="varHtmlString" type="xsd:string"/>
+   </variables>
+   <sequence name="sequenceMain">
+      <scope name="scopeSendMail">
+         <variables>
+            <variable name="mailInput" messageType="ns2:MessageRq"/>
+         </variables>
+         <sequence name="sequenceSendMail">
+            <assign name="assignMailContent">
+               <copy>
+                  <from>$varHtmlString</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.MessageRq/ns2:Message/ns2:Message</to>
+               </copy>
+               <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>dvm:lookupValue("Dvms/Configuration.dvm","PropertyName","INTEGRATION_NAME","PropertyValue","")</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$mailInput.CustomHeader/ns2:IntegrationName</to>
+               </copy>
+            </assign>
+            <invoke name="invokeSendMail" partnerLink="wsMessageTec" portType="ns2:MessageTecPortType" operation="SendEmail" inputVariable="mailInput" bpelx:invokeAsDetail="no"/>
+         </sequence>
+      </scope>
+   </sequence>
+</bpelx:subProcess>

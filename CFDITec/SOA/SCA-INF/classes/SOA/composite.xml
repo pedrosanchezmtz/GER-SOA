@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<composite name="CFDITec" revision="1.1" label="2023-01-18_12-13-01_584" mode="active" state="on" xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:ui="http://xmlns.oracle.com/soa/designer/" xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
+   <import namespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile" location="WSDLs/BpelGetCFDIFromFile.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="WSDLs/External/SOAUtilitiesTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/CFDITec" location="oramds:/apps/SOA/CFDITec/CFDITec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP" location="WSDLs/BpelGetInvoiceCFDIFromERP.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" location="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec" location="WSDLs/External/ERPIntegrationServiceTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="WSDLs/External/SOAUtilitiesTecWrapper1.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/AuditControlTec" location="oramds:/apps/OSB/AuditControlTec/AuditControlTec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/AuditControlTec" location="WSDLs/External/AuditControlTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="oramds:/apps/OSB/SftpTec/SftpTec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP" location="WSDLs/BpelSendCFDIToSFTP.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/MessageTec" location="oramds:/apps/SOA/MessageTec/MessageTec.wsdl" importType="wsdl"/>
+   <import namespace="http://xmlns.oracle.com/GER_SOA_OCI/CFDITec/BpelGetComplementCFDI" location="WSDLs/BpelGetComplementCFDI.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/AuditControlTec" location="WSDLs/AuditControlTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/DigitalStampGERTec" location="oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/DigitalStampGERTec" location="WSDLs/DigitalStampGERTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="WSDLs/SftpTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="WSDLs/External/SftpTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SftpTec" location="WSDLs/SftpTecWrapper1.wsdl" importType="wsdl"/>
+   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD" location="WSDLs/DB_SOA_CLOUD.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/MessageTec" location="WSDLs/MessageTecWrapper.wsdl" importType="wsdl"/>
+   <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="WSDLs/SOAUtilitiesTecWrapper.wsdl" importType="wsdl"/>
+   <service name="CFDITec" ui:wsdlLocation="oramds:/apps/SOA/CFDITec/CFDITec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec#wsdl.interface(CFDITecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/CFDITec#wsdl.interface(CFDITecPortTypeCallback)"/>
+      <binding.ws port="http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITec/CFDITecPort)">
+         <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">NEVER</property>
+      </binding.ws>
+      <callback>
+         <binding.ws port="http://soa.estrellaroja.com.mx/CFDITec#wsdl.endpoint(CFDITec/CFDITecPortTypeCallback_pt)"/>
+      </callback>
+   </service>
+   <property name="productVersion" type="xs:string" many="false">12.2.1.4.0.190828</property>
+   <property name="compositeID" type="xs:string" many="false">5c820ba1-e978-49be-9ed6-03178187b823</property>
+   <component name="BpelGetCFDIFromFile" version="2.0">
+      <implementation.bpel src="BPEL/BpelGetCFDIFromFile.bpel"/>
+      <componentType>
+         <service name="bpelgetcfdifromfile_client" ui:wsdlLocation="WSDLs/BpelGetCFDIFromFile.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile#wsdl.interface(BpelGetCFDIFromFile)"/>
+         </service>
+         <reference name="WsSOAUtilitiesTec" ui:wsdlLocation="WSDLs/External/SOAUtilitiesTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+         </reference>
+      </componentType>
+      <property name="bpel.config.transaction" type="xs:string" many="false">notSupported</property>
+   </component>
+   <component name="MediatorCFDITec">
+      <implementation.mediator src="Mediators/MediatorCFDITec.mplan"/>
+      <componentType>
+         <service name="MediatorCFDITec" ui:wsdlLocation="oramds:/apps/SOA/CFDITec/CFDITec.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec#wsdl.interface(CFDITecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/CFDITec#wsdl.interface(CFDITecPortTypeCallback)"/>
+         </service>
+         <reference name="BpelGetCFDIFromFile.bpelgetcfdifromfile_client" ui:wsdlLocation="WSDLs/BpelGetCFDIFromFile.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile#wsdl.interface(BpelGetCFDIFromFile)"/>
+         </reference>
+         <reference name="BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client" ui:wsdlLocation="WSDLs/BpelGetInvoiceCFDIFromERP.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERP)" callbackInterface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERPCallback)"/>
+         </reference>
+         <reference name="BpelSendCFDIToSFTP.bpelsendcfditosftp_client" ui:wsdlLocation="WSDLs/BpelSendCFDIToSFTP.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP#wsdl.interface(BpelSendCFDIToSFTP)"/>
+         </reference>
+         <reference name="BpelGetComplementCFDI.bpelgetcomplementcfdi_client" ui:wsdlLocation="WSDLs/BpelGetComplementCFDI.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/GER_SOA_OCI/CFDITec/BpelGetComplementCFDI#wsdl.interface(BpelGetComplementCFDI)"/>
+         </reference>
+      </componentType>
+   </component>
+   <component name="BpelGetInvoiceCFDIFromERP" version="2.0">
+      <implementation.bpel src="BPEL/BpelGetInvoiceCFDIFromERP.bpel"/>
+      <componentType>
+         <service name="bpelgetinvoicecfdifromerp_client" ui:wsdlLocation="WSDLs/BpelGetInvoiceCFDIFromERP.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERP)" callbackInterface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERPCallback)"/>
+         </service>
+         <reference name="wsErpIntegrationTec" ui:wsdlLocation="WSDLs/External/ERPIntegrationServiceTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+         </reference>
+         <reference name="WsSOAUtilitiesTec" ui:wsdlLocation="WSDLs/External/SOAUtilitiesTecWrapper1.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+         </reference>
+         <reference name="BpelGetCFDIFromFile.bpelgetcfdifromfile_client" ui:wsdlLocation="WSDLs/BpelGetCFDIFromFile.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile#wsdl.interface(BpelGetCFDIFromFile)"/>
+         </reference>
+         <reference name="WsAuditControlTec" ui:wsdlLocation="WSDLs/External/AuditControlTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+         </reference>
+      </componentType>
+      <property name="bpel.config.transaction" type="xs:string" many="false">notSupported</property>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+   </component>
+   <component name="BpelSendCFDIToSFTP" version="2.0">
+      <implementation.bpel src="BPEL/BpelSendCFDIToSFTP.bpel"/>
+      <componentType>
+         <service name="bpelsendcfditosftp_client" ui:wsdlLocation="WSDLs/BpelSendCFDIToSFTP.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelSendCFDIToSFTP#wsdl.interface(BpelSendCFDIToSFTP)"/>
+         </service>
+         <reference name="wsDigitalStampGerTec" ui:wsdlLocation="WSDLs/DigitalStampGERTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/DigitalStampGERTec#wsdl.interface(DigitalStampGERTecPortType)"/>
+         </reference>
+         <reference name="wsSftpTec" ui:wsdlLocation="WSDLs/SftpTecWrapper1.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/SftpTec#wsdl.interface(SftpTec_ptt)"/>
+         </reference>
+         <reference name="DB_SOA_CLOUD" ui:wsdlLocation="WSDLs/DB_SOA_CLOUD.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD#wsdl.interface(DB_SOA_CLOUD_ptt)"/>
+         </reference>
+         <reference name="WsMessageTec" ui:wsdlLocation="WSDLs/MessageTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+         </reference>
+         <reference name="WsSOAUtilitiesTec" ui:wsdlLocation="WSDLs/SOAUtilitiesTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+         </reference>
+      </componentType>
+      <property name="bpel.config.transaction" type="xs:string" many="false">notSupported</property>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+   </component>
+   <component name="BpelGetComplementCFDI" version="2.0">
+      <implementation.bpel src="BPEL/BpelGetComplementCFDI.bpel"/>
+      <componentType>
+         <service name="bpelgetcomplementcfdi_client" ui:wsdlLocation="WSDLs/BpelGetComplementCFDI.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/GER_SOA_OCI/CFDITec/BpelGetComplementCFDI#wsdl.interface(BpelGetComplementCFDI)"/>
+         </service>
+         <reference name="WsAuditControlTec" ui:wsdlLocation="WSDLs/AuditControlTecWrapper.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+         </reference>
+         <reference name="BpelGetCFDIFromFile.bpelgetcfdifromfile_client" ui:wsdlLocation="WSDLs/BpelGetCFDIFromFile.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetCFDIFromFile#wsdl.interface(BpelGetCFDIFromFile)"/>
+         </reference>
+         <reference name="BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client" ui:wsdlLocation="WSDLs/BpelGetInvoiceCFDIFromERP.wsdl">
+            <interface.wsdl interface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERP)" callbackInterface="http://soa.estrellaroja.com.mx/CFDITec/BpelGetInvoiceCFDIFromERP#wsdl.interface(BpelGetInvoiceCFDIFromERPCallback)"/>
+         </reference>
+      </componentType>
+      <property name="bpel.config.transaction" type="xs:string" many="false">notSupported</property>
+   </component>
+   <reference name="WsSOAUtilitiesTec" ui:wsdlLocation="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+      <binding.ws port="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl" soapVersion="1.2">
+         <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
+      </binding.ws>
+   </reference>
+   <reference name="wsErpIntegrationTec" ui:wsdlLocation="oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec#wsdl.interface(ERPIntegrationTecPortType)"/>
+      <binding.direct address="sb:/ERPIntegrationServiceTecPs" connection-factory="com.bea.wli.sb.transports.direct.OSBDirectConnectionFactory" useLocalJNDIProvider="false">
+         <property name="java.naming.provider.url">t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</property>
+      </binding.direct>
+   </reference>
+   <reference name="WsAuditControlTec" ui:wsdlLocation="oramds:/apps/OSB/AuditControlTec/AuditControlTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/AuditControlTec#wsdl.interface(AuditControlTecPortType)"/>
+      <binding.direct address="sb:/AuditControlTecPs" connection-factory="com.bea.wli.sb.transports.direct.OSBDirectConnectionFactory" useLocalJNDIProvider="false">
+         <property name="java.naming.provider.url">t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</property>
+      </binding.direct>
+   </reference>
+   <reference name="wsSftpTec" ui:wsdlLocation="oramds:/apps/OSB/SftpTec/SftpTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/SftpTec#wsdl.interface(SftpTec_ptt)"/>
+      <binding.direct address="sb:/SftpTecPS" connection-factory="com.bea.wli.sb.transports.direct.OSBDirectConnectionFactory" useLocalJNDIProvider="false">
+         <property name="java.naming.provider.url">t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</property>
+      </binding.direct>
+   </reference>
+   <reference name="WsMessageTec" ui:wsdlLocation="oramds:/apps/SOA/MessageTec/MessageTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecPortType)" callbackInterface="http://soa.estrellaroja.com.mx/MessageTec#wsdl.interface(MessageTecCallbackPortType)"/>
+      <binding.ws port="http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)" location="oramds:/apps/SOA/MessageTec/MessageTec.wsdl" soapVersion="1.1">
+         <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
+      </binding.ws>
+   </reference>
+   <reference name="wsDigitalStampGerTec" ui:wsdlLocation="oramds:/apps/OSB/DigitalStampGERTec/DigitalStampGERTec.wsdl">
+      <interface.wsdl interface="http://soa.estrellaroja.com.mx/DigitalStampGERTec#wsdl.interface(DigitalStampGERTecPortType)"/>
+      <binding.direct address="sb:/DigitalStampGERTecPS" connection-factory="com.bea.wli.sb.transports.direct.OSBDirectConnectionFactory" useLocalJNDIProvider="false">
+         <property name="java.naming.provider.url">t3://ersoaprod02lab-soa-0.snproduccin.vcner.oraclevcn.com:9073</property>
+      </binding.direct>
+   </reference>
+   <reference name="DB_SOA_CLOUD" ui:wsdlLocation="WSDLs/DB_SOA_CLOUD.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/GER_SOA_OCI/CFDITec/DB_SOA_CLOUD#wsdl.interface(DB_SOA_CLOUD_ptt)"/>
+      <binding.jca config="Adapters/DB_SOA_CLOUD_db.jca">
+         <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+         <property name="jca.retry.interval" type="xs:int" many="false" override="may">1</property>
+         <property name="jca.retry.backoff" type="xs:int" many="false" override="may">2</property>
+         <property name="jca.retry.maxInterval" type="xs:int" many="false" override="may">120</property>
+      </binding.jca>
+   </reference>
+   <wire>
+      <source.uri>BpelGetCFDIFromFile/WsSOAUtilitiesTec</source.uri>
+      <target.uri>WsSOAUtilitiesTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>MediatorCFDITec/BpelGetCFDIFromFile.bpelgetcfdifromfile_client</source.uri>
+      <target.uri>BpelGetCFDIFromFile/bpelgetcfdifromfile_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetInvoiceCFDIFromERP/wsErpIntegrationTec</source.uri>
+      <target.uri>wsErpIntegrationTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>MediatorCFDITec/BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client</source.uri>
+      <target.uri>BpelGetInvoiceCFDIFromERP/bpelgetinvoicecfdifromerp_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetInvoiceCFDIFromERP/WsSOAUtilitiesTec</source.uri>
+      <target.uri>WsSOAUtilitiesTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetInvoiceCFDIFromERP/BpelGetCFDIFromFile.bpelgetcfdifromfile_client</source.uri>
+      <target.uri>BpelGetCFDIFromFile/bpelgetcfdifromfile_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetInvoiceCFDIFromERP/WsAuditControlTec</source.uri>
+      <target.uri>WsAuditControlTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>MediatorCFDITec/BpelSendCFDIToSFTP.bpelsendcfditosftp_client</source.uri>
+      <target.uri>BpelSendCFDIToSFTP/bpelsendcfditosftp_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>CFDITec</source.uri>
+      <target.uri>MediatorCFDITec/MediatorCFDITec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>MediatorCFDITec/BpelGetComplementCFDI.bpelgetcomplementcfdi_client</source.uri>
+      <target.uri>BpelGetComplementCFDI/bpelgetcomplementcfdi_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetComplementCFDI/WsAuditControlTec</source.uri>
+      <target.uri>WsAuditControlTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetComplementCFDI/BpelGetCFDIFromFile.bpelgetcfdifromfile_client</source.uri>
+      <target.uri>BpelGetCFDIFromFile/bpelgetcfdifromfile_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelGetComplementCFDI/BpelGetInvoiceCFDIFromERP.bpelgetinvoicecfdifromerp_client</source.uri>
+      <target.uri>BpelGetInvoiceCFDIFromERP/bpelgetinvoicecfdifromerp_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/wsDigitalStampGerTec</source.uri>
+      <target.uri>wsDigitalStampGerTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/wsSftpTec1</source.uri>
+      <target.uri>wsSftpTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/wsSftpTec</source.uri>
+      <target.uri>wsSftpTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/DB_SOA_CLOUD</source.uri>
+      <target.uri>DB_SOA_CLOUD</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/WsMessageTec</source.uri>
+      <target.uri>WsMessageTec</target.uri>
+   </wire>
+   <wire>
+      <source.uri>BpelSendCFDIToSFTP/WsSOAUtilitiesTec</source.uri>
+      <target.uri>WsSOAUtilitiesTec</target.uri>
+   </wire>
+</composite>

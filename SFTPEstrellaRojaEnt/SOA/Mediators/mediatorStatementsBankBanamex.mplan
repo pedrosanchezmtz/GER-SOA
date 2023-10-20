@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorStatementsBankBanamex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetFilesStatementsBankFromBanamex" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelManagementsStatementsBankBanamex.ManagementsStatementsBankBanorte.process">
+            <action>
+               <assign>
+                  <copy expression="$in.body/imp1:StatementsBankBanamex" target="$out.payload/imp1:StatementsBankBanamex" xmlns:imp1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBanamex"/>
+                  <copy value="$in.property.jca.ftp.FileName" target="$out.property.jca.ftp.FileName"/>
+               </assign>
+               <invoke reference="bpelManagementsStatementsBankBanamex.ManagementsStatementsBankBanorte" operation="ManagementsStatementsBankBanamex"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

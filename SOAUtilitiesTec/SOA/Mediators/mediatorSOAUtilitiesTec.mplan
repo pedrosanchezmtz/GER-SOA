@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorSOAUtilitiesTec" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="GetDateByTimeZone" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetDateByTimeZone.bpelGetDateByTimeZone.GetDateByTimeZone">
+            <action>
+               <assign>
+                  <copy expression="$in.GetDateByTimeZoneRq/tns:GetDateByTimeZoneRq" target="$out.GetDateByTimeZoneRq/tns:GetDateByTimeZoneRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelGetDateByTimeZone.bpelGetDateByTimeZone" operation="GetDateByTimeZone">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.GetDateByTimeZoneRs/ns1:GetDateByTimeZoneRs" target="$out.GetDateByTimeZoneRs/ns1:GetDateByTimeZoneRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GenerateZipFile" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGenerateZipFile.bpelbpelGenerateZipFile.bpelGenerateZipFile">
+            <action>
+               <assign>
+                  <copy expression="$in.GenerateZipFileRq/tns:GenerateZipFileRq" target="$out.bpelGenerateZipFileRq/tns:GenerateZipFileRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelGenerateZipFile.bpelbpelGenerateZipFile" operation="bpelGenerateZipFile">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.bpelGenerateZipFileRs/ns1:GenerateZipFileRs" target="$out.GenerateZipFileRs/ns1:GenerateZipFileRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="transformNumberToLetter" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelNumberToLetter.transformNumberToLetter.transformNumberToLetter_3">
+            <action>
+               <assign>
+                  <copy expression="$in.NumberToLetterRq/tns:NumberToLetterRq" target="$out.NumberToLetterRq/tns:NumberToLetterRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelNumberToLetter.transformNumberToLetter" operation="transformNumberToLetter">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.NumberToLetterRs/ns1:NumberToLetterRs" target="$out.NumberToLetterRs/ns1:NumberToLetterRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="Decode" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelDecode.bpelDecode.Decode">
+            <action>
+               <assign>
+                  <copy expression="$in.DecodeRq/tns:DecodeRq" target="$out.DecodeRq/tns:DecodeRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelDecode.bpelDecode" operation="Decode">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.DecodeRs/ns1:DecodeRs" target="$out.DecodeRs/ns1:DecodeRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="Encode" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelEncode.bpelEncode.Encode">
+            <action>
+               <assign>
+                  <copy expression="$in.EncodeRq/tns:EncodeRq" target="$out.EncodeRq/tns:EncodeRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelEncode.bpelEncode" operation="Encode">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.EncodeRs/ns1:EncodeRs" target="$out.EncodeRs/ns1:EncodeRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="EncodeFileBase64" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelEncodeFileBase64.bpelEncodeFileBase64.EncodeFileBase64">
+            <action>
+               <assign>
+                  <copy expression="$in.EncodeFileBase64Rq" target="$out.EncodeFileBase64Rq"/>
+               </assign>
+               <invoke reference="bpelEncodeFileBase64.bpelEncodeFileBase64" operation="EncodeFileBase64">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.EncodeFileBase64Rs" target="$out.EncodeFileBase64Rs"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+   <operation name="GetHtmlControl" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelGetHtmlControl.bpelGetHtmlControl.GetHtmlControl">
+            <action>
+               <assign>
+                  <copy expression="$in.GetHtmlControlRq/tns:GetHtmlControlRq" target="$out.payload/tns:GetHtmlControlRq" xmlns:tns="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+               </assign>
+               <invoke reference="bpelGetHtmlControl.bpelGetHtmlControl" operation="GetHtmlControl">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:GetHtmlControlRs" target="$out.GetHtmlControlRs/ns1:GetHtmlControlRs" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

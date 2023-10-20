@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<graphics>
+   <diagram optimizeLayout="false" fixedWidthSwimlanes="true" roundedPartnerlinks="true" centerZoom="true" validateOnLoad="true" confirmBeforeDelete="true" selectedPartnerLinkColor="49,105,198" swimlaneBackground="240,240,240" swimlaneDividerBackground="218,218,218" graphBackground="255,255,255" selectedBorderBackground="49,105,198" connectedPartnerLinkColor="204,204,255" connectablePartnerLinkColor="0,0,255" unconnectedPartnerLinkColor="192,192,192"/>
+   <annotationfile/>
+   <iconize/>
+   <partnerlink_locations>
+      <partnerlink name="wsDateService" x="0" y="204" side="left"/>
+      <partnerlink name="wsZAMSelectTratecsaAssetsService" x="0" y="2366" side="left"/>
+      <partnerlink name="wsZAMSelectDeliverOrder" x="0" y="147" side="left"/>
+      <partnerlink name="wsZAMSelectDeliverTravelTraffic" x="0" y="3281" side="left"/>
+      <partnerlink name="wsSOAUtilitiesService" x="0" y="5190" side="left"/>
+      <partnerlink name="wsSelectWorkOrdersService" x="0" y="3338" side="left"/>
+      <partnerlink name="wsInsertWorkOrdersService" x="0" y="1841" side="left"/>
+      <partnerlink name="wsZAMBlockAssetService" x="0" y="3742" side="left"/>
+      <partnerlink name="wsEAMSelectUnprocessedWorkOrders" x="0" y="18" side="left"/>
+      <partnerlink name="RegisterAssetStatusService" x="0" y="90" side="left"/>
+      <partnerlink name="wsERPIntegrationAPITec" x="0" y="4637" side="left"/>
+      <partnerlink name="wsERPIntegrationBiz" x="0" y="476" side="left"/>
+      <partnerlink name="wsZAMSelectDeliverAssetService" x="4558" y="2270" side="right"/>
+      <partnerlink name="wsZAMSelectTratecsaTravel" x="4558" y="3191" side="right"/>
+      <partnerlink name="wsZAMSelectTratecsaOrder" x="4558" y="164" side="right"/>
+      <partnerlink name="wsEAMWorkOrdersExecutionsService" x="4558" y="2977" side="right"/>
+      <partnerlink name="wsSendMailService" x="4558" y="5382" side="right"/>
+      <partnerlink name="wsUpdateWorkOrdersService" x="4558" y="3065" side="right"/>
+      <partnerlink name="ZAMUnblockAssetService" x="4558" y="3248" side="right"/>
+      <partnerlink name="wsEAMSelectWorkOrdersByUnit" x="4558" y="2843" side="right"/>
+      <partnerlink name="wsEAMSelectWorkOrdersByStatusService" x="4558" y="1278" side="right"/>
+   </partnerlink_locations>
+   <graph_layout viewport="1872,2180,1334,795" show_swimlanes="true">
+      <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll" type="catchall"/>
+      <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/faultHandlers/catchAll/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/sequence[1]" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach" type="foreach"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/faultHandlers/catchAll" type="catchall"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/faultHandlers/catchAll/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[1]/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[1]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[1]/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/sequence/if/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/sequence/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/else/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/else/if/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/sequence/scope/sequence/if/else/sequence/if/else/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/else/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/else/sequence/if/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/if/else/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/elseif/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/elseif/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/sequence/if[2]/else/sequence/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/forEach/scope/sequence/if[2]/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/sequence[2]" type="sequence"/>
+   </graph_layout>
+   <bookmarks/>
+</graphics>

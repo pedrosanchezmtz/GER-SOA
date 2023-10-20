@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaTravleTraffic" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/SelectTratecsaTravleTraffic" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="SelectTratecsaTravleTrafficInput" type="SelectTratecsaTravleTrafficInput"/>
+   <xs:complexType name="SelectTratecsaTravleTrafficInput">
+      <xs:sequence>
+         <xs:element name="idUnidad" type="xs:string" nillable="true"/>
+         <xs:element name="viajeActual" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="SelectTratecsaTravleTrafficOutputCollection" type="SelectTratecsaTravleTrafficOutputCollection"/>
+   <xs:complexType name="SelectTratecsaTravleTrafficOutputCollection">
+      <xs:sequence>
+         <xs:element name="SelectTratecsaTravleTrafficOutput" type="SelectTratecsaTravleTrafficOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SelectTratecsaTravleTrafficOutput">
+      <xs:sequence>
+         <xs:element name="id_area" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_sector" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_subsector" type="xs:decimal" nillable="true"/>
+         <xs:element name="confirmacion_iave" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_area_liq" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_personal" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_camion_vacio" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_camion_lleno" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_operador" type="xs:decimal" nillable="true"/>
+         <xs:element name="kms_real" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_liquidacion" type="xs:decimal" nillable="true"/>
+         <xs:element name="viaje_ant" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_liquidacion_rend" type="xs:decimal" nillable="true"/>
+         <xs:element name="hrs_realthermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="hrs_realthermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="puntaje_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_ruta" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_ejes_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_operador2" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_status_unidad" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_origen" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_destino" type="xs:decimal" nillable="true"/>
+         <xs:element name="liquidacion_operador2" type="xs:decimal" nillable="true"/>
+         <xs:element name="cd1" type="xs:decimal" nillable="true"/>
+         <xs:element name="cd2" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_area_liq2" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_depto" type="xs:decimal" nillable="true"/>
+         <xs:element name="fecha_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_fin_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_real_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_real_fin_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="fecha_ingreso" type="xs:dateTime" nillable="true"/>
+         <xs:element name="f_prog_ini_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="f_prog_fin_viaje" type="xs:dateTime" nillable="true"/>
+         <xs:element name="f_despachado" type="xs:dateTime" nillable="true"/>
+         <xs:element name="f_status_unidad" type="xs:dateTime" nillable="true"/>
+         <xs:element name="sueldo_operador" type="xs:decimal" nillable="true"/>
+         <xs:element name="compensaciones" type="xs:decimal" nillable="true"/>
+         <xs:element name="compensacion_operador2" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="rendimiento_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="rendimiento_real" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_empresa" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_esperado" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_empthermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_empthermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_viajethermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_viajethermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_espthermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_espthermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_realthermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_realthermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="ton_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="sueldo_operador2" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_kit" type="xs:string" nillable="true"/>
+         <xs:element name="id_unidad" type="xs:string" nillable="true"/>
+         <xs:element name="id_remolque1" type="xs:string" nillable="true"/>
+         <xs:element name="id_remolque2" type="xs:string" nillable="true"/>
+         <xs:element name="id_dolly" type="xs:string" nillable="true"/>
+         <xs:element name="id_ingreso" type="xs:string" nillable="true"/>
+         <xs:element name="thermo1" type="xs:string" nillable="true"/>
+         <xs:element name="thermo2" type="xs:string" nillable="true"/>
+         <xs:element name="id_linearem1" type="xs:string" nillable="true"/>
+         <xs:element name="id_linearem2" type="xs:string" nillable="true"/>
+         <xs:element name="status_viaje" type="xs:string" nillable="true"/>
+         <xs:element name="confirma_viaje" type="xs:string" nillable="true"/>
+         <xs:element name="status_desp" type="xs:string" nillable="true"/>
+         <xs:element name="viajeactual" type="xs:string" nillable="true"/>
+         <xs:element name="status_cs" type="xs:string" nillable="true"/>
+         <xs:element name="id_confirmacion" type="xs:decimal" nillable="true"/>
+         <xs:element name="num_confirmacion" type="xs:string" nillable="true"/>
+         <xs:element name="liberado" type="xs:decimal" nillable="true"/>
+         <xs:element name="centro_costo" type="xs:string" nillable="true"/>
+         <xs:element name="capacidad_cajas" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_tarjeta_llave" type="xs:string" nillable="true"/>
+         <xs:element name="id_configuracionviaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="tipo_pago01" type="xs:decimal" nillable="true"/>
+         <xs:element name="batch" type="xs:string" nillable="true"/>
+         <xs:element name="tipo_pago02" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_tipoviaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="num_shipment" type="xs:string" nillable="true"/>
+         <xs:element name="kms_viaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="observacionesviaje" type="xs:string" nillable="true"/>
+         <xs:element name="id_area_conc" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_areaviaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_areapago" type="xs:decimal" nillable="true"/>
+         <xs:element name="rendimiento_reseteo" type="xs:decimal" nillable="true"/>
+         <xs:element name="proporcional_flete" type="xs:decimal" nillable="true"/>
+         <xs:element name="no_transferencia" type="xs:decimal" nillable="true"/>
+         <xs:element name="status_liberado" type="xs:string" nillable="true"/>
+         <xs:element name="tipo_cargado" type="xs:decimal" nillable="true"/>
+         <xs:element name="tipo_vacio" type="xs:decimal" nillable="true"/>
+         <xs:element name="tipo_tractor" type="xs:decimal" nillable="true"/>
+         <xs:element name="lts_reseteo" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_statusviaje" type="xs:decimal" nillable="true"/>
+         <xs:element name="f_ini_status" type="xs:dateTime" nillable="true"/>
+         <xs:element name="cargadovacio_rem1" type="xs:string" nillable="true"/>
+         <xs:element name="cargadovacio_rem2" type="xs:string" nillable="true"/>
+         <xs:element name="id_contrato" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_tipo_servicio" type="xs:decimal" nillable="true"/>
+         <xs:element name="pagar_sueldo" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_reseteo_thermo1" type="xs:decimal" nillable="true"/>
+         <xs:element name="rend_reseteo_thermo2" type="xs:decimal" nillable="true"/>
+         <xs:element name="tipo_sueldo" type="xs:string" nillable="true"/>
+         <xs:element name="TEA" type="xs:dateTime" nillable="true"/>
+         <xs:element name="id_cliente" type="xs:decimal" nillable="true"/>
+         <xs:element name="id_tipo_operacion" type="xs:decimal" nillable="true"/>
+         <xs:element name="incentivo" type="xs:decimal" nillable="true"/>
+         <xs:element name="monto_incentivo" type="xs:decimal" nillable="true"/>
+         <xs:element name="descuento_transbordo" type="xs:decimal" nillable="true"/>
+         <xs:element name="cupon" type="xs:string" nillable="true"/>
+         <xs:element name="lugar_cita" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

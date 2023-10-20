@@ -1,0 +1,540 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpelx:subProcess name="SBpelValidateLines" targetNamespace="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/SBpelValidateLines" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:client="http://soa.estrellaroja.com.mx/ValidationPaymentsAPBiz/SBpelValidateLines" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer" xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.sat.gob.mx/cfd/3" xmlns:ns2="http://soa.estrellaroja.com.mx/Reports/XXER_ValidationComplement" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns3="http://soa.estrellaroja.com.mx/ValidacionAutomaticTec" xmlns:ns4="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ns5="http://www.sat.gob.mx/Pagos" xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns6="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns7="http://soa.estrellaroja.com.mx/AuditControlTec" xmlns:ns8="http://www.sat.gob.mx/cfd/4" xmlns:ns11="http://www.sat.gob.mx/ConsumoDeCombustibles11" xmlns:ns12="http://www.sat.gob.mx/EstadoDeCuentaCombustible12" xmlns:ns10="http://www.sat.gob.mx/CartaPorte20" xmlns:ns13="http://www.sat.gob.mx/nomina12" xmlns:ns9="http://www.sat.gob.mx/Pagos20" xmlns:sp1="http://xmlns.oracle.com/GER_SOA_OCI/ValidationPaymentsAPBiz/SubSendInvoiceToReport" xmlns:ns14="http://soa.estrellaroja.com.mx/CFDITec">
+   <import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+   <partnerLinks>
+      <partnerLink name="wsAuditControlTec" partnerLinkType="ns7:wsAuditControlTec" partnerRole="AuditControlTecPortType"/>
+      <partnerLink name="wsCFDITec" partnerLinkType="ns14:wsCFDITec" partnerRole="CFDITecPortType" myRole="CFDITecPortTypeCallback"/>
+   </partnerLinks>
+   <variables>
+      <variable name="v_paymentXML" element="ns1:Comprobante"/>
+      <variable name="v_payment" element="ns2:DATA_DS"/>
+      <variable name="v_statusDesc" type="xsd:string"/>
+      <variable name="wsAuditControlTecMergeComplementsAPRq" messageType="ns7:MergeComplementsAPRq"/>
+      <variable name="v_paymentXML40" element="ns8:Comprobante"/>
+      <variable name="v_countDR" type="xsd:int">
+         <from>0</from>
+      </variable>
+   </variables>
+   <sequence name="main">
+      <forEach parallel="no" counterName="counterLines" name="For_lines">
+         <startCounterValue>1</startCounterValue>
+         <finalCounterValue>count($v_payment/ns2:G_1/ns2:G_2)</finalCounterValue>
+         <scope name="ScopeLine">
+            <variables>
+               <variable name="v_ExisteLineXML" type="xsd:boolean">
+                  <from>false()</from>
+               </variable>
+               <variable name="v_tolerancia" type="xsd:string">
+                  <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBizConfigs.dvm","Code","tolerancia","Value","0","Component","Vars")</from>
+               </variable>
+               <variable name="v_msjNotifiacion" type="xsd:string"/>
+               <variable name="v_montoF" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_montoXML" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_uuidF" type="xsd:string">
+                  <from>'null'</from>
+               </variable>
+               <variable name="v_uuidXML" type="xsd:string">
+                  <from>'null'</from>
+               </variable>
+               <variable name="v_retIVAF" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_retISRF" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_retIVAXML" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_retISRXML" type="xsd:string">
+                  <from>'0'</from>
+               </variable>
+               <variable name="v_numF" type="xsd:string">
+                  <from>'null'</from>
+               </variable>
+               <variable name="WsAuditControlTecGetInvoicesAPRq" messageType="ns7:GetInvoicesAPByExampleRq"/>
+               <variable name="WsAuditControlTecGetInvoicesAPRs" messageType="ns7:GetInvoicesAPByExampleRs"/>
+               <variable name="v_objetoImpDrXML" type="xsd:string">
+                  <from>''</from>
+               </variable>
+               <variable name="v_objetoImpF" type="xsd:string">
+                  <from>''</from>
+               </variable>
+               <variable name="v_invoice" element="ns2:DATA_DS"/>
+               <variable name="v_montoBaseISRDRXML" type="xsd:string"/>
+               <variable name="v_montoBaseIVADRXML" type="xsd:string"/>
+            </variables>
+            <sequence name="SeqLine">
+               <assign name="AssignInvoice">
+                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                     <from>$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]</from>
+                     <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_invoice/ns2:G_1/ns2:G_2</to>
+                  </copy>
+               </assign>
+               <if name="If_Standard">
+                  <documentation><![CDATA[standard]]></documentation>
+                  <condition>$v_payment/ns2:G_1/ns2:G_2[$counterLines]/ns2:TIPO_PAGO!='CREDIT'</condition>
+                  <sequence name="SeqStandard">
+                     <assign name="AssignMergeLine">
+                        <copy>
+                           <from>$v_countDR+1</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_countDR</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>concat($v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:ID_PAGO,$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:ID_FACTURA)</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:drId</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>xp20:current-dateTime()</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:creationDate</to>
+                        </copy>
+                        <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                           <from>$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:ID_FACTURA</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:invoiceId</to>
+                        </copy>
+                        <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                           <from>'ValidationPaymentsAPBiz'</from>
+                           <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:createdBy</to>
+                        </copy>
+                     </assign>
+                     <scope name="Scope1">
+                        <variables>
+                           <variable name="GetInvoiceCFDIFromERPRq" messageType="ns14:GetInvoiceCFDIFromERPRqMsg"/>
+                           <variable name="GetInvoiceCFDIFromERPResponse" messageType="ns14:GetInvoiceCFDIFromERPRsMsg"/>
+                        </variables>
+                        <sequence>
+                           <assign name="AssignSelect">
+                              <copy>
+                                 <from>$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:ID_FACTURA</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPRq.GetInvoicesAPByExampleRqPart/ns7:invoiceId</to>
+                              </copy>
+                              <copy>
+                                 <from>$v_payment/ns2:G_1/ns2:G_2[$counterLines]/ns2:NUMERO_DOCUMENTO</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_numF</to>
+                              </copy>
+                           </assign>
+                           <invoke name="WsAuditControlTec" partnerLink="wsAuditControlTec" portType="ns7:AuditControlTecPortType" operation="GetInvoicesAPByExample" inputVariable="WsAuditControlTecGetInvoicesAPRq" outputVariable="WsAuditControlTecGetInvoicesAPRs" bpelx:invokeAsDetail="no"/>
+                           <if name="If_ExisteInvoice">
+                              <documentation><![CDATA[No Existe]]></documentation>
+                              <condition>string-length($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice/ns7:versionXml)=0 or string-length($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice/ns7:objetoImpXml)=0 or  (string-length($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice/ns7:versionXml) > 0 and string-length($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice/ns7:uuid)=0 )</condition>
+                              <sequence name="Seq_Invoice">
+                                 <assign name="Assign1">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                       <from>$v_invoice/ns2:G_1[1]/ns2:G_2[1]/ns2:ID_FACTURA</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetInvoiceCFDIFromERPRq.GetInvoiceCFDIFromERPRqPart/ns14:IdInvoice</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                       <from>true()</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$GetInvoiceCFDIFromERPRq.GetInvoiceCFDIFromERPRqPart/ns14:SendReport</to>
+                                    </copy>
+                                 </assign>
+                                 <invoke name="GetInvoiceCFDIFromERP" bpelx:invokeAsDetail="no" partnerLink="wsCFDITec" portType="ns14:CFDITecPortType" operation="GetInvoiceCFDIFromERP" inputVariable="GetInvoiceCFDIFromERPRq"/>
+                                 <receive name="GetInvoiceCFDIFromERPResponse" partnerLink="wsCFDITec" portType="ns14:CFDITecPortTypeCallback" operation="GetInvoiceCFDIFromERPResponse" variable="GetInvoiceCFDIFromERPResponse">
+                                    <bpelx:skipCondition>true()</bpelx:skipCondition>
+                                 </receive>
+                                 <extensionActivity>
+                                    <bpelx:call name="GatDataInvoice" xmlns:sp1="http://xmlns.oracle.com/GER_SOA_OCI/ValidationPaymentsAPBiz/SubSendInvoiceToReport" target="sp1:SubSendInvoiceToReport">
+                                       <bpelx:skipCondition>true()</bpelx:skipCondition>
+                                       <bpelx:param name="v_invoice" copyByValue="yes" variable="v_invoice"/>
+                                    </bpelx:call>
+                                 </extensionActivity>
+                                 <invoke name="WsAuditControlTec" partnerLink="wsAuditControlTec" portType="ns7:AuditControlTecPortType" operation="GetInvoicesAPByExample" inputVariable="WsAuditControlTecGetInvoicesAPRq" outputVariable="WsAuditControlTecGetInvoicesAPRs" bpelx:invokeAsDetail="no" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+                              </sequence>
+                           </if>
+                        </sequence>
+                     </scope>
+                     <if name="If_FacturaRegistrada">
+                        <documentation><![CDATA[SiExiste]]></documentation>
+                        <condition>string-length($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid)>0</condition>
+                        <sequence name="SeqExiste">
+                           <scope name="ScopeApplyCreditNote">
+                              <variables>
+                                 <variable name="WsAuditControlTecGetInvoicesAPNCRq" messageType="ns7:GetInvoicesAPByExampleRq"/>
+                                 <variable name="WsAuditControlTecGetInvoicesAPNCRs" messageType="ns7:GetInvoicesAPByExampleRs"/>
+                              </variables>
+                              <sequence name="SeqApplyCreditNote">
+                                 <assign name="AssignSelect" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <copy>
+                                       <from>$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPNCRq.GetInvoicesAPByExampleRqPart/ns7:uuidRelacion</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                       <from>'VALIDADO'</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPNCRq.GetInvoicesAPByExampleRqPart/ns7:status</to>
+                                    </copy>
+                                    <copy>
+                                       <from>'E'</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPNCRq.GetInvoicesAPByExampleRqPart/ns7:tipoComprobante</to>
+                                    </copy>
+                                 </assign>
+                                 <invoke name="WsAuditControlTec" partnerLink="wsAuditControlTec" portType="ns7:AuditControlTecPortType" operation="GetInvoicesAPByExample" inputVariable="WsAuditControlTecGetInvoicesAPNCRq" outputVariable="WsAuditControlTecGetInvoicesAPNCRs" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable" bpelx:invokeAsDetail="no"/>
+                                 <if name="If_ExitNC">
+                                    <documentation><![CDATA[RecalcularTotal]]></documentation>
+                                    <condition>count($WsAuditControlTecGetInvoicesAPNCRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice)>0</condition>
+                                    <assign name="AssignTotales">
+                                       <copy>
+                                          <from>(xp20:abs($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:amount  *  100) - xp20:abs( $WsAuditControlTecGetInvoicesAPNCRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:totalOracle * 100) ) div 100</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:amount</to>
+                                       </copy>
+                                       <copy>
+                                          <from>(xp20:abs($v_payment/ns2:G_1/ns2:G_2[$counterLines]/ns2:MONTO_DOCUMENTO  *  100) - xp20:abs( $WsAuditControlTecGetInvoicesAPNCRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:attribute2 * 100) ) div 100</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:MONTO_DOCUMENTO</to>
+                                       </copy>
+                                       <copy>
+                                          <from>(xp20:abs($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:totalOracle  *  100) - xp20:abs( $WsAuditControlTecGetInvoicesAPNCRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:totalOracle * 100) ) div 100</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:totalOracle</to>
+                                       </copy>
+                                       <copy>
+                                          <from>(xp20:abs($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:total  *  100) - xp20:abs( $WsAuditControlTecGetInvoicesAPNCRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:totalOracle * 100) ) div 100</from>
+                                          <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:total</to>
+                                       </copy>
+                                    </assign>
+                                 </if>
+                              </sequence>
+                           </scope>
+                           <forEach parallel="no" counterName="counterPagoXML" name="For_PagoXML">
+                              <startCounterValue>1</startCounterValue>
+                              <finalCounterValue>count($v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago)</finalCounterValue>
+                              <scope name="ScopePagoXML">
+                                 <forEach parallel="no" counterName="counterDR" name="For_DR">
+                                    <startCounterValue>1</startCounterValue>
+                                    <finalCounterValue>count($v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado)</finalCounterValue>
+                                    <scope name="ScopeDR">
+                                       <if name="If_Exist_UUIDXML">
+                                          <documentation><![CDATA[UUID_Existe]]></documentation>
+                                          <condition>xp20:upper-case($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid)=xp20:upper-case($v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@IdDocumento)</condition>
+                                          <sequence name="Sequence6">
+                                             <assign name="AssignDRXML">
+                                                <copy>
+                                                   <from>true()</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_ExisteLineXML</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@IdDocumento</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:uuidDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@Serie</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:serieDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@Folio</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:folioDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@MonedaDR</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:monedaDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@TipoCambioDR</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:tipoCambioDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@MetodoDePagoDR</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:metodoPagoDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@ImpPagado</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:impPagoDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@ImpSaldoInsoluto</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:impSaldoInsolutoDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/ns5:DoctoRelacionado[$counterDR]/@ImpSaldoAnt</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:impSaldoAntDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/@FormaDePagoP</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:formaPagoDrXml</to>
+                                                </copy>
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_paymentXML/ns1:Complemento/ns5:Pagos/ns5:Pago[$counterPagoXML]/@FechaPago</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:fechaDrXml</to>
+                                                </copy>
+                                             </assign>
+                                             <if name="If_CV40">
+                                                <condition>$v_paymentXML/@Version='4.0'</condition>
+                                                <assign name="AssignDRXML40" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                   <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                                                      <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago[$counterPagoXML]/ns9:DoctoRelacionado[$counterDR]/@ObjetoImpDR</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:objetoImpDrXml</to>
+                                                   </copy>
+                                                   <copy>
+                                                      <from>$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:objetoImpXml</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_objetoImpF</to>
+                                                   </copy>
+                                                </assign>
+                                             </if>
+                                          </sequence>
+                                       </if>
+                                    </scope>
+                                 </forEach>
+                              </scope>
+                           </forEach>
+                           <assign name="AssignUUID_F" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy>
+                                 <from>xp20:upper-case($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid)</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_uuidF</to>
+                              </copy>
+                           </assign>
+                           <if name="If_ExisteUUID_XML">
+                              <documentation><![CDATA[Existe]]></documentation>
+                              <condition>$v_ExisteLineXML</condition>
+                              <if name="If_V_UUID_LINE_REPEAT" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                 <documentation><![CDATA[UUID Repetido mas de 1 vez]]></documentation>
+                                 <condition>count($v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]) > 1</condition>
+                                 <assign name="AssignErrorMontoL" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <copy>
+                                       <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_UUID_LINE_REPEAT","Value","","Component","Validation"),'&lt;/li>')</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                    </copy>
+                                 </assign>
+                                 <else>
+                                    <documentation><![CDATA[un UUID]]></documentation>
+                                    <sequence name="SeqVMontoLine">
+                                       <assign name="AssignVarsG">
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:RET_IVA*$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='002']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retIVAF</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:RET_ISR*$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='001']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retISRF</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='002']/@TasaOCuotaDR*$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='002']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retIVAXML</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='001']/@TasaOCuotaDR*$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='001']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_retISRXML</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='001']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoBaseISRDRXML</to>
+                                          </copy>
+                                          <copy ignoreMissingFromData="yes">
+                                             <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='002']/@BaseDR</from>
+                                             <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoBaseIVADRXML</to>
+                                          </copy>
+                                       </assign>
+                                       <if name="If_NoIsMXN">
+                                          <documentation><![CDATA[MXN]]></documentation>
+                                          <condition>$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$counterLines]/ns7:monedaDrXml='MXN'</condition>
+                                          <assign name="AssignVars">
+                                             <copy>
+                                                <from>xp20:upper-case($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid)</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_uuidF</to>
+                                             </copy>
+                                             <copy>
+                                                <from>xp20:abs(number($wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$counterLines]/ns7:impPagoDrXml))</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoXML</to>
+                                             </copy>
+                                             <copy>
+                                                <from>xp20:abs(number($v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:MONTO_DOCUMENTO))</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoF</to>
+                                             </copy>
+                                          </assign>
+                                          <else>
+                                             <documentation><![CDATA[OtraMoneda]]></documentation>
+                                             <assign name="AssignVars" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <copy>
+                                                   <from>xp20:upper-case($WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:uuid)</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_uuidF</to>
+                                                </copy>
+                                                <copy>
+                                                   <from>xp20:abs(number($wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$counterLines]/ns7:impPagoDrXml))</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoXML</to>
+                                                </copy>
+                                                <copy>
+                                                   <from>$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:total</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_montoF</to>
+                                                </copy>
+                                             </assign>
+                                          </else>
+                                       </if>
+                                       <if name="If_VALID_MONTO">
+                                          <documentation><![CDATA[V_MONTO_LINE]]></documentation>
+                                          <condition>xp20:abs(xp20:abs(number($v_montoXML))- xp20:abs(number($v_montoF))) > $v_tolerancia</condition>
+                                          <assign name="AssignErrorMontoL" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                             <copy>
+                                                <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_MONTO_LINE","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                             </copy>
+                                          </assign>
+                                       </if>
+                                       <if name="If_V4.0" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                          <documentation><![CDATA[Validaciones 4.0]]></documentation>
+                                          <condition>$v_paymentXML/@Version='4.0'</condition>
+                                          <sequence name="SeqVal40">
+                                             <assign name="AssignVarsG" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                                   <from>$v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/@ObjetoImpDR</from>
+                                                   <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_objetoImpDrXML</to>
+                                                </copy>
+                                             </assign>
+                                             <if name="If_FACT_40">
+                                                <documentation><![CDATA[FACT_V40]]></documentation>
+                                                <condition>$WsAuditControlTecGetInvoicesAPRs.GetInvoicesAPByExampleRsPart/ns7:Return/ns7:Invoice[1]/ns7:versionXml='4.0'</condition>
+                                                <if name="If_V_OBJETO_IMP_DR">
+                                                   <documentation><![CDATA[ErrorObjetoImpDr]]></documentation>
+                                                   <condition>$v_objetoImpDrXML!=$v_objetoImpF</condition>
+                                                   <assign name="AssignErrorObjetoImpDR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                      <copy>
+                                                         <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_OBJETO_IMP_DR","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                                      </copy>
+                                                   </assign>
+                                                </if>
+                                             </if>
+                                             <if name="If_V_RET_IVA" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <documentation><![CDATA[ValidaRET_IVA]]></documentation>
+                                                <condition>xp20:abs(xp20:abs(number($v_retIVAF))- xp20:abs(number($v_retIVAXML))) > $v_tolerancia</condition>
+                                                <assign name="AssignErrorRET_IVA">
+                                                   <copy>
+                                                      <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RET_IVA","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                                   </copy>
+                                                </assign>
+                                                <elseif>
+                                                   <documentation><![CDATA[noExist]]></documentation>
+                                                   <condition>string-length($v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='002']/@TasaOCuotaDR) = 0 and $v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:RET_IVA > 0</condition>
+                                                   <assign name="AssignErrorRET_IVA" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                      <copy>
+                                                         <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RET_IVA","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                                      </copy>
+                                                   </assign>
+                                                </elseif>
+                                             </if>
+                                             <if name="If_V_RET_ISR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                <documentation><![CDATA[ValidaRET_ISR]]></documentation>
+                                                <condition>xp20:abs(xp20:abs(number($v_retISRF))- xp20:abs(number($v_retISRXML))) > $v_tolerancia</condition>
+                                                <assign name="AssignErrorRET_ISR">
+                                                   <copy>
+                                                      <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RET_ISR","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                                   </copy>
+                                                </assign>
+                                                <elseif>
+                                                   <documentation><![CDATA[noExist]]></documentation>
+                                                   <condition>string-length($v_paymentXML40/ns8:Complemento/ns9:Pagos/ns9:Pago/ns9:DoctoRelacionado[xp20:upper-case(@IdDocumento)=xp20:upper-case($v_uuidF)]/ns9:ImpuestosDR/ns9:RetencionesDR/ns9:RetencionDR[@ImpuestoDR='001']/@TasaOCuotaDR) =0 and $v_payment/ns2:G_1[1]/ns2:G_2[$counterLines]/ns2:RET_ISR > 0</condition>
+                                                   <assign name="AssignErrorRET_ISR" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                                      <copy>
+                                                         <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_RET_ISR","Value","","Component","Validation"),'&lt;/li>')</from>
+                                                         <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                                      </copy>
+                                                   </assign>
+                                                </elseif>
+                                             </if>
+                                          </sequence>
+                                       </if>
+                                    </sequence>
+                                 </else>
+                              </if>
+                              <else>
+                                 <documentation><![CDATA[V_NO_EXISTE_UUID_XML]]></documentation>
+                                 <assign name="AssignErrorNoExistUUID" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                    <copy>
+                                       <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_NO_EXISTE_UUID_XML","Value","","Component","Validation"),'&lt;/li>')</from>
+                                       <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                                    </copy>
+                                 </assign>
+                              </else>
+                           </if>
+                        </sequence>
+                        <else>
+                           <documentation><![CDATA[V_NO_EXISTE_FACTURA_REG]]></documentation>
+                           <assign name="AssignErrorNO_EXISTE_FACTURA_REG" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                              <copy>
+                                 <from>concat($v_msjNotifiacion,'&lt;li>' ,dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","V_NO_EXISTE_FACTURA_REG","Value","","Component","Validation"),'&lt;/li>')</from>
+                                 <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_msjNotifiacion</to>
+                              </copy>
+                           </assign>
+                        </else>
+                     </if>
+                     <if name="If_Success" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                        <documentation><![CDATA[Valido]]></documentation>
+                        <condition>string-length($v_msjNotifiacion) =0</condition>
+                        <assign name="AssignSuccessLine">
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","CC","Value","","Component","Status")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:status</to>
+                           </copy>
+                           <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                              <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","P_V_L","Value","","Component","MensajeDesc")</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:statusDesc</to>
+                           </copy>
+                        </assign>
+                        <else>
+                           <documentation><![CDATA[ErrorsLine]]></documentation>
+                           <sequence name="Sequence5">
+                              <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                 <bpelx:exec name="Java_ReplaceVars" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"><![CDATA[addAuditTrailEntry("Replace Variables");                                                        
+try {                                                     
+String v_montoF = (String)getVariableData("v_montoF");                                                         
+String v_montoXML = (String)getVariableData("v_montoXML");         
+String v_uuidF = (String)getVariableData("v_uuidF");          
+String v_tolerancia = (String)getVariableData("v_tolerancia");   
+String v_numF = (String)getVariableData("v_numF");   
+String v_retISRF = (String)getVariableData("v_retISRF");    
+String v_retISRXML = (String)getVariableData("v_retISRXML");    
+String v_retIVAF = (String)getVariableData("v_retIVAF");    
+String v_retIVAXML = (String)getVariableData("v_retIVAXML");  
+String v_objetoImpDrXML = (String)getVariableData("v_objetoImpDrXML");    
+String v_objetoImpF = (String)getVariableData("v_objetoImpF");  
+String msj = (String)getVariableData("v_msjNotifiacion");                                                           
+String cadena = null;            
+cadena=msj.replace("$TOLERANCIA", v_tolerancia);          
+msj=cadena.replace("$MONTO_FL", v_montoF);           
+addAuditTrailEntry("Cadena 1="+msj);           
+cadena=msj.replace("$MONTO_LXML",v_montoXML);       
+msj=cadena.replace("$UUID_F",v_uuidF);   
+cadena=msj.replace("$NUM_FACTURA",v_numF);   
+msj=cadena.replace("$RET_ISR_F",v_retISRF);   
+cadena=msj.replace("$RET_ISR_XML",v_retISRXML);   
+msj=cadena.replace("$RET_IVA_F",v_retIVAF);   
+cadena=msj.replace("$RET_IVA_XML",v_retIVAXML); 
+msj=cadena.replace("$OBJ_IMP_DR_XML",v_objetoImpDrXML);   
+cadena=msj.replace("$OBJ_IMP_F_XML",v_objetoImpF);  
+msj=cadena;  
+addAuditTrailEntry("Cadena 2 ="+cadena);           
+setVariableData("v_msjNotifiacion",msj);                                                        
+} catch (Exception e) {                                                        
+  addAuditTrailEntry("Exception: "+e.getMessage());                                                        
+}                                                        
+addAuditTrailEntry("ended");]]></bpelx:exec>
+                              </extensionActivity>
+                              <assign name="AssignErrorsLine" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                                 <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>$v_msjNotifiacion</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:statusDesc</to>
+                                 </copy>
+                                 <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                    <from>dvm:lookupValue("DVMs/dvmValidationPaymentsBiz.dvm","Code","EE","Value","","Component","Status")</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$wsAuditControlTecMergeComplementsAPRq.MergeComplementsAPRq/ns7:Complements/ns7:Complement/ns7:ComplementsLinesAp/ns7:XxerComplementsLinesApTbl[$v_countDR]/ns7:status</to>
+                                 </copy>
+                                 <copy>
+                                    <from>concat($v_statusDesc,$v_msjNotifiacion)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$v_statusDesc</to>
+                                 </copy>
+                              </assign>
+                           </sequence>
+                        </else>
+                     </if>
+                  </sequence>
+                  <else>
+                     <documentation><![CDATA[credit]]></documentation>
+                     <empty name="NotValid"/>
+                  </else>
+               </if>
+            </sequence>
+         </scope>
+      </forEach>
+   </sequence>
+</bpelx:subProcess>

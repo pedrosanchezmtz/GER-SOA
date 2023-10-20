@@ -1,0 +1,40 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="bpelGetJournals"
+     targetNamespace="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals"
+     xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns2="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates"
+    >
+    <plnk:partnerLinkType name="bpelGetJournals">
+        <plnk:role name="bpelGetJournalsProvider" portType="client:bpelGetJournals"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://soa.estrellaroja.com.mx/JournalBiz" location="oramds:/apps/SOA/JournalBiz/JournalBiz.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals" xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates" schemaLocation="../Schemas/groupsDates.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals" xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates">
+            <xsd:import namespace="http://TargetNamespace.com/ServiceName" schemaLocation="../Schemas/nxsdFileJournal.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://soa.estrellaroja.com.mx/JournalBiz/bpelGetJournals" xmlns:ns1="http://soa.estrellaroja.com.mx/JournalBiz"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://soa.estrellaroja.com.mx/JournalBiz/GroupsDates">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/JournalBiz" schemaLocation="oramds:/apps/SOA/JournalBiz/JournalBiz.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="bpelGetJournalsRequestMessage">
+        <wsdl:part name="payload" element="ns1:GetJournalRq"/>
+    </wsdl:message>
+    <wsdl:portType name="bpelGetJournals">
+        <wsdl:operation name="GetJournals">
+            <wsdl:input message="client:bpelGetJournalsRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

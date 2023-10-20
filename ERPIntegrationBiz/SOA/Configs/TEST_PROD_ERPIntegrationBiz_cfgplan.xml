@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="ERPIntegrationBiz">
+      <import>
+         <searchReplace>
+            <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+            <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+            <replace>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+            <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+            <replace>oramds:/apps/OSB/AuditControlTec/AuditControlTec</replace>
+         </searchReplace>
+         <searchReplace>
+            <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+            <replace>oramds:/apps/SOA/MessageTec/MessageTec</replace>
+         </searchReplace>
+      </import>
+      <service name="ERPIntegrationBiz">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizPort)</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>NEVER</replace>
+            </property>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://soa.estrellaroja.com.mx/ERPIntegrationBiz#wsdl.endpoint(ERPIntegrationBiz/ERPIntegrationBizCallbackPort)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="compositeID">
+         <replace>717c64bb-5934-498b-a1e1-932830f9cbdc</replace>
+      </property>
+      <property name="productVersion">
+         <replace>12.2.1.4.0.190828</replace>
+      </property>
+      <component name="bpelImportToERPCloud">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelGenerateReport">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <component name="bpelGetJobsStatus">
+         <property name="bpel.config.transaction">
+            <replace>required</replace>
+         </property>
+      </component>
+      <reference name="wsAuditControlTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://AuditControlTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsSOAUtilitiesTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.endpoint(SOAUtilitiesTec/SOAUtilitiesTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsMessageTec">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://soa.estrellaroja.com.mx/MessageTec#wsdl.endpoint(MessageTec/MessageTecPort)</replace>
+            </attribute>
+            <attribute name="location">
+               <replace>oramds:/apps/SOA/MessageTec/MessageTec.wsdl</replace>
+            </attribute>
+            <property name="weblogic.wsee.wsat.transaction.flowOption">
+               <replace>WSDLDriven</replace>
+            </property>
+         </binding>
+      </reference>
+      <reference name="wsERPIntegrationServiceTec">
+         <binding type="direct">
+            <attribute name="address">
+               <replace>sb://ERPIntegrationServiceTecPs</replace>
+            </attribute>
+            <property name="java.naming.provider.url">
+               <replace>t3://servidor.soa.local:7101</replace>
+            </property>
+         </binding>
+      </reference>
+   </composite>
+   <wsdlAndSchema name="Schemas/AuditControlTec.xsd|Schemas/bruleGenerateReportDSMessageTypes.xsd|Schemas/bruleGenerateReportDSTypes.xsd|Schemas/bruleImportToERPCloudDSMessageTypes.xsd|Schemas/bruleImportToERPCloudDSTypes.xsd|Schemas/bruleImportToERPCloudDSxMessageTypes.xsd|Schemas/bruleImportToERPCloudDSxTypes.xsd|Schemas/Commons/EstrellaRojaCommons.xsd|Schemas/DecisionServicePrimitiveTypes.xsd|Schemas/ERPIntegrationBiz.xsd|Schemas/ERPIntegrationServiceTec.xsd|Schemas/MessageTec.xsd|Schemas/SOAUtilitiesTec.xsd|WSDLs/AuditControlTec.wsdl|WSDLs/AuditControlTecWrapper.wsdl|WSDLs/bpelGenerateReport.wsdl|WSDLs/bpelGetJobsStatus.wsdl|WSDLs/bpelImportToERPCloud.wsdl|WSDLs/bruleGenerateReportDS.wsdl|WSDLs/bruleGenerateReportDSWrapper.wsdl|WSDLs/bruleImportToERPCloudDS.wsdl|WSDLs/bruleImportToERPCloudDSWrapper.wsdl|WSDLs/ERPIntegrationBiz.wsdl|WSDLs/ERPIntegrationServiceTec.wsdl|WSDLs/ERPIntegrationServiceTecWrapper.wsdl|WSDLs/MessageTec.wsdl|WSDLs/MessageTecWrapper.wsdl|WSDLs/SOAUtilitiesTec.wsdl|WSDLs/SOAUtilitiesTecWrapper.wsdl">
+      <searchReplace>
+         <search>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</search>
+         <replace>oramds:/apps/SOA/ERPIntegrationBiz/ERPIntegrationBiz</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</search>
+         <replace>oramds:/apps/OSB/ERPIntegrationServiceTec/ERPIntegrationServiceTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</search>
+         <replace>oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/OSB/AuditControlTec/AuditControlTec</search>
+         <replace>oramds:/apps/OSB/AuditControlTec/AuditControlTec</replace>
+      </searchReplace>
+      <searchReplace>
+         <search>oramds:/apps/SOA/MessageTec/MessageTec</search>
+         <replace>oramds:/apps/SOA/MessageTec/MessageTec</replace>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

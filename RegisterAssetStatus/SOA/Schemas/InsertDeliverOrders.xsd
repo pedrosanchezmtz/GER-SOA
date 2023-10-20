@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/InsertDeliverOrders" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/InsertDeliverOrders" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="InsertDeliverOrdersInput" type="InsertDeliverOrdersInput"/>
+   <xs:complexType name="InsertDeliverOrdersInput">
+      <xs:sequence>
+         <xs:element name="idArea" type="xs:string" nillable="true"/>
+         <xs:element name="idOrden" type="xs:string" nillable="true"/>
+         <xs:element name="fechInicio" type="xs:string" nillable="true"/>
+         <xs:element name="estado" type="xs:string" nillable="true"/>
+         <xs:element name="idUnidad" type="xs:string" nillable="true"/>
+         <xs:element name="observaciones" type="xs:string" nillable="true"/>
+         <xs:element name="kilometrosInicio" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="mediatorReceiptEnt" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" wsdlTargetNamespace="http://soa.estrellaroja.com.mx/ReceiptEnt" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
+   <operation name="CreateReceipts" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="bpelCreateReceipts.bpelCreateReceipts.CreateReceipts">
+            <action>
+               <assign>
+                  <copy expression="$in.CreateReceiptsRq/tns:CreateReceiptsRq" target="$out.CreateReceiptsRq/tns:CreateReceiptsRq" xmlns:tns="http://soa.estrellaroja.com.mx/ReceiptEnt"/>
+               </assign>
+               <invoke reference="bpelCreateReceipts.bpelCreateReceipts" operation="CreateReceipts"/>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

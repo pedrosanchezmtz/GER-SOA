@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelReceiptApply" targetNamespace="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelReceiptApply" xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptBiz" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension" xmlns:ns3="http://soa.estrellaroja.com.mx/SOAUtilitiesTec">
+   <plnk:partnerLinkType name="bpelReceiptApply">
+      <plnk:role name="bpelReceiptApplyProvider" portType="client:bpelReceiptApply"/>
+      <plnk:role name="bpelReceiptApplyRequester" portType="client:bpelReceiptApplyCallback"/>
+   </plnk:partnerLinkType>
+   <wsdl:import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" location="oramds:/apps/SOA/SOAUtilitiesTec/SOAUtilitiesTec.wsdl"/>
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/ReceiptBiz" schemaLocation="oramds:/apps/SOA/ReceiptBiz/ReceiptBiz.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="ReceiptApplyRq">
+      <wsdl:part name="ReceiptApplyRq" element="ns1:ReceiptApplyRq"/>
+   </wsdl:message>
+   <wsdl:message name="ReceiptApplyRs">
+      <wsdl:part name="ReceiptApplyRs" element="ns1:ReceiptApplyRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelReceiptApply">
+      <wsdl:operation name="ReceiptApply">
+         <wsdl:input message="client:ReceiptApplyRq"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:portType name="bpelReceiptApplyCallback">
+      <wsdl:operation name="ReceiptApplyRs">
+         <wsdl:input message="client:ReceiptApplyRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+</wsdl:definitions>

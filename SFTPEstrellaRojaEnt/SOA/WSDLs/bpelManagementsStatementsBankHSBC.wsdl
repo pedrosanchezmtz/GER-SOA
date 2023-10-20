@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelManagementsStatementsBankHSBC" targetNamespace="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.mx/SFTPEstrellaRojaEnt/bpelManagementsStatementsBankHSBC" xmlns:ns1="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankHSBC" schemaLocation="../Schemas/Banks/StatementsBankHSBC.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="bpelManagementsStatementsBankHSBCRequestMessage">
+      <wsdl:part name="payload" element="ns1:StatementsBankHSBC"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelManagementsStatementsBankHSBC">
+      <wsdl:operation name="process">
+         <wsdl:input message="client:bpelManagementsStatementsBankHSBCRequestMessage"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelManagementsStatementsBankHSBC">
+      <plnk:role name="bpelManagementsStatementsBankHSBCProvider" portType="client:bpelManagementsStatementsBankHSBC"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

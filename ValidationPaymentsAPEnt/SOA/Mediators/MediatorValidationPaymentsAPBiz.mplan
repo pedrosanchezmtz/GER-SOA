@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Mediator name="MediatorValidationPaymentsAPBiz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator" wsdlTargetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ums/GER_SOA_DEV_OLD/ValidationPaymentsAPEnt/ReceiveEmail">
+   <operation name="SendPaymentsAP" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+      <switch>
+         <case executionType="sequential" name="BpelSendPaymentsAP.bpelSendPaymentsAP_client.SendPaymentsAP">
+            <action>
+               <assign>
+                  <copy expression="$in.SendPaymentsAPRqPart/tns:SendPaymentsAPRq" target="$out.payload/tns:SendPaymentsAPRq" xmlns:tns="http://soa.estrellaroja.com.mx/ValidationPaymentsAPEnt"/>
+               </assign>
+               <invoke reference="BpelSendPaymentsAP.bpelSendPaymentsAP_client" operation="SendPaymentsAP">
+                  <onReply>
+                     <assign>
+                        <copy expression="$in.payload/ns1:SendPaymentsAPRs" target="$out.SendPaymentsAPRsPart/ns1:SendPaymentsAPRs" xmlns:ns1="http://soa.estrellaroja.com.mx/ValidationPaymentsAPEnt"/>
+                     </assign>
+                     <reply/>
+                  </onReply>
+               </invoke>
+            </action>
+         </case>
+      </switch>
+   </operation>
+</Mediator>

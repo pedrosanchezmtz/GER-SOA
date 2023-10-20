@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="bpelGetDateByTimeZone" targetNamespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelGetDateByTimeZone" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelGetDateByTimeZone" xmlns:ns1="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns2="http://schemas.oracle.com/bpel/extension">
+   <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://soa.estrellaroja.com.mx/SOAUtilitiesTec" schemaLocation="oramds:/apps/SOA/DEV_SOAUtilitiesTec/SOAUtilitiesTec.xsd"/>
+      </schema>
+   </wsdl:types>
+   <wsdl:message name="GetDateByTimeZoneRq">
+      <wsdl:part name="GetDateByTimeZoneRq" element="ns1:GetDateByTimeZoneRq"/>
+   </wsdl:message>
+   <wsdl:message name="GetDateByTimeZoneRs">
+      <wsdl:part name="GetDateByTimeZoneRs" element="ns1:GetDateByTimeZoneRs"/>
+   </wsdl:message>
+   <wsdl:portType name="bpelGetDateByTimeZone">
+      <wsdl:operation name="GetDateByTimeZone">
+         <wsdl:input message="client:GetDateByTimeZoneRq"/>
+         <wsdl:output message="client:GetDateByTimeZoneRs"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <plnk:partnerLinkType name="bpelGetDateByTimeZone">
+      <plnk:role name="bpelGetDateByTimeZoneProvider" portType="client:bpelGetDateByTimeZone"/>
+   </plnk:partnerLinkType>
+</wsdl:definitions>

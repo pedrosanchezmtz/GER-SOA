@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="SOAUtilitiesTec">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="276" width="137" height="156">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="269" width="156" height="170">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="SOAUtilitiesTec" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/mft_adapter_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>GetDateByTimeZone</dgm:item>
+            <dgm:item>GenerateZipFile</dgm:item>
+            <dgm:item>transformNumberToLetter</dgm:item>
+            <dgm:item>Decode</dgm:item>
+            <dgm:item>Encode</dgm:item>
+            <dgm:item>EncodeFileBase64</dgm:item>
+            <dgm:item>GetHtmlControl</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="fileWrite">
+        <dgm:body borderWidth="2" arcRad="20" X="1200" Y="324" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1190" Y="317" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="fileWrite" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAUtilitiesTec/SOAUtilitiesTec/fileWrite#wsdl.interface(Write_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/file_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Write</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="mediatorSOAUtilitiesTec">
+        <dgm:body borderWidth="2" arcRad="20" X="321" Y="261" width="130" height="211">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="311" Y="254" width="150" height="227">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="mediatorSOAUtilitiesTec" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec#wsdl.interface(SOAUtilitiesTecPortType)"/>
+        <dgm:outputPort name="bpelGetDateByTimeZone.bpelGetDateByTimeZone" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelGetDateByTimeZone#wsdl.interface(bpelGetDateByTimeZone)"/>
+        <dgm:outputPort name="bpelGenerateZipFile.bpelbpelGenerateZipFile" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelbpelGenerateZipFile#wsdl.interface(bpelbpelGenerateZipFile)"/>
+        <dgm:outputPort name="bpelNumberToLetter.transformNumberToLetter" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelNumberToLetter#wsdl.interface(bpelNumberToLetter)"/>
+        <dgm:outputPort name="bpelDecode.bpelDecode" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelDecode#wsdl.interface(bpelDecode)"/>
+        <dgm:outputPort name="bpelEncode.bpelEncode" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncode#wsdl.interface(bpelEncode)"/>
+        <dgm:outputPort name="bpelEncodeFileBase64.bpelEncodeFileBase64" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncodeFileBase64#wsdl.interface(bpelEncodeFileBase64)"/>
+        <dgm:outputPort name="bpelGetHtmlControl.bpelGetHtmlControl" X="120" Y="165" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl#wsdl.interface(bpelGetHtmlControl)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetDateByTimeZone">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="26" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelGetDateByTimeZone" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelGetDateByTimeZone#wsdl.interface(bpelGetDateByTimeZone)"/>
+        <dgm:outputPort name="springConvertDateFromTimezone.SOAUtilitiesImplService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://impl.utilities.cloud.estrellaroja.com.mx/#wsdl.interface(SOAUtilitiesImpl)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="springConvertDateFromTimezone">
+        <dgm:body borderWidth="2" arcRad="20" X="907" Y="336" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="897" Y="329" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="SOAUtilitiesImplService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="mx.com.estrellaroja.cloud.utilities.impl.SOAUtilitiesImpl"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGenerateZipFile">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="121" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="114" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelbpelGenerateZipFile" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelbpelGenerateZipFile#wsdl.interface(bpelbpelGenerateZipFile)"/>
+        <dgm:outputPort name="fileWrite" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAUtilitiesTec/SOAUtilitiesTec/fileWrite#wsdl.interface(Write_ptt)"/>
+        <dgm:outputPort name="springConvertDateFromTimezone.SOAUtilitiesImplService" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://impl.utilities.cloud.estrellaroja.com.mx/#wsdl.interface(SOAUtilitiesImpl)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelNumberToLetter">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="241" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="234" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="transformNumberToLetter" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelNumberToLetter#wsdl.interface(bpelNumberToLetter)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelDecode">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="336" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="329" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelDecode" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelDecode#wsdl.interface(bpelDecode)"/>
+        <dgm:outputPort name="SOAUtilitiesImplService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://impl.utilities.cloud.estrellaroja.com.mx/#wsdl.interface(SOAUtilitiesImpl)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelEncode">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="431" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="424" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelEncode" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncode#wsdl.interface(bpelEncode)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelEncodeFileBase64">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="526" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="519" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelEncodeFileBase64" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://soa.estrellaroja.com.mx/SOAUtilitiesTec/bpelEncodeFileBase64#wsdl.interface(bpelEncodeFileBase64)"/>
+        <dgm:outputPort name="springConvertDateFromTimezone.SOAUtilitiesImplService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://impl.utilities.cloud.estrellaroja.com.mx/#wsdl.interface(SOAUtilitiesImpl)"/>
+        <dgm:outputPort name="fileWrite" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAUtilitiesTec/SOAUtilitiesTec/fileWrite#wsdl.interface(Write_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="bpelGetHtmlControl">
+        <dgm:body borderWidth="2" arcRad="20" X="614" Y="646" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="604" Y="639" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="bpelGetHtmlControl" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/SOAUtilitiesTec/SOAUtilitiesTec/bpelGetHtmlControl#wsdl.interface(bpelGetHtmlControl)"/>
+        <dgm:outputPort name="springConvertDateFromTimezone.SOAUtilitiesImplService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://impl.utilities.cloud.estrellaroja.com.mx/#wsdl.interface(SOAUtilitiesImpl)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="SOAUtilitiesTec" target="mediatorSOAUtilitiesTec/mediatorSOAUtilitiesTec" width="2">
+        <dgm:gSegment X1="168" Y1="286" X2="311" Y2="286"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelGetDateByTimeZone.bpelGetDateByTimeZone" target="bpelGetDateByTimeZone/bpelGetDateByTimeZone" width="2">
+        <dgm:gSegment X1="461" Y1="286" X2="485" Y2="286"/>
+        <dgm:gSegment X1="485" Y1="286" X2="485" Y2="51"/>
+        <dgm:gSegment X1="485" Y1="51" X2="604" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelGenerateZipFile.bpelbpelGenerateZipFile" target="bpelGenerateZipFile/bpelbpelGenerateZipFile" width="2">
+        <dgm:gSegment X1="461" Y1="311" X2="500" Y2="311"/>
+        <dgm:gSegment X1="500" Y1="311" X2="500" Y2="146"/>
+        <dgm:gSegment X1="500" Y1="146" X2="604" Y2="146"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGenerateZipFile/fileWrite" target="fileWrite" width="2">
+        <dgm:gSegment X1="754" Y1="146" X2="1086" Y2="146"/>
+        <dgm:gSegment X1="1086" Y1="146" X2="1086" Y2="334"/>
+        <dgm:gSegment X1="1086" Y1="334" X2="1190" Y2="334"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetDateByTimeZone/springConvertDateFromTimezone.SOAUtilitiesImplService" target="springConvertDateFromTimezone/SOAUtilitiesImplService" width="2">
+        <dgm:gSegment X1="754" Y1="51" X2="823" Y2="51"/>
+        <dgm:gSegment X1="823" Y1="51" X2="823" Y2="361"/>
+        <dgm:gSegment X1="823" Y1="361" X2="897" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelNumberToLetter.transformNumberToLetter" target="bpelNumberToLetter/transformNumberToLetter" width="2">
+        <dgm:gSegment X1="461" Y1="336" X2="515" Y2="336"/>
+        <dgm:gSegment X1="515" Y1="336" X2="515" Y2="266"/>
+        <dgm:gSegment X1="515" Y1="266" X2="604" Y2="266"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelDecode.bpelDecode" target="bpelDecode/bpelDecode" width="2">
+        <dgm:gSegment X1="461" Y1="361" X2="604" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelEncode.bpelEncode" target="bpelEncode/bpelEncode" width="2">
+        <dgm:gSegment X1="461" Y1="386" X2="515" Y2="386"/>
+        <dgm:gSegment X1="515" Y1="386" X2="515" Y2="456"/>
+        <dgm:gSegment X1="515" Y1="456" X2="604" Y2="456"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelEncodeFileBase64.bpelEncodeFileBase64" target="bpelEncodeFileBase64/bpelEncodeFileBase64" width="2">
+        <dgm:gSegment X1="461" Y1="411" X2="500" Y2="411"/>
+        <dgm:gSegment X1="500" Y1="411" X2="500" Y2="551"/>
+        <dgm:gSegment X1="500" Y1="551" X2="604" Y2="551"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelEncodeFileBase64/springConvertDateFromTimezone.SOAUtilitiesImplService" target="springConvertDateFromTimezone/SOAUtilitiesImplService" width="2">
+        <dgm:gSegment X1="754" Y1="551" X2="778" Y2="551"/>
+        <dgm:gSegment X1="778" Y1="551" X2="778" Y2="361"/>
+        <dgm:gSegment X1="778" Y1="361" X2="897" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelEncodeFileBase64/fileWrite" target="fileWrite" width="2">
+        <dgm:gSegment X1="754" Y1="576" X2="1071" Y2="576"/>
+        <dgm:gSegment X1="1071" Y1="576" X2="1071" Y2="334"/>
+        <dgm:gSegment X1="1071" Y1="334" X2="1190" Y2="334"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelDecode/SOAUtilitiesImplService" target="springConvertDateFromTimezone/SOAUtilitiesImplService" width="2">
+        <dgm:gSegment X1="754" Y1="361" X2="897" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="mediatorSOAUtilitiesTec/bpelGetHtmlControl.bpelGetHtmlControl" target="bpelGetHtmlControl/bpelGetHtmlControl" width="2">
+        <dgm:gSegment X1="461" Y1="436" X2="485" Y2="436"/>
+        <dgm:gSegment X1="485" Y1="436" X2="485" Y2="671"/>
+        <dgm:gSegment X1="485" Y1="671" X2="604" Y2="671"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGetHtmlControl/springConvertDateFromTimezone.SOAUtilitiesImplService" target="springConvertDateFromTimezone/SOAUtilitiesImplService" width="2">
+        <dgm:gSegment X1="754" Y1="671" X2="793" Y2="671"/>
+        <dgm:gSegment X1="793" Y1="671" X2="793" Y2="361"/>
+        <dgm:gSegment X1="793" Y1="361" X2="897" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="bpelGenerateZipFile/springConvertDateFromTimezone.SOAUtilitiesImplService" target="springConvertDateFromTimezone/SOAUtilitiesImplService" width="2">
+        <dgm:gSegment X1="754" Y1="171" X2="808" Y2="171"/>
+        <dgm:gSegment X1="808" Y1="171" X2="808" Y2="361"/>
+        <dgm:gSegment X1="808" Y1="361" X2="897" Y2="361"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

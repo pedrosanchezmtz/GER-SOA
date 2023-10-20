@@ -1,0 +1,740 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 21 17:15:06 CDT 2016
+  Author:  LAEL
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="bpelDigitalStampReceipts" targetNamespace="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:cmn="http://soa.estrellaroja.com.mx/EstrellaRojaCommons" xmlns:ns0="http://soa.estrellaroja.com.mx/ReceiptBiz"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://soa.estrellaroja.com.mx/ReceiptTec"
+         queryLanguage="http://www.w3.org/TR/1999/REC-xpath-19991116" suppressJoinFailure="no" exitOnStandardFault="no"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/ReceiptBiz/ReceiptBiz/dbReceipt"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/dbReceipt" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/ReceiptBiz/ReceiptBiz/dbProcedure"
+         xmlns:ns5="http://xmlns.oracle.com/pcbpel/adapter/db/sp/dbProcedure"
+         xmlns:ns6="http://xmlns.oracle.com/apps/financials/receivables/receipts/shared/standardReceiptService/commonService/"
+         xmlns:ns9="http://xmlns.oracle.com/apps/financials/receivables/receipts/shared/model/flex/StandardReceiptGdf/"
+         xmlns:ns7="http://xmlns.oracle.com/apps/financials/receivables/receipts/shared/standardReceiptService/commonService/types/"
+         xmlns:ns8="http://xmlns.oracle.com/apps/financials/receivables/receipts/shared/model/flex/StandardReceiptDff/"
+         xmlns:ns10="http://soa.estrellaroja.com.mx/ERPIntegrationServiceTec"
+         xmlns:ns11="http://soa.estrellaroja.com.mx/FinancialsTec"
+         xmlns:ns12="http://soa.estrellaroja.com.mx/StructureReceipt"
+         xmlns:ns13="http://xmlns.oracle.com/pcbpel/adapter/db/ReceiptBiz/ReceiptBiz/wsProcessedReceipt"
+         xmlns:ns14="http://xmlns.oracle.com/pcbpel/adapter/db/sp/wsProcessedReceipt"
+         xmlns:ns15="http://soa.estrellaroja.com.mx/SOAUtilitiesTec"
+         xmlns:sp1="http://soa.estrellaroja.com.mx/ReceiptBiz/ReceiptBiz/sbpelNotifyHtmlControl">
+  <documentation>
+    <![CDATA[Proceso BPEL que maneja la lógica para la operación DigitalStampReceipts del servicio ReceiptBiz.]]>
+  </documentation>
+  <import namespace="http://soa.estrellaroja.com.mx/StructureReceipt" location="../Schemas/StructureReceipt.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://soa.estrellaroja.com.mx/ReceiptBiz/bpelDigitalStampReceipts"
+          location="../WSDLs/bpelDigitalStampReceipts.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelDigitalStampReceipts" partnerLinkType="client:bpelDigitalStampReceipts"
+                 myRole="bpelDigitalStampReceiptsProvider"  partnerRole="bpelDigitalStampReceiptsRequester"/>
+    <partnerLink name="wsErpIntegrationTec" partnerLinkType="ns10:wsErpIntegrationTec"
+                 partnerRole="ERPIntegrationTecPortType"/>
+    <partnerLink name="wsFinancialsTec" partnerLinkType="ns11:wsFinancialsTec" partnerRole="FinancialsTecPortType"/>
+  </partnerLinks>
+  <variables>
+    <variable name="inputVariable" messageType="client:DigitalStampReceiptsRq"/>
+    <variable name="outputVariable" messageType="client:DigitalStampReceiptsRs"/>
+    <variable name="varErrorCount" type="xsd:integer"/>
+    <variable name="varHtmlInput" messageType="ns15:GetHtmlControlRq"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <faultHandlers>
+    <catchAll>
+      <documentation>
+        <![CDATA[Control de cualquier excepción no conocida o no manejada específicamente. Se indica a nivel global del BPEL.]]>
+      </documentation>
+      <sequence name="sequenceCatchAll">
+        <documentation>
+          <![CDATA[Secuencia de actividades para preparar la salida del proceso BPEL una vez que se ha atrapado una excepción no conocida o no controlada de forma específica.]]>
+        </documentation><assign name="assignCatchAll">
+          <documentation>
+            <![CDATA[Se asigna la información correspondiente a la excepción CatchAll en el nodo de errores.]]>
+          </documentation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>SOA-00001</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>ora:getFaultName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>concat('Unknown error in service integration: ',ora:getFaultAsString())</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[DigitalStampReceipts]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal>[ReceiptBiz]</literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from>xp20:current-dateTime()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+          </copy>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+          <copy bpelx:insertMissingToData="yes">
+            <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</to>
+          </copy>
+          <extensionAssignOperation>
+            <bpelx:remove>
+              <?audit suppress oracle.ide.xml.validation-incomplete?>
+              <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</bpelx:target>
+            </bpelx:remove>
+          </extensionAssignOperation>
+        </assign>
+        <invoke name="callbackClient" partnerLink="bpelDigitalStampReceipts"
+                portType="client:bpelDigitalStampReceiptsCallback" operation="DigitalStampReceiptsCallback"
+                inputVariable="outputVariable" bpelx:invokeAsDetail="no"
+                xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/>
+      </sequence>
+    </catchAll>
+  </faultHandlers>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="sequenceMain">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in bpelDigitalStampReceipts.wsdl) -->
+    <documentation>
+      <![CDATA[Secuencia por defecto del BPEL.]]>
+    </documentation>
+    <receive name="receiveInput" partnerLink="bpelDigitalStampReceipts" portType="client:bpelDigitalStampReceipts"
+             operation="DigitalStampReceipts" variable="inputVariable" createInstance="yes">
+      <documentation>
+        <![CDATA[Entrada del proceso BPEL.]]>
+      </documentation>
+    </receive>
+    <scope name="scopeDigitalStampReceipts">
+      <bpelx:annotation>
+        <bpelx:general>
+          <bpelx:property name="userDescription">
+            <![CDATA[Scope general para englobar toda la lógica que se requiera en el BPEL de capa de Negocio. El flujo puede organizarse mediante más scopes o subprocesos pero todos dentro de éste. Se especifica a este nivel el manejo de las excepciones más comúnes, otras podrían manejarse en scopes más internos. Como base, incluye la invocación a un servicio externo de capa Técnica así como las transformaciones correspondientes para asignar entrada y salida.]]>
+          </bpelx:property>
+        </bpelx:general>
+      </bpelx:annotation>
+      <variables>
+        <variable name="varInvokeWsFinancialsTecProcedureReceiptRq" messageType="ns11:GetReceiptOrInvoicesRq"/>
+        <variable name="varInvokeWsFinancialsTecProcedureReceiptRs" messageType="ns11:GetReceiptOrInvoicesRs"/>
+        <variable name="varInvokeWsProcessedReceiptRq" messageType="ns11:ProcessedReceiptRq"/>
+        <variable name="varInvokeWsProcessedReceiptRs" messageType="ns11:ProcessedReceiptRs"/>
+      </variables>
+      <faultHandlers>
+        <catch bpelx:name="Timeout" faultName="bpelx:timeout">
+          <documentation>
+            <![CDATA[Control para excepción por Tiempo Expirado durante la llamada a un servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignTimeout">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00002</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception maxed timeout. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[DigitalStampReceipts]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ReceiptBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Remote Fault" faultName="bpelx:remoteFault">
+          <documentation>
+            <![CDATA[Control para excepción por Falla Remota a servicio externo invocado.]]>
+          </documentation>
+          <assign name="assignRemoteFault">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00005</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('Exception when trying to invoke a remote service. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[DigitalStampReceipts]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ReceiptBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Selection Failure" faultName="bpel:selectionFailure">
+          <documentation>
+            <![CDATA[Control para excepción por Falla en Selección.]]>
+          </documentation>
+          <assign name="assignSelectionFailure">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00004</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying to select and set variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[DigitalStampReceipts]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ReceiptBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+        <catch bpelx:name="Invalid Variables" faultName="bpel:invalidVariables">
+          <documentation>
+            <![CDATA[Control para excepción por Variables No Válidas.]]>
+          </documentation>
+          <assign name="assignInvalidVariables">
+            <documentation>
+              <![CDATA[Se asignan los valores correspondientes de la excepción controlada al nodo de Errores que se encuentra en la variable de salida del BPEL.]]>
+            </documentation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>SOA-00003</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>ora:getFaultName()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ShortDescription</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>concat('There have been exceptions when trying set values in variables. ',ora:getFaultAsString())</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[DigitalStampReceipts]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:BusinessProcess</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal>[ReceiptBiz]</literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:FailedService</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from>xp20:current-dateTime()</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:TimeStamp</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+            <copy bpelx:insertMissingToData="yes">
+              <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</to>
+            </copy>
+            <extensionAssignOperation>
+              <bpelx:remove>
+                <?audit suppress oracle.ide.xml.validation-incomplete?>
+                <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/ns0:Return</bpelx:target>
+              </bpelx:remove>
+            </extensionAssignOperation>
+          </assign>
+        </catch>
+      </faultHandlers>
+      <sequence name="sequenceDigitalStampReceipts">
+        <documentation>
+          <![CDATA[Secuencia principal para la lógica de la operación que representa el BPEL.]]>
+        </documentation>
+        <if name="IfDMInput">
+          <documentation>
+            <![CDATA[Get result]]>
+          </documentation>
+          <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($inputVariable.DigitalStampReceiptsRq/ns0:DATA_DS/ns0:Q_CUSTOMER/ns0:RFC) &gt; 0</condition>
+          <sequence name="sequenceCreateReceipt">
+            <assign name="assignWsReceiptTecRq">
+              <documentation>
+                <![CDATA[Se asigna la entrada del servicio Técnico a partir de la entrada del BPEL.]]>
+              </documentation>
+              <copy>
+                <from><literal><Element xmlns="http://soa.estrellaroja.com.mx/EstrellaRojaCommons"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsFinancialsTecProcedureReceiptRq.GetReceiptOrInvoicesRq</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>0</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCount</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>0</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalSucceeded</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>0</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalErrors</to>
+              </copy>
+              <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                <from>0</from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalProcessed</to>
+              </copy>
+            </assign>
+            <assign name="trBpelRqToWsFinancialsTecGetInformationReceiptRq">
+              <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+              </bpelx:annotation>
+              <copy>
+                <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRqToWsFinancialsTecGetInformationReceiptRq.xsl", $inputVariable.DigitalStampReceiptsRq)</from>
+                <to variable="varInvokeWsFinancialsTecProcedureReceiptRq" part="GetReceiptOrInvoicesRq"/>
+              </copy>
+            </assign>
+            <invoke name="invokeWsFinancialsTecProcedure" partnerLink="wsFinancialsTec" portType="ns11:FinancialsTecPortType"
+                    operation="GetReceiptOrInvoices"
+                    inputVariable="varInvokeWsFinancialsTecProcedureReceiptRq"
+                    outputVariable="varInvokeWsFinancialsTecProcedureReceiptRs" bpelx:invokeAsDetail="no">
+              <documentation>
+                <![CDATA[Se invoca a la operación ReferenceOperation del servicio Técnico ReceiptTec.]]>
+              </documentation>
+            </invoke>
+            <if name="IfProcResult">
+              <documentation>
+                <![CDATA[Error Procedure]]>
+              </documentation>
+              <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:ErrorDesc) &gt; 0</condition>
+              <assign name="assignErrorProcedure">
+                <extensionAssignOperation>
+                  <bpelx:remove>
+                    <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+                  </bpelx:remove>
+                </extensionAssignOperation>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>$varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:ErrorDesc</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:Description</to>
+                </copy>
+                <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                  <from>string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Error)</from>
+                  <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error/cmn:ErrorCode</to>
+                </copy>
+              </assign>
+              <else>
+                <documentation>
+                  <![CDATA[Sucess Procedure]]>
+                </documentation>
+                <if name="IfResultProcReceipt">
+                  <documentation>
+                    <![CDATA[Result information receipt]]>
+                  </documentation>
+                  <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt/ns11:RFC) &gt; 0</condition>
+                  <sequence name="SequenceForCreateReceipt">
+                    <assign name="assignWsCreateReceiptRq">
+                      <extensionAssignOperation>
+                        <bpelx:remove>
+                          <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors</bpelx:target>
+                        </bpelx:remove>
+                      </extensionAssignOperation>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCount</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalSucceeded</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalErrors</to>
+                      </copy>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>0</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalProcessed</to>
+                      </copy>
+                    </assign>
+                    <forEach parallel="no" counterName="CounterCreateReceipt" name="ForCreateReceipt">
+                      <startCounterValue>1</startCounterValue>
+                      <finalCounterValue>count($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt)</finalCounterValue>
+                      <scope name="ScopeCreateReceipt">
+                        <variables>
+                          <variable name="varCount" element="ns0:countElement"/>
+                          <variable name="varInvokeStandardReceiptServiceRq" messageType="ns10:CreateReceiptRq"/>
+                          <variable name="varInvokeStandardReceiptServiceRs" messageType="ns10:CreateReceiptRs"/>
+                          <variable name="varTablaPuenteId" type="xsd:decimal"/>
+                        </variables>
+                        <sequence name="SequenceCreateReceipt">
+                          <assign name="assignVarCount">
+                            <copy>
+                              <from>$CounterCreateReceipt</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varCount/ns0:count</to>
+                            </copy>
+                          </assign>
+                          <assign name="assignInvokeWsStandardReceiptService">
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:Amount)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:Amount</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:SiteUseId)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:CustomerSiteUseId</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>xp20:format-dateTime(string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:DepositDate), '[Y0001]-[M01]-[D01]')</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:DepositDate</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:CustAccountId)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:CustomerId</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>xp20:format-dateTime(string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:ReceiptDate), '[Y0001]-[M01]-[D01]')</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:ReceiptDate</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>$varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:ReceiptMethodId</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:ReceiptMethodId</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>$varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:ReceiptNumber</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:ReceiptNumber</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>dvm:lookupValue ("DVM/dvmReceiptBiz.dvm", "Code", "Currency", "Value", "" )</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:CurrencyCode</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>string($varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:OrganizationId)</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:OrganizationId</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+                              <from>"Y"</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:ReceiptFlex/ns10:superInterface</to>
+                            </copy>
+                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                              <from>""</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRs.CreateReceiptRs/ns10:Return/ns10:Receipt/ns10:CashReceiptId</to>
+                            </copy>
+                            <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                              <from>""</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeStandardReceiptServiceRs.CreateReceiptRs/ns10:Return/ns10:Receipt/ns10:ReceiptNumber</to>
+                            </copy>
+                            <copy bpelx:insertMissingToData="yes">
+                              <from>$varInvokeWsFinancialsTecProcedureReceiptRs.GetReceiptOrInvoicesRs/ns11:Return/ns11:Receipt[position()=$varCount/ns0:count]/ns11:TablaPuenteId</from>
+                              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varTablaPuenteId</to>
+                            </copy>
+                          </assign>
+                          <invoke name="invokeWsErpIntegrationTecStandardReceipt" partnerLink="wsErpIntegrationTec"
+                                  portType="ns10:ERPIntegrationTecPortType" operation="CreateReceipt"
+                                  inputVariable="varInvokeStandardReceiptServiceRq"
+                                  outputVariable="varInvokeStandardReceiptServiceRs" bpelx:invokeAsDetail="no"/>
+                          <if name="IfReceiptProcessed">
+                            <documentation>
+                              <![CDATA[Success Created Receipt]]>
+                            </documentation>
+                            <condition expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">string-length($varInvokeStandardReceiptServiceRs.CreateReceiptRs/ns10:Return/ns10:Receipt/ns10:CashReceiptId) &gt; 0</condition>
+                            <scope name="scopeSuccessCreateReceipt">
+                              <sequence name="sequenceSuccessCreateReceipt">
+                                <assign name="assignSuccessCreateReceipt">
+                                  <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                    <from>$varHtmlInput.GetHtmlControlRq/ns15:TotalSucceeded+1</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalSucceeded</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>decimal($varInvokeStandardReceiptServiceRs.CreateReceiptRs/ns10:Return/ns10:Receipt/ns10:CashReceiptId)</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:RECEIPT_ID</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>$varTablaPuenteId</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:TABLA_PUENTE_ID</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>"S"</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:ESTATUS</to>
+                                  </copy>
+                                  <copy bpelx:insertMissingToData="yes">
+                                    <from>""</from>
+                                    <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:ERRORDESCRIPCION</to>
+                                  </copy>
+                                </assign>
+                              </sequence>
+                            </scope>
+                            <else>
+                              <documentation>
+                                <![CDATA[Error Created Receipt]]>
+                              </documentation>
+                              <scope name="scopeErrorCreateReceipt">
+                                <sequence name="sequenceErrorCreateReceipt">
+                                  <assign name="assignErrorCreateReceipt">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                      <from>$varErrorCount+1</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varErrorCount</to>
+                                    </copy>
+                                  </assign>
+                                  <assign name="assignCreateReceiptNotifyHtml">
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                      <from>$varInvokeStandardReceiptServiceRs.CreateReceiptRs/cmn:Errors/cmn:Error[1]</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors/cmn:Error[$varErrorCount]</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                      <from>substring($varInvokeStandardReceiptServiceRs.CreateReceiptRs/cmn:Errors/cmn:Error/cmn:Description, 0, 450)</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:ErrorsDetails/ns15:ErrorDetail[$varErrorCount]/ns15:ErrorMessage</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                                      <from>concat("REC{",$varInvokeStandardReceiptServiceRq.CreateReceiptRq/ns10:ReceiptNumber,"}")</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:ErrorsDetails/ns15:ErrorDetail[$varErrorCount]/ns15:DataValue</to>
+                                    </copy>
+                                    <copy bpelx:insertMissingToData="yes">
+                                      <from>$varTablaPuenteId</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:TABLA_PUENTE_ID</to>
+                                    </copy>
+                                    <copy bpelx:insertMissingToData="yes">
+                                      <from>substring($varInvokeStandardReceiptServiceRs.CreateReceiptRs/cmn:Errors/cmn:Error/cmn:Description, 0, 450)</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:ERRORDESCRIPCION</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="no" bpelx:insertMissingToData="yes">
+                                      <from>"E"</from>
+                                      <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varInvokeWsProcessedReceiptRq.ProcessedReceiptRq/ns11:ProcessedReceiptType/ns11:RegReceipts[$CounterCreateReceipt]/ns11:ESTATUS</to>
+                                    </copy>
+                                  </assign>
+                                </sequence>
+                              </scope>
+                            </else>
+                          </if>
+                        </sequence>
+                      </scope>
+                    </forEach>
+                    <invoke name="invokeWsProcessedReceipt" bpelx:invokeAsDetail="no" partnerLink="wsFinancialsTec"
+                            portType="ns11:FinancialsTecPortType" operation="ProcessedReceipt"
+                            inputVariable="varInvokeWsProcessedReceiptRq"
+                            outputVariable="varInvokeWsProcessedReceiptRs"/>
+                    <assign name="assignTotalError">
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from>$varErrorCount</from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$varHtmlInput.GetHtmlControlRq/ns15:TotalErrors</to>
+                      </copy>
+                    </assign>
+                    <assign name="trBpelRsToWsProcessedReceipt">
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelRsToWsProcessedReceipt_1.xsl", $varInvokeWsProcessedReceiptRs.ProcessedReceiptRs, "varHtmlInput.GetHtmlControlRq", $varHtmlInput.GetHtmlControlRq)</from>
+                        <to variable="outputVariable" part="DigitalStampReceiptsRs"/>
+                      </copy>
+                    </assign>
+                    <assign name="trBpelCopyRegErrorSuccess">
+                      <bpelx:skipCondition>1=1</bpelx:skipCondition>
+                      <bpelx:annotation>
+                        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+                      </bpelx:annotation>
+                      <copy>
+                        <from>ora:doXSLTransformForDoc("../Transformations/XSLs/trBpelCopyRegErrorSuccess.xsl", $varHtmlInput.GetHtmlControlRq)</from>
+                        <to variable="outputVariable" part="DigitalStampReceiptsRs"/>
+                      </copy>
+                    </assign>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[No result information receipt]]>
+                    </documentation>
+                    <assign name="assignNoRowReceipt">
+                      <extensionAssignOperation>
+                        <bpelx:remove>
+                          <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</bpelx:target>
+                        </bpelx:remove>
+                      </extensionAssignOperation>
+                      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+                        <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors</to>
+                      </copy>
+                    </assign>
+                  </else>
+                </if>
+              </else>
+            </if>
+          </sequence>
+          <else>
+            <documentation>
+              <![CDATA[No get result]]>
+            </documentation>
+            <assign name="assignNoRowsRfc">
+              <extensionAssignOperation>
+                <bpelx:remove>
+                  <bpelx:target expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Errors</bpelx:target>
+                </bpelx:remove>
+              </extensionAssignOperation>
+              <copy>
+                <from><literal><Element xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"/></literal></from>
+                <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$outputVariable.DigitalStampReceiptsRs/cmn:Success</to>
+              </copy>
+            </assign>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+            <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+  <invoke name="callbackClient" partnerLink="bpelDigitalStampReceipts" portType="client:bpelDigitalStampReceiptsCallback"
+                operation="DigitalStampReceiptsCallback" inputVariable="outputVariable" bpelx:invokeAsDetail="no"/>
+                
+
+  </sequence>
+</process>

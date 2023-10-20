@@ -1,0 +1,36 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="BPELRelationCFDIs"
+     targetNamespace="http://soa.estrellaroja.com.mx/LetterPorteBiz/BPELRelationCFDIs"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://soa.estrellaroja.com.mx/LetterPorteBiz/BPELRelationCFDIs"
+     xmlns:ns1="http://soa.estrellaroja.com.mx/LetterPorteBiz"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns2="http://soa.estrellaroja.com.mx/LetterPorteBiz/NXSD/RelationCFDIs"
+    >
+    <plnk:partnerLinkType name="BPELRelationCFDIs">
+        <plnk:role name="BPELRelationCFDIsProvider" portType="client:BPELRelationCFDIs"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://soa.estrellaroja.com.mx/LetterPorteBiz"
+                 schemaLocation="oramds:/apps/SOA/LetterPorteBiz/LetterPorteBiz.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://soa.estrellaroja.com.mx/LetterPorteBiz/NXSD/RelationCFDIs"
+                 schemaLocation="../Schemas/NXSD/RelationsCFDIs.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="BPELRelationCFDIsRequestMessage">
+        <wsdl:part name="payload" element="ns1:GenerateRelationCFDIsRq"/>
+    </wsdl:message>
+    <wsdl:message name="BPELRelationCFDIsResponseMessage">
+        <wsdl:part name="payload" element="ns1:GenerateRelationCFDIsRs"/>
+    </wsdl:message>
+    <wsdl:portType name="BPELRelationCFDIs">
+        <wsdl:operation name="RelationCFDIs">
+            <wsdl:input message="client:BPELRelationCFDIsRequestMessage"/>
+            <wsdl:output message="client:BPELRelationCFDIsResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBBVA" targetNamespace="http://soa.estrellaroja.com.mx/SFTPEstrellaRojaEnt/StatementsBankBBVA" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="UTF-8">
+   <xsd:element name="AccountStatements">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Statements" minOccurs="1" maxOccurs="unbounded" nxsd:style="array" nxsd:cellSeparatedBy="${eol}">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="Cuenta" type="xsd:string" nxsd:style="fixedLength" nxsd:length="18"/>
+                     <xsd:element name="FechaValor" type="xsd:string" nxsd:style="fixedLength" nxsd:length="10"/>
+                     <xsd:element name="FolioBanco" type="xsd:string" nxsd:style="fixedLength" nxsd:length="6"/>
+                     <xsd:element name="Transaccion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="30"/>
+                     <xsd:element name="TipoDeMovimiento" type="xsd:string" nxsd:style="fixedLength" nxsd:length="1"/>
+                     <xsd:element name="Importe" type="xsd:string" nxsd:style="fixedLength" nxsd:length="16"/>
+                     <xsd:element name="Moneda" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                     <xsd:element name="FolioAceptacion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="9"/>
+                     <xsd:element name="Referencia" type="xsd:string" nxsd:style="fixedLength" nxsd:length="30"/>
+                     <xsd:element name="Contrato" type="xsd:string" nxsd:style="fixedLength" nxsd:length="7"/>
+                     <xsd:element name="FechaOperacion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="10"/>
+                     <xsd:element name="NombreContratoCW" type="xsd:string" nxsd:style="fixedLength" nxsd:length="12"/>
+                     <xsd:element name="CodigoTransaccion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                     <xsd:element name="TipoOperacion" type="xsd:string" nxsd:style="fixedLength" nxsd:length="3"/>
+                     <xsd:element name="Plaza" type="xsd:string" nxsd:style="fixedLength" nxsd:length="4"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+</xsd:schema>

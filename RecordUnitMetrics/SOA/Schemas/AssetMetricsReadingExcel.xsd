@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://soa.estrellaroja.com.mx/AssetMetricReadingExcel" targetNamespace="http://soa.estrellaroja.com.mx/AssetMetricReadingExcel" elementFormDefault="qualified">
+   <xsd:element name="AssetMetricReading">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="Reading" type="AssetList" maxOccurs="unbounded"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+   <xsd:complexType name="AssetList">
+      <xsd:sequence>
+         <xsd:element name="assetNumber" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="Records" type="RecordList" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RecordList">
+      <xsd:sequence>
+         <xsd:element name="readingDate" type="xsd:date" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="readingValue" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="origin" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+         <xsd:element name="assetProcessed" type="xsd:string" maxOccurs="0" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>
